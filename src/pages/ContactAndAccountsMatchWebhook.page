@@ -1,3 +1,0 @@
-<apex:page controller="ContactAndAccountsMatchWebhookCntrl" contentType="application/javascript" action="{!init}">
-  
-</apex:page>

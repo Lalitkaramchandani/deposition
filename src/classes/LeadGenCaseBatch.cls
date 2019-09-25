@@ -39,41 +39,7 @@ global class LeadGenCaseBatch implements Database.Batchable<sObject>,   Database
                 if(casePraserRes.error==false){
                     if(String.isNotBlank(casePraserRes.data.docket_entries_token))
                         UnicourtSFDCIdMap.put(caseLead.Unicourt_Case_ID__c, casePraserRes.data.docket_entries_token);
-                    system.debug('caseObj.more_attorneys++ '+casePraserRes.data.caseObj.more_attorneys);
-                    if(casePraserRes.data.caseObj.more_attorneys){
-                        system.debug('attorney size:: '+casePraserRes.data.caseObj.attorneys.size());
-                        if(Test.isRunningTest()){
-                            CaseLeadCommonRoutine.fetchAllCaseAttorneys(casePraserRes.data.caseObj.case_meta.case_id,
-                            casePraserRes.data.attorneys_token);
-                        }else{
-                            casePraserRes.data.caseObj.attorneys = null;
-                            casePraserRes.data.caseObj.attorneys = CaseLeadCommonRoutine.fetchAllCaseAttorneys(casePraserRes.data.caseObj.case_meta.case_id,
-                            casePraserRes.data.attorneys_token);
-                        }
-                            
-                        system.debug('attorney size:: '+casePraserRes.data.caseObj.attorneys.size());
-                    }
-                    system.debug('caseObj.more_parties++ '+casePraserRes.data.caseObj.more_parties);
-                    if(casePraserRes.data.caseObj.more_parties){
-                        system.debug('parties size:: '+casePraserRes.data.caseObj.parties.size());
-                        if(Test.isRunningTest()){
-                            CaseLeadCommonRoutine.fetchAllCaseParties(casePraserRes.data.caseObj.case_meta.case_id, 
-                            casePraserRes.data.parties_token);
-                        }else{
-                            casePraserRes.data.caseObj.parties = null;
-                            casePraserRes.data.caseObj.parties = CaseLeadCommonRoutine.fetchAllCaseParties(casePraserRes.data.caseObj.case_meta.case_id, 
-                            casePraserRes.data.parties_token);
-                        }
-                            
-                        system.debug('parties size:: '+casePraserRes.data.caseObj.parties.size());
-                    }
                     for(CaseParser.cls_attorneys attorney : casePraserRes.data.caseObj.attorneys){
-                        system.debug('attorney:: '+attorney);
-                        if(attorney.entities != null && !attorney.entities.isEmpty())
-                        system.debug(LoggingLevel.ERROR, 'Attorney Entity :: '+attorney.entities[0].emails);
-                        if(attorney.entities != null && !attorney.entities.isEmpty() && attorney.entities[0].emails != null && !attorney.entities[0].emails.isEmpty())
-                        system.debug(LoggingLevel.ERROR, 'Attorney Entity :: '+attorney.entities[0].emails[0]);
-                        
                         if(attorney.firstname != NULL || attorney.lastname != NULL)
                             setAttorneyName.add(attorney.firstname+' '+attorney.lastname);
                     }
@@ -198,16 +164,6 @@ mapAttorneys.put(cont.Unicourt_Attorney_Id__c,cont);
                         }
                         rep.Unicourt_Id__c = casePraserRes.data.caseobj.case_meta.case_id+'-'+attorney.attorney_id;
                         rep.Law_Firm_Text__c = attorney.firm;
-                        
-                        if(attorney.entities != null && !attorney.entities.isEmpty() && attorney.entities[0].emails!= null && !attorney.entities[0].emails.isEmpty())
-                            rep.Unicourt_Email_Address__c = attorney.entities[0].emails[0];
-                        if(attorney.entities != null && !attorney.entities.isEmpty() && !attorney.entities[0].potentials.isEmpty() ){
-                            CaseParser.cls_potentials pot = attorney.entities[0].potentials[0];
-                            rep.Unicourt_Attorney_Address__c = pot.address;
-                            rep.Unicourt_Attorney_City__c = pot.city;
-                            rep.Unicourt_Attorney_State__c = pot.state;
-                            rep.Unicourt_Attorney_ZipCode__c = pot.zipcode;
-                        }  
                         if(rep.Law_Firm_Text__c == null || rep.Law_Firm_Text__c =='null')
                             rep.Law_Firm_Text__c = '';
                         system.debug('attorney.attorney_id:::'+attorney.attorney_id +' '+mapAttorneyIdWithPartyName.get(attorney.attorney_id));
@@ -246,16 +202,6 @@ mapAttorneys.put(cont.Unicourt_Attorney_Id__c,cont);
 						rep.Case__c=mapCaseLeads.get(casePraserRes.data.caseobj.case_meta.case_id).id;
                         rep.Unicourt_Id__c = casePraserRes.data.caseobj.case_meta.case_id+'-'+attorney.attorney_id;
                         rep.Law_Firm_Text__c = attorney.firm;
-                        
-                        if(attorney.entities != null && !attorney.entities.isEmpty() && attorney.entities[0].emails != null && !attorney.entities[0].emails.isEmpty())
-                            rep.Unicourt_Email_Address__c = attorney.entities[0].emails[0];
-                        if(attorney.entities != null && !attorney.entities.isEmpty() && !attorney.entities[0].potentials.isEmpty() ){
-                            CaseParser.cls_potentials pot = attorney.entities[0].potentials[0];
-                            rep.Unicourt_Attorney_Address__c = pot.address;
-                            rep.Unicourt_Attorney_City__c = pot.city;
-                            rep.Unicourt_Attorney_State__c = pot.state;
-                            rep.Unicourt_Attorney_ZipCode__c = pot.zipcode;
-                        } 
                         if(rep.Law_Firm_Text__c == null || rep.Law_Firm_Text__c =='null')
                             rep.Law_Firm_Text__c = '';
                         system.debug('attorney id :::'+attorney.attorney_id+' unicourt id==='+rep.Unicourt_Id__c);

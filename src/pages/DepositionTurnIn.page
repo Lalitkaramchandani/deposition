@@ -1,0 +1,1533 @@
+<apex:page standardController="Deposition__c" extensions="DepositionTurnInCtrl" action="{!postInit}" docType="html-5.0"
+    showHeader="false" standardStylesheets="true">
+    <head>
+        <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+        <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-ui-1.8.18.custom.min.js')}" type="text/javascript"></script>
+        <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery.easy-confirm-dialog.js')}" type="text/javascript"></script>
+        
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"></link>
+        <script src="{!$Resource.upload}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+        <link href="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/css/FileUploadCSS.css')}" rel="stylesheet" type="text/css" />
+        <link href="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/css/jquery-ui-1.8.18.custom.css')}" rel="stylesheet" type="text/css" />
+    <style>
+        img.timg, .pbSubheader > img{
+            width:inherit!important;
+            display:initial!important;
+        }
+        img.gimg, .pbSubheader > img{
+            width:3%!important;
+        }
+        .status img{
+            display: inline;
+        }
+        td{
+          vertical-align:middle!important;  
+        }
+        div.pbSubheader.brandTertiaryBgr.tertiaryPalette{
+            border : 1px solid darkgrey;
+        }
+        div.pbSubheader.brandTertiaryBgr.first.tertiaryPalette > img{
+            width:inherit!important;
+        }
+        label, .labelCol {
+            color:black!important;
+        }
+        .pbSubheader.brandTertiaryBgr.tertiaryPalette > img{
+            width:1%!important;
+        }
+        .messageTable li, .messageText{
+            color:black!important;
+        }
+        .ui-dialog {
+            font-size: 13px;
+        }
+        
+        .overlay {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.7;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            z-index: 500;
+        }
+        
+        .status {
+            background: #ddd;
+            border: 1px solid #aaa;
+            border-radius: 2px;
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            -moz-box-shadow: 0 0 15px 5px #DDDDDD;
+            -webkit-box-shadow: 0 0 15px 5px #DDDDDD;
+            box-shadow: 0 0 15px 5px #DDDDDD;
+            margin: 2px;
+            width: 325px;
+            opacity: 1;
+            height: auto;
+            
+            left: 40%;
+            padding: 15px;
+            z-index: 1000;
+            display: block;
+        }
+        
+        .ui-widget-header {
+            border: 1px solid #00335B !important;
+            background: #00335B url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x !important;
+        }
+        
+        .messageCell,
+        .errorMsg {
+            color: red;
+        }
+        
+        .ui-button {
+            border: 1px solid #cccccc !important;
+            background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x !important;
+            font-weight: bold !important;
+            color: #1c94c4 !important;
+        }
+        .custPopup{ 
+            background-color: white; border-width: 0px; border-radius:10px; z-index: 9999; left: 50%; padding:20px; position: fixed;  margin-left: -100px; top:40%;
+            
+        }
+     
+        .popupBackground{ 
+            background-color:black; opacity: 0.30; filter: alpha(opacity = 30); position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 9998; 
+        }
+        /* override tab style*/
+        /*dev*/
+        .Custom68Tab .secondaryPalette, .individualPalette .Custom68Block .secondaryPalette{
+            background-color: #FF5700;
+            border-color: #FF5700;
+        }
+        /* prelaunch*/
+        .Custom56Block .secondaryPalette, .individualPalette .Custom56Block .secondaryPalette{
+            background-color: #FF5700;
+            border-color: #FF5700;
+        }
+        body .pbBody .pbSubheader{
+            background-image:none!important;
+        }
+        .pbSubheader.brandTertiaryBgr.tertiaryPalette{
+            background-color: #FF5700!important;
+            border-color: #FF5700!important;
+        }
+        .pbSubheader h3{
+            background:inherit!important;
+        }
+        
+        .rtitems .pbSubsection > table th{
+            width:16.5%;
+        }
+        .rtitems .pbSubsection > table th.col-5{
+            width:20%;
+        }
+        .rtitems .pbSubsection > table th.col-4{
+            width:25%;
+        }
+        
+        .rtitems .att-name-table .pbSubsection > table th{
+            
+        }
+        .dep-name{
+            margin-bottom: 20%;
+        }
+        a{
+            color:white;
+            padding-left:1em;
+        }
+        label.label-bold{
+            font-weight:bold;
+        }
+        /*.dataCol .dateInput .dateFormat, .datePicker .calBody > .buttonBar{
+            display:none !important;
+        }
+        .datePicker .dateBar > img{
+            display:-webkit-inline-box;
+        }*/
+        .datePicker .dateBar > select{
+            width:inherit;
+        }
+        
+        table.multiSelectPicklistTable tbody tr td{
+            border:0px!important;
+        }
+        .p-around{
+            padding: 1.25em!important;
+        }
+        .customLookup a.customLookupLink{
+            padding:0px !important;
+        }
+        .customLookupLink img.lookupIcon{
+            display:inherit !important;
+        }
+        .customLookupLink img.lookupIconOn{
+            display:inherit !important;
+        }
+        .uploadFiles a{
+            color:blue;
+            cursor:pointer;
+        }
+    </style>
+    </head>
+    <!-- This will render a standard detail page of deposition with all related lists --->
+    <!--<apex:detail relatedListHover="true" relatedList="true"  subject="{!Deposition__c.Id}" title="true" showChatter="true" inlineEdit="true"   /> -->
+    
+    <!--<apex:relatedList list="Deposition_Location__r" />
+    <apex:relatedList list="Deposition_Roles__r" /> 
+    <apex:relatedList list="Invoices__r" /> 
+    <apex:relatedList list="OpenActivities" /> 
+    <apex:relatedList list="ActivityHistories" /> 
+    <apex:relatedList list="Corporate_Clients__r" /> --->
+    <script type="text/javascript">
+        var accessToken = '';
+        var folderName = "{!depositionRec.Name}";
+        var folderID = null;
+        var j$ = jQuery.noConflict();
+        var byteChunkArray;
+        var files;
+        var currentFile;
+        var $upload;
+        var CHUNK_SIZE = 180000; //Must be evenly divisible by 3, if not, data corruption will occur
+        var VIEW_URL = '/servlet/servlet.FileDownload?file=';
+        var BatchSize = 0;
+
+        var fileForInputFile;
+        // A $( document ).ready() block.
+
+        function checkForUploads() {
+
+            //Get div of the first matching upload element that is 'pending', if none, all uploads are complete
+            $upload = $(".upload:first[data-status='pending']");
+            // console.log($upload);
+            if ($upload.length != 0) {
+                //Based on index of the div, get correct file from files array
+                // console.log(files);
+                if (files != null) {
+                    currentFile = files[$upload.attr('data-index')];
+
+                    var button = document.getElementById('upload-button');
+                    var results = document.getElementById('results');
+                    var file = currentFile;
+                    // console.log('Actual File Name-->' + file.name);
+                    if (file) {
+                        results.innerHTML = '';
+                        var contentType = file.type || 'application/octet-stream';
+                        var metadata = {
+                            'title': file.name,
+                            'mimeType': contentType,
+                            'parents': [{
+                                "id": folderID
+                            }]
+                        };
+                        var uploader = new MediaUploader({
+                            file: file,
+                            token: accessToken,
+                            metadata: metadata,
+                            onComplete: function(data) {
+                                // console.log(
+                                //     'No Error. This file has completed, all byte chunks have been uploaded.'
+                                // );
+                                $upload.attr('data-status',
+                                    'complete');
+                                $upload.find(".percentComplete").html(
+                                    '<font style="color:#008040;">Completed</font>'
+                                );
+                                $upload.find(".statusBarPercent").hide();
+                                checkForUploads();
+                            }
+                        });
+                        uploader.upload();
+
+                    } else {
+                        results.innerHTML = 'Nothing to upload.';
+                    }
+                } else {
+                    performUploadCompleteActions();
+                }
+            } else {
+                performUploadCompleteActions();
+            }
+        }
+
+        function loadDataTable() {
+            // console.log('ready');
+
+            j$("#table").show();
+
+            j$(".load-status").hide();
+            //j$(".bRelatedList:eq(1 )").append(j$("#GoogleFiles").remove());
+            j$(".file").change(function(event) {
+                fileForInputFile = document.getElementById("file").files;
+
+            });
+            j$('#table').dataTable().fnDestroy();
+            //j$('#table').DataTable();
+            j$('#table').DataTable({
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
+                "oLanguage": {
+                    "sSearch": "File Name Search:"
+                }
+            });
+            j$("#GoogleFiles .pbGoogleFiles").show();
+            jsLoaduploaded();
+        }
+
+        function grantFileAccess() {
+            window.location.href = '/apex/GrantingFileAccessToUsers?id={!depositionRec.id}&folderId='+folderID;
+        }
+
+        function downloadAsZip() {
+            window.location.href = '/apex/DownloadAllFilesFromDeposition?id={!depositionRec.id}';;
+        }
+
+        function callLoadFilesInDataTable() {
+            loadDataTable();
+        }
+
+        function callSaveFiles() {
+            saveFiles();
+            j$(".load-status").show();
+        }
+
+        function hideStatus() {
+            j$(".load-status").hide();
+        }
+
+        function quantyChange(data) {
+            console.log('-----', data);
+            console.log('{!$Component.frm.turnin4pb}');
+        }
+
+        function goNextStep() {
+            var tFiles = document.getElementById("file").files;
+            if (tFiles.length > 0) {
+                if (confirm('Do you want to proceed without uploading file?')) {
+                    jsnextStep();
+                }
+            } else {
+                jsnextStep();
+            }
+        }
+
+        function onPrimaryAlChange(val) {
+            $('.primAlt').each(function(index, value) {
+                $(this).attr('checked', $(this).hasClass(val));
+            });
+        }
+
+        function preventGoBack() {
+            history.pushState(null, null, location.href);
+            var isNavigate = true;
+            window.onpopstate = function() {
+                if (isNavigate) {
+                    alert('Click on Back to Portal, for navigating');
+                }
+                isNavigate = !isNavigate;
+                history.go(1);
+            };
+        }
+        function jsBackToPoratl(){
+            window.location="/Portal";
+        }
+        function runScriptDecimal(obj, dat){
+            if(obj.keyCode==190){
+				if( dat.value === undefined || dat.value===''){
+					dat.value='0';
+                }
+				return dat.value.indexOf('.')<0;
+            }else if((obj.keyCode > 34 && obj.keyCode < 40) || (obj.keyCode > 95 && obj.keyCode < 106) 
+                    || (obj.keyCode > 47 && obj.keyCode < 58) || obj.keyCode == 8 || obj.keyCode == 46 
+                    || obj.keyCode == 9 ||obj.keyCode == 190 ){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
+        function runScriptInteger(obj, dat){
+            if((obj.keyCode > 34 && obj.keyCode < 40) || (obj.keyCode > 95 && obj.keyCode < 106) 
+                    || (obj.keyCode > 47 && obj.keyCode < 58) || obj.keyCode == 8 || obj.keyCode == 46 
+                    || obj.keyCode == 9 ){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        function runScriptHandleEnter(obj){
+            if(obj.keyCode == 13){
+                searchByEmail();
+                return false;
+            }else{
+                return true;
+            }
+        }
+        function runScriptHandleContactEnter(obj){
+            if(obj.keyCode == 13){
+                jsAddAttendee();
+                return false;
+            }else{
+                return true;
+            }
+        }
+        window.onload = preventGoBack();
+        
+        
+        function openCustomPopupAccount(targetSearch,targetId){
+            var url= '{!$Page.sObjectLookup}?lkObject=Account&lkField=Name&lksrch='+ (document.getElementById(targetSearch).value)+'&lknm='+targetSearch+ '&lkId=' + targetId;
+            var popup = window.open(url,'Popup','height=400,width=500,left=100,top=100,scrollbars=yes,toolbar=no,\status=no');
+            popup.onblur = function(){popup.close();}
+        }
+        function parentCalling(result){
+            document.getElementById(result.lkId).value = result.selectedId;
+            document.getElementById(result.lknm).value = result.selectedVal;
+        }
+        function cancelSearch(){
+            var emailId = '{!$Component.frm.turnin3.attendTable.searchPb.searchAttPbs.searchAttPbsItem.email}';
+            var ele = document.getElementById(emailId);
+            if(ele){
+                ele.value='';
+            }
+            jsCancelSearch();
+        }
+    </script>
+    <body>
+        <apex:outputPanel rendered="{!isValidEntry}">
+        <c:GoogleDriveUploadScript IsListFolderFiles="true" />
+        </apex:outputPanel>
+        <c:CommunityResources title="Deposition Turn In" />
+        <title>{!firm.Name} | Deposition Turn Ins </title>
+        <script src="https://apis.google.com/js/client.js?onload=init"></script>
+        <!---->
+        <!--<c:CommunityHeader />-->
+        <c:firmHeader firm="{!firm}" />
+        <!---->
+        <apex:form id="frm">
+            <apex:actionStatus id="fetching">
+                <apex:facet name="start">
+                    <apex:outputPanel id="tstpopup">
+                        <apex:outputPanel styleClass="popupBackground" layout="block" />
+                        <apex:outputPanel styleClass="custPopup" layout="block">
+                            <img src="/img/loading24.gif" style="vertical-align:middle; horizontal-align:middle"
+                                class="timg" />
+                            <span>Please wait...</span>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:facet>
+            </apex:actionStatus>
+            
+            <apex:actionFunction reRender="uploadFiles" name="jsLoaduploaded" action="{!loaduploaded}" status="fetching"/>
+            <apex:actionFunction reRender="uploadFiles, pnlForTable" name="jsRemoveFile" action="{!removeFile}" status="fetching">
+                <apex:param name="removeFileId" value="" />
+                <apex:param name="removeFileIndex" value="" />
+                <apex:param name="screen" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction status="fetching" name="jsAddAttendee" action="{!onNewAttendee}" 
+            reRender="newAttMsg,msgs, turnin3" />
+                
+            <apex:actionFunction status="fetching" name="jsBackStep" action="{!previousStep}" reRender="mainPanel" />
+            <apex:actionFunction status="fetching" name="jsnextStep" action="{!nextStep}" reRender="mainPanel" />
+            <apex:actionFunction name="jsaddAttendeesRow" action="{!addAttendeesRow}" status="fetching" reRender="turnin3" />
+            <apex:actionFunction name="jsremoveRow" action="{!removeAttendeesRow}" status="fetching" reRender="turnin3">
+                <apex:param name="aa" assignTo="{!removeIndex}" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction name="jssetFirmName" action="{!setFirmName}" status="fetching" reRender="turnin3">
+                <apex:param name="aaa" assignTo="{!removeIndex}" value="" />
+            </apex:actionFunction>
+            <apex:actionFunction name="quantityChange" action="{!onQuantityChange}" status="fetching" reRender="turnin4" />
+
+            <apex:outputPanel rendered="{!!ISNULL(depositionRec)}" id="mainPanel">
+                <a href="/Portal"> Back to Portal</a>&nbsp;
+                <apex:outputPanel rendered="{!isValidEntry}">
+                <apex:outputPanel id="pnlMsg">
+                    <br/>
+                    <apex:pagemessages id="msgs"></apex:pagemessages>
+                    <br/>
+                    <script>
+                        var expediteId = '{!$Component.frm.turnin1.depDetails.expedite}';
+                        var serviceSelectedId = '{!$Component.frm.turnin1.depDetails.serviceInputItem.serviceInput}_selected';
+                        function goStep2(){
+                            var expedite = document.getElementById(expediteId);
+                            var serviceSelected = document.getElementById(serviceSelectedId);
+                            var infoMessage = 'Expedite Level cannot be None if Services having Expedite or Services should have Expedite if Expedite Level cannot be None';
+                            if (serviceSelected && expedite) {
+                                var showAlert = false;
+                                for (var ind = 0, len = serviceSelected.options.length; ind < len; ind++) {
+                                    if (serviceSelected.options[ind].innerText === 'Expedite' ||
+                                        serviceSelected.options[ind].innerText === 'Expedite') {
+                                        showAlert = expedite.selectedIndex <1;
+                                        break;
+                                    }
+                                }
+                                if (showAlert){
+                                    alert(infoMessage);
+                                    return;
+                                }
+                            }
+                            goNextStep();
+                        }
+                    </script>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!if(pageNo==1,true,false)}">
+                    <apex:pageblock mode="edit" title="Deposition Detail" id="turnin1">
+                        <apex:pageblockbuttons >
+                            <apex:commandButton styleClass="btn" value="Back" disabled="true" />
+                            <input type="button" class="btn" value="Next" onclick="goStep2()" />
+                        </apex:pageblockbuttons>
+                        <apex:pageblocksection columns="1">
+                            <apex:outputLabel >
+                                Thank you for working with {!depositionRec.Firm_Name__c}. Please provide information
+                                and files for this {!LOWER(depositionRec.Event_Type_Lowercase__c)}.
+                                The job is not considered complete until all transcripts,
+                                exhibits and order forms are turned in.
+                            </apex:outputLabel>
+                            <br/>
+                        </apex:pageblocksection>
+                        <apex:pageblocksection title="Deposition Detail" showheader="false" columns="2" id="depDetails">
+                            <!---->
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.Deposition__c.fields.Deposition_Date__c.Label}"
+                                    styleClass="label-bold" />
+                                <apex:outputField value="{!depositionRec.Deposition_Date__c}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Deposition Name" styleClass="label-bold" />
+                                <apex:outputField value="{!depositionRec.Name}" />
+                            </apex:pageBlockSectionItem>
+                            <!---->
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Witness Name" styleClass="label-bold" />
+                                    <br/>
+                                    <apex:outputLabel value="(If there are multiple witnesses, just start with the first one.)"
+                                    />
+                                </apex:outputPanel>
+                                <!--readonly-->
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!depositionRec.Deponent_Name__c}" styleClass="{!IF(curUserRole!='Videographer/Technician','dep-name','')}" 
+                                        rendered="{!!readonly}"/>
+                                    <apex:outputField value="{!depositionRec.Deponent_Name__c}"
+                                        rendered="{!readonly}"/>
+                                </apex:outputPanel>
+                                <!--<apex:inputField value="{!depositionRec.Deponent_Name__c}" styleClass="dep-name" />-->
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem id="serviceInputItem">
+                                <apex:outputLabel value="Services" styleClass="label-bold" />
+                                <!--readonly-->
+                                <!--<apex:inputField value="{!depositionRec.Portal_Deposition_Services__c}" id="serviceInput"/>-->
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!depositionRec.Portal_Deposition_Services__c}" id="serviceInput"
+                                        rendered="{!!readonly && curUserRole!='Videographer/Technician'}" />
+                                    <apex:outputField value="{!depositionRec.Portal_Deposition_Services__c}" id="serviceInputReadOnly"
+                                        rendered="{!readonly || curUserRole=='Videographer/Technician'}" />
+                                </apex:outputPanel>
+                                
+                            </apex:pageBlockSectionItem>
+
+                            <!---->
+                            <!--readonly-->
+                            <apex:outputField value="{!depositionRec.Expedite__c}" id="expediteReadOnly"
+                                    rendered="{!readonly}" />
+                            <apex:selectList label="Expedite Level (Business Days)" value="{!depositionRec.Expedite__c}" id="expedite"
+                                size="1" rendered="{!!readonly}">
+                                <apex:selectOptions value="{!DepositionExpedite}" /> 
+                            </apex:selectList>
+                            <apex:inputCheckbox label="No Transcript" value="{!NoTranscript}" 
+                                    rendered="{!!readonly}" />
+                            <apex:pageBlockSectionItem rendered="{!readonly}" />
+                            <!---->
+
+                            <apex:pageBlockSectionItem rendered="{!curUserAttendee!=NULL}">
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Job Recap" styleClass="label-bold" />
+                                    <br/>
+                                    <apex:outputLabel value="This is the quick summary of the job that you sent us."
+                                    />
+                                </apex:outputPanel>
+                                <!--readonly-->
+                                <apex:outputPanel >
+                                <!--<apex:inputField value="{!curUserAttendee.Recap_Notes__c}" />-->
+                                    <apex:inputField value="{!curUserAttendee.Recap_Notes__c}" 
+                                            rendered="{!!readonly}"/>
+                                    <apex:outputField value="{!curUserAttendee.Recap_Notes__c}" 
+                                            rendered="{!readonly}"/>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem rendered="{!curUserAttendee!=NULL}">
+                                <apex:outputPanel >
+                                    <apex:outputLabel styleClass="label-bold">
+                                        {!IF(curUserRole!='Videographer/Technician','Exhibit ','')}Shipping Detail
+                                    </apex:outputLabel>
+                                    <br/>
+                                    <apex:outputLabel value="Let us know how exhibits will be shipped to us, scanned, etc. Please include tracking numbers and any relevant dates"
+                                    />
+                                </apex:outputPanel>
+                                <!--readonly-->
+                                <apex:outputPanel >
+                                    <!--<apex:inputField value="{!curUserAttendee.Shipping_Notes__c}" />-->
+                                    <apex:inputField value="{!curUserAttendee.Shipping_Notes__c}" 
+                                            rendered="{!!readonly}"/>
+                                    <apex:outputField value="{!curUserAttendee.Shipping_Notes__c}" 
+                                            rendered="{!readonly}"/>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <!---->
+                            <script>
+                                var pageNo = '{!pageNo}';
+                                function onStepNextComplete(){
+                                    console.log(pageNo);
+                                }
+                            </script>
+                        </apex:pageblocksection>
+
+                        <apex:pageblocksection title="Attendee(s) Detail" showheader="true" columns="2" rendered="{!curUserAttendee==NULL}">
+                            <apex:outputLabel value="No attendee found!" />
+                        </apex:pageblocksection>
+
+                        <br />
+                        <apex:inputText styleClass="folderId" value="{!folderId}" style="display:none;" />
+                        
+                        <apex:actionFunction reRender="pnlForTable" name="loadFilesInDataTable" action="{!loadFilesInDataTable}"
+                            oncomplete="loadDataTable();" />
+                        <apex:actionFunction status="fetching" reRender="pnlMsg" name="saveFiles" action="{!saveFiles}"
+                            oncomplete="hideStatus();" />
+                        <apex:actionFunction status="fetching" name="updateFileType" action="{!updateDepFileType}" reRender="pnlMsg,uploadFiles" >
+                            <apex:param assignTo="{!selectedDepFileIndex}" value="" name="selectedFileIndex" />
+                        </apex:actionFunction>
+                        <div class="listRelatedObject Custom16Block" id="GoogleFiles">
+                            <div class="load-status" style="margin-left: 35%;">
+                                <div class="popupBackground" layout="block" />
+                                <div class="status">
+                                    <img src="/img/loading24.gif" />
+                                    <span>Please Wait Loading Files...</span>
+                                </div>
+                            </div>
+                            <div style="{!if(readonly, 'display:none;','')}">
+                            <div class="bPageBlock brandSecondaryBrd secondaryPalette pbGoogleFiles" style="display:none;">
+                                <div class="pbHeader">
+                                    <table border="0" cellpadding="0" cellspacing="0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="pbTitle">
+                                                    <!--<img alt="Google Drive" class="gimg timg" src="/img/icon/contentHubGDrive_16.png" style="float: left;margin-right: 1%;"/>-->
+                                                    <apex:outputLabel >
+                                                        Please upload all files for this {!LOWER(depositionRec.Event_Type_Lowercase__c)}
+                                                        such as transcripts, exhibits
+                                                        or videos.
+                                                    </apex:outputLabel>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pbBody" style="padding:1em;">
+                                    <br/>
+                                    <span id="filesLoadStatus" style="display: none;">
+                                        <span id="filesLoadStatus:tstpopup"><div id="j_id0:frm:j_id15" class="popupBackground"></div>
+                                            <div id="filesLoadStatus:popup" class="custPopup"> 
+                                                <img class="timg" src="/img/loading24.gif" style="vertical-align:middle; horizontal-align:middle" /> 
+                                                <span>Please wait...</span>
+                                            </div>
+                                        </span>
+                                    </span>
+                                    <table border="0" width="100%">
+                                        <tr>
+                                            <td width="25%">
+                                                <b style="float:left;margin: 2%;">Select File :</b>
+                                                <input style="float:left;" id="file" class="file" type="file" name="files" multiple="true"
+                                                />
+                                                <br/><br/>
+                                                <button onclick="upload_image();return false;" style="min-width: 141px;margin-top: 5%;"
+                                                    class="ui-button ui-widget  ui-corner-all ui-button-text-only"
+                                                    role="button"><span class="ui-button-text">Start Upload</span></button>
+                                            </td>
+                                            <td>
+                                                <div id="drop_zone" style="width:60%;">Drag and Drop Your Files Here</div>
+                                                <div class="uploadBox" style="border: 0px solid #F8f8f8;"></div>
+                                                <br/>
+                                                <div id="results" style="font-weight:bold;font-size: 20px;color:#00335B;"></div>
+                                                <br/>
+                                                <div class="dragAndDropTargetDiv" id="dragAndDropTargetDiv" style="display: none;">
+                                                    <div class="dragAndDropTargetImg"></div>
+                                                    <div class="dragAndDropTargetTextDiv">Drag and Drop Files Here</div>
+                                                </div>
+                                                <br/>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <apex:outputPanel id="uploadFiles">
+                                        <table id="table" class="display list uploadFiles" cellspacing="0" width="100%"
+                                            style="{!if(listFiles.size==0, 'display: none;','')}">
+                                            <thead>
+                                                <tr class="headerRow">
+                                                    <!--<th class="headerRow">Action</th>-->
+                                                    <th class="headerRow">Action</th>
+                                                    <th class="headerRow">Title</th>
+                                                    <th class="headerRow">File Type</th>
+                                                    <!--<th class="headerRow">Uploaded By</th>-->
+                                                    <!--<th class="headerRow">Upload Date</th>-->
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableBEmailody">
+                                                <apex:variable var="rawIndex" value="{!0}" />
+                                                <apex:repeat value="{!listFiles}" var="S3File">
+                                                    <tr class="dataRow " onmouseover="if (window.hiOn){hiOn(this);}" 
+                                                        onmouseout="if (window.hiOff){hiOff(this);}"
+                                                        onblur="if (window.hiOff){hiOff(this);}"
+                                                        onfocus="if (window.hiOn){hiOn(this);}">
+                                                        <td class="dataCell ">
+                                                            <a onclick="jsRemoveFile('{!S3File.awsS3Obj.Id}','{!rawIndex}','1');return false;">Remove File</a>
+                                                        </td>
+                                                        <td class="dataCell ">
+                                                            {!S3File.awsS3Obj.File_Name__c}
+                                                        </td>
+                                                        <!--<td class="dataCell ">{!S3File.OwnerName}</td>-->
+                                                        <!--<td class="dataCell ">-->
+                                                        <!--    <apex:outputText value="{0,date,MM'/'dd'/'yyyy h:mm a}">-->
+                                                        <!--        <apex:param value="{!S3File.UploadedDate}" />-->
+                                                        <!--    </apex:outputText>-->
+                                                        <!--</td>-->
+                                                        <td class="dataCell ">
+                                                            <apex:inputField onchange="updateFileType({!rawIndex});return false;"
+                                                                             value="{!S3File.awsS3Obj.File_Type__c}" />
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <apex:variable var="rawIndex" value="{!rawIndex+1}" />
+                                                </apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+                                </div>
+                                <div class="pbFooter secondaryPalette">
+                                    <div class="bg"></div>
+                                </div>
+                                <div id="dialog-confirm" title="Cancel Upload?" style="display:none;">
+                                    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You
+                                        have uploads that have not been completed
+                                        yet. Do you want to cancel the remaining
+                                        uploads?</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </apex:pageblock>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!if(pageNo==2,true,false)}">
+                    <!--{!curUserRole}--->
+                    <apex:actionFunction name="updateFileType" action="{!updateDepFileType}" reRender="pnlMsg,turnin2"
+                        oncomplete="j$('#filesLoadStatus').hide();">
+                        <apex:param assignTo="{!selectedDepFileIndex}" value="" name="selectedFileIndex" />
+                    </apex:actionFunction>
+
+                    <apex:pageblock mode="edit" title="Deposition Detail">
+                        <apex:pageBlockSection id="turnin2">
+                            
+                            <!--<apex:inputField value="{!depositionRec.Transcript_page_count__c}" -->
+                            <!--    rendered="{!AND( curUserRole == 'Court Reporter')}}" -->
+                            <!--    onkeydown="return runScriptInteger(event, this);" />-->
+                            
+                            <!--<apex:outputField value="{!depositionRec.Transcript_page_count__c}" -->
+                            <!--    rendered="{!AND(curUserRole == 'Court Reporter',readonly)} "  />-->
+                            
+                            <!--<apex:inputField value="{!depositionRec.Exhibit_Page_Count__c}" -->
+                            <!--    rendered="{!AND(curUserRole == 'Court Reporter')}}" -->
+                            <!--    onkeydown="return runScriptInteger(event, this);" />-->
+                            <!--<apex:outputField value="{!depositionRec.Exhibit_Page_Count__c}" -->
+                            <!--    rendered="{!AND(curUserRole == 'Court Reporter',readonly)} "  />-->
+                            
+                            
+                            <!--<apex:inputField value="{!depositionRec.Errata_Needed__c}" -->
+                            <!--    rendered="{!AND(curUserRole == 'Court Reporter', !readonly)}}"  />-->
+                            <!--<apex:outputField value="{!depositionRec.Errata_Needed__c}" -->
+                            <!--    rendered="{!AND(curUserRole == 'Court Reporter',readonly)} "  />-->
+                            
+                            <!--<apex:pageBlockSectionItem rendered="{!curUserRole == 'Court Reporter'}" >-->
+                            <!--    <apex:outputPanel >-->
+                            <!--        <apex:outputLabel value="Read & Sign (Errata) Instructions" />-->
+                            <!--    </apex:outputPanel>-->
+                            <!--    <apex:outputPanel >-->
+                            <!--        <apex:inputField value="{!depositionRec.Errata_Notes__c}" -->
+                            <!--            rendered="{!!readonly}" />-->
+                            <!--        <apex:outputField value="{!depositionRec.Errata_Notes__c}" -->
+                            <!--            rendered="{!readonly}" />-->
+                            <!--    </apex:outputPanel>-->
+                            <!--</apex:pageBlockSectionItem>-->
+                            <!--<apex:input value="{!depStartTime}" type="time" label="Start Time" -->
+                            <!--    rendered="{! !readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}" />-->
+                            
+                            <!--<apex:pageBlockSectionItem rendered="{!readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}">-->
+                            <!--    <apex:outputLabel value="Start Time" styleClass="label-bold" />-->
+                            <!--    <apex:outputText value="{!if(depStartTime!=null, Left(TEXT(depStartTime),8),'')}" />-->
+                            <!--</apex:pageBlockSectionItem>-->
+                            <!--<apex:input value="{!depEndTime}" type="time" label="End Time"-->
+                            <!--    rendered="{! !readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}" />-->
+                            
+                            <!--<apex:pageBlockSectionItem rendered="{!readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}">-->
+                            <!--    <apex:outputLabel value="End Time" styleClass="label-bold" />-->
+                            <!--    <apex:outputText value="{!if(depEndTime!=null, Left(TEXT(depEndTime),8),'')}" />-->
+                            <!--</apex:pageBlockSectionItem>-->
+                            
+                            
+                            
+                            <apex:inputField value="{!depositionRec.Transcript_page_count__c}" 
+                                rendered="{!AND(curUserRole == 'Court Reporter', !readonly)}" 
+                                onkeydown="return runScriptInteger(event, this);" />
+                            <apex:pageBlockSectionItem rendered="{!AND(curUserRole == 'Court Reporter', readonly)}" >
+                                <apex:outputPanel >
+                                     {!$ObjectType.Deposition__c.fields.Transcript_page_count__c.Label}
+                                </apex:outputPanel>
+                                <apex:outputPanel >
+                                    {!depositionRec.Transcript_page_count__c}
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                                
+                            <apex:inputField value="{!depositionRec.Exhibit_Page_Count__c}" 
+                                rendered="{!AND(curUserRole == 'Court Reporter', !readonly)}" 
+                                onkeydown="return runScriptInteger(event, this);" />
+                            <apex:pageBlockSectionItem rendered="{!AND(curUserRole == 'Court Reporter', readonly)}" >
+                                <apex:outputPanel >
+                                     {!$ObjectType.Deposition__c.fields.Exhibit_Page_Count__c.Label}
+                                </apex:outputPanel>
+                                <apex:outputPanel >
+                                    {!depositionRec.Exhibit_Page_Count__c}
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:inputField value="{!depositionRec.Errata_Needed__c}" 
+                                rendered="{!AND(curUserRole == 'Court Reporter', !readonly)}" />
+                            
+                            <apex:pageBlockSectionItem rendered="{!AND(curUserRole == 'Court Reporter',readonly)}" >
+                                <apex:outputPanel >
+                                     {!$ObjectType.Deposition__c.fields.Errata_Needed__c.Label}
+                                </apex:outputPanel>
+                                <apex:outputPanel >
+                                    {!if(depositionRec.Errata_Needed__c, 'Checked', 'Unchecked')}
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                                
+                            <apex:pageBlockSectionItem rendered="{!curUserRole == 'Court Reporter'}" >
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Read & Sign (Errata) Instructions" styleClass="{!if(readonly,'label-bold','')}" />
+                                </apex:outputPanel>
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!depositionRec.Errata_Notes__c}" rendered="{!!readonly}"/>
+                                    <apex:outputField value="{!depositionRec.Errata_Notes__c}" 
+                                        rendered="{!readonly}"/>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            
+                            <!--<apex:input value="{!depStartTime}" type="time" label="Start Time" rendered="{!curUserRole == 'Court Reporter'}" />-->
+                            <!--<apex:inputField value="{!depositionRec.Start_Time__c}" showDatePicker="false" rendered="{!curUserRole == 'Court Reporter'}" />-->
+                            <!--<apex:pageBlockSectionItem rendered="{!curUserRole == 'Court Reporter'}">-->
+                            <!--    <apex:outputLabel value="End Time" />-->
+                            <!--    <apex:inputField value="{!depositionRec.Stop_Time__c}" />-->
+                            <!--</apex:pageBlockSectionItem>-->
+
+                            <!--<apex:inputField value="{!depositionRec.Start_Time__c}" showDatePicker="false" rendered="{!curUserRole == 'Videographer/Technician'}" />-->
+                            <!--<apex:inputField value="{!depositionRec.Starts_Time__c}"/>-->
+                            <apex:input value="{!depStartTime}" type="time" label="Start Time" 
+                                rendered="{! !readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}" />
+                            
+                            <apex:pageBlockSectionItem rendered="{!readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}">
+                                <apex:outputLabel value="Start Time" styleClass="label-bold" />
+                                <apex:outputText value="{!if(depStartTime!=null, Left(TEXT(depStartTime),8),'')}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:input value="{!depEndTime}" type="time" label="End Time"
+                                rendered="{! !readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}" />
+                            
+                            <apex:pageBlockSectionItem rendered="{!readonly && OR(curUserRole == 'Videographer/Technician',curUserRole == 'Court Reporter')}">
+                                <apex:outputLabel value="End Time" styleClass="label-bold" />
+                                <apex:outputText value="{!if(depEndTime!=null, Left(TEXT(depEndTime),8),'')}" />
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                        <apex:pageblockbuttons >
+                            <input type="button" class="btn" value="Back" onclick="jsBackStep();" />
+                            <input type="button" class="btn" value="Next" onclick="jsnextStep();" />
+                        </apex:pageblockbuttons>
+                        <apex:pageBlockSection id="pnlForTable" title="File details" columns="1" rendered="false">
+                            <apex:outputPanel rendered="{!AND(lstFiles!=NULL,lstFiles.size>0)}">
+                                <apex:variable var="counter" value="{!0}" />
+                                <span id="filesLoadStatus" style="display: none;">
+                                    <span id="filesLoadStatus:tstpopup"><div id="j_id0:frm:j_id15" class="popupBackground"></div>
+                                        <div id="filesLoadStatus:popup" class="custPopup"> 
+                                            <img class="timg" src="/img/loading24.gif" style="vertical-align:middle; horizontal-align:middle" /> 
+                                            <span>Please wait...</span>
+                                        </div>
+                                    </span>
+                                </span>
+
+                                <table id="table" class="display list uploadFiles" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr class="headerRow">
+                                            <!--<th class="headerRow">Action</th>-->
+                                            <th class="headerRow">File Type</th>
+                                            <th class="headerRow">Title</th>
+                                            <th class="headerRow">Notes</th>
+                                            <th class="headerRow">Uploaded By</th>
+                                            <th class="headerRow">Upload Date</th>
+                                        </tr>
+                                    </thead>
+                                    <!--<tfoot>-->
+                                    <!--    <tr>-->
+                                    <!--        <th>Action</th>-->
+                                    <!--        <th>File Type</th>-->
+                                    <!--        <th>Title</th>-->
+                                    <!--        <th>Notes</th>-->
+                                    <!--        <th>Uploaded By</th>-->
+                                    <!--        <th>Upload Date</th>-->
+
+                                    <!--    </tr>-->
+                                    <!--</tfoot>-->
+                                    <tbody id="tableBEmailody">
+                                        <apex:repeat value="{!lstFiles}" var="S3File">
+                                            <tr class="dataRow " onmouseover="if (window.hiOn){hiOn(this);}" 
+                                                onmouseout="if (window.hiOff){hiOff(this);}"
+                                                onblur="if (window.hiOff){hiOff(this);}"
+                                                onfocus="if (window.hiOn){hiOn(this);}">
+                                                <!--<td class="dataCell ">-->
+                                                <!--    <a href="/apex/FileDetail?id={!S3File.awsS3Obj.id}" target="_blank">Info</a>-->
+                                                <!--</td>-->
+                                                <!--<td class="dataCell ">-->
+                                                <!--    <a onclick="jsRemoveFile('{!S3File.awsS3Obj.Id}','{!counter}','2');return false;">Remove File</a>-->
+                                                <!--</td>-->
+                                                <td class="dataCell ">
+                                                    <apex:inputField onchange="j$('#filesLoadStatus').show();updateFileType({!counter});"
+                                                        value="{!S3File.awsS3Obj.File_Type__c}" />
+                                                    <apex:variable var="counter" value="{!counter+1}" />
+                                                </td>
+                                                <td class="dataCell ">
+                                                    <a href="/apex/SecureDownload?id={!S3File.awsS3Obj.id}" 
+                                                        target="_blank">{!S3File.awsS3Obj.File_Name__c}</a>
+                                                </td>
+                                                <td class="dataCell ">
+                                                    <img title="{!S3File.awsS3Obj.Note__c}"
+                                                        src="{!IF(S3File.awsS3Obj.Note__c != NULL && S3File.awsS3Obj.Note__c !='' ,'/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}"
+                                                        alt="Checked" width="21" height="16"
+                                                        class="checkImg timg" />
+                                                </td>
+                                                <td class="dataCell ">{!S3File.OwnerName}</td>
+                                                <td class="dataCell ">
+                                                    <apex:outputText value="{0,date,MM'/'dd'/'yyyy h:mm a}">
+                                                        <apex:param value="{!S3File.UploadedDate}" />
+                                                    </apex:outputText>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!OR(lstFiles==NULL,lstFiles.size == 0)}">
+                                No file found!
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                        <!--<apex:pageblocksection title="Attendee(s) Detail" showheader="true" columns="2" rendered="{!curUserAttendee!=NULL}">-->
+                        <!--    <apex:inputField value="{!curUserAttendee.Notes__c}" />-->
+                        <!--</apex:pageblocksection>-->
+                    </apex:pageblock>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!if(pageNo==3,true,false)}">
+                    <apex:actionFunction name="cancelNewAttendee" action="{!onCancelNewAttendee}" status="fetching" reRender="turnin3" />
+                    <apex:actionFunction name="searchAttByEmail" action="{!onSearch}" status="fetching" reRender="turnin3" />
+                    <apex:actionFunction name="jsCancelSearch" action="{!onCancelSearch}" status="fetching" reRender="turnin3" />
+                    <apex:variable var="derpService" 
+                        value="{!IF(ISNULL(depositionRec.Deposition_Services__c),' ',LOWER(depositionRec.Deposition_Services__c))}" />
+                    <apex:pageBlock id="turnin3" title="Deposition Detail">
+                        <apex:pageblockbuttons >
+                            <input type="button" class="btn" value="Back" onclick="jsBackStep();" />
+                            <input type="button" class="btn" value="Next" onclick="jsnextStep();" 
+                                style="{!if(readonly, 'display:none;','')}"/>
+                        </apex:pageblockbuttons>
+                        <apex:pageblocksection title="Attendee(s) Detail" showheader="false" columns="2" rendered="{!curUserAttendee!=NULL}">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel >
+
+                                        <apex:outputLabel value="Billing Notes" styleClass="label-bold" />
+                                        <br/>
+                                    <apex:outputText rendered="{!OR(contains(LOWER(curUserRole),'technician'), contains(LOWER(curUserRole),'videographer'))}"
+                                                     escape="true">
+                                        <label>
+                                            Please let us know any orders placed by our clients including DVDs, MP4 files, digital access to videos, etc.
+                                        </label>
+                                    </apex:outputText>
+
+                                </apex:outputPanel>
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!curUserAttendee.Notes__c}"
+                                        rendered="{!!readonly}"/>
+                                    <apex:outputField value="{!curUserAttendee.Notes__c}" 
+                                        rendered="{!readonly}"/>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel >
+                                    <apex:outputLabel value="Exhibit Shipping Detail" styleClass="label-bold" />
+                                    <br/>
+                                    <apex:outputLabel value="Let us know how exhibits will be shipped to us, scanned, etc. Please include tracking numbers and any relevant dates"
+                                    />
+                                </apex:outputPanel>
+                                <apex:outputPanel >
+                                    <apex:inputField value="{!curUserAttendee.Shipping_Notes__c}"
+                                        rendered="{!!readonly}"/>
+                                    <apex:outputField value="{!curUserAttendee.Shipping_Notes__c}" 
+                                        rendered="{!readonly}"/>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageblocksection>
+                        
+                        <apex:pageBlockSection columns="1" id="attendTable" collapsible="false" title="Attendee(s) ">
+                            <apex:pageblockTable value="{!attendeeWrapperList}" var="attende" id="attendTable1"
+                                rendered="{!attendeeWrapperList.size>0}">
+                                <apex:column headerValue="Action">
+                                    <center>
+                                        <a href="javascript:void(0)" onclick="jsremoveRow({!attende.index});">X</a>
+                                    </center>
+                                </apex:column>
+                                <apex:column headerValue="Contact" styleClass="p-around">
+                                    <apex:inputField value="{!attende.atten.Contact__c}" onchange="jssetFirmName({!attende.index});return false;" 
+                                        rendered="{!!readonly}"/>
+                                    <apex:outputText value="{!attende.atten.Contact__r.Name}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+                                <apex:column headerValue="Firm">
+                                    <apex:outputtext value="{!attende.firmName}" /><br/>
+                                </apex:column>
+                                <apex:column headerValue="Original Transcript Recipient" rendered="{!AND(!NoTranscript,curUserRole!='Videographer/Technician') }">
+                                    <apex:inputCheckbox value="{!attende.atten.Primary_Attorney__c}" onchange="onPrimaryAlChange('{!attende.atten.Id}');"
+                                        styleClass="primAlt {!attende.atten.Id}" rendered="{!!readonly}"/>
+                                    <apex:outputText value="{!if(attende.atten.Primary_Attorney__c, 'Checked', 'Unchecked')}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+
+                                <apex:column headerValue="Transcript Order" rendered="{!AND(!NoTranscript,curUserRole!='Videographer/Technician') }">
+                                    <!--<apex:inputField value="{!attende.atten.Deposition_Services__c}" />-->
+                                    <apex:inputCheckbox value="{!attende.transcriptOrder}" rendered="{!!readonly}"/>
+                                    <apex:outputText value="{!if(attende.transcriptOrder, 'Checked', 'Unchecked')}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+                                <apex:column headerValue="Video Order" rendered="{!CONTAINS(derpService,'traditional video')}">
+                                    <!--OR(CONTAINS(derpService,'traditional video'), CONTAINS(derpService,'legalview'))-->
+                                    <apex:inputcheckbox value="{!attende.videoOrder}" rendered="{!!readonly}"/>
+                                    <apex:outputText value="{!if(attende.videoOrder, 'Checked', 'Unchecked')}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+                                <apex:column headerValue="Realtime Order" rendered="{!(AND( CONTAINS(derpService,'realtime'), curUserRole!='Videographer/Technician'))}">
+                                    <apex:inputcheckbox value="{!attende.realtimeOrder}" rendered="{!!readonly}"/>
+                                    <apex:outputText value="{!if(attende.realtimeOrder, 'Checked', 'Unchecked')}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+                                <apex:column headerValue="Rough Draft" rendered="{!AND(!NoTranscript,CONTAINS(derpService,'rough draft'))}">
+                                    <apex:inputcheckbox value="{!attende.roughDraft}" rendered="{!!readonly}"/>
+                                    <apex:outputText value="{!if(attende.roughDraft, 'Checked', 'Unchecked')}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+                                <!--<apex:column headerValue="Synchronized Video" rendered="{!(CONTAINS(derpService,'synchronized video'))}">-->
+                                <!--    <apex:inputcheckbox value="{!attende.syncVideo}" /><br/>-->
+                                <!--</apex:column>-->
+                                <apex:column headerValue="Expedite" rendered="{!AND(!NoTranscript,CONTAINS(derpService,'expedite'))}">
+                                    <apex:inputcheckbox value="{!attende.expedite}" rendered="{!!readonly}"/>
+                                    <apex:outputText value="{!if(attende.expedite, 'Checked', 'Unchecked')}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+                                <apex:column headerValue="Expedite level" rendered="{!AND(!NoTranscript,CONTAINS(derpService,'expedite'))}">
+                                    <apex:inputField value="{!attende.atten.Expedite_Level__c}" rendered="{!!readonly}"/>
+                                    <apex:outputField value="{!attende.atten.Expedite_Level__c}" 
+                                        rendered="{!readonly}"/>
+                                </apex:column>
+                            </apex:pageblockTable>
+                            <apex:outputLabel value="No copy parties found!" rendered="{!attendeeWrapperList.size ==0 }" />
+                            <apex:outputPanel rendered="{!!readonly}">
+                                <!--<apex:commandButton value="Add New Copy Party" action="{!onAddCopyParty}" status="fetching" reRender="turnin3" />-->
+                                <apex:commandButton value="Add New Copy Party" action="{!onSearchEnable}" status="fetching" reRender="turnin3" />
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!addNewAttendee}">
+                                <apex:pageMessages id="newAttMsg" />
+                                <apex:pageBlock >
+                                    <apex:pageBlockButtons location="bottom">
+                                        <apex:commandButton value="Save" action="{!onNewAttendee}" status="fetching" reRender="newAttMsg,msgs, turnin3" />
+                                        <apex:commandButton value="Cancel" onclick="cancelNewAttendee();return false;" status="fetching"
+                                            reRender="turnin3" />
+                                    </apex:pageBlockButtons>
+                                    <apex:pageBlockSection >
+                                        <apex:inputText label="First Name" value="{!conInput.firstName}" onkeydown="return runScriptHandleContactEnter(event);"/>
+                                        <apex:inputText label="Last Name" value="{!conInput.lastName}" required="false" onkeydown="return runScriptHandleContactEnter(event);"/>
+                                        <!--<apex:inputField value="{!newContact.Email}" />-->
+                                        <!--<apex:pageBlockSectionItem >-->
+                                        <!--    <apex:outputLabel value="Email" />-->
+                                        <!--    <apex:outputPanel >-->
+                                        <!--        {!conInput.email}-->
+                                        <!--    </apex:outputPanel>-->
+                                        <!--</apex:pageBlockSectionItem>-->
+                                        <apex:inputText label="Email" value="{!conInput.email}" onkeydown="return runScriptHandleContactEnter(event);"/>
+                                        <!--<apex:selectList value="{!newContact.AccountId}" label="Account" size="1">-->
+                                        <!--    <apex:selectOptions value="{!accounts}" />-->
+                                        <!--</apex:selectList>-->
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputLabel value="Law Firm" />
+                                            <apex:outputPanel styleClass="customLookup">
+                                                <!--<div class="CustomRequiredDiv" />-->
+                                                <apex:inputHidden id="accountid" value="{!conInput.AccountId}" />
+                                                <apex:inputText id="accName"  onkeydown="return runScriptHandleContactEnter(event);"/>
+                                                <a href="javascript: openCustomPopupAccount('{!$Component.accName}','{!$Component.accountid}');" 
+                                                   id="con4_lkwgt" onclick="setLastMousePosition(event)" tabindex="6" title="Account Lookup (New Window)"
+                                                   class="customLookupLink">
+                                                    <img src="/s.gif" alt="Account Lookup (New Window)" class="lookupIcon" onblur="this.className = 'lookupIcon';" 
+                                                         onfocus="this.className = 'lookupIconOn';" onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';" 
+                                                         onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';" title="Account Lookup (New Window)" />
+                                                </a>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSectionItem>
+                                        <!--<apex:inputField value="{!newContact.AccountId} " />-->
+                                        <apex:inputText label="Phone" value="{!conInput.phone}" onkeydown="return runScriptHandleContactEnter(event);"/>
+                                        <apex:inputText label="Mobile Phone" value="{!conInput.mPhone}" onkeydown="return runScriptHandleContactEnter(event);"/>
+                                    </apex:pageBlockSection>
+                                </apex:pageBlock>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!isSearchAttendee}" id="searchAtt">
+                                <apex:pageBlock id="searchPb">
+                                    <apex:pageMessages rendered="{!NOT(addNewAttendee)}"/>
+                                    <apex:pageBlockButtons >
+                                        <apex:commandButton value="Save" action="{!onSaveSearch}" status="fetching"
+                                            reRender="turnin3" />
+                                        <apex:commandButton value="Cancel" onclick="cancelSearch();return false;" />
+                                    </apex:pageBlockButtons>
+                                    <apex:pageBlockSection columns="1" id="searchAttPbs">
+                                        <apex:pageBlockSectionItem id="searchAttPbsItem">
+                                            <apex:outputPanel >
+                                                <apex:commandButton value="Search by email" onclick="searchByEmail();return false;" status="fetching"
+                                                    reRender="turnin3" rendered="{!AND(isSearchAttendee,NOT(addNewAttendee))}" /> &nbsp; &nbsp; &nbsp;
+                                                <apex:outputLabel value="Email" rendered="{!AND(isSearchAttendee,NOT(addNewAttendee))}"/>
+                                                <apex:inputText value="{!conInput.email}" id="email" rendered="{!AND(isSearchAttendee,NOT(addNewAttendee))}"
+                                                    onkeydown="return runScriptHandleEnter(event);"/>
+                                                <apex:outputLabel value="Patry(s) with Email:" rendered="{!AND(addNewAttendee,isSearchAttendee)}"/>
+                                                <apex:outputText value="{!conInput.Email}" id="emails" rendered="{!AND(addNewAttendee,isSearchAttendee)}"/>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSectionItem>
+                                    </apex:pageBlockSection>
+                                    <apex:outputPanel style="width:90vw;max-height:350px; overflow:scroll" layout="block" 
+                                        rendered="{!isAlreadyMember}">
+                                        {!partyAddedMsg}
+                                    </apex:outputPanel>
+                                    <apex:outputPanel id="searchResults" style="width:90vw;max-height:350px; overflow:scroll" layout="block" 
+                                        rendered="{!searchContacts.size>0 && !isAlreadyMember}">
+                                        <table class="list" border="0" cellpadding="0" cellspacing="0">
+                                            <thead >
+                                                <tr class="headerRow">
+                                                    <th class="headerRow" >
+                                                        <apex:outputLabel value="Select" />
+                                                    </th>                                
+                                                    <th class="headerRow">
+                                                        Name
+                                                    </th>    
+                                                    <th class="headerRow">
+                                                        Firm Name
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody >
+                                                <apex:repeat value="{!searchContacts}" var="searchContact">
+                                                    <tr class="dataRow "
+                                                        onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" >
+                                                        
+                                                       <td class="dataCell" > 
+                                                             <apex:inputCheckbox value="{!searchContact.isSelect}" 
+                                                                disabled="{!searchContact.isAdded}" title="{!if(searchContact.isAdded, 'Party is connected with Deposition!','')}"/>
+                                                        </td>
+                                                        <td class="dataCell"> 
+                                                            {!searchContact.con.Name}
+                                                        </td>    
+                                                        <td class="dataCell" >
+                                                            {!searchContact.con.Account.Name}
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                            </tbody>
+                                        </table>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel style="width:90vw;max-height:350px; overflow:scroll" layout="block" 
+                                        rendered="{!searchContacts.size==0 && NOT(ISNULL(conInput.email))}">
+                                        {!if(isAlreadyMember,'','No party found with email!')}
+                                    </apex:outputPanel>
+                                    
+                                    <apex:outputPanel >
+                                        <script>
+                                            function searchByEmail(){
+                                                var eleId = '{!$Component.frm.turnin3.attendTable.searchPb.searchAttPbs.searchAttPbsItem.email}';
+                                                var element = document.getElementById(eleId);
+                                                if(element ){
+                                                    if(element.value ===''){
+                                                        alert('Please specify email!');
+                                                        return;
+                                                    }
+                                                    searchAttByEmail();
+                                                }
+                                            }
+                                        </script>
+                                    </apex:outputPanel>
+                                </apex:pageBlock>
+                                
+                                
+                                
+                                
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                        <!--<apex:pageblocksection title="Attendee(s) Detail" showheader="false" columns="2" rendered="{!curUserAttendee!=NULL}">-->
+                        <!--    <apex:inputField value="{!curUserAttendee.Notes__c}" />-->
+                        <!--</apex:pageblocksection>-->
+                        <!--<apex:pageblocksection title="Shipping Detail" rendered="{!curUserAttendee!=NULL}">-->
+                        <!--    <apex:inputField value="{!curUserAttendee.Shipping_Notes__c}" />-->
+                        <!--</apex:pageblocksection>-->
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!if(pageNo==4,true,false)}" id="turnin4" styleClass="turnin4sec">
+                    <apex:pageBlock id="turnin4pb" >
+                        <apex:pageblockbuttons rendered="{!!isInvoiced}">
+                            <input type="button" class="btn" value="Back" onclick="jsBackStep();" />
+                            <apex:commandButton value="Add Additional Witness On This Job" status="fetching" action="{!onAddAdditional}"
+                                disabled="{!isInvoiced}" reRender="mainPanel" />
+                            <apex:commandButton value="Submit" action="{!onSubmit}" status="fetching" reRender="mainPanel"
+                                disabled="{!isInvoiced}" />
+                        </apex:pageblockbuttons>
+                        <apex:pageblockbuttons rendered="{!isInvoiced}">
+                            <input type="button" class="btn" value="Return to Main Page" onclick="jsBackToPoratl();" />
+                        </apex:pageblockbuttons>
+                        <apex:pageBlockSection columns="1" id="pbsec">
+                            <apex:outputPanel rendered="{!!isrtItemsWithType}">
+                                Items are not available!
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!isrtItemsWithType}" styleClass="rtitems">
+                                <apex:pageBlockSection title="Item(s) List" columns="1" id="items" showHeader="false">
+                                    <apex:outputPanel rendered="{!curUserRole == 'Court Reporter'}">
+                                        
+                                        <!--<apex:pageBlockSection title="Transcripts" columns="1" rendered="{!isrtItemsPrimary || isrtItemsOther}">-->
+                                            
+                                        <!--</apex:pageBlockSection>-->
+                                        
+                                        <apex:pageBlockSection title="Primary Attorney Transcript" columns="1" rendered="{!isrtItemsPrimary}">
+                                            <apex:outputPanel styleClass="att-name-table">
+                                                <!--rendered="{!isrtItemsPrimary}" -->
+                                                <apex:pageBlockTable value="{!rtItemsWithType['Primary Transcript']}" var="rtItem">
+                                                    <apex:column headerValue="Attorney Name" styleClass="{!if(showExpeditePrimary, '','col-5')}" >
+                                                        <apex:outputText value="{!rtItem.attorneyName}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Item Description" styleClass="{!if(showExpeditePrimary, '','col-5')}" >
+                                                        <apex:outputText value="{!rtItem.rtItemDescription}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Invoice Text" styleClass="{!if(showExpeditePrimary, '','col-5')}" >
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Invoice_Text__c}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Your Pay Rate" styleClass="{!if(showExpeditePrimary, '','col-5')}" >
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Price__c}" />&nbsp;<apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Expedite Surcharge" styleClass="col-5" 
+                                                        rendered="{!showExpeditePrimary}">
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Modification__c}" />
+                                                    </apex:column>
+                                                    <!--<apex:column headerValue="Units of Measure">-->
+                                                        
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Quantity" styleClass="{!if(showExpeditePrimary, '','col-5')}" >
+                                                        <!--<apex:outputField value="{!rtItem.invoiceItem.Quantity__c}" />-->
+                                                        {!rtItem.quantity}
+                                                    </apex:column>
+                                                </apex:pageBlockTable>
+                                            </apex:outputPanel>
+                                            <!-- no need to show-->
+                                            <!--<apex:outputPanel rendered="{!!isrtItemsPrimary}">-->
+                                            <!--    Primary Attorney Items are not available!-->
+                                            <!--</apex:outputPanel>-->
+                                        </apex:pageBlockSection>
+                                        <apex:pageBlockSection title="Copy Party Transcript(s)" columns="1" rendered="{!isrtItemsOther}">
+                                            <!-- no need to show-->
+                                            <!--<apex:outputPanel rendered="{!!isrtItemsOther}">-->
+                                            <!--    Copy Party Transcript(s) are not available!-->
+                                            <!--</apex:outputPanel>-->
+                                            <apex:outputPanel styleClass="att-name-table">
+                                                <!--rendered="{!isrtItemsOther}" -->
+                                                <apex:pageBlockTable value="{!rtItemsWithType['Other Transcript']}" var="rtItem">
+                                                    <apex:column headerValue="Attorney Name" styleClass="{!if(showExpediteCopy, '','col-5')}" >
+                                                        <apex:outputText value="{!rtItem.attorneyName}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Item Description" styleClass="{!if(showExpediteCopy, '','col-5')}" >
+                                                        <apex:outputText value="{!rtItem.rtItemDescription}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Invoice Text" styleClass="{!if(showExpediteCopy, '','col-5')}" >
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Invoice_Text__c}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Your Pay Rate" styleClass="{!if(showExpediteCopy, '','col-5')}" >
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Price__c}" />&nbsp;<apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Expedite Surcharge" styleClass="col-5" 
+                                                        rendered="{!showExpediteCopy}">
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Modification__c}" />
+                                                    </apex:column>
+                                                    <!--<apex:column headerValue="Units of Measure">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />-->
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Quantity" styleClass="{!if(showExpediteCopy, '','col-5')}" >
+                                                        <!--<apex:outputField value="{!rtItem.invoiceItem.Quantity__c}" />-->
+                                                        {!rtItem.quantity}
+                                                    </apex:column>
+                                                </apex:pageBlockTable>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSection>
+                                        <apex:pageBlockSection title="Realtime Transcript items" columns="1" rendered="{!isrtItemsReal}">
+                                            <!-- no need to show-->
+                                            <!--<apex:outputPanel rendered="{!!isrtItemsReal}">-->
+                                            <!--    Realtime Transcript Items are not available!-->
+                                            <!--</apex:outputPanel>-->
+                                            <apex:outputPanel rendered="{!isrtItemsReal}">
+                                                <apex:pageBlockTable value="{!rtItemsWithType['Realtime Transcript']}" var="rtItem">
+                                                    <!--<apex:column headerValue="Attorney Name">-->
+                                                    <!--    <apex:outputText value="{!rtItem.attorneyName}" />-->
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Item Description" styleClass="col-4">
+                                                        <apex:outputText value="{!rtItem.rtItemDescription}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Invoice Text" styleClass="col-4">
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Invoice_Text__c}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Your Pay Rate" styleClass="col-4">
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Price__c}" />&nbsp;<apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />
+                                                    </apex:column>
+                                                    <!--<apex:column headerValue="Expedite Surcharge">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Modification__c}" />-->
+                                                    <!--</apex:column>-->
+                                                    <!--<apex:column headerValue="Units of Measure">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />-->
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Quantity" styleClass="col-4">
+                                                        <!--<apex:outputField value="{!rtItem.invoiceItem.Quantity__c}" />-->
+                                                        {!rtItem.quantity}
+                                                    </apex:column>
+                                                </apex:pageBlockTable>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSection>
+                                        <apex:pageBlockSection title="Rough Draft Transcript items" columns="1" rendered="{!isrtItemsRough}">
+                                            <!-- no need to show-->
+                                            <!--<apex:outputPanel rendered="{!!isrtItemsReal}">-->
+                                            <!--    Realtime Transcript Items are not available!-->
+                                            <!--</apex:outputPanel>-->
+                                            <apex:outputPanel rendered="{!isrtItemsRough}">
+                                                <apex:pageBlockTable value="{!rtItemsWithType['Rough Draft Transcript']}" var="rdItem">
+                                                    <!--<apex:column headerValue="Attorney Name">-->
+                                                    <!--    <apex:outputText value="{!rtItem.attorneyName}" />-->
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Item Description" styleClass="col-4">
+                                                        <apex:outputText value="{!rdItem.rtItemDescription}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Invoice Text" styleClass="col-4">
+                                                        <apex:outputField value="{!rdItem.invoiceItem.Invoice_Text__c}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Your Pay Rate" styleClass="col-4">
+                                                        <apex:outputField value="{!rdItem.invoiceItem.Price__c}" />&nbsp;<apex:outputField value="{!rdItem.invoiceItem.Units_of_Measure__c}" />
+                                                    </apex:column>
+                                                    <!--<apex:column headerValue="Expedite Surcharge">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Modification__c}" />-->
+                                                    <!--</apex:column>-->
+                                                    <!--<apex:column headerValue="Units of Measure">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />-->
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Quantity" styleClass="col-4">
+                                                        <!--<apex:outputField value="{!rtItem.invoiceItem.Quantity__c}" />-->
+                                                        {!rdItem.quantity}
+                                                    </apex:column>
+                                                </apex:pageBlockTable>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSection>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!curUserRole == 'Videographer/Technician'}">
+                                        <apex:pageBlockSection title="Traditional Video items" columns="1" rendered="{!isrtItemsTrad}">
+                                            <!-- no need to show-->
+                                            <!--<apex:outputPanel rendered="{!!isrtItemsTrad}">-->
+                                            <!--    Traditional Video Items are not available!-->
+                                            <!--</apex:outputPanel>-->
+                                            <apex:outputPanel rendered="{!isrtItemsTrad}">
+                                                <apex:pageBlockTable value="{!rtItemsWithType['Traditional Video']}" var="rtItem">
+                                                    <!--<apex:column headerValue="Attorney Name">-->
+                                                    <!--    <apex:outputText value="{!rtItem.attorneyName}" />-->
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Item Description" styleClass="col-4">
+                                                        <apex:outputText value="{!rtItem.rtItemDescription}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Invoice Text" styleClass="col-4">
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Invoice_Text__c}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Your Pay Rate" styleClass="col-4">
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Price__c}" />&nbsp;<apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />
+                                                    </apex:column>
+                                                    <!--<apex:column headerValue="Expedite Surcharge">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Modification__c}" />-->
+                                                    <!--</apex:column>-->
+                                                    <!--<apex:column headerValue="Units of Measure">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />-->
+                                                    <!--</apex:column>-->
+                                                    <apex:column headerValue="Quantity" styleClass="col-4">
+                                                        <!--<apex:outputField value="{!rtItem.invoiceItem.Quantity__c}" />-->
+                                                        {!rtItem.invoiceItem.Quantity__c}
+                                                    </apex:column>
+                                                </apex:pageBlockTable>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSection>
+
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!isrtItemsTrans}">
+                                        <apex:pageBlockSection title="Transcript items" columns="1" collapsible="false"
+                                            id="rtItemTransSec">
+                                            <apex:pageBlockTable value="{!rtItemsWithType['Transcript']}" var="rtItem" id="rtItemTransSec">
+                                                <!--<apex:column headerValue="Attorney Name">-->
+                                                <!--    <apex:outputText value="{!rtItem.attorneyName}" />-->
+                                                <!--</apex:column>-->
+                                                <apex:column headerValue="Item Description" styleClass="col-5">
+                                                    <apex:outputText value="{!rtItem.rtItemDescription}" />
+                                                </apex:column>
+                                                <apex:column headerValue="Invoice Text" styleClass="col-5">
+                                                    <apex:outputField value="{!rtItem.invoiceItem.Invoice_Text__c}" />
+                                                </apex:column>
+                                                <apex:column headerValue="Your Pay Rate" id="unitPrice" styleClass="col-5">
+                                                    <apex:outputField value="{!rtItem.invoiceItem.Price__c}" />&nbsp;<apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />
+                                                </apex:column>
+                                                    <apex:column headerValue="Expedite Surcharge" styleClass="col-5">
+                                                        <apex:outputField value="{!rtItem.invoiceItem.Modification__c}" />
+                                                    </apex:column>
+                                                <!--<apex:column headerValue="Units of Measure">-->
+                                                <!--    <apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />-->
+                                                <!--</apex:column>-->
+                                                <apex:column headerValue="Quantity" id="quantity" styleClass="col-5">
+                                                    <!--<apex:inputField value="{!rtItem.invoiceItem.Quantity__c}" rendered="{!AND(rtItem.isQuantityEdit,!isInvoiced)}"-->
+                                                    <!--    onchange="quantityChange();">-->
+                                                    <!--</apex:inputField>-->
+                                                    <!--<apex:outputField value="{!rtItem.invoiceItem.Quantity__c}" rendered="{!OR(!rtItem.isQuantityEdit, isInvoiced)}"-->
+                                                    <!--/>-->
+                                                    <apex:input value="{!rtItem.quantity}" rendered="{!AND(rtItem.isQuantityEdit,!isInvoiced)}"
+                                                        onchange="quantityChange();" onkeydown="return runScriptInteger(event, this);"/>
+                                                    <!--<apex:inputField value="{!rtItem.invoiceItem.Quantity__c}" rendered="{!AND(rtItem.isQuantityEdit,!isInvoiced)}" -->
+                                                    <!--    onchange="quantityChange();" onkeydown="return runScriptDecimal(event, this);"/>-->
+                                                    <apex:outputPanel rendered="{!OR(!rtItem.isQuantityEdit, isInvoiced)}" >
+                                                        {!rtItem.quantity}
+                                                    </apex:outputPanel>
+                                                </apex:column>
+                                            </apex:pageBlockTable>
+                                        </apex:pageBlockSection>
+                                    </apex:outputPanel>
+                                    <apex:repeat value="{!rtItemsWithType}" var="type" id="rep">
+                                        <apex:pageBlockSection title="{!type} items" columns="1" collapsible="false" rendered="{!AND(type!='Other Transcript',type!='Primary Transcript', 
+                                                                type!='Traditional Video', type!='Realtime Transcript', type!='Transcript')}"
+                                            id="rtItemSec">
+                                            <apex:pageBlockTable value="{!rtItemsWithType[type]}" var="rtItem" id="rtItemSecTable">
+                                                <!--<apex:column headerValue="Attorney Name">-->
+                                                <!--    <apex:outputText value="{!rtItem.attorneyName}" />-->
+                                                <!--</apex:column>-->
+                                                <apex:column headerValue="Item Description" styleClass="col-4">
+                                                    <apex:outputText value="{!rtItem.rtItemDescription}" />
+                                                </apex:column>
+                                                <apex:column headerValue="Invoice Text" styleClass="col-4">
+                                                    <apex:outputField value="{!rtItem.invoiceItem.Invoice_Text__c}" />
+                                                </apex:column>
+                                                <apex:column headerValue="Your Pay Rate" id="unitPrice" styleClass="col-4">
+                                                    <apex:outputField value="{!rtItem.invoiceItem.Price__c}" />&nbsp;<apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />
+                                                </apex:column>
+                                                    <!--<apex:column headerValue="Expedite Surcharge" rendered="{!type=='Transcript'}">-->
+                                                    <!--    <apex:outputField value="{!rtItem.invoiceItem.Modification__c}" />-->
+                                                    <!--</apex:column>-->
+                                                <!--<apex:column headerValue="Units of Measure">-->
+                                                <!--    <apex:outputField value="{!rtItem.invoiceItem.Units_of_Measure__c}" />-->
+                                                <!--</apex:column>-->
+                                                <apex:column headerValue="Quantity" id="quantity" styleClass="col-4">
+                                                    <!--<apex:inputField value="{!rtItem.invoiceItem.Quantity__c}" rendered="{!AND(rtItem.isQuantityEdit,!isInvoiced)}"-->
+                                                    <!--    onchange="quantityChange();">-->
+                                                    <!--</apex:inputField>-->
+                                                    <!--<apex:outputField value="{!rtItem.invoiceItem.Quantity__c}" rendered="{!OR(!rtItem.isQuantityEdit, isInvoiced)}"-->
+                                                    <!--/>-->
+                                                    <apex:input value="{!rtItem.quantity}" rendered="{!AND(rtItem.isQuantityEdit,!isInvoiced)}"
+                                                        onchange="quantityChange();" onkeydown="return runScriptInteger(event, this);"/>
+                                                    <!--<apex:inputField value="{!rtItem.invoiceItem.Quantity__c}" rendered="{!AND(rtItem.isQuantityEdit,!isInvoiced)}" -->
+                                                    <!--    onchange="quantityChange();" onkeydown="return runScriptDecimal(event, this);"/>-->
+                                                    <apex:outputPanel rendered="{!OR(!rtItem.isQuantityEdit, isInvoiced)}" >
+                                                        {!rtItem.quantity}
+                                                    </apex:outputPanel>
+                                                </apex:column>
+                                            </apex:pageBlockTable>
+                                        </apex:pageBlockSection>
+                                    </apex:repeat>
+                                </apex:pageBlockSection>
+
+                                <apex:pageBlockSection title="Grand Total" columns="1">
+                                    <table class="list" id="j_id0:j_id6:turnin4:j_id147:j_id192:j_id196" border="0" cellpadding="0"
+                                        cellspacing="0">
+                                        <colgroup span="4"></colgroup>
+                                        <thead class="">
+                                            <tr class="headerRow">
+                                                <!--<th class="headerRow" scope="col" colspan="1" >-->
+                                                <!--    <div >-->
+                                                <!--        Invoice Item Count-->
+                                                <!--    </div>-->
+                                                <!--</th>-->
+                                                <!--<th class="headerRow" scope="col" colspan="1" >-->
+                                                <!--    <div >-->
+                                                <!--        Total Quantity-->
+                                                <!--    </div>-->
+                                                <!--</th>-->
+                                                <th class="headerRow" scope="col" colspan="4">
+                                                    <div>
+                                                        Invoice Amount
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="dataRow even first last" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}"
+                                                onblur="if (window.hiOff){hiOff(this);}"
+                                                onfocus="if (window.hiOn){hiOn(this);}">
+                                                <!--<td class="dataCell" colspan="1">-->
+                                                <!--    {!rtTotal.itemCount}-->
+                                                <!--</td>-->
+                                                <!--<td class="dataCell" colspan="1">-->
+                                                <!--    {!rtTotal.totalQuantity}-->
+                                                <!--</td>-->
+                                                <td class="dataCell" colspan="4">
+                                                    ${!rtTotal.total}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </apex:pageBlockSection>
+                            </apex:outputPanel>
+
+                            <apex:pageblocksection title="Attendee Detail" columns="2" rendered="{!curUserAttendee!=NULL}">
+                                <apex:inputField value="{!curUserAttendee.Notes__c}" label="Billing Notes" rendered="{!!isInvoiced}" />
+                                <apex:outputField value="{!curUserAttendee.Notes__c}" label="Billing Notes" rendered="{!isInvoiced}" />
+                            </apex:pageblocksection>
+                            <apex:pageblocksection title="Attendee(s) Detail" showheader="true" columns="2" rendered="{!curUserAttendee==NULL}">
+                                <apex:outputLabel value="No attendee found!" />
+                            </apex:pageblocksection>
+                        </apex:pageBlockSection>
+                        <apex:pageMessages />
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!!isValidEntry}">
+                    <apex:pageMessage summary="Invalid attempt of page!" severity="warning" strength="3" />
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:form>
+        <!---->
+        <!--<c:CommunityFooter />-->
+        <c:firmFooter firm="{!firm}" />
+        <!---->
+    </body>
+</apex:page>

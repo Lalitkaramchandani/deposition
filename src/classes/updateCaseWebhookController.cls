@@ -1,30 +1,22 @@
 public class updateCaseWebhookController {
-    Public Static final String UPDATE_WEBHOOK = 'UpdateCaseWebhook';
     
     public void init(){
         //Map<String, CaseParser> mapCaseLeads = new Map<String,CaseParser >();
         try{
-            Transient String json = ApexPages.currentpage().getParameters().get('data');
-           // Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+            String json = ApexPages.currentpage().getParameters().get('data');
+            Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
             UpdateAPIResParse parseObj	= UpdateAPIResParse.parse(json);
             if(parseObj.result.Status == 'has_update'){
                 String caseUniCourtId = parseObj.result.case_id;
-                system.debug('caseUniCourtId::: '+caseUniCourtId);
-                if(String.isNotBlank(caseUniCourtId)){
-                    LeadGenCaseUpsertBatch job = new LeadGenCaseUpsertBatch(UPDATE_WEBHOOK,caseUniCourtId);
-                    Database.executeBatch(job,100);
-                }
-                
-               /* HttpRequest req = new HttpRequest();
+                HttpRequest req = new HttpRequest();
                 req.setMethod('GET');
                 req.setEndpoint('https://api.unicourt.com/rest/v1/case/'+caseUniCourtId +'/?token=2a8c48f7019a286dae3ddd7f43a96622a9ccc669');
                 req.setTimeout(60*1000);
                 
                 Http h = new Http();
-                System.debug('Heap Size::: '+Limits.getHeapSize());
-                String resp = h.send(req).getBody();
-                System.debug('Heap Size::: '+Limits.getHeapSize());
-              //  resp = res.getBody();
+                String resp;
+                HttpResponse res = h.send(req);
+                resp = res.getBody();
                 
                 if(resp.indexOf('"case"') !=-1)
                     resp = resp.substring(0,resp.indexOf('"case"')) + '"caseObj"' + resp.substring(resp.indexOf(':{"case_meta"'),resp.length()) ;
@@ -62,7 +54,7 @@ public class updateCaseWebhookController {
                     //CaseLeadCommonRoutine.createDocketEntries(caseIDTokenMap); // update the Docket Entries from Unicourt
                     LeadGenCaseBatch cntrl = new LeadGenCaseBatch(caseIDTokenMap.keyset());
                 	Database.executeBatch(cntrl,100);
-                } */
+                }
             }
             
             if(parseObj.result.Status == 'has_no_update'){

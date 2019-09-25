@@ -1,0 +1,46 @@
+<apex:page controller="OnSiteConfirmationController" showHeader="false" action="{!manitainAttendee}"
+    standardstylesheets="false" cache="false" 
+    sidebar="false">
+    
+    <head>
+        <title>{!firm.Name} | On Site Confirmation</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width"/>
+        <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />
+        <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery-latest.js')}" />
+        <link href="{!URLFOR($Resource.nextgendepositions, 'nextgendepositions/style.css')}" rel="stylesheet" type="text/css"/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
+        <style>
+            .pbHeader table td.pbTitle h2{
+                font-size: larger;
+                font-family: inherit;
+            }
+            .pbBody{
+                padding-left:1%;
+            }
+        </style>
+    </head>
+    <body>
+        <c:firmHeader firm="{!firm}" />
+        <div id="main_container">
+            <div class="clear"></div>
+            <apex:outputPanel rendered="{!!isError}" style="margin:10px;padding:20px;" layout="none">
+                <div style="margin-top: 2em;">
+                    <apex:pageBlock >
+                    Thank you for your assistance with this {!deposition.Event_Type_Lowercase__c}. 
+                    <br/>
+                    <br/>
+                    If you have any questions, please contact us at {!firm.Scheduling_Email_Address__c} or {!firm.Phone__c}.
+                    </apex:pageBlock>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!isError}" style="" layout="none">
+                <div style="margin-top:50px;color:#cc0000;">
+                    The link seems invalid. Please check the link and try again
+                </div>
+            </apex:outputPanel>
+        </div>
+        <c:firmFooter firm="{!firm}" />
+    </body>
+</apex:page>

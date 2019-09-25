@@ -9,7 +9,4 @@ trigger AccountTrigger on Account (Before update) {
                 accnt.Commission_Records__c= accnt.Requested_Commission_Records__c;
         }
     }
-    if(Trigger.isUpdate && Trigger.isBefore){
-        AccountTriggerHandler.onBeforeUpdateRoutine(Trigger.new, Trigger.oldMap);
-    }
 }

@@ -22,12 +22,14 @@ global with sharing class BatchSendConfirmationEmail implements Database.Statefu
            {
                  listOfAddresses.add(dep.GuestEmail__c);
                  ID whatID = dep.id;
-                 Contact cnt = [select id, Email from Contact where email != null limit 1];
+                 List<Contact> cnts = [select id, Email from Contact where email != null limit 1];
                  List<Messaging.SingleEmailMessage> msgList= new List<Messaging.SingleEmailMessage>();
                  Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
                  msg.setTemplateId( et.id );
                  msg.setWhatId(whatID);
-                 msg.setTargetObjectId(cnt.id);
+               if(!cnts.isEmpty() ){
+                 msg.setTargetObjectId(cnts[0].id);
+               }
                  msg.setToAddresses(listOfAddresses);
                  msgList.add(msg);
                 // Send the emails in a transaction, then roll it back

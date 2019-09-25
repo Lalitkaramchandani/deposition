@@ -2,6 +2,7 @@ public without sharing class ConfirmDepositionController {
     public Boolean isSucess{get;set;}
     private Boolean hasMissingParameterMsgAdded = false;
     public Deposition__c deposition{get;set;}
+    public Firm__c firm{get;set;}
     public ConfirmDepositionController (){
         isSucess = false;
         
@@ -11,6 +12,15 @@ public without sharing class ConfirmDepositionController {
         else
             this.deposition = new Deposition__c();
         String selectedFirm = deposition.Primary_Court_Reporting_Firm__r.Name;
+        
+        firm = DepositionHelper.fetchFirm( 'Lexitas' );
+        if(deposition.Primary_Court_Reporting_Firm__c!=null){
+            firm = [SELECT Id, Name, Community_Header__c,Community_Footer__c, Web_Page_Footer_HTML__c , Web_Page_Header_HTML__c,
+                    Scheduling_Email_Address__c, Phone__c
+                    FROM Firm__c 
+                    WHERE Id=: deposition.Primary_Court_Reporting_Firm__c  LIMIT 1];
+            selectedFirm = firm.Name;
+        }
         system.debug('$$$'+selectedFirm );
         
         Cookie Cookie= new Cookie('firmCookie', null,null,0,false);
@@ -24,6 +34,7 @@ public without sharing class ConfirmDepositionController {
     private Deposition__c loadDeposition(String depId ) {
         List<Deposition__c>lstDeps =  [SELECT Id,Firm_Name__c, Event_Type_Lowercase__c,Deposition_Date__c ,Deposition_Time__c ,Time_Zone__c,
                                        Event_Location__c, Deposition_Services__c,Client_Notes__c,Hiring_Attorney__c,Hiring_Firm__c,
+                                       Primary_Court_Reporting_Firm__c,
                                        Primary_Court_Reporting_Firm__r.Name,Primary_Court_Reporting_Firm__r.Phone__c
             FROM Deposition__c WHERE Id = : depId Limit 1
         ];

@@ -1,31 +1,59 @@
-<apex:page standardController="AWS_S3_Object__c">
-   <apex:detail relatedListHover="true" relatedList="true"  subject="{!AWS_S3_Object__c.Id}" title="true" showChatter="true" inlineEdit="false"   />
-   <script type="text/javascript">
-
-       //hideButton("del");
-       hideButton("clone");  
-        function hideButton(btnName) {
-          try{
-            var buttons = parent.document.getElementsByName(btnName);
-            for (var i=0; i < buttons.length; i++) {
-              buttons[i].className="btnDisabled ";
-              buttons[i].disabled=true;
-              buttons[i].type='hidden';
+<apex:page standardController="AWS_S3_Object__c" extensions="FileDetailCtrl" showHeader="false">
+   <head>
+        <title>{!firm.Name} | File Details </title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width"/>
+        <!--<link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />-->
+        <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery-latest.js')}" />
+        <link href="{!URLFOR($Resource.nextgendepositions, 'nextgendepositions/style.css')}" rel="stylesheet" type="text/css"/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
+        <style>
+            .pbHeader table td.pbTitle h2{
+                font-size: larger;
+                font-family: inherit;
             }
-          } catch(e) {
-            // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
-          }
-        }
+            .pbBody{
+                padding-left:1%;
+            }
+            td.labelCol{
+                color:white!important;
+            }
+        </style>
+    </head>
+    <!--<c:CommunityResources title="Confirm"/>-->
+    <body>
+        <div class="wrapper">
+            <c:firmHeader firm="{!firm}" />
+            <apex:detail relatedListHover="true" relatedList="true"  subject="{!AWS_S3_Object__c.Id}" title="true" showChatter="true" inlineEdit="false"   />
+            <script type="text/javascript">
         
-        function renameButton(btnName, newTitle) {
-          try{
-            var buttons = parent.document.getElementsByName(btnName);
-            for (var i=0; i < buttons.length; i++) {
-              buttons[i].value=newTitle;
-            }
-          } catch(e) {
-            // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
-          }
-        }
-    </script>
+               //hideButton("del");
+               hideButton("clone");  
+                function hideButton(btnName) {
+                  try{
+                    var buttons = parent.document.getElementsByName(btnName);
+                    for (var i=0; i < buttons.length; i++) {
+                      buttons[i].className="btnDisabled ";
+                      buttons[i].disabled=true;
+                      buttons[i].type='hidden';
+                    }
+                  } catch(e) {
+                    // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
+                  }
+                }
+                
+                function renameButton(btnName, newTitle) {
+                  try{
+                    var buttons = parent.document.getElementsByName(btnName);
+                    for (var i=0; i < buttons.length; i++) {
+                      buttons[i].value=newTitle;
+                    }
+                  } catch(e) {
+                    // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
+                  }
+                }
+            </script>
+        </div>
+    </body>
 </apex:page>

@@ -4,7 +4,7 @@
             
         <link href="{!URLFOR($Resource.WilcoxCSS)}" rel="stylesheet" type="text/css"/> 
         <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css"/>
-        <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+        
         <style>
             .messageCell,
             .errorMsg {

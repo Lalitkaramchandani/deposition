@@ -251,7 +251,8 @@ public class GrantingFileAccessToUsersExtn {
             }          
         }
     }
-    private map<String,AWS_S3_Object__c >loadS3Files(Set<String>setFileIds){
+    @TestVisible
+    public map<String,AWS_S3_Object__c >loadS3Files(Set<String>setFileIds){
         map<String,AWS_S3_Object__c > mapAWS_S3Objects = new map<String,AWS_S3_Object__c >();
         String qry = 'select Id,File_Id__c,File_Name__c,Upload_Files__c,File_Type__c,File_Size__c,Note__c,Notes__c, Content_Type__c,';
         qry +='CreatedById,CreatedDate,Deposition__c,Deposition__r.Deposition_Date__c,Deposition__r.Case_Name__c,Deposition__r.Event_Location__c,';
@@ -369,9 +370,12 @@ public class GrantingFileAccessToUsersExtn {
                     Database.emptyRecycleBin(lstS3FilesAccess);
                 }
                 lstS3FilesAccess  = new List<File_Access__c>();
+                String attPrefix = Attendee__c.sObjectType.getDescribe().getKeyprefix();
                 for(String fileId : setSelectedFilesIds){
                     for(String userId: setSelectedUserIds){
-                        lstS3FilesAccess.add( new File_Access__c(Attendee__c=userId,File__c=fileId));
+                        if(userId.startsWith(attPrefix)){
+                            lstS3FilesAccess.add( new File_Access__c(Attendee__c=userId,File__c=fileId));
+                        }
                     }
                 }
                 if(lstS3FilesAccess.size()>0)

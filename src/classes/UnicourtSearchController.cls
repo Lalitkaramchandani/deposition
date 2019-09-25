@@ -16,7 +16,6 @@ public class UnicourtSearchController {
     public Map<String,UnicourtSearchResultParser.Case_Z> unicourtCaseMap{get;set;}
     public Boolean showSuccessMsg{get;set;}
     List<String> prohibitedStatusList = new List<String>{'Other Disposed','Terminated','Arbitration'};
-    List<String> prohibitedCaseTypeList = new List<String>{'Commercial Eviction','Consumer Credit','Controlled Substance/Drug','Debt Collection','Declaratory Judgment ','Eminent Domain ','Expungement ','Foreclosure ','Franchise ','Government Benefit Recovery','Land','Marriage Dissolution/Divorce','Minor Compromise Claim','Other Family','Other Forfeiture','Other Prisoner','Other Tax','Residential Eviction','State Statute Constitutionality','Trust','Uninsured Motor Vehicle','Withdrawal','Writ Of Mandamus'};
     public UnicourtSearchController(){
         showSuccessMsg = false;
         pageSize = 5;
@@ -48,7 +47,7 @@ public class UnicourtSearchController {
             parser = UnicourtSearchResultParser.parse(resp);
             if(!parser.error){
                 for(UnicourtSearchResultParser.Result result : parser.data.result){
-                    if(!prohibitedStatusList.contains(result.case_Z.case_status_name) && !prohibitedCaseTypeList.contains(result.case_Z.case_type)){
+                    if(!prohibitedStatusList.contains(result.case_Z.case_status_name)){
                         unicourtCaseMap.put(result.case_Z.case_id, result.case_Z);
                         Map_UnicourtCase_IsImportedFlag.put(result.case_Z.case_id, false);
                         

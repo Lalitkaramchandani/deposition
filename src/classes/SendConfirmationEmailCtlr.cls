@@ -51,7 +51,7 @@ public class SendConfirmationEmailCtlr {
            List<Messaging.SingleEmailMessage>lstEmails = new List<Messaging.SingleEmailMessage>();
             List<EmailTemplate>lstEmailTemplate = new List<EmailTemplate>();
             map<String,Id>mapEmailTemplates = new Map<String,Id>();
-            String templateName = 'CR_Confirmation_Tomorrow_VF,Videographer_Confirmation_Tomorrow_VF,Confirmation_for_legal_staff_tomorrow_VF';
+            String templateName = 'CR_Confirmation_Tomorrow_VF1,Videographer_Confirmation_Tomorrow_VF,Confirmation_for_legal_staff_tomorrow_VF';
             for(EmailTemplate emailTempl : [select id,DeveloperName From EmailTemplate WHERE DeveloperName  IN : templateName.split(',')]){
                 mapEmailTemplates.put(emailTempl.DeveloperName,emailTempl.id);
             }
@@ -96,8 +96,9 @@ public class SendConfirmationEmailCtlr {
                                     mail.setTemplateId(mapEmailTemplates.get('Confirmation_for_legal_staff_tomorrow_VF'));
                             }else if(attendee.Role__c == 'Videographer/Technician' && mapEmailTemplates.containsKey('Videographer_Confirmation_Tomorrow_VF')){
                                 mail.setTemplateId(mapEmailTemplates.get('Videographer_Confirmation_Tomorrow_VF'));
-                            }else if(attendee.Role__c == 'Court Reporter' && mapEmailTemplates.containsKey('CR_Confirmation_Tomorrow_VF')){
-                                mail.setTemplateId(mapEmailTemplates.get('CR_Confirmation_Tomorrow_VF'));
+                            }else if(attendee.Role__c == 'Court Reporter' && mapEmailTemplates.containsKey('CR_Confirmation_Tomorrow_VF1')){
+                                mail.setTemplateId(mapEmailTemplates.get('CR_Confirmation_Tomorrow_VF1'));
+                                mail.setWhatId(attendee.id); 
                             }
                               
                            lstEmails.add(mail);                

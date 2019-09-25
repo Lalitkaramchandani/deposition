@@ -1,0 +1,113 @@
+<apex:page standardController="Deposition__c" extensions="DepositionInvoiceCtrl"  docType="html-5.0"
+    showHeader="false" standardStylesheets="true">
+    <head>
+        <style>
+            img.timg, .pbSubheader > img{
+                width:inherit!important;
+                display:initial!important;
+            }
+            img.gimg, .pbSubheader > img{
+                width:3%!important;
+            }
+            .status img{
+                display: inline;
+            }
+            div.messageText{
+                color:black;
+            }
+        </style>
+    </head>
+    <body>
+        <c:CommunityResources title="Deposition Invoice" />
+        <title>{!firm.Name} | Deposition Invoice</title>
+        <c:firmHeader firm="{!firm}" />
+        <apex:outputPanel rendered="{!isValidEntry}">
+            <apex:form >
+                <apex:variable var="invs" value="{!Invoices}" />
+                <apex:variable var="invsSize" value="{!Invoices.size}" />
+                <apex:variable var="invData" value="{!InvoiceData}" />
+                <apex:variable var="invTitle" value="{!'Invoice'}" />
+                <apex:pageBlock title="Invoice Details" >
+                    <apex:outputPanel rendered="{!invData!=null}" >
+                        <apex:variable var="invTitle" value="{!invTitle+' ' +invData.inv.Name}" />
+                        <table class="list" border="0" cellpadding="0" cellspacing="0">
+                            <colgroup span="6"></colgroup>
+                            <thead class="">
+                                <tr class="headerRow">
+                                    <th class="headerRow" scope="col" colspan="1" >
+                                        Status
+                                    </th>
+                                    <th class="headerRow" scope="col" colspan="1" >
+                                        Invoice #
+                                    </th>
+                                    <th class="headerRow" scope="col" colspan="1" >
+                                        Date of Deposition
+                                    </th>
+                                    <th class="headerRow" scope="col" >
+                                        Invoice Date
+                                    </th>
+                                    <th class="headerRow" scope="col" >
+                                        Amount Due
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr class="dataRow even  " 
+                                    onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " 
+                                    onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                                    <td class="dataCell  " colspan="1">
+                                        <apex:outputField value="{!invData.inv.Payment_Status__c}" />
+                                    </td>
+                                    <td class="dataCell  " colspan="1">
+                                        <apex:outputField value="{!invData.inv.Name}" />
+                                    </td>
+                                    <td class="dataCell  " colspan="1"> 
+                                        <apex:outputField value="{!invData.inv.Deposition__r.Deposition_Date__c}" />
+                                    </td>
+                                    <td class="dataCell  " colspan="1"> 
+                                        <apex:outputField value="{!invData.inv.Invoice_Date__c}" />
+                                    </td>
+                                    <td class="dataCell  " colspan="1">
+                                        <apex:outputField value="{!invData.inv.Due_Amount__c}" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <apex:pageBlockSection title="Invoice Item(s)" rendered="{!invData.invItems.size>0}"
+                                columns="1" collapsible="false">
+                            <apex:pageBlockTable value="{!invData.invItems}" var="invItem" >
+                                <apex:column headerValue="Item Name">
+                                    {!invItem.Item__r.Name}
+                                </apex:column>
+                                <apex:column headerValue="Invoice Text">
+                                    {!invItem.Invoice_Text__c}
+                                </apex:column>
+                                <apex:column headerValue="Price">
+                                    ${!invItem.Price__c}&nbsp;{!invItem.Units_of_Measure__c}
+                                </apex:column>
+                                <apex:column headerValue="Quantity">
+                                    {!invItem.Quantity__c}
+                                </apex:column>
+                                <apex:column headerValue="Surcharge">
+                                    {!invItem.Modification__c}%
+                                </apex:column>
+                                <apex:column headerValue="Total Price">
+                                    ${!invItem.Total_Price__c}
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!invData==null}" >
+                        <apex:pageMessage summary="No Invoice found!" severity="info" strength="3" />
+                    </apex:outputPanel>
+                </apex:pageBlock>
+            </apex:form>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!isValidEntry}">
+            <apex:pageMessage summary="Invalid attempt of page!" severity="warning" strength="3" />
+        </apex:outputPanel>
+        <c:firmFooter firm="{!firm}" />
+    </body>
+    
+</apex:page>

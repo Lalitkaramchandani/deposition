@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -148,6 +148,11 @@
                     <label>Bryan</label>
                 </value>
                 <value>
+                    <fullName>California</fullName>
+                    <default>false</default>
+                    <label>California</label>
+                </value>
+                <value>
                     <fullName>Chicago</fullName>
                     <default>false</default>
                     <label>Chicago</label>
@@ -186,11 +191,6 @@
                     <fullName>Pennsylvania</fullName>
                     <default>false</default>
                     <label>Pennsylvania</label>
-                </value>
-                <value>
-                    <fullName>Rocklin</fullName>
-                    <default>false</default>
-                    <label>Rocklin</label>
                 </value>
                 <value>
                     <fullName>San Antonio</fullName>
@@ -509,6 +509,11 @@
                     <label>Doug Blanchard</label>
                 </value>
                 <value>
+                    <fullName>Eddie Reeves</fullName>
+                    <default>false</default>
+                    <label>Eddie Reeves</label>
+                </value>
+                <value>
                     <fullName>Ed Kerpius</fullName>
                     <default>false</default>
                     <label>Ed Kerpius</label>
@@ -592,11 +597,6 @@
                     <fullName>Mike Tzorfas</fullName>
                     <default>false</default>
                     <label>Mike Tzorfas</label>
-                </value>
-                <value>
-                    <fullName>Phillip Reader</fullName>
-                    <default>false</default>
-                    <label>Phillip Reader</label>
                 </value>
                 <value>
                     <fullName>Rhonda Jensen</fullName>
@@ -691,11 +691,6 @@
                     <default>true</default>
                     <label>Requested</label>
                 </value>
-                <value>
-                    <fullName>Completed</fullName>
-                    <default>false</default>
-                    <label>Completed</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -736,11 +731,6 @@
                     <fullName>Happy Hour</fullName>
                     <default>false</default>
                     <label>Happy Hour</label>
-                </value>
-                <value>
-                    <fullName>Lexitas Event</fullName>
-                    <default>false</default>
-                    <label>Lexitas Event</label>
                 </value>
                 <value>
                     <fullName>Sponsorship</fullName>
@@ -816,7 +806,6 @@
         <columns>Event_Start_Date__c</columns>
         <columns>Projected_Cost__c</columns>
         <columns>Lexitas_AE_Attendees__c</columns>
-        <columns>Event_Location__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Business_Unit__c</field>

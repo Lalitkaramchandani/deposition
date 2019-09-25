@@ -5,9 +5,7 @@ public class CaseLeadTriggerHelper {
        
         Map<String, case_leads__c> UnicourtIdCaseLeadMap = new Map<String, case_leads__c>();
         
-        for(case_leads__c cl : newCaseLeads){                
-
-
+        for(case_leads__c cl : newCaseLeads){
             if(String.isNotBlank(cl.Unicourt_Case_ID__c)){
                 UnicourtIdCaseLeadMap.put(cl.Unicourt_Case_ID__c, cl);
             }
@@ -16,16 +14,10 @@ public class CaseLeadTriggerHelper {
         system.debug('here validateUnicourtIds is called----');
         validateUnicourtIds(UnicourtIdCaseLeadMap);
         updateCommissionRepEmails(newCaseLeads,null);
-        commonRoutineBeforeUpsert(newCaseLeads,null);
     }
     
     public static void onBeforeUpdate(List<case_leads__c> newCaseLeads, Map<Id, case_leads__c> oldCaseLeadsMap){
         updateCommissionRepEmails(newCaseLeads,oldCaseLeadsMap);
-        commonRoutineBeforeUpsert(newCaseLeads,oldCaseLeadsMap);
-    }
-
-    public static void onAfterUpdate(List<case_leads__c> newCaseLeads, Map<Id, case_leads__c> oldCaseLeadsMap){
-       commonRoutineAfterUpdate(newCaseLeads,oldCaseLeadsMap);
     }
     
     /*
@@ -66,38 +58,6 @@ public class CaseLeadTriggerHelper {
                 cl.Commission_Tertiary_Rep_Email__c = comm.Tertiary_Rep__r.email;
             }
         }
-    }
-
-    private static void commonRoutineBeforeUpsert(List<case_leads__c> newCaseLeads, Map<Id, case_leads__c> oldCaseLeadsMap){
-        for(case_leads__c cl : newCaseLeads){
-            // copy Case_name__c to Name 
-            if(String.isNotBlank(cl.Case_Name__c) && cl.Case_Name__c.length() > 80){
-                cl.name =  cl.Case_Name__c.substring(0,80);
-            }else if(String.isNotBlank(cl.Case_Name__c)){
-                cl.name =  cl.Case_Name__c;
-            }
-          
-        }
-    }
-
-    private static void commonRoutineAfterUpdate(List<case_leads__c> newCaseLeads, Map<Id, case_leads__c> oldCaseLeadsMap){
-        List<String> closedStatusList = new List<String>{'Other Disposed','Settled','Terminated'};
-        List<Id> closedCasesID = new List<Id>();
-        for(case_leads__c cl : newCaseLeads){
-            if(cl.Case_Status__c != oldCaseLeadsMap.get(cl.id).Case_Status__c &&
-                closedStatusList.contains(cl.Case_Status__c)){
-                closedCasesID.add(cl.id);
-            }
-        }
-        // set Case Closed = true for related Depositions if Case Status is one of closedStatusList
-        List<Deposition__c> depositionListToUpdate = new List<Deposition__c>();
-        for(Deposition__c dep : [select id,Case_Closed__c from Deposition__c where Case_Lead__c in :closedCasesID]){
-            dep.Case_Closed__c = true;
-            depositionListToUpdate.add(dep);
-        }
-        if(depositionListToUpdate.size() > 0)
-            update depositionListToUpdate;
-
     }
     
     

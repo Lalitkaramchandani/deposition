@@ -147,4 +147,36 @@ public class AttendeeHelper{
                 update mapDepositions.values();
         }
     }
+    
+    //Send Deposition Confirmation Email and SMS 
+    public Static void sendDepositionNotification( List<Attendee__c> attendees ){
+        //List<Attendee__c> attendees =  new List<Attendee__c>();
+        //Get Notification Schedule Time
+        String schedulerTime = Label.NotificationScheduledTime;
+        //Check if scheduler is already executed. 
+        if( String.isNotBlank( schedulerTime ) && schedulerTime.isNumeric() && 
+            Integer.valueOf( schedulerTime ) >=  System.now().hour() ){
+            
+            Set<Id> depositionIds = new Set<Id>();
+            for( Attendee__c attendee : attendees ){
+                if( attendee.Role__c == 'Court Reporter' || attendee.Role__c == 'Videographer/Technician' || 
+                    attendee.Role__c == 'Interpreter' ){
+                    depositionIds.add( attendee.Deposition__c );
+                }
+            }
+            if( depositionIds != NULL && depositionIds.size() > 0 ){
+                Set<Id> processDepositions = new Set<Id>();
+                for( Deposition__c deposition : [SELECT ID FROM Deposition__c WHERE Deposition_Date__c = TOMORROW AND 
+                                                  ( Confirm_Reporter__c = 'Not Sent' OR Confirm_Video_Tech__c = 'Not Sent' OR 
+                                                  Confirm_Interpreter__c = 'Not Sent') ] ){
+                    processDepositions.add( deposition.Id );
+                }
+                if( processDepositions != NULL && processDepositions.size() > 0 ){
+                    DepositionReminderScheduler reminderClass = new DepositionReminderScheduler();
+                    reminderClass.processNotification( processDepositions );
+                }
+            }
+        }
+        
+    }
 }

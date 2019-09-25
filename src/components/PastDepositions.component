@@ -2,15 +2,24 @@
     <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery.tablesorter.js')}" />
     <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery.tablesorter.min.js')}" />
     <link rel="stylesheet" href="{!URLFOR($Resource.tableSorter, 'tableSorter/themes/blue/style.css')}" type="text/css" id="" media="print, projection, screen" />
+    <style>
+        .past-depo td{
+            min-width: 100px;
+        }
+        .past-depo td.min{
+            min-width: 125px;
+        }
+        .past-depo td.max{
+            width: 150px;
+        }
+    </style>
     <script type="text/javascript" src="{!URLFOR($Resource.tableSorter, 'tableSorter/addons/pager/jquery.tablesorter.pager.js')}"></script>
-
-   
-        
+    
      <c:ActionStatus ></c:ActionStatus>
      <apex:actionFunction name="fetchPastDepositions" action="{!fetchDepositions}" reRender="pbPastDepositions" status="status">
          <apex:param assignTo="{!selectedCaseNameChar}" value="" name="selectedCaseNameChar"/>
      </apex:actionFunction>
-     <apex:outputPanel rendered="{!lstDepositions.size==0}">
+     <apex:outputPanel rendered="{!PastDepositions.size==0}">
          <label>
              <span>We don’t see any past depositions for you. If you have past depositions which should be associated with your account,
                   just <A HREF="mailto:{!Firm.Scheduling_Email_Address__c}" >let us know.</A> 
@@ -18,21 +27,30 @@
              </span>
          </label>
      </apex:outputPanel>
-    <apex:pageBlock id="pbPastDepositions" rendered="{!Depositions.size>0}">
+    <apex:pageBlock id="pbPastDepositions" rendered="{!PastDepositions.size>0}">
         <div >
-            <apex:pageBlockTable value="{!Depositions}" var="dep" styleClass="tablesorter" >
-                 <apex:column headerValue="Case Caption/Name">
-                    {!dep.Case_Name__c}
+            <apex:variable value="{!IF(OR(currentUser.Contact.Account.industry=='Court Reporting', currentUser.Contact.Account.industry=='Videography'),'Turn In','Deposition')}" var="depTitle" />
+            <apex:pageBlockTable value="{!PastDepositions}" var="depData" styleClass="tablesorter past-depo" >
+                <apex:column headerValue="{!depTitle}" styleClass="min">
+                    <!--<a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!depData.dep.id}','newwindow','700','650');  return false;" ></a>-->
+                     <a href="{!$Page.DepositionTurnIn+'?id='+depData.dep.id}" target="_blank" >{!depData.dep.Name}</a>
                 </apex:column>
-                <apex:column headerValue="Witness Name">
-                    <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!dep.id}','newwindow','700','650');  return false;" >{!dep.Deponent_Name__c}</a>
+                <apex:column headerValue="Case">
+                    {!depData.dep.Case_Name__c}
                 </apex:column>
-                <apex:column value="{!dep.Deposition_Date__c}" />
-                <apex:column value="{!dep.Hiring_Attorney__c}" headerValue="Hiring Attorney Name" />
-                <apex:column value="{!dep.Deposition_Services__c}" />
-                <apex:column headerValue="Deposition Id">
-                    <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!dep.id}','newwindow','700','650');  return false;" >{!dep.Name}</a>
+                <apex:column headerValue="Witness">
+                    <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!depData.dep.id}','newwindow','700','650');  return false;" >{!depData.dep.Deponent_Name__c}</a>
                 </apex:column>
+                <apex:column value="{!depData.dep.Deposition_Date__c}" />
+                <apex:column value="{!depData.dep.Hiring_Attorney__c}" headerValue="Hiring Attorney" />
+                <apex:column value="{!depData.dep.Deposition_Services__c}" headerValue="Services Requested"/>
+                <apex:column headerValue="Invoice" styleClass="max" >
+                    <apex:repeat value="{!depData.invoices}" var="invoice">
+                        <a href="{!$Page.DepositionInvoice+'?id='+invoice.Deposition__c+'&invid='+invoice.Id}" target="_blank" >   {!invoice.Name}</a>&nbsp; &nbsp;
+                    </apex:repeat>
+                </apex:column>
+                    <!--&nbsp; &nbsp;-->
+                    <!--<a href="{!$Page.DepositionInvoice+'?id='+depData.dep.id}" target="_blank" >Invoice</a>-->
             </apex:pageBlockTable>
                 <div  class="footerDiv">
                     <label><i>Search by First Name of Deponent </i></label> <br/>

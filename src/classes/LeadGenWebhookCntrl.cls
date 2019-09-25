@@ -7,7 +7,7 @@ public class LeadGenWebhookCntrl {
     String json;
     public void init(){
         //Set<String>setCasesIds= new Set<String>();
-        List<String> prohibitedStatusList = new List<String>{'Other Disposed','Terminated','Arbitration','Commercial Eviction','Consumer Credit','Controlled Substance/Drug','Debt Collection','Declaratory Judgment ','Eminent Domain ','Expungement ','Foreclosure ','Franchise ','Government Benefit Recovery','Land','Marriage Dissolution/Divorce','Minor Compromise Claim','Other Family','Other Forfeiture','Other Prisoner','Other Tax','Residential Eviction','State Statute Constitutionality','Trust','Uninsured Motor Vehicle','Withdrawal','Writ Of Mandamus'};
+        List<String> prohibitedStatusList = new List<String>{'Other Disposed','Terminated','Arbitration'};
             //Savepoint sp = Database.setSavepoint(); // cannot make callout after DML
             try{
                 json = ApexPages.currentpage().getParameters().get('data').trim();
@@ -73,7 +73,6 @@ public class LeadGenWebhookCntrl {
                     for(String jString : listJSON){
                         Unicourt_Case_Lead_JSON__c tCase = new Unicourt_Case_Lead_JSON__c();
                         tCase.JSON_String__c = jString;
-                        tCase.Type__c  =  'JSON';
                         tempCases.add(tCase);
                     }
                     if(tempCases.size() > 0){
@@ -83,7 +82,7 @@ public class LeadGenWebhookCntrl {
                 }
 
                 // execute batch to process JSON and create Case Lead
-                ParseUnicourtJSONandCreateCasesBatch job = new ParseUnicourtJSONandCreateCasesBatch('JSON');
+                ParseUnicourtJSONandCreateCasesBatch job = new ParseUnicourtJSONandCreateCasesBatch();
                 // In test class it's high because must be processed in single chunk only.Else throw error
                 Integer batchsize = test.isRunningTest() ? 5 :2; 
                 

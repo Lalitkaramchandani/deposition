@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>35.0</apiVersion>
+    <apiVersion>45.0</apiVersion>
     <available>true</available>
     <description>CR - Evening After Depo Follow-up VF</description>
     <encodingKey>ISO-8859-1</encodingKey>
     <name>CR - Evening After Depo Follow-up VF</name>
     <style>none</style>
-    <subject>Asssignment Followup - Short Reply Requested  -  -</subject>
+    <subject>Assignment Followup - Short Reply Requested  -  -</subject>
     <type>visualforce</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

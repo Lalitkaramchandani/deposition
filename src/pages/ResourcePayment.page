@@ -1,0 +1,324 @@
+<apex:page tabStyle="Resource_Payment__tab" title="Resource Payment" 
+    controller="ResourcePaymentCtlr"
+    docType="{!if($CurrentPage.parameters.isExport=='true','','html-5.0')}"
+    contentType="{!if($CurrentPage.parameters.isExport=='true', 'application/vnd.ms-excel#Resource Payment - ' + TEXT(Month(TODAY())) +'-'+TEXT(Day(TODAY())) +'-'+TEXT(Year(TODAY())) +' '+ TEXT(HOUR(TIMENOW())) + '_'+ TEXT(MINUTE(TIMENOW())) + '_'+ TEXT(SECOND(TIMENOW())) +'.csv', '')}" 
+    >{!if($CurrentPage.parameters.isExport=='true',header,'')}
+    
+    <apex:outputPanel rendered="{!$CurrentPage.parameters.isExport!='true'}">
+        <head>
+            <style>
+                .custPopup{ 
+                    background-color: white; border-width: 0px; border-radius:10px; z-index: 9999; left: 50%; padding:20px; position: fixed;  margin-left: -100px; top:40%;
+                }
+                .popupBackground{ 
+                    background-color:black; opacity: 0.30; filter: alpha(opacity = 30); position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 9998; 
+                }
+            </style>
+        </head>
+        <script>
+            function handleAllSelect(){
+                var allId = '{!$Component.frm.invpb.invpbtable.chkAll}';
+                var allEle = document.getElementById(allId);
+                if(allEle){
+                    var chks = document.getElementsByClassName('select-chk');
+                    for(let ind=0, len = chks.length; ind<len;ind++){
+                        chks[ind].checked = allEle.checked;
+                    }
+                }
+            }
+            function maintainSelectAll(){
+                var allId = '{!$Component.frm.invpb.invpbtable.chkAll}';
+                var allEle = document.getElementById(allId);
+                if(allEle){
+                    var allChecked = true;
+                    var chks = document.getElementsByClassName('select-chk');
+                    for(let ind=0, len = chks.length; ind<len;ind++){
+                        if(chks[ind].checked === false){
+                            allChecked = false;
+                        }
+                    }
+                    allEle.checked = allChecked;
+                }
+            }
+            function markSelectAll(){
+                var allId = '{!$Component.frm.invpb.invpbtable.chkAll}';
+                var allEle = document.getElementById(allId);
+                if(allEle){
+                    allEle.checked = true;
+                }
+            }
+        </script>
+    </apex:outputPanel>
+    <apex:form rendered="{!$CurrentPage.parameters.isExport!='true'}" id="frm">
+        <apex:actionStatus id="status"> 
+            <apex:facet name="start"> 
+                <apex:outputPanel id="tstpopup"> 
+                    <apex:outputPanel styleClass="popupBackground" layout="block"/> 
+                    <apex:outputPanel styleClass="custPopup" layout="block"> 
+                        <img src="/img/loading24.gif" style="vertical-align:middle; horizontal-align:middle"/> 
+                        <span>Please wait...</span> 
+                    </apex:outputPanel> 
+                </apex:outputPanel> 
+            </apex:facet> 
+        </apex:actionStatus>
+        <apex:actionStatus id="fetching">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif"
+                    />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:sectionHeader title="Manage" subtitle="Payments" />
+        <apex:outputPanel id="mainPanel">
+        <apex:outputPanel id="invoiceDetails" rendered="{!!isPaymentDone}" >
+            <apex:pageBlock id="mainpb">
+                <apex:pageMessages id="pbmsg"/>
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton title="Mark As Paid" value="Mark As Paid" action="{!onPay}" reRender="mainPanel,mainpb, pbmsg" status="status" />
+                </apex:pageBlockButtons>
+    
+                <apex:pageBlockSection title="Search for invoices" id="searchPb">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel > Start Date</apex:outputLabel>
+                        <apex:input value="{!startDate}" type="date">
+                            <!--<apex:actionSupport event="onchange" action="{!setSelectedDateforAll}" rerender="invpb,pbmsg" status="status" />-->
+                        </apex:input>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel > End Date</apex:outputLabel>
+                        <apex:input value="{!endDate}" type="date">
+                            <!--<apex:actionSupport event="onchange" action="{!setSelectedDateforAll}" rerender="invpb,pbmsg" status="status" />-->
+                        </apex:input>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:commandButton value="Search" action="{!onSearch}"  reRender="invpb, pbmsg" status="status" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            <apex:pageBlock id="invpb" title="Invoice(s)">
+                <apex:outputPanel rendered="{!invoices.size >0}" id="invpbpanel">
+                    <apex:pageBlockTable value="{!invoices}" var="invoice" id="invpbtable">
+                        <apex:column >
+                            <apex:facet name="header">
+                                Select ALL
+                                <apex:inputCheckbox onclick="handleAllSelect();" id="chkAll" />
+                            </apex:facet>
+                            <apex:inputCheckbox value="{!invoice.isSelect}" styleClass="select-chk" onclick="maintainSelectAll();"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Contact Name{!IF(sortExpression=='Contact__r.Name', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}" >
+                                    <apex:param name="column" value="Contact__r.Name" assignTo="{!sortExpression}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputLink title="{!invoice.inv.Contact__r.Name}" value="{!'/'+invoice.inv.Contact__c}" target="_blank">
+                                {!invoice.inv.Contact__r.Name}
+                            </apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                    
+                                <apex:commandLink value="Account Name{!IF(sortExpression=='Account__r.Name', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}" >
+                                    <apex:param name="column" value="Account__r.Name" assignTo="{!sortExpression}"/>
+                                </apex:commandLink>
+                    
+                            </apex:facet>
+                            <apex:outputField value="{!invoice.inv.Account__c}" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Invoice #{!IF(sortExpression=='Name', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}" >
+                                    <apex:param name="column" value="Name" assignTo="{!sortExpression}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputLink title="{!invoice.inv.Name}" value="{!'/'+invoice.inv.Id}" target="_blank">
+                                {!invoice.inv.Name}
+                            </apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Deposition #{!IF(sortExpression=='Deposition__r.Name', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}" >
+                                    <apex:param name="column" value="Deposition__r.Name" assignTo="{!sortExpression}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputField value="{!invoice.inv.Deposition__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Date of Deposition{!IF(sortExpression=='Deposition__r.Deposition_Date__c', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}" >
+                                    <apex:param name="column" value="Deposition__r.Deposition_Date__c" assignTo="{!sortExpression}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                               <apex:outputText value="{0, date, MM/dd/yyyy}">
+                                   <apex:param value="{!invoice.inv.Deposition__r.Deposition_Date__c}" />
+                               </apex:outputText>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Invoice Date{!IF(sortExpression=='Invoice_Date__c', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb, pbmsg" status="status" action="{!doSort}">
+                                    <apex:param name="column" value="Invoice_Date__c" assignTo="{!sortExpression}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputText value="{0, date, MM/dd/yyyy}">
+                                <apex:param value="{!invoice.inv.Invoice_Date__c}" />
+                            </apex:outputText>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Amount Due{!IF(sortExpression=='Due_Amount__c', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}">
+                                    <apex:param name="column" value="Due_Amount__c" assignTo="{!sortExpression}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                               <apex:outputField value="{!invoice.inv.Due_Amount__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Unique identifier for this person{!IF(sortExpression=='Contact__r.ADP_ID__c', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}">
+                                    <apex:param name="column" value="Contact__r.ADP_ID__c" assignTo="{!sortExpression}"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputField value="{!invoice.inv.Contact__r.ADP_ID__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Role{!IF(sortExpression=='Attendee__r.Role__c', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb,pbmsg" status="status" action="{!doSort}">
+                                    <apex:param name="column" value="Attendee__r.Role__c" assignTo="{!sortExpression}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputField value="{!invoice.inv.Attendee__r.Role__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                <apex:commandLink value="Payment Method{!IF(sortExpression=='Contact__r.Payment_Method__c', IF(sortDirection='ASC','▼','▲'),'')}"
+                                     rerender="invpb, pbmsg" status="status" action="{!doSort}">
+                                    <apex:param name="column" value="Contact__r.Payment_Method__c" assignTo="{!sortExpression}" />
+                                </apex:commandLink>
+                            </apex:facet>
+                            <apex:outputField value="{!invoice.inv.Contact__r.Payment_Method__c}" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <apex:outputPanel style="text-align:center;" layout="block">
+                        <apex:commandButton value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" reRender="invpb" status="status"/>
+                        <apex:commandButton value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}" reRender="invpb" status="status"/>&nbsp;Page {!pageNumber} of {!totalPages}&nbsp;
+                        <apex:commandButton value="Next" action="{!next}" disabled="{!NOT(hasNext)}" reRender="invpb" status="status"/>
+                        <apex:commandButton value="Last"  action="{!last}" disabled="{!NOT(hasNext)}" reRender="invpb" status="status"/>
+                    </apex:outputPanel>
+                    <script>
+                        markSelectAll();
+                    </script>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!invoices.size == 0}" >
+                    <apex:outputLabel value="No Pending Invoice!" />
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="payDetails" rendered="{!isPaymentDone}">
+            <apex:pageBlock title="Payment(s)">
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton title="Export" action="{!onExport}" 
+                        value="Export to CSV" status="status" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!payments}" var="payment">
+                    <apex:column >
+                        <apex:facet name="header">
+                            Account Name
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Contact__r.Account.Name}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Invoice #
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Deposition #
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Deposition__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Contact Name
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Contact__r.Name}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Date of Deposition
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Deposition__r.Deposition_Date__c}" />
+                    </apex:column>
+                    <apex:column value="{!payment.Amount__c}" />
+                    <apex:column >
+                        <apex:facet name="header">
+                            Unique identifier for this person
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Contact__r.ADP_ID__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Role
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Attendee__r.Role__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Attendee Role
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Attendee_Role__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Conga Firm Name
+                        </apex:facet>
+                        <apex:outputField value="{!payment.Invoice__r.Conga_Firm_Name__c}" />
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Invoice date
+                        </apex:facet>
+                        <apex:outputText value="{0, date, MM/dd/yyyy}">
+                            <apex:param value="{!payment.Invoice__r.Invoice_Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Payment date
+                        </apex:facet>
+                        <apex:outputText value="{0, date, MM/dd/yyyy}">
+                            <apex:param value="{!payment.Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column value="{!payment.Payment_Type__c}" />
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+
+<apex:repeat value="{!paymentData}" var="payment" rendered="{!paymentData!=NULL}">
+&#34;{!payment.inv.Contact__r.Account.Name}&#34;,&#34;{!payment.invName}&#34;,&#34;{!payment.inv.Deposition__r.Name}&#34;,&#34;{!payment.inv.Contact__r.Name}&#34;,&#34;<apex:outputText value="{0, date, MM/dd/yyyy}"><apex:param value="{!payment.inv.Deposition__r.Deposition_Date__c}" /></apex:outputText>&#34;,&#34;{!payment.inv.Due_Amount__c}&#34;,&#34;{!payment.inv.Contact__r.ADP_ID__c}&#34;,&#34;{!payment.inv.Attendee__r.Role__c}&#34;,&#34;{!payment.inv.Attendee_Role__c}&#34;,&#34;{!payment.inv.Conga_Firm_Name__c}&#34;,&#34;<apex:outputText value="{0, date, MM/dd/yyyy}"><apex:param value="{!payment.inv.Invoice_Date__c}" /></apex:outputText>&#34;,&#34;{!payment.pdate}&#34;,&#34;{!payment.pType}&#34;
+</apex:repeat>
+</apex:page>

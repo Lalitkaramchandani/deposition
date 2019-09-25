@@ -51,10 +51,10 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -114,6 +114,54 @@
         <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>BU_Invoicing__c</fullName>
+        <externalId>false</externalId>
+        <label>BU - Invoicing</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Business_Units</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>BU_Production__c</fullName>
+        <externalId>false</externalId>
+        <label>BU - Production</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Business_Units</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>BU_Scheduling__c</fullName>
+        <externalId>false</externalId>
+        <label>BU- Scheduling</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Business_Units</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>BU_Video__c</fullName>
+        <externalId>false</externalId>
+        <label>BU - Video</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Business_Units</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Bill_for_Last_Minute_Cancellation__c</fullName>
@@ -204,15 +252,6 @@ Due_Date_To_The_Client_Computed__c - TODAY()
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Cancelled__c</fullName>
-        <externalId>false</externalId>
-        <formula>ISPICKVAL(Deposition_Status__c,&quot;Cancelled&quot;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Cancelled</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Case_Billing_Notes__c</fullName>
@@ -511,11 +550,6 @@ Due_Date_To_The_Client_Computed__c - TODAY()
                     <label>Amica</label>
                 </value>
                 <value>
-                    <fullName>AmTrust</fullName>
-                    <default>false</default>
-                    <label>AmTrust</label>
-                </value>
-                <value>
                     <fullName>AT&amp;T (Troy)</fullName>
                     <default>false</default>
                     <label>AT&amp;T (Troy)</label>
@@ -584,11 +618,6 @@ Due_Date_To_The_Client_Computed__c - TODAY()
                     <fullName>HPE</fullName>
                     <default>false</default>
                     <label>HPE</label>
-                </value>
-                <value>
-                    <fullName>Jeffries</fullName>
-                    <default>false</default>
-                    <label>Jeffries</label>
                 </value>
                 <value>
                     <fullName>Liberty Mutual</fullName>
@@ -669,11 +698,6 @@ Due_Date_To_The_Client_Computed__c - TODAY()
                     <fullName>SAP</fullName>
                     <default>false</default>
                     <label>SAP</label>
-                </value>
-                <value>
-                    <fullName>UnitedHealth</fullName>
-                    <default>false</default>
-                    <label>UnitedHealth</label>
                 </value>
                 <value>
                     <fullName>USAA</fullName>
@@ -1027,7 +1051,7 @@ Due_Date_To_The_Client_Computed__c - TODAY()</formula>
                 </value>
             </valueSetDefinition>
         </valueSet>
-        <visibleLines>6</visibleLines>
+        <visibleLines>9</visibleLines>
     </fields>
     <fields>
         <fullName>Deposition_Status__c</fullName>
@@ -1145,6 +1169,14 @@ Due_Date_To_The_Client_Computed__c - TODAY()</formula>
         <visibleLines>25</visibleLines>
     </fields>
     <fields>
+        <fullName>Ends_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Ends Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Time</type>
+    </fields>
+    <fields>
         <fullName>Errata_Due_Date__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(Errata_Status__c, &quot;Waiting&quot;), Production_Complete_Date__c + 30,null)</formula>
@@ -1153,6 +1185,14 @@ Due_Date_To_The_Client_Computed__c - TODAY()</formula>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Errata_Needed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Errata Needed</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Errata_Notes__c</fullName>
@@ -1487,14 +1527,14 @@ Due_Date_To_The_Client_Computed__c - TODAY()</formula>
     <fields>
         <fullName>Graphical_Alert__c</fullName>
         <externalId>false</externalId>
-        <formula>If (Primary_CR_Firm__c = &quot;&quot;,&quot;&quot;,IMAGE(&quot;/servlet/servlet.ImageServer?id=0152K000004Do4M&amp;oid=00DA0000000XoMw&amp;lastMod=1557175809000&quot;, &quot;Networked Job&quot;, 200, 400))
+        <formula>If (Primary_CR_Firm__c = &quot;&quot;,&quot;&quot;,IMAGE(&quot;http://www.lexitasng.com/wp-content/uploads/2015/06/Networking.jpg&quot;, &quot;Networked Job&quot;, 200, 400))
 &amp;
 IF(
-(INCLUDES( Deposition_Services__c, &quot;LegalView (Remote Video)&quot;) &amp;&amp; NOT(INCLUDES(Deposition_Services__c, &quot;Court Reporter&quot;))) , &quot;Remote without Court Reporting&quot;, &quot;&quot;)
+(INCLUDES( Deposition_Services__c, &quot;Remote Deposition&quot;) &amp;&amp; NOT(INCLUDES(Deposition_Services__c, &quot;Court Reporter&quot;))) , &quot;Remote without Court Reporting&quot;, &quot;&quot;)
 &amp;
-If (TEXT(Hard_Copy__c) = &quot;Needed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=0152K000004Do50&quot;, &quot;Hard Copy&quot;),&quot;&quot;)
+If (TEXT(Hard_Copy__c) = &quot;Needed&quot;, IMAGE(&quot;https://nextgen--c.na7.content.force.com/sfc/servlet.shepherd/version/download/068A0000002a1PM?asPdf=false&amp;operationContext=CHATTER&quot;, &quot;Hard Copy&quot;),&quot;&quot;)
 &amp;
-If ( File_Uploaded_By_Client__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=0152K000004Do4v&quot;, &quot;File Uploaded By Client&quot;),&quot;&quot;)</formula>
+If ( File_Uploaded_By_Client__c=TRUE,IMAGE(&quot;https://nextgen--c.na7.content.force.com/sfc/servlet.shepherd/version/download/068A0000002a3mN?asPdf=false&amp;operationContext=CHATTER&quot;, &quot;File Uploaded By Client&quot;),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Alert</label>
         <required>false</required>
@@ -1665,17 +1705,6 @@ If ( File_Uploaded_By_Client__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?f
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Likelihood_of_Cancellation2__c</fullName>
-        <externalId>false</externalId>
-        <label>Likelihood of Depo Cancellation</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Loc__c</fullName>
         <externalId>false</externalId>
         <formula>UPPER(Event_Location__c)</formula>
@@ -1841,6 +1870,51 @@ Due_Date_To_The_Client_Computed__c  -  Transcript_Complete_Date__c)</formula>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Portal_Deposition_Services__c</fullName>
+        <externalId>false</externalId>
+        <label>Portal Deposition Services</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Expedite</fullName>
+                    <default>false</default>
+                    <label>Expedite</label>
+                </value>
+                <value>
+                    <fullName>Traditional Video</fullName>
+                    <default>false</default>
+                    <label>Traditional Video</label>
+                </value>
+                <value>
+                    <fullName>Realtime</fullName>
+                    <default>false</default>
+                    <label>Realtime</label>
+                </value>
+                <value>
+                    <fullName>Rough Draft</fullName>
+                    <default>false</default>
+                    <label>Rough Draft</label>
+                </value>
+                <value>
+                    <fullName>Interpreter</fullName>
+                    <default>false</default>
+                    <label>Interpreter</label>
+                </value>
+                <value>
+                    <fullName>Synchronized Video</fullName>
+                    <default>false</default>
+                    <label>Synchronized Video</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
         <fullName>Post_Deposition_Notes__c</fullName>
         <externalId>false</externalId>
         <label>Production Notes</label>
@@ -1864,6 +1938,18 @@ Due_Date_To_The_Client_Computed__c  -  Transcript_Complete_Date__c)</formula>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Predicted_Deposition_Cost__c</fullName>
+        <externalId>false</externalId>
+        <isAIPredictionField>true</isAIPredictionField>
+        <label>Predicted Deposition Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Primary_CR_Firm__c</fullName>
@@ -2212,6 +2298,14 @@ IF(INCLUDES(Deposition_Services__c, &quot;Remote Deposition&quot;), &quot;Just a
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Starts_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Starts Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Time</type>
     </fields>
     <fields>
         <fullName>State_Rule__c</fullName>
@@ -2736,8 +2830,20 @@ Due_Date_To_The_Client_Computed__c  - 2)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Transcript_Due_and_Received_Diff__c</fullName>
+        <externalId>false</externalId>
+        <formula>Transcript_Due_From_Reporter_Computed__c - Transcript_Received_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Transcript Due and Received Diff</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Transcript_Received_Date__c</fullName>
-        <description>The date when we received the final transcript from the reporter.</description>
         <externalId>false</externalId>
         <label>Transcript Received Date</label>
         <required>false</required>
@@ -3001,18 +3107,14 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
         <externalId>false</externalId>
         <formula>CASE( Zoom_ID__c, 
 &quot;NextGen Video&quot;, &quot;2154947649&quot;, 
+&quot;Everett&quot;, &quot;3129756206&quot;, 
+&quot;Jeremy&quot;,&quot;2154947637&quot;, 
 &quot;Room 1&quot;, &quot;8352175315&quot;, 
 &quot;Room 2&quot;, &quot;8652223641&quot;, 
 &quot;Room 3&quot;, &quot;2331467458&quot;, 
 &quot;Room 4&quot;, &quot;7484659194&quot;, 
 &quot;Room 5&quot;, &quot;6099467743&quot;, 
 &quot;Room 6&quot;, &quot;5447004547&quot;, 
-&quot;Room 7&quot;, &quot;8277320802&quot;, 
-&quot;Room 8&quot;, &quot;4701500423&quot;, 
-&quot;Room 9&quot;, &quot;4318302928&quot;, 
-&quot;Room 10&quot;, &quot;5665626906&quot;, 
-&quot;Room 11&quot;, &quot;8236656664&quot;, 
-&quot;Room 12&quot;, &quot;2734606268&quot;,
 &quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Zoom ID PIN Code</label>
@@ -3073,39 +3175,24 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
                     <label>Room 6</label>
                 </value>
                 <value>
-                    <fullName>Room 7</fullName>
-                    <default>false</default>
-                    <label>Room 7</label>
-                </value>
-                <value>
-                    <fullName>Room 8</fullName>
-                    <default>false</default>
-                    <label>Room 8</label>
-                </value>
-                <value>
-                    <fullName>Room 9</fullName>
-                    <default>false</default>
-                    <label>Room 9</label>
-                </value>
-                <value>
-                    <fullName>Room 10</fullName>
-                    <default>false</default>
-                    <label>Room 10</label>
-                </value>
-                <value>
-                    <fullName>Room 11</fullName>
-                    <default>false</default>
-                    <label>Room 11</label>
-                </value>
-                <value>
-                    <fullName>Room 12</fullName>
-                    <default>false</default>
-                    <label>Room 12</label>
-                </value>
-                <value>
                     <fullName>NextGen Video</fullName>
                     <default>false</default>
                     <label>NextGen Video</label>
+                </value>
+                <value>
+                    <fullName>Everett</fullName>
+                    <default>false</default>
+                    <label>Everett</label>
+                </value>
+                <value>
+                    <fullName>Michele</fullName>
+                    <default>false</default>
+                    <label>Michele</label>
+                </value>
+                <value>
+                    <fullName>Jeremy</fullName>
+                    <default>false</default>
+                    <label>Jeremy</label>
                 </value>
                 <value>
                     <fullName>No Room Needed</fullName>
@@ -3375,7 +3462,7 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
         </sharedTo>
     </listViews>
     <nameField>
-        <displayFormat>{YYYY}-{00000}</displayFormat>
+        <displayFormat>{YYYY}-{00000}-prelaunch</displayFormat>
         <label>Deposition ID</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
@@ -3386,6 +3473,242 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
         <fullName>External</fullName>
         <active>true</active>
         <label>External</label>
+        <picklistValues>
+            <picklist>BU_Invoicing__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BU_Production__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BU_Scheduling__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BU_Video__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Confirm_Client__c</picklist>
             <values>
@@ -3461,10 +3784,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
                 <default>false</default>
             </values>
             <values>
-                <fullName>AmTrust</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Amica</fullName>
                 <default>false</default>
             </values>
@@ -3514,10 +3833,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Horace Mann</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jeffries</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3578,10 +3893,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>USAA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>UnitedHealth</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3839,6 +4150,33 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Portal_Deposition_Services__c</picklist>
+            <values>
+                <fullName>Expedite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interpreter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Realtime</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rough Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Synchronized Video</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional Video</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Production_Region__c</picklist>
             <values>
                 <fullName>Austin</fullName>
@@ -3846,6 +4184,10 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3870,10 +4212,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Philadelphia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Rocklin</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4268,6 +4606,18 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
         <picklistValues>
             <picklist>Zoom_ID__c</picklist>
             <values>
+                <fullName>Everett</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jeremy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Michele</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NextGen Video</fullName>
                 <default>false</default>
             </values>
@@ -4277,18 +4627,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Room 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 10</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 11</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 12</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4311,24 +4649,248 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
                 <fullName>Room 6</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Room 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 8</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 9</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Internal</fullName>
         <active>true</active>
         <label>Internal</label>
+        <picklistValues>
+            <picklist>BU_Invoicing__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BU_Production__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BU_Scheduling__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BU_Video__c</picklist>
+            <values>
+                <fullName>Austin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chicago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corpus Christi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dallas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ft%2E Worth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Houston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lufkin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Philadelphia</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>San Antonio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tyler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wilmington</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Confirm_Client__c</picklist>
             <values>
@@ -4404,10 +4966,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
                 <default>false</default>
             </values>
             <values>
-                <fullName>AmTrust</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Amica</fullName>
                 <default>false</default>
             </values>
@@ -4457,10 +5015,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Horace Mann</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jeffries</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4521,10 +5075,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>USAA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>UnitedHealth</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4806,6 +5356,33 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Portal_Deposition_Services__c</picklist>
+            <values>
+                <fullName>Expedite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interpreter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Realtime</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rough Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Synchronized Video</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Traditional Video</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Production_Region__c</picklist>
             <values>
                 <fullName>Austin</fullName>
@@ -4813,6 +5390,10 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Boston</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4837,10 +5418,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Philadelphia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Rocklin</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5235,6 +5812,18 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
         <picklistValues>
             <picklist>Zoom_ID__c</picklist>
             <values>
+                <fullName>Everett</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Jeremy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Michele</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NextGen Video</fullName>
                 <default>false</default>
             </values>
@@ -5244,18 +5833,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Room 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 10</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 11</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 12</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5276,18 +5853,6 @@ includes(Deposition_Services__c, &quot;Synchronized Video&quot;)</formula>
             </values>
             <values>
                 <fullName>Room 6</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 8</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Room 9</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5334,17 +5899,6 @@ Special_Instructions__c = TRUE</errorConditionFormula>
         <errorMessage>Please QC before marking the job as complete</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Date_Cannot_Be_Changed_on_Confirmed_Jobs</fullName>
-        <active>true</active>
-        <errorConditionFormula>ISCHANGED( Deposition_Date__c )  &amp;&amp; (
-
-ISPICKVAL(Confirm_Client__c, &quot;Confirmed&quot;)  || 
-ISPICKVAL(Confirm_Reporter__c, &quot;Confirmed&quot;)  ||  ISPICKVAL(Confirm_Interpreter__c, &quot;Confirmed&quot;)  ||  
-ISPICKVAL( Confirm_Video_Tech__c , &quot;Confirmed&quot;) 
-)</errorConditionFormula>
-        <errorMessage>The deposition date cannot be changed on a confirmed job. To change the date, change the confirmation status for the client, reporter, videographer or interpreter.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Ensure_Future_Dates</fullName>
         <active>false</active>
         <description>Make sure that deposition are scheduled with future dates.</description>
@@ -5389,6 +5943,12 @@ ISPICKVAL(Transcript_Status__c,&quot;Not Received&quot;)
 $Profile.Name &lt;&gt; &quot;Public Site Profile&quot;</errorConditionFormula>
         <errorDisplayField>Deposition_Status__c</errorDisplayField>
         <errorMessage>The Deposition Status to cannot be changed to “Production Complete” if the Transcript, Exhibit or Video Status is “Not Received” or “In Production.”</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Update_With_Deposition_Date</fullName>
+        <active>false</active>
+        <errorConditionFormula>TODAY() &gt;= ( Deposition_Date__c -2)</errorConditionFormula>
+        <errorMessage>It is too close to the deposition to update these details online. Please email &lt;A HREF=&quot;mailto:Primary_Court_Reporting_Firm__r.Scheduling_Email_Address__c&quot;&gt; Primary_Court_Reporting_Firm__r.Scheduling_Email_Address__c&lt;/A&gt;</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Updates_on_Cancelled_Depos</fullName>
@@ -5527,7 +6087,7 @@ ISPICKVAL( Deposition_Status__c , &quot;Confirmed&quot;)</errorConditionFormula>
     <webLinks>
         <fullName>Test</fullName>
         <availability>online</availability>
-        <displayType>button</displayType>
+        <displayType>link</displayType>
         <encodingKey>UTF-8</encodingKey>
         <hasMenubar>false</hasMenubar>
         <hasScrollbars>true</hasScrollbars>
@@ -5543,12 +6103,7 @@ ISPICKVAL( Deposition_Status__c , &quot;Confirmed&quot;)</errorConditionFormula>
         <showsStatus>false</showsStatus>
         <url>https://composer.congamerge.com
 ?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_370}
-&amp;id={!Deposition__c.Id}
-&amp;TemplateId=a1z2K0000011Ru1 
-&amp;EmailTemplateId=00XA0000001f9FhMAI 
-&amp;EmailToId=0032K00002F4Tg6
-&amp;QueryId=a1r2K000007ObAm?pv0=a062K00001xp2kP
-&amp;defaultPDF=1</url>
+&amp;serverUrl={!API.Partner_Server_URL_290}
+&amp;id={!Deposition__c.Id}</url>
     </webLinks>
 </CustomObject>

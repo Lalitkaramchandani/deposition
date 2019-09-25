@@ -1,11 +1,13 @@
-<apex:component access="global">
-  <apex:attribute name="files"  type="AWS_S3_Object__c[]" description="This points to Deposition Record Id" />  
-  
-  <P>
+<apex:component access="global" allowDML="true" controller="DepositionFilesCtrl" >
+  <apex:attribute name="files"  type="AWS_S3_Object__c[]" description="This points to List of Files" />  
+  <apex:attribute name="depId"  type="String" assignTo="{!depositionId}" description="This points to DepositionId" /> 
+ 
+  <apex:outputPanel rendered="{!AND(awsFiles!=null,awsFiles.size>0 )}">
     Available File(s) 
+        <P>
     <TABLE BORDER="1" cellspacing="5" cellpadding="5" WIDTH="90%" style="border-collapse: collapse;">
         <TR><Th style="text-decoration:underline;">File Type</Th><Th style="text-decoration:underline;">File Name</Th><Th style="text-decoration:underline;">Size (KB)</Th></TR>
-        <apex:repeat value="{!files}" var="file">
+        <apex:repeat value="{!awsFiles}" var="file">
             <TR style="{!IF(file.File_Type__c!='Deposition Notice','display:none;','')}">
                 <TD>{!file.File_Type__c}</TD>
                 <TD><A HREF="{!$Setup.URL_Setting__c.Site_URL__c}/CommunitiesSecureDownload?id={!file.id}&firm={!SUBSTITUTE(file.Deposition__r.Primary_Court_Reporting_Firm__r.Name,'&','%26')}">
@@ -16,5 +18,7 @@
         </apex:repeat>
         
     </TABLE>
-  </p>  
+    </p>
+      {!fileAccess}
+    </apex:outputPanel>
 </apex:component>

@@ -2,21 +2,15 @@ public class CaseParser{
     public boolean error;
     public String message;  //OK
     public cls_data data;
-    public class cls_data { 
+    public class cls_data {
         public cls_caseObj caseObj;
         public String docket_entries_token;
-        public String attorneys_token;
-        public String parties_token;
-       
-
     }
     public class cls_caseObj {
         public cls_case_meta case_meta;
         public cls_parties[] parties;
         public cls_attorneys[] attorneys;
         public cls_judges[] judges;
-        public Boolean more_parties;
-        public Boolean more_attorneys; 
     }
     public class cls_case_meta {
         public String case_number;  //3:18-CV-00477
@@ -63,7 +57,7 @@ public class CaseParser{
         public String attorney_entity_id;   //EI6RCFI4E46S6EL6MIVFY7KVLBFQS1011
         public cls_potentials[] potentials;
         public cls_phones[] phones;
-        public String[] emails;
+        //public cls_emails[] emails;
     }
     
     public class cls_attorneys {

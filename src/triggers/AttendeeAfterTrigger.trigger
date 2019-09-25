@@ -10,5 +10,9 @@ trigger AttendeeAfterTrigger on Attendee__c (after Insert,After Update,After Del
    
    if(Trigger.isAfter && Trigger.isInsert)
        AttendeeHelper.sendEmailAlertForMultipleJobsOnSameDay(trigger.new);
-      
+    
+    //Send Email and SMS
+    if( Trigger.isAfter && Trigger.isInsert ){
+        AttendeeHelper.sendDepositionNotification( Trigger.new );
+    }
 }

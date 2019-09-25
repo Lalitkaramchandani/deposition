@@ -48,9 +48,9 @@
     <description>Represents a bucket and object name as it exists on Amazon S3</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -254,6 +254,11 @@
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Order Form</fullName>
+                    <default>false</default>
+                    <label>Order Form</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

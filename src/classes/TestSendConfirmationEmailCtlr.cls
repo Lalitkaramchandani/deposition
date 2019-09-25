@@ -3,33 +3,30 @@ private class TestSendConfirmationEmailCtlr {
 
     static testMethod void myUnitTest() {
         // TO DO: implement unit test
-        Firm__C firm = new Firm__c(Name='NextGen Reporting');
-        insert firm;
         Set<String> depIds=new Set<String>();
-        TestUtils tUtils = new TestUtils();
-        Deposition__c deposition = tUtils.createDeposition();
-        deposition.Deposition_Date__c = System.today();
-        depIds.add(deposition.id);
-        
-        Account account = tUtils.insertAccount();
-        Contact contact = tUtils.insertContact(account.ID);
-        List<Attendee__c>lstAttendees = new List<Attendee__c>();
-        lstAttendees.add(new Attendee__c(Contact__c=contact.id,Role__c='Scheduler',Deposition__c=deposition.id));
-        lstAttendees.add(new Attendee__c(Contact__c=contact.id,Role__c='Court Reporter',Deposition__c=deposition.id));
-        lstAttendees.add(new Attendee__c(Contact__c=contact.id,Role__c='Videographer/Technician',Deposition__c=deposition.id));
-        insert lstAttendees;
-        
+        TestFactory tFact = new TestFactory();
+        List<Deposition__c> depositions = tFact.depositions;
+        List<Attendee__c> attendees = tFact.attendees;
+        System.debug([SELECT id,name from Firm__c]);
+        Deposition__c dep = [select Primary_Court_Reporting_Firm__r.Name, name,Event_Type__c,Deposition_Status__c,Deposition_Time__c,Deposition_Date__c,Time_Zone__c,Event_Location__c
+                            ,(select id,Name,Contact__c,Contact__r.Name,Contact__r.Email,Role__c,Deposition__r.Confirm_Reporter__c,
+                            Deposition__r.Confirm_Client__c,Deposition__r.Confirm_Video_Tech__c,IsDeleted,Primary_Attorney__c 
+                            From Deposition_Roles__r WHERE Role__c IN ('Scheduler','Court Reporter','Videographer/Technician') AND Contact__r.Email!= NULL)
+                            from Deposition__c where Id=:depositions[1].Id
+                            LIMIT 1];
+        System.debug(dep);
+        System.debug(dep.Primary_Court_Reporting_Firm__r);
+        System.debug(depositions[1].Primary_Court_Reporting_Firm__c);
+        System.debug([SELECT id,name from Firm__c where id=:depositions[1].Primary_Court_Reporting_Firm__c]);
         
         SendConfirmationEmailCtlr cntrl = new SendConfirmationEmailCtlr();
-        cntrl.dummydeposition=deposition;
+        cntrl.dummydeposition=depositions[1];
+        cntrl.selectedFirm = dep.Primary_Court_Reporting_Firm__r.Name;
         cntrl.actionmethod();
+        cntrl.lstDepositionsModel.add(new SendConfirmationEmailCtlr.DepositionModel(dep));
         cntrl.sendEmail();
-        
+        cntrl.cancel();
         Test.startTest();
-        BatchSendConfirmationEmail bsm=new BatchSendConfirmationEmail();
-        bsm.DepositionSet=depIds;
-        Database.executeBatch(bsm);
-        Test.stopTest();
-    
+        
     }
 }

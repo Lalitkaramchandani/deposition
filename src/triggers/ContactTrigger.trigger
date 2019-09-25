@@ -9,7 +9,4 @@ trigger ContactTrigger on Contact(Before update) {
                 cont.Commission_Records__c= cont.Requested_Commission_Records__c;
         }
     }
-    if(Trigger.isUpdate && Trigger.isBefore){
-        ContactTriggerHandler.onBeforeUpdateRoutine(Trigger.new, Trigger.oldMap);
-    }
 }

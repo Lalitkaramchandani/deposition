@@ -1,3 +1,0 @@
-<apex:page controller="AccountsMatchOnlyWebhookCntrl" action="{!init}" contentType="application/javascript">
-  
-</apex:page>

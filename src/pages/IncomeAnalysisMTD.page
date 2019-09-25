@@ -1,0 +1,526 @@
+<apex:page language="en-US" id="page" lightningStylesheets="{!CONTAINS($User.UITheme,'Theme4')}"
+           standardStylesheets="{!Not(CONTAINS($User.UITheme,'Theme4'))}">
+    
+    <apex:includeScript value="{!$Resource.UtilJS}" />
+    <head>
+        <apex:outputPanel rendered="{!$User.UITheme =='Theme4d'}" >
+            <apex:stylesheet value="{!$Resource.translateelements}"/>
+            <apex:stylesheet value="{!$Resource.forceslds}"/>
+            
+    
+            <style>
+                body .requiredInput .requiredBlock::after,
+                .slds-vf-scope .requiredInput .requiredBlock::after{
+                    left: .25rem!important;
+                }
+                
+                .bPageBlock .pbHeader td.pbButton{
+                text-align:right;
+                }
+                .bPageBlock .pbBottomButtons td.pbButtonb {
+                margin-right: 1.5em;
+                    float: right;
+                }
+            </style>
+        </apex:outputPanel>
+    </head> 
+    
+  <style>
+      .headingcss{
+          text-align: center !important;
+            background-color: #26a1de;
+            color:#FFF;
+      }
+  </style>
+  <apex:slds />
+  <body style="margin:10px 10px 10px 10px">
+  
+  <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+       <thead>
+          <tr>
+              <td colspan="6" class="headingcss" ><b>Income Analysis MTD</b></td>
+          </tr>
+          <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" ></div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Invoiced Amount</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Resource Costs</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Gross Profit ($)</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Gross Profit (%)</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Projected Monthly Income</div>
+             </th>
+            
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Total</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Philadelphia</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+          </tr>
+          
+       </tbody>
+    </table>
+  <br/>
+  
+  <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+       <thead>
+          <tr>
+              <td colspan="5" class="headingcss" ><b>Invoiced Today</b></td>
+          </tr>
+          <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" ></div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Transcript</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Video</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Other</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Total</div>
+             </th>
+             
+            
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Total</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+            
+          </tr>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Philadelphia</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+            
+          </tr>
+          
+       </tbody>
+    </table>
+  <br/>
+  <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+       <thead>
+          <tr>
+              <td colspan="4" class="headingcss" ><b>Resource Payments</b></td>
+          </tr>
+          <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" ></div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Today</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >MTD</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Monthly Projection</div>
+             </th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Total</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             
+            
+          </tr>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Philadelphia</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             
+          </tr>
+          
+       </tbody>
+    </table>
+  <br/>
+  <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+       <thead>
+          <tr>
+              <td colspan="6" class="headingcss" ><b>Cash Received Today</b></td>
+          </tr>
+          <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" ></div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Payments Received Today</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Credits/Discounts Issued Today</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Net Received Today</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Net Received MTD</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Monthly Projection</div>
+             </th>
+            
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Total</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Philadelphia</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+          </tr>
+          
+       </tbody>
+    </table>
+  <br/>
+  <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+       <thead>
+          <tr>
+              <td colspan="6" class="headingcss" ><b>Scheduling Analysis</b></td>
+          </tr>
+          <tr class="slds-line-height_reset">
+              <th class="" scope="col">
+                <div class="slds-truncate" ></div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Booked Today</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Booked MTD</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Conducted Today</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Conducted MTD</div>
+             </th>
+             <th class="" scope="col">
+                <div class="slds-truncate" >Monthly Projection</div>
+             </th>
+            
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Total</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+          </tr>
+          <tr class="slds-hint-parent">
+            <td>
+                <div class="slds-truncate"> Philadelphia</div>
+            </td>             
+            
+             
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+             <td >
+                <div class="slds-truncate"> $ 511 </div>
+             </td>
+          </tr>
+          
+       </tbody>
+    </table>
+  <!-- 
+  
+  <table width="100%">
+      <tr>
+          <td colspan="5" style="text-align: center;">Invoiced Today</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Transcript</td>
+          <td>Video</td>
+          <td>Other</td>
+          <td>Total</td>
+          
+      </tr>
+       <tr>
+          <td>Total</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          
+      </tr>
+      <tr>
+          <td>Boston</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          
+      </tr>
+  </table>
+  <table width="100%">
+      <tr>
+          <td colspan="4" style="text-align: center;">Resource Payments</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Today</td>
+          <td>MTD</td>
+          <td>Monthly Projection</td>
+          
+          
+      </tr>
+       <tr>
+          <td>Total</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          
+          
+      </tr>
+      <tr>
+          <td>Boston</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+         
+          
+      </tr>
+  </table>
+  
+  <table width="100%">
+      <tr>
+          <td colspan="6" style="text-align: center;">Cash Received Today</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Payments Received Today</td>
+          <td>Credits/Discounts Issued Today</td>
+          <td>Net Received Today</td>
+          <td>Net Received MTD</td>
+          <td>Monthly Projection</td>
+      </tr>
+       <tr>
+          <td>Total</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          
+          
+      </tr>
+      <tr>
+          <td>Boston</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          
+      </tr>
+  </table>
+  
+  <table width="100%">
+      <tr>
+          <td colspan="6" style="text-align: center;">Scheduling Analysis</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>Booked Today</td>
+          <td>Booked MTD</td>
+          <td>Conducted Today</td>
+          <td>Conducted MTD</td>
+          <td>Monthly Projection</td>
+      </tr>
+       <tr>
+          <td>Total</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          
+          
+      </tr>
+      <tr>
+          <td>Boston</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          <td>$ 511</td>
+          
+      </tr>
+  </table>
+  -->
+  
+  </body>
+  
+</apex:page>

@@ -49,26 +49,14 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <fields>
-        <fullName>BaseUrl__c</fullName>
-        <externalId>false</externalId>
-        <formula>LEFT($Api.Enterprise_Server_URL_450 , FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_450))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>BaseUrl</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <fields>
         <fullName>BeingTracked__c</fullName>
         <defaultValue>false</defaultValue>
@@ -134,7 +122,7 @@
         <externalId>false</externalId>
         <label>Case Management Conference</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -260,11 +248,6 @@
                     <default>false</default>
                     <label>Rejected</label>
                 </value>
-                <value>
-                    <fullName>Related</fullName>
-                    <default>false</default>
-                    <label>Related</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -350,11 +333,6 @@
                     <fullName>Other Product Liability</fullName>
                     <default>false</default>
                     <label>Other Product Liability</label>
-                </value>
-                <value>
-                    <fullName>Motor Vehicle</fullName>
-                    <default>false</default>
-                    <label>Motor Vehicle</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -510,27 +488,6 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Expert_Witness_Probability__c</fullName>
-        <externalId>false</externalId>
-        <label>Expert Witness Probability</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Expert_Witness_Used__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Expert Witness Used</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Filing_Date__c</fullName>
         <externalId>false</externalId>
         <label>Filing Date</label>
@@ -544,7 +501,7 @@
         <externalId>false</externalId>
         <label>Followup Date</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -561,49 +518,13 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>High_Profile_2__c</fullName>
-        <externalId>false</externalId>
-        <label>High Profile #2</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>High_Profile_Case__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>High Profile Case</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>High_Profile_Prob__c</fullName>
-        <externalId>false</externalId>
-        <label>High Profile Probability</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>High_Profile_Probability__c</fullName>
-        <externalId>false</externalId>
-        <label>High Profile Probability</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Industry__c</fullName>
@@ -678,27 +599,6 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Likelihood_of_Lots_of_Parties__c</fullName>
-        <externalId>false</externalId>
-        <label>Likelihood of Lots of Parties</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>MDL__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>MDL</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Notes__c</fullName>
         <externalId>false</externalId>
         <label>Notes</label>
@@ -744,26 +644,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Recommended_Email_Blast_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Recommended Email Blast Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Related_JSON_OR_CSV__c</fullName>
-        <externalId>false</externalId>
-        <label>Related JSON/CSV</label>
-        <length>20</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Sales_Status__c</fullName>
         <externalId>false</externalId>
         <label>Sales Status</label>
@@ -775,16 +655,6 @@
             <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
-                <value>
-                    <fullName>Reviewed</fullName>
-                    <default>false</default>
-                    <label>Reviewed</label>
-                </value>
-                <value>
-                    <fullName>Pending Info</fullName>
-                    <default>false</default>
-                    <label>Pending Info</label>
-                </value>
                 <value>
                     <fullName>To Pursue</fullName>
                     <default>false</default>
@@ -911,116 +781,7 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <fields>
-        <fullName>X60_Days_Past_Filing__c</fullName>
-        <externalId>false</externalId>
-        <formula>Filing_Date__c + 60</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>60 Days Past Filing</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
     <label>Case Lead</label>
-    <listViews>
-        <fullName>AIG_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Courthouse__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>AIG</value>
-        </filters>
-        <filters>
-            <field>Courthouse__c</field>
-            <operation>contains</operation>
-        </filters>
-        <label>AIG Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>AT_T_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>AT&amp;T</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>AT&amp;T Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Adversary_Proceedings_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Case_Number__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Sales_Status__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Adversary</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Adversary Proceedings Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Akin_Gump_Case_Lead</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Akin Gump</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Akin Gump Case Leads</label>
-    </listViews>
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
@@ -1033,715 +794,6 @@
             <operation>notEqual</operation>
         </filters>
         <label>All</label>
-    </listViews>
-    <listViews>
-        <fullName>AmTrust_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Case_Number__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Sales_Status__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Case_Type__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>AmTrust</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>AmTrust Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>ArbitrationCL</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Arbitration</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Arbitration Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Bracewell</fullName>
-        <columns>NAME</columns>
-        <columns>Case_Number__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Sales_Status__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Bracewell</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected,Related</value>
-        </filters>
-        <filters>
-            <field>Sales_Status__c</field>
-            <operation>equals</operation>
-        </filters>
-        <label>Bracewell</label>
-    </listViews>
-    <listViews>
-        <fullName>Brown_Rudnick_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Brown Rudnick</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Brown Rudnick Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>CMC_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>CMC Docket</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>CMC Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Cleary_Gottlieb_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Cleary Gottlieb</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Cleary Gottlieb Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Deposition_Docket_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Case_Number__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Deposition Docket</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Deposition Docket Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Deutsche_Bank_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Deutsche</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Deutsche Bank Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Discovery_Deadlines_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Discovery Deadlines</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Discovery Deadlines Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Fried_Frank_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Fried Frank</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Fried Frank Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Goldman_Sachs_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Case_Number__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Sales_Status__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Goldman Sachs</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Related,Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Goldman Sachs Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Kirkland_Ellis_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Kirkland</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Kirkland Ellis Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Liberty_Mutual_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Liberty Mutual</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Liberty Mutual Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>McKool_Smith_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>McKool Smith</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>McKool Smith Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Medtronic_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Medtronic</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Medtronic Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Milbank_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Milbank</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Milbank Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Paul_Hastings_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Paul Hastings</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Paul Hastings Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Paul_Weiss_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Paul Weiss</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Paul Weiss Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Sidley_Austin_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Sidley Austin</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Sidley Austin Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Sullivan_Cormwell_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Sullivan &amp; Cromwell</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Sullivan Cormwell Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>TX_Cases</fullName>
-        <columns>NAME</columns>
-        <columns>Notes__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Courthouse__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Case_Type__c</columns>
-        <columns>Case_Type_Category__c</columns>
-        <columns>Case_Type_Subcategory__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>State__c</field>
-            <operation>contains</operation>
-            <value>TX</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Dismissed,Judgment Entered,Other Disposed,Terminated,Settled,Rejected,Related</value>
-        </filters>
-        <filters>
-            <field>Sales_Status__c</field>
-            <operation>equals</operation>
-        </filters>
-        <filters>
-            <field>Courthouse__c</field>
-            <operation>notContain</operation>
-            <value>Bexar</value>
-        </filters>
-        <filters>
-            <field>Filing_Date__c</field>
-            <operation>greaterThan</operation>
-            <value>1/1/2016</value>
-        </filters>
-        <label>TX Cases</label>
-    </listViews>
-    <listViews>
-        <fullName>Thermo_Fisher_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Case_Number__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Thermo</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Thermo Fisher Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Trade_Secrets_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Trade Secrets</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Trade Secrets Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>UHG_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>UnitedHealth</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>UHG Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Weil</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Notes__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Updated__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Weil</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <filters>
-            <field>Sales_Status__c</field>
-            <operation>equals</operation>
-        </filters>
-        <label>Weil Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>Winston_Strawn_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Dockets__c</columns>
-        <columns>Case_Name__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>Discovery_Deadline__c</columns>
-        <columns>Docket_Alarm__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Last_Deposition__c</columns>
-        <columns>Last_Updated__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>Winston &amp; Strawn</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
-        </filters>
-        <label>Winston Strawn Case Leads</label>
-    </listViews>
-    <listViews>
-        <fullName>X3M_Case_Leads</fullName>
-        <columns>NAME</columns>
-        <columns>Case_Number__c</columns>
-        <columns>Number_of_Parties__c</columns>
-        <columns>Parent_Case__c</columns>
-        <columns>Case_Status__c</columns>
-        <columns>High_Profile_Case__c</columns>
-        <columns>Filing_Date__c</columns>
-        <columns>Notes__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Source_Saved_Search__c</field>
-            <operation>contains</operation>
-            <value>3M</value>
-        </filters>
-        <filters>
-            <field>Case_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected,Related</value>
-        </filters>
-        <label>3M Case Leads</label>
     </listViews>
     <nameField>
         <label>Case Leads Name</label>
@@ -1818,10 +870,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Related</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Settled</fullName>
                 <default>false</default>
             </values>
@@ -1850,14 +898,6 @@
             </values>
             <values>
                 <fullName>Debt Collection</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Motor Vehicle</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Yet Classified</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1900,10 +940,6 @@
             </values>
             <values>
                 <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Motor Vehicle</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1976,15 +1012,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Pending Info</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Proposal Submitted</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reviewed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2118,14 +1146,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Motor Vehicle</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Yet Classified</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Small Claim</fullName>
                 <default>false</default>
             </values>
@@ -2165,10 +1185,6 @@
             </values>
             <values>
                 <fullName>Chapter 7</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Motor Vehicle</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2241,15 +1257,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Pending Info</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Proposal Submitted</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reviewed</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2291,11 +1299,9 @@
     <searchLayouts>
         <listViewButtons>Delete_Cases</listViewButtons>
         <listViewButtons>Group_Selected</listViewButtons>
-        <searchResultsAdditionalFields>Filing_Date__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Case_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Case_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case_Category__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Case_Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Courthouse__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

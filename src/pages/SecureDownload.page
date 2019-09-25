@@ -1,4 +1,5 @@
-<apex:page title="Secure Download" standardController="AWS_S3_Object__c" sidebar="false" extensions="GoogleDriveAuthenticationCntrl">
+<apex:page title="Secure Download" standardController="AWS_S3_Object__c" sidebar="false" extensions="GoogleDriveAuthenticationCntrl"
+showHeader="false">
    <style>
      #upload-percentage{
             position:absolute;
@@ -118,12 +119,6 @@
                                          $('<a></a>').attr('download', "{!AWS_S3_Object__c.File_Name__c}").attr('href', url).appendTo(document.body)[0].click();
                                          $("#drive-box").hide();
                                          $("#upload-percentage").hide();   
-                                         Visualforce.remoting.Manager.invokeAction(
-                                         '{!$RemoteAction.GoogleDriveAuthenticationCntrl.updateFileDownloadLog}',
-                                         '{!AWS_S3_Object__c.Id}',
-                                         function(result3, event){
-                                             
-                                         });
                                     }
                                  }, 
                     {escape: true}
@@ -139,7 +134,8 @@
            $("#upload-percentage").hide();                        
        }
     </script>
-        
+    <c:CommunityResources />
+    <c:CommunityHeader />
      <a  href="data:application/octet-stream" id="textLink" download="{!AWS_S3_Object__c.File_Name__C}"></a>
     <br/><br/>
     <a href="/{!AWS_S3_Object__c.Deposition__c}" >Go Back To Deposition</a>
@@ -148,4 +144,5 @@
     <div id="drive-box">
        <div id='upload-percentage' class='flash'>Downloading...</div>
    </div>
+   <c:CommunityFooter />
 </apex:page>

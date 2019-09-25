@@ -46,9 +46,9 @@
     <description>Which law firms represent which corporations?</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -106,18 +106,6 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Client_Commission_Profile__c</fullName>
-        <externalId>false</externalId>
-        <formula>Client__r.Commission__r.Name</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Client Commission Profile</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Client__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -156,30 +144,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Firm_Commission_Assignment__c</fullName>
-        <externalId>false</externalId>
-        <formula>Law_Firm__r.Commission__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Firm Commission Assignment</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Firm_Type__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(INCLUDES( Law_Firm__r.Marketing_Segments__c, &quot;AMLAW 100&quot;), &quot;AMLAW 100&quot;, NULL)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Firm Type</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Full_Attorney_Email__c</fullName>
         <externalId>false</externalId>
         <formula>BLANKVALUE( Attorney__r.Email ,  Unicourt_Email_Address__c )</formula>
@@ -194,7 +158,8 @@
     <fields>
         <fullName>Full_Attorney_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Attorney__c), Unicourt_Attorney_First_Name__c&amp;&quot; &quot;&amp;Unicourt_Attorney_Last_Name__c, Attorney__r.Contact_Name__c )</formula>
+        <formula>Attorney__r.Contact_Name__c  + Unicourt_Attorney_First_Name__c + &quot; &quot; + Unicourt_Attorney_Last_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Full Attorney Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -332,28 +297,6 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Unicourt_Attorney_Address__c</fullName>
-        <externalId>false</externalId>
-        <label>Unicourt Attorney Address</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Unicourt_Attorney_City__c</fullName>
-        <externalId>false</externalId>
-        <label>Unicourt Attorney City</label>
-        <length>100</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Unicourt_Attorney_First_Name__c</fullName>
         <externalId>false</externalId>
         <label>Attorney First Name Text</label>
@@ -380,28 +323,6 @@
         <externalId>false</externalId>
         <label>Attorney Last Name Text</label>
         <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Unicourt_Attorney_State__c</fullName>
-        <externalId>false</externalId>
-        <label>Unicourt Attorney State</label>
-        <length>100</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Unicourt_Attorney_ZipCode__c</fullName>
-        <externalId>false</externalId>
-        <label>Unicourt Attorney ZipCode</label>
-        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -440,24 +361,6 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
-    </fields>
-    <fields>
-        <fullName>Unicourt_Mailing_Address2__c</fullName>
-        <externalId>false</externalId>
-        <formula>Unicourt_Attorney_Address__c+ 
-IF(Not(IsBlank(Unicourt_Attorney_Address__c)), &apos;, &apos;, &apos;&apos;) +  
-Unicourt_Attorney_City__c +
-IF(Not(IsBlank(Unicourt_Attorney_City__c)), &apos;, &apos;, &apos;&apos;) + 
-Unicourt_Attorney_State__c+
-IF(Not(IsBlank(Unicourt_Attorney_State__c)), &apos;, &apos;, &apos;&apos;) + 
-Unicourt_Attorney_ZipCode__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Unicourt Mailing Address 2</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Unicourt_Mailing_Address__c</fullName>

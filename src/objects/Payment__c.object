@@ -47,9 +47,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -85,7 +85,7 @@
         <relationshipName>Payments</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -104,7 +104,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Paid in Full</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -113,7 +113,7 @@
         <externalId>false</externalId>
         <label>Payment Method</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -141,24 +141,19 @@
                     <label>Credit Card</label>
                 </value>
                 <value>
-                    <fullName>Credit Memo</fullName>
-                    <default>false</default>
-                    <label>Credit Memo</label>
-                </value>
-                <value>
                     <fullName>Lockbox</fullName>
                     <default>false</default>
                     <label>Lockbox</label>
                 </value>
                 <value>
+                    <fullName>Credit Memo</fullName>
+                    <default>false</default>
+                    <label>Credit Memo</label>
+                </value>
+                <value>
                     <fullName>Misc. Receivables</fullName>
                     <default>false</default>
                     <label>Misc. Receivables</label>
-                </value>
-                <value>
-                    <fullName>Wire Transfer</fullName>
-                    <default>false</default>
-                    <label>Wire Transfer</label>
                 </value>
                 <value>
                     <fullName>Write Off</fullName>
@@ -173,7 +168,7 @@
         <externalId>false</externalId>
         <label>Reason for Credit</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -208,7 +203,7 @@
         <externalId>false</externalId>
         <label>Type</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -234,11 +229,6 @@
                     <default>false</default>
                     <label>Finance Charge</label>
                 </value>
-                <value>
-                    <fullName>Intercompany</fullName>
-                    <default>false</default>
-                    <label>Intercompany</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -251,7 +241,7 @@
     <nameField>
         <displayFormat>P-{0000000}</displayFormat>
         <label>Payment No</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Payments</pluralLabel>
@@ -259,7 +249,7 @@
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>Lock_Payment_Item</fullName>
-        <active>false</active>
+        <active>true</active>
         <errorConditionFormula>(ISNEW()=false &amp;&amp; 
 (ISCHANGED( Amount__c ) || ISCHANGED( Date__c )) &amp;&amp; 
 (MONTH( PRIORVALUE(Date__c) ) &lt; MONTH(TODAY()) || YEAR(PRIORVALUE(Date__c)) &lt; YEAR(TODAY()) || MONTH( Date__c ) &lt; MONTH(TODAY()) || YEAR(Date__c) &lt; YEAR(TODAY()) ) 

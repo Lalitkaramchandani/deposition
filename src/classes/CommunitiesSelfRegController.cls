@@ -122,12 +122,6 @@ public class CommunitiesSelfRegController {
                 mail.setHtmlBody(emailBody );
                 mail.setToAddresses(new list<string>{firm.Community_Admin_Email__c != NULL ? firm.Community_Admin_Email__c : 'jprimuth@nextgenreporting.com'});
                 mail.setSubject('New User Registration Request');
-                List<OrgWideEmailAddress >lstOrgWideEmails = [select Id,Address from OrgWideEmailAddress WHERE
-                                Address ='premiervideo@lexitaslegal.com'];
-                if (lstOrgWideEmails.size()>0) {
-                    mail.setOrgWideEmailAddressId(lstOrgWideEmails[0].Id);
-                }                  
-                                
                 Messaging.sendEmail(new Messaging.Singleemailmessage[] { mail});
                 return null;
             }

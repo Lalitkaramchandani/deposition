@@ -1,0 +1,120 @@
+<apex:page controller="DepositionConfirmationController" action="{!updateDeposition}"
+    title="Confirm Participation" standardstylesheets="false" cache="false" showHeader="false"
+    sidebar="false">
+
+    <head>
+        <title>NextGen Reporting | Confirm </title>
+        <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />
+        <style>
+            .pbHeader table td.pbTitle h2{
+                font-size: larger;
+                font-family: inherit;
+            }
+            .pbBody{
+                padding-left:1%;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <c:CommunityResources title="Deposition Confirmation" />
+        <c:firmHeader firm="{!firm}" />
+        <!--<apex:outputText escape="false" value="{!firm.Community_Header__c}"></apex:outputText>-->
+        <div id="main_container">
+            <div class="clear"></div>
+            <apex:outputPanel rendered="{!!isError}" style="margin:10px;padding:20px;" layout="none">
+                <div style="margin-top:50px">
+                    <apex:pageBlock >
+                        Thank you for confirming your participation with the deposition on&nbsp; <apex:outputField value="{!Deposition.Deposition_Date__c}" />. The main details are listed below:
+                    </apex:pageBlock>
+                    <br/>
+                    <apex:pageBlock >
+                        <br/>
+                        <table cellspacing="0" border="0">
+                            <tr>
+                                <td><strong>Deposition Date: </strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Deposition_Date__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deposition Time: </strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Deposition_Time__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Primary Deposition Location:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Event_Location__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Case Name/Caption:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Case_Name__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deponent Name:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Deponent_Name__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hiring Attorney:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Hiring_Attorney__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hiring Firm:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Hiring_Firm__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deposition Services:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Deposition_Services__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Event Type:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Event_Type__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Expedite:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Expedite__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transcript Due From Reporter:</strong></td>
+                                <td>
+                                    <apex:outputField value="{!Deposition.Transcript_Due_From_Reporter_Computed__c}"
+                                    />
+                                </td>
+                            </tr>
+                        </table>
+                    </apex:pageBlock>
+                    <!--
+                    <br/> 
+                    {!message}
+                    -->
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!isError}" style="" layout="none">
+                <div style="margin-top:50px;color:#cc0000;">
+                    The link seems invalid. Please check the link and try again
+                </div>
+            </apex:outputPanel>
+        </div>
+        <c:firmFooter firm="{!firm}" />
+        <!--<apex:outputText escape="false" value="{!firm.Community_Footer__c}"></apex:outputText>-->
+    </body>
+
+</apex:page>

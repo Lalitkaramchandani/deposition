@@ -1,10 +1,10 @@
-<apex:component controller="NewCaseAsgmtTemplateCtlr" access="global"  >
+<apex:component controller="NewCaseAsgmtTemplateCtlr" access="global" >
     <apex:attribute name="caseLead" description="related Case Lead Id."
                   type="String" assignTo="{!caseleadId}"/>
     
        <P>
     <TABLE BORDER="1" cellspacing="5" cellpadding="5" WIDTH="90%" style="border-collapse: collapse;">
-        <TR><Th style="text-decoration:underline;">Client</Th><Th style="text-decoration:underline;">Law Firm</Th><Th style="text-decoration:underline;">Attorney</Th><Th style="text-decoration:underline;">Attorney Email</Th></TR>
+        <TR><Th style="text-decoration:underline;">Client</Th><Th style="text-decoration:underline;">Law Firm</Th><Th style="text-decoration:underline;">Attorney</Th></TR>
         <apex:repeat value="{!commissionList}" var="comm">
             <tr>
                             <td colspan="3" style="font-weight:bold">{!comm}</td>
@@ -27,11 +27,6 @@
                 	<span style="{!IF(ISNULL(rep.Attorney__c),'display:none;','')}">
                       <a href="{!$Site.BaseUrl}/{!rep.Attorney__c}" target="_blank"> {!rep.Attorney__r.name} </a></span>
                    <span style="{!IF(NOT(ISNULL(rep.Attorney__c)),'display:none;','')}" >{!rep.Unicourt_Attorney_First_Name__c} {!rep.Unicourt_Attorney_Last_Name__c}</span>
-                </TD>
-                <TD >
-                	<span style="{!IF(ISNULL(rep.Full_Attorney_Email__c),'display:none;','')}">
-                       {!rep.Full_Attorney_Email__c} </span>
-                   
                 </TD>
              </TR>
         </apex:repeat>

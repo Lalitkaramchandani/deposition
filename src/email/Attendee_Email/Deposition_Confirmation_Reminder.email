@@ -1,0 +1,57 @@
+<messaging:emailTemplate subject="Confirming Reporter for {!Relatedto.Day_Of_The_Week__c} - {!Relatedto.Deponent_Name__c} - {!Relatedto.Name}" recipientType="Contact" relatedToType="Deposition__c">
+<messaging:htmlEmailBody >
+    <apex:outputtext escape="false" value="{!Relatedto.Primary_Court_Reporting_Firm__r.Email_Header_HTML__c}" />     
+      <div id="main_container" class="emailMain_Container">
+        <p>Click on this link to confirm your presence. <a href="{!$Label.SiteURL}/DepositionConfirmation?depositionId={!Relatedto.Id}&contactId={!Recipient.Id}">Click Here</a></p>
+        <P>  
+        Thank you for being available to cover the {!Relatedto.Event_Type_Lowercase__c} of {!Relatedto.Deponent_Name__c} on {!Relatedto.Day_Of_The_Week__c},&nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!Relatedto.Deposition_Date__c}" /> </apex:outputText> at {!Relatedto.Deposition_Time__c} {!Relatedto.Time_Zone__c}. <U><B>{!Relatedto.Reporter_Instructions__c}</B></U>
+        </P>
+        <P>
+        <B>{!Relatedto.Networking_Reminder_for_Conf_Emails__c}</B>               
+        </P>
+        <P>
+        This email confirms the assignment details listed below. Please review then <A HREF="{!$Label.SiteURL}/ConfirmDeposition?id={!Relatedto.Name}&code={!Relatedto.Id}&type=R">click here to confirm receipt of job information</A>. 
+        </P>
+        <P>
+        <TABLE CELLPADDING="5" border="0">
+        <TR><TD>Date:</TD><TD><apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!Relatedto.Deposition_Date__c}" /> </apex:outputText></TD></TR>
+        
+        <TR><TD>Start Time:</TD><TD>{!Relatedto.Deposition_Time__c} {!Relatedto.Time_Zone__c}<apex:outputLabel rendered="{!Relatedto.Estimated_Duration__c != NULL && Relatedto.Estimated_Duration__c !=''}" value=" – Estimated duration: {!Relatedto.Estimated_Duration__c}"></apex:outputLabel> </TD></TR>
+        <TR><TD>Scheduling Client:</TD><TD>{!Relatedto.Hiring_Attorney__c} -  {!Relatedto.Hiring_Firm__c}</TD></TR>
+        <TR><TD>Case Name/Caption:</TD><TD>{!Relatedto.Case_Name__c}</TD></TR>
+        <TR><TD>Witness:</TD><TD>{!Relatedto.Deponent_Name__c}</TD></TR>
+        <TR><TD VALIGN="TOP">Location:</TD><TD>
+        <apex:outputfield value="{!relatedTo.Event_Location__c}"/>
+        </TD></TR>
+        <TR><TD>Services Requested: </TD><TD>{!Relatedto.Deposition_Services__c}</TD></TR>
+        <TR><TD>Special Instructions: </TD><TD>{!Relatedto.Reporter_Instructions__c}</TD></TR>
+        <TR><TD>Anticipated Due Date:</TD><TD><apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!Relatedto.Transcript_Due_From_Reporter_Computed__c}" /> </apex:outputText>  {!IF(Relatedto.Expedite__c="None",""," - " + Relatedto.Expedite__c)}</TD></TR>
+        <TR><TD>Job #:</TD><TD>{!Relatedto.Name}</TD></TR>
+        </TABLE>
+        </P>
+        <P>{!IF(CONTAINS(Relatedto.Deposition_Services__c, 'LegalView'),"LegalView is our remote video viewing system. If we have specifically asked you to assist us with this service, please see attached/below instructions. If we have not, there is NOTHING that you have to do or worry about. Our people will handle it all from our office or the location itself.", "")}
+        <B>{!Relatedto.Networking_Reminder_2_for_Conf_Emails__c}</B>
+        </P>
+        <P>
+         {!IF(CONTAINS(relatedto.Deposition_Services__c, 'Realtime'),"Please arrive at least 45 minutes early.", "Please arrive at least a half hour early.")} After the job, we'll send you an email requesting a recap on the {!Relatedto.Event_Type_Lowercase__c}.
+        </P>
+        <p>
+            <c:DepositionFiles files="{!RelatedTo.AWS_S3_Objects__r}" />
+        </p>
+        <P>        
+        When the transcript is complete, please <A HREF="{!$Label.SiteURL}/uploadfile?id={!Relatedto.Name}&email={!recipient.Email}">upload it through this link along with any other scanned exhibits</A>.
+        </p>
+        <P>
+        Please contact us with any questions by replying to this email or calling {!Relatedto.Primary_Court_Reporting_Firm__r.Phone__c}.
+        </P>
+        
+        <P>Thank you,
+        </P>
+        <P>
+        {!$User.FirstName}
+        </P>
+    </div>
+    <apex:outputtext escape="false" value="{!Relatedto.Primary_Court_Reporting_Firm__r.Email_Footer_HTML__c}" />   
+</messaging:htmlEmailBody>
+
+</messaging:emailTemplate>

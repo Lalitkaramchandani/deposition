@@ -1,4 +1,4 @@
-<apex:page standardController="Invoice__c" title="Invoice {!Invoice__c.Name}" lightningStylesheets="true" extensions="InvoiceNotification_ext">
+<apex:page standardController="Invoice__c" lightningStylesheets="true" extensions="InvoiceNotification_ext">
    
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
  

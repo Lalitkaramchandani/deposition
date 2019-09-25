@@ -1,18 +1,36 @@
 <apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="ConfirmDepositionController" action="{!updateDeposition}">
-    <c:CommunityResources title="Confirm"/>
+    <head>
+        <title>{!firm.Name} | Confirm </title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width"/>
+        <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />
+        <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery-latest.js')}" />
+        <link href="{!URLFOR($Resource.nextgendepositions, 'nextgendepositions/style.css')}" rel="stylesheet" type="text/css"/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
+        <style>
+            .pbHeader table td.pbTitle h2{
+                font-size: larger;
+                font-family: inherit;
+            }
+            .pbBody{
+                padding-left:1%;
+            }
+        </style>
+    </head>
+    <!--<c:CommunityResources title="Confirm"/>-->
     <body>
         <div class="wrapper">
-                
-                <c:CommunityHeader />
- 
-                <div class="schedule-depositions">
-                    <div class="schedule">
-                        <h1>Confirm</h1>
-
-                        <div class="scheduleform">
-
-                               <apex:pageMessages ></apex:pageMessages>
-                               <div class="message" style="{!IF(isSucess,'','display:none;')}color: #3d537a;" >
+            <c:firmHeader firm="{!firm}" />
+            <!--<c:CommunityHeader />-->
+            <div class="schedule-depositions">
+                <div class="schedule">
+                    <h1>Confirm</h1>
+                    
+                    <div class="scheduleform">
+                        
+                        <apex:pageMessages ></apex:pageMessages>
+                        <div class="message" style="{!IF(isSucess,'','display:none;')}color: #3d537a;" >
                             <span><h4>Thank you for confirming tomorrow&#39;s {!deposition.Event_Type_Lowercase__c}. The details of this {!deposition.Event_Type_Lowercase__c} are below. Please contact us immediately if any information is incorrect or has changed. We are available 24 hours a day, worldwide, to assist you.<br/><P></P></h4>
                                 <TABLE>
                                     <TR><TD>Case Name:</TD><TD>{!deposition.Case_Name__c}</TD></TR>
@@ -28,16 +46,15 @@
                         
                     </span>
                 </div>
-                <!-- SFDC STUFF ENDS HERE -->                            
-                        </div>
-
-                    </div>
-
-                </div>
-             
-                <c:CommunityFooter />
+                <!-- SFDC STUFF ENDS HERE -->            
             </div>
+            
+        </div>
         
+    </div>
+            <c:firmFooter firm="{!firm}" />
+        <!--<c:CommunityFooter />-->
+        </div>
     </body>
-    
+
 </apex:page>

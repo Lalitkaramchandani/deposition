@@ -7,7 +7,7 @@ public class SelectFirmContactExtn {
         cont= (Contact)controller.getRecord();
         //User usr = [select Default_CR_Firm__c FROM User WHERE Id=:Userinfo.getUserid()];
         for(Firm__c firm: [select id,Name
-                                 FROM Firm__c  WHERE Exclude_From_Statement__c = false]){
+                                 FROM Firm__c ]){
             lstFirms.add(new SelectOption(firm.id,firm.Name));
             if(firm.Name =='Lexitas')
                 selectedFirm = firm.id;
@@ -23,8 +23,7 @@ public class SelectFirmContactExtn {
             cont.put('X150_180__c',  0);
             cont.put('Over_180__c',  0);
             for(Invoice__c invoice:[select Id,Due_Amount__c,Days_Past_Due_Bucket__c FROM Invoice__c
-                         WHERE (Attendee__r.Contact__c=:cont.id OR Contact__c=:cont.id) AND Due_Amount__c >=0
-                         AND Deposition__r.Primary_Court_Reporting_Firm__r.Exclude_From_Statement__c=false ]){
+                         WHERE (Attendee__r.Contact__c=:cont.id OR Contact__c=:cont.id) AND Due_Amount__c >=0]){
                 if(invoice.Days_Past_Due_Bucket__c == '0-30')
                     cont.put('X0_30__c' , (Decimal)cont.get('X0_30__c')+invoice.Due_Amount__c);
                 else if(invoice.Days_Past_Due_Bucket__c == '30-60')

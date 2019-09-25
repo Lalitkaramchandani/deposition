@@ -1,5 +1,5 @@
-<apex:page title="Lexitas&nbsp;|&nbsp;  Thank You" showHeader="false" standardStylesheets="true">
+<apex:page title="NextGen Reporting&nbsp;|&nbsp;  Thank You" showHeader="false" standardStylesheets="true">
 <p>Thank you for scheduling your deposition. </p>
 <P>We will follow up with you to confirm this event.</p>
-Would you like to <A HREF="http://nextgen.force.com">book another deposition</A>, learn more about <A HREF="http://lexitaslegal.com/premier" target="_top">our services</A>, or <a href="mailto:premier@lexitaslegal.com">email our scheduling department?</A>
+Would you like to <A HREF="http://nextgen.force.com">book another deposition</A>, learn more about <A HREF="http://lexitasng.com/services" target="_top">our services</A>, or <a href="mailto:scheduling@lexitasng.com">email our scheduling department?</A>
 </apex:page>

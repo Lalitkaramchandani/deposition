@@ -46,9 +46,9 @@
     <description>Interesting updates to case leads</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -81,7 +81,7 @@
         <fullName>Docket_Update__c</fullName>
         <externalId>false</externalId>
         <label>Docket Update</label>
-        <length>131071</length>
+        <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>

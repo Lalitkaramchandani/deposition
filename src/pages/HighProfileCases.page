@@ -37,26 +37,23 @@
             </apex:pageBlock>
             <apex:pageBlock id="mainBlock" rendered="{!!isReadOnly}" >
            
-                <c:PageBlockTableEnhancer targetPbTableIds="HPCTable" paginate="true" enableExport="false" defaultPageSize="50" pageSizeOptions="5,10,25,50,100,1000" />    
+                <c:PageBlockTableEnhancer targetPbTableIds="HPCTable" paginate="true" enableExport="false" defaultPageSize="50" pageSizeOptions="5,10,25,50,100" />    
                 <apex:pageBlockButtons >
                     <apex:commandButton action="{!save}" value="Save" reRender="mainBlock" status="status" />
                 </apex:pageBlockButtons>
                 <apex:pageBlockSection columns="1">
-                
+				
                 <apex:pageBlockTable id="HPCTable" value="{!HPCaseList}" var="case">
                     
-                    <apex:column headerValue="Case Name" width="6%">
+                    <apex:column headerValue="Case Name" width="8%">
                       
                         <apex:outputLink target="_blank" value="/{!case.Id}" >{!case.Name}</apex:outputLink>
                         
                     </apex:column>
-                    <apex:column headerValue="Filing Date" width="6%" >
+                    <apex:column headerValue="Filing Date" width="8%" >
                         <apex:outputField value="{!case.Filing_Date__c}" />
                     </apex:column>
-                    <apex:column headerValue="Disc. Due" width="6%" >
-                        <apex:outputField value="{!case.Discovery_Deadline__c}" />
-                    </apex:column>
-                    <apex:column headerValue="Case Type" width="6%">
+                    <apex:column headerValue="Case Type" width="8%">
                         <apex:outputField value="{!case.Case_Type__c}" />
                     </apex:column>
                     <apex:column headerValue="Law Firms" width="20%" >
@@ -85,22 +82,19 @@
             
             <apex:pageBlock id="mainBlockReadyOnly" rendered="{!isReadOnly}">
            
-                <c:PageBlockTableEnhancer targetPbTableIds="HPCTableReadOnly" paginate="true" enableExport="false" defaultPageSize="50" pageSizeOptions="5,10,25,50,100,1000" />    
+                <c:PageBlockTableEnhancer targetPbTableIds="HPCTableReadOnly" paginate="true" enableExport="false" defaultPageSize="50" pageSizeOptions="5,10,25,50,100" />    
               
                 <apex:pageBlockSection columns="1">
                 <apex:pageBlockTable id="HPCTableReadOnly" value="{!HPCaseList}" var="case">
                     
-                    <apex:column headerValue="Case Name" width="6%">
+                    <apex:column headerValue="Case Name" width="8%">
                         <apex:outputLink target="_blank" value="/{!case.Id}" >{!case.Name}</apex:outputLink>
                         
                     </apex:column>
-                    <apex:column headerValue="Filing Date" width="6%" >
+                    <apex:column headerValue="Filing Date" width="8%" >
                         <apex:outputField value="{!case.Filing_Date__c}" />
                     </apex:column>
-                    <apex:column headerValue="Disc. Due" width="6%" >
-                        <apex:outputField value="{!case.Discovery_Deadline__c}" />
-                    </apex:column>
-                    <apex:column headerValue="Case Type" width="6%">
+                    <apex:column headerValue="Case Type" width="8%">
                         <apex:outputField value="{!case.Case_Type__c}" />
                     </apex:column>
                     <apex:column headerValue="Law Firms" width="20%" >

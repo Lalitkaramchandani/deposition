@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -69,39 +69,6 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Type__c</fullName>
-        <externalId>false</externalId>
-        <label>Type</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>JSON</fullName>
-                    <default>false</default>
-                    <label>JSON</label>
-                </value>
-                <value>
-                    <fullName>CSV</fullName>
-                    <default>false</default>
-                    <label>CSV</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>hadExceptions__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>True if any error occurred while processing the records.</description>
-        <externalId>false</externalId>
-        <label>hadExceptions</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <label>Unicourt Case Lead JSON</label>
     <listViews>

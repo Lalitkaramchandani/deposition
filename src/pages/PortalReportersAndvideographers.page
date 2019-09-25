@@ -1,136 +1,34 @@
-<apex:page applyHtmlTag="false" applyBodyTag="false" standardstylesheets="false" cache="false" showHeader="false" sidebar="false" standardController="Deposition__c" extensions="PortalReportersAndvideographersCntrl"
-action="{!validatePageParameters}" >
- <head>
-    <c:HeaderCSS />
-    <link rel="stylesheet" href="{!URLFOR($Resource.TimePicker, 'TimePicker/css/jquery-ui-1.10.0.custom.min.css')}" type="text/css" />
-    <link rel="stylesheet" href="{!URLFOR($Resource.TimePicker, 'TimePicker/css/jquery.ui.timepicker.css')}" type="text/css" />
-
-    <script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'TimePicker/js/jquery-1.9.0.min.js')}"></script>
-  
-    <script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'TimePicker/js/jquery.ui.position.min.js')}"></script>
-
-    <script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'TimePicker/js/jquery.ui.timepicker.js')}"></script>
+<apex:page applyHtmlTag="false" applyBodyTag="false" standardstylesheets="false" cache="false" showHeader="false" sidebar="false" 
+    standardController="Deposition__c" extensions="PortalReportersAndvideographersCntrl" action="{!validatePageParameters}" >
+    <head>
+        <title>{!firm.Name} | End of Day Recap </title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width"/>
+        <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />
+        <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery-latest.js')}" />
+        <link href="{!URLFOR($Resource.nextgendepositions, 'nextgendepositions/style.css')}" rel="stylesheet" type="text/css"/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'/>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
         <style>
-            .messageCell,
-            .errorMsg,
-            .errMsg li {
-                color: #cc0000;
-                font-size: 1em;
+            .pbHeader table td.pbTitle h2{
+                font-size: larger;
+                font-family: inherit;
             }
-            
-            .messageCell h4 {
-                color: #cc0000;
+            .pbBody{
+                padding-left:1%;
             }
-            
-            .standard {
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: normal;
-                font-size: 10px;
-                color: black;
-                padding: 5px;
-            }
-            
-            .standard_darkred {
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight: normal;
-                font-size: 11px;
-                color: darkred;
-            }
-            
-            .table_background {
-                background-color: #f0f0f0
-            }
-            
-            .header_background {
-                background-color: #8c8c8c
-            }
-            
-            .input {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 9px
-            }
-            
-            .input_hint {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 9px;
-                color: gray
-            }
-            
-            .ad {
-                font-family: Arial, Helvetica, sans-serif;
-                width: 140px;
-                font-size: 10px;
-                margin: 0 auto;
-                text-align: left;
-                border: 2px solid #999;
-                background: white;
-                padding: 5px;
-            }
-            
-            a.blue:link {
-                color: #0000ff;
-            }
-            
-            a.blue:visited {
-                color: #0000ff;
-            }
-            
-            a.blue:hover {
-                color: #ff0000;
-            }
-            
-            a.blue:active {
-                color: #0000ff;
-            }
-            
-            textarea {
-                color: black !important;
-                margin:0px !important;
-            }
-            select{
-                background: #f9f9f9;
-                border: 1px solid #ccc;
-                box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
-                -moz-box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
-                -webkit-box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
-                padding: 2px;
-                width: 100%;
-            }
-            .alert-danger {
-                color: #a94442;
-                background-color: #f2dede;
-                border-color: #ebccd1;
-            }
-            .alert {
-                padding: 15px;
-                margin-bottom:0px !important;
-                border: 1px solid transparent;
-                border-radius: 4px;
-            }
-            .ui-widget-header {
-                border: 1px solid #00335B !important;
-                background: #00335B url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x !important;
-            }
-            
-            .messageCell,
-            .errorMsg,.error {
-                color: red;
-            }
-            
-            .ui-button {
-                border: 1px solid #cccccc !important;
-                background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x !important;
-                font-weight: bold !important;
-                color: #1c94c4 !important;
+            textarea{
+                color:inherit!important;
             }
         </style>
     </head>
 
     <body>
         <div id="main_container">
-           <apex:outputText escape="false" value="{!Deposition__c.Primary_Court_Reporting_Firm__r.Web_Page_Header_HTML__c}"></apex:outputText>
-            <div id="headbox">
-                <h3>{!Deposition__c.Firm_Name__c}</h3></div>
+            <c:firmHeader firm="{!firm}" />
+           <!--<apex:outputText escape="false" value="{!Deposition__c.Primary_Court_Reporting_Firm__r.Web_Page_Header_HTML__c}"></apex:outputText>-->
+            <!--<div id="headbox">-->
+            <!--    <h3>{!Deposition__c.Firm_Name__c}</h3></div>-->
             <div id="content_container">
                 <div id="left_navigation">
                     <h2 class="navigation_title"><!---<br/>UPLOAD FILES--->
@@ -185,11 +83,11 @@ action="{!validatePageParameters}" >
                                         </td>
                                     </tr>
                                     <tr >
-                                        <td style="vertical-align: top;padding:4px;" valign="middle">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
                                             <apex:outputText value="{!IF($CurrentPage.parameters.type=='r' || $CurrentPage.parameters.type=='R','Reporter Recap:','Event Recap:')} " />
                                         </td>
                                         <td style="vertical-align: middle;padding:4px;" valign="middle">
-                                            <apex:inputField value="{!attendee.Recap_Notes__c}" style="width:400px;height:300px;" />
+                                            <apex:inputField value="{!attendee.Recap_Notes__c}" />
                                         </td>
                                     </tr>
                                    
@@ -242,6 +140,7 @@ action="{!validatePageParameters}" >
                                             <apex:inputField value="{!attendee.Parking_Expenses__c}" />
                                         </td>
                                     </tr>
+                                    
                                     <tr>
                                         <td style="vertical-align: middle;padding:4px;" valign="middle">&nbsp;</td>
                                         <td style="vertical-align: middle;padding:4px;" valign="middle">
@@ -262,14 +161,13 @@ action="{!validatePageParameters}" >
                 <div class="clear"></div>
             </div>
 
-            <div id="content_bottom">
-
-
-                <img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/page-template-btm.jpg')}" width="891" height="38" alt="" class="png" />
-            </div>
-            <div class="clear"></div>
+            <!--<div id="content_bottom">-->
+            <!--    <img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/page-template-btm.jpg')}" width="891" height="38" alt="" class="png" />-->
+            <!--</div>-->
+            <!--<div class="clear"></div>-->
         </div>
-        <apex:outputText escape="false" value="{!Deposition__c.Primary_Court_Reporting_Firm__r.Web_Page_Footer_HTML__c}"></apex:outputText>
+        <!--<apex:outputText escape="false" value="{!Deposition__c.Primary_Court_Reporting_Firm__r.Web_Page_Footer_HTML__c}"></apex:outputText>-->
+        <c:firmFooter firm="{!firm}" />
         <script type="text/javascript">
          
         $(document).ready(function() {
@@ -277,6 +175,9 @@ action="{!validatePageParameters}" >
                 showPeriod: true,
                 showLeadingZero: true
             });
+           
+           
+ 
         });
                                            
          function validateTime(){

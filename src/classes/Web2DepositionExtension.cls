@@ -67,12 +67,11 @@ public class Web2DepositionExtension {
                         } */
                         Deposition__c depowithComm = [select id, Commission__r.Primary_Rep__r.Email, Commission__r.Secondary_Rep__r.Email  from Deposition__c where id=:webdeposition.id];
                         if(depowithComm != null && String.isNotBlank(depowithComm.Commission__r.Primary_Rep__r.Email))
-                          ccAddresses.add(depowithComm.Commission__r.Primary_Rep__r.Email);
+                        	ccAddresses.add(depowithComm.Commission__r.Primary_Rep__r.Email);
                         if(depowithComm != null && String.isNotBlank(depowithComm.Commission__r.Secondary_Rep__r.Email))
-                          ccAddresses.add(depowithComm.Commission__r.Secondary_Rep__r.Email);
+                        	ccAddresses.add(depowithComm.Commission__r.Secondary_Rep__r.Email);
                         if(ccAddresses.size()>0)
                             mail.setCCAddresses(new String[] {Firm.Scheduling_email_address__c});
-                        mail.setWhatId(depowithComm.id);
                         mail.setsaveasactivity(true);
                         allmails.add(mail);
                         Messaging.sendEmail(allMails);
@@ -87,7 +86,10 @@ public class Web2DepositionExtension {
                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,ex.getMessage()));
                Database.rollback(sp);
            }
-           PageReference p = Page.ScheduleDepositionThankYou;
+           PageReference p = Page.ThankYouNextGenReporting;
+           if(firmStr=='Wilcox & Fetzer')
+               p = Page.ThankYouWilcoxAndFetzer;
+           
            p.SetRedirect(true);
            return p;
        }

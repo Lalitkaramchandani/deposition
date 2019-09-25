@@ -1,7 +1,0 @@
-<apex:page standardController="Firm__c"  showHeader="false" standardStylesheets="true">
-<head>
-    <title>{!Firm__c.Name}&nbsp;|&nbsp;  Thank You
-    </title>
-</head>
-<apex:outputLabel escape="false" value="{!Firm__c.Schedule_Deposition_Thank_You_HTML__c}"> </apex:outputLabel>
-</apex:page>

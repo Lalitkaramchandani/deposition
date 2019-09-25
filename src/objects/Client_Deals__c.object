@@ -46,14 +46,14 @@
     <description>Formal or informal agreements/relationships with clients - with a value of over $100k annually.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Read</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Account_Name__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
@@ -139,16 +139,6 @@
                     <fullName>3 Years</fullName>
                     <default>false</default>
                     <label>3 Years</label>
-                </value>
-                <value>
-                    <fullName>4 Years</fullName>
-                    <default>false</default>
-                    <label>4 Years</label>
-                </value>
-                <value>
-                    <fullName>5 Years</fullName>
-                    <default>false</default>
-                    <label>5 Years</label>
                 </value>
                 <value>
                     <fullName>Indefinite</fullName>
@@ -789,28 +779,6 @@
         </filters>
         <label>All Open Deals</label>
     </listViews>
-    <listViews>
-        <fullName>X2019_YTD_WON_DEALS</fullName>
-        <columns>NAME</columns>
-        <columns>Account_Name__c</columns>
-        <columns>Annualized_Revenue__c</columns>
-        <columns>Nature_of_Deal__c</columns>
-        <columns>Stage__c</columns>
-        <columns>Actual_Close_Date__c</columns>
-        <columns>OWNER.LAST_NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Stage__c</field>
-            <operation>equals</operation>
-            <value>Closed/Won</value>
-        </filters>
-        <filters>
-            <field>Actual_Close_Date__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>1/1/2019</value>
-        </filters>
-        <label>2019 YTD &quot;Won&quot; Deals</label>
-    </listViews>
     <nameField>
         <label>Deal Name</label>
         <trackHistory>true</trackHistory>
@@ -821,7 +789,7 @@
         <searchResultsAdditionalFields>OWNER.FIRST_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>OWNER.LAST_NAME</searchResultsAdditionalFields>
     </searchLayouts>
-    <sharingModel>Read</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Close_Date_Required</fullName>
         <active>true</active>

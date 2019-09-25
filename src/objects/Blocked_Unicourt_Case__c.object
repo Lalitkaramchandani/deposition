@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -65,16 +65,6 @@
         <unique>true</unique>
     </fields>
     <label>Blocked Unicourt Case</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Unicourt_Case_Id__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>OBJECT_ID</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
     <nameField>
         <displayFormat>BUC-{0000}</displayFormat>
         <label>Blocked Unicourt Case Name</label>

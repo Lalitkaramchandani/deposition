@@ -2,6 +2,10 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>*</members>
+        <name>Action</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -18,39 +22,22 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomLabel</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomLabels</name>
+        <name>AuraDefinitionBundle</name>
     </types>
     <types>
         <members>*</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
+        <members>Attendee_Email/*</members>
         <members>Attendee_Email/Deposition_Confirmation_Reminder</members>
         <members>Attendee_Email/Deposition_Confirmation_Reminder1</members>
+        <members>Automated_Emails/*</members>
         <members>Automated_Emails/CR_Evening_After_Depo_Follow_up_VF</members>
-        <members>Automated_Emails/Transcript_Due_in_2_Days</members>
-        <members>Deposition_Emails</members>
+        <members>Deposition_Emails/*</members>
         <members>Deposition_Emails/CR_Confirmation_Tomorrow_VF</members>
         <members>Deposition_Emails/CR_Confirmation_Tomorrow_VF1</members>
-        <members>Deposition_Emails/CR_Transcript_Due_in_Two_Days</members>
-        <members>Deposition_Emails/VID_Video_Due_Soon</members>
         <name>EmailTemplate</name>
     </types>
-    <types>
-        <members>*</members>
-        <name>Profile</name>
-    </types>
-    <version>41.0</version>
+    <version>45.0</version>
 </Package>

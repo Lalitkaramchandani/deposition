@@ -22,7 +22,7 @@ public class HighProfileCasesController {
       //  caseFirmsMap = new Map<Id, String>();
      //   casePartiesMap = new Map<Id, String>();
         commIDNameMap = new Map<String,String>();
-        for(Case_leads__c cl : [select id,name, Case_Type__c,Discovery_Deadline__c, Filing_Date__c, Commission__c,Commission__r.Name, Followup_Date__c, Notes__c, (select id, Law_Firm__r.name, Law_Firm_Text__c, Client__r.name, Unicourt_Client_Name__c  from Representation__r)   from Case_Leads__c where High_Profile_Case__c = true and Case_Status__c not in :filterStatusList LIMIT 1000]){
+        for(Case_leads__c cl : [select id,name, Case_Type__c, Filing_Date__c, Commission__c,Commission__r.Name, Followup_Date__c, Notes__c, (select id, Law_Firm__r.name, Law_Firm_Text__c, Client__r.name, Unicourt_Client_Name__c  from Representation__r)   from Case_Leads__c where High_Profile_Case__c = true and Case_Status__c not in :filterStatusList LIMIT 1000]){
             List<String> partiesName = new List<String>();
             List<String> firmsName = new List<String>();
             if(String.isNotBlank(cl.Commission__c))
@@ -43,7 +43,6 @@ public class HighProfileCasesController {
             cloneCaseLead.Commission__c= cl.Commission__c;
             cloneCaseLead.Followup_Date__c= cl.Followup_Date__c;
             cloneCaseLead.Notes__c= cl.Notes__c;
-            cloneCaseLead.Discovery_Deadline__c = cl.Discovery_Deadline__c;
             HPCaseMasterList.add(cloneCaseLead );
             
            // if(!firmsName.isEmpty())

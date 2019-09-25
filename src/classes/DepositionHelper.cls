@@ -258,7 +258,9 @@ public class DepositionHelper{
             firmName  = 'NextGen Reporting';
         system.debug('$$'+firmName);
         List<Firm__c>lstFirms = [select id,Name,Web_Page_Footer_HTML__c,Web_Page_Header_HTML__c,Email_Footer_HTML__c,Email_Header_HTML__c,URL__c,
-                                Scheduling_email_address__c,Community_Admin_Email__c,Google_Drive_Folder_Name__c From Firm__c WHERE Name like: firmName+'%'];
+                                 Scheduling_email_address__c,Community_Admin_Email__c,Google_Drive_Folder_Name__c,
+                                 Community_Header__c,Community_Footer__c,Phone__c
+                                 From Firm__c WHERE Name like: firmName+'%'];
         if(lstFirms.size()>0)
             return lstFirms[0];
         else 
@@ -358,5 +360,34 @@ public class DepositionHelper{
         if(lstTasks.size()>0)
             insert lstTasks;       
        
+    }
+    public static void maintainBusinessUnit(List<Deposition__c> lstDeposition, map<Id,Deposition__c>oldMap,Boolean isUpdate){
+        Map<Id, Business_Unit__c> bUnits = new Map<Id, Business_Unit__c>();
+    
+        for(Deposition__c d: lstDeposition){
+            if(d.Business_Unit__c != null){
+                if(!isUpdate || ( isUpdate && d.Business_Unit__c!= oldMap.get(d.Id).Business_Unit__c))
+                    bUnits.put(d.Business_Unit__c, null);
+            }
+        }
+        if(!bUnits.isEmpty()){
+            bUnits = new Map<Id, Business_Unit__c>([SELECT Id,BU_Invoicing__c,BU_Production__c,BU_Scheduling__c,BU_Video__c,Scheduling_Email_Alias__c
+                                                    FROM Business_Unit__c WHERE Id in: bUnits.keySet()]);
+            System.debug(bUnits);
+            for(Deposition__c d: lstDeposition) {
+                if(d.Business_Unit__c != null && bUnits.containsKey(d.Business_Unit__c)) {
+                    Business_Unit__c bUnit = bUnits.get(d.Business_Unit__c);
+                    d.BU_Invoicing__c = bUnit.BU_Invoicing__c;
+                    d.BU_Production__c = bUnit.BU_Production__c;
+                    d.BU_Scheduling__c = bUnit.BU_Scheduling__c;
+                    d.BU_Video__c = bUnit.BU_Video__c;
+                }else{
+                    d.BU_Invoicing__c = null;
+                    d.BU_Production__c = null;
+                    d.BU_Scheduling__c = null;
+                    d.BU_Video__c = null;
+                }
+            }
+        }
     }
 }

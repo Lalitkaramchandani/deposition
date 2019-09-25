@@ -56,12 +56,11 @@ trigger businessDaysCalculation on Deposition__c(before insert, before update) {
                 deposition.Due_Date_To_The_Client_Computed__c = computeDueDateToClient(deposition);
             System.debug('***Due Date***' + deposition.Due_Date_To_The_Client_Computed__c);
     
-            /*if (deposition.VIP_Level__c == NULL && (deposition.Expedite__c == '6 day turnaround' || deposition.Expedite__c == '7 day turnaround' || deposition.Expedite__c == '8 day turnaround' || deposition.Expedite__c == '9 day turnaround' || deposition.Expedite__c == 'None' || deposition.Expedite__c == null)) {
+            if (deposition.VIP_Level__c == NULL && (deposition.Expedite__c == '6 day turnaround' || deposition.Expedite__c == '7 day turnaround' || deposition.Expedite__c == '8 day turnaround' || deposition.Expedite__c == '9 day turnaround' || deposition.Expedite__c == 'None' || deposition.Expedite__c == null)) {
                 deposition.Transcript_Due_From_Reporter_Computed__c = getBusinessDate(deposition.Due_Date_To_The_Client_Computed__c, -2);
             } else {
                 deposition.Transcript_Due_From_Reporter_Computed__c = deposition.Due_Date_To_The_Client_Computed__c;
-            }*/
-            deposition.Transcript_Due_From_Reporter_Computed__c = deposition.Due_Date_To_The_Client_Computed__c;
+            }
         }
         System.debug('***Transcript_Due_From_Reporter_Computed__c***' + deposition.Transcript_Due_From_Reporter_Computed__c);
         //deposition.

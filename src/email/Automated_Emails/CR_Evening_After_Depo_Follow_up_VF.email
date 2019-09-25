@@ -3,41 +3,37 @@
         <apex:outputtext escape="false" value="{!Relatedto.Primary_Court_Reporting_Firm__r.Email_Header_HTML__c}" />     
         <div id="main_container" class="emailMain_Container">
             <p>
-            Thank you for handling the {!Relatedto.Event_Type_Lowercase__c} of {!Relatedto.Deponent_Name__c} today.
-</P>
-<P>
-Please take just 30 seconds this evening to help us close things out for this assignment in our system:
-<OL>
-<LI>"End of Day" Summary - Please <a href="http://nextgen.force.com/PortalReportersAndvideographers?id={!Relatedto.Id}&contactid={!recipient.Id}&type=r">click here</a> to provide us with a brief summary of the job. Please include:</li>
-<UL>
-<LI>Any orders (especially any unexpected orders or expedites).            {!IF(Relatedto.Expedite__c="None","",Relatedto.Expedite__c)} 
- </LI>
-<LI>If there were rough drafts ordered or exhibits retained</LI>
-<LI>Any other pertinent information you feel we should know so that we are not caught off guard if any of the parties contact us asking for something that they may have only told to you during the job.
-<BLOCKQUOTE>Please feel free to use short style for your summary, for example:
-<BR>Firm A: O&amp;1, reg delivery</BR>
-<BR>Firm B: Copy, ruf, realtime, 3-day expedite (due next Tuesday), read &amp; sign</BR>
-<BR>Firm C: Asked for price of copy. Please call John Doe at 555-5555</BR>
-<BR>Ruf will be sent out by 10pm tonight.</BR></BLOCKQUOTE>
-</LI>
-
-</UL>
-<LI>Exhibits - If not too voluminous, please feel free to upload the exhibits through same link above or <A HREF="mailto:{!Relatedto.Primary_Court_Reporting_Firm__r.Production_Email_Address__c}">email them</A> to our Production department over the next few days.</LI>
-</OL>
-
-<P>That’s it! Thank you in advance for helping us keep our system up to date in real time so that we can better serve our clients.</P>
-
-<P>Here are few additional items that will help if you have not worked with us in the past:</P>
-<P><B>Client Pricing Questions:</B> If you received any client pricing questions or feel that a particular party should be followed up with to obtain an order, please let us know so that our client services department can follow up with that party accordingly. We will then inform you if we were able to up-sell another copy so that you can bill us accordingly.</P>
-<P><B>Exhibits, Invoices and Turn-In Sheets:</B> These can be uploaded through the same link in Item #1, you can also upload them any time here, or ship them to the address below through a trackable method such as UPS or FedEx.</P> 
-<P><B>Final Transcript:</B> Please deliver the final transcript to us by <apex:outputText value="{0, date, MM/dd/yyyy}"><apex:Param value="{!relatedTo.Transcript_Due_From_Reporter_Computed__c}" /></apex:OutputText> unless you were told a different delivery date at the job. If any of the parties have requested a different due date than what we told you, please alert us immediately so that we can update our system.</P> 
-<P>If you have any questions at all, please contact us at {!Relatedto.Primary_Court_Reporting_Firm__r.Phone__c} or {!Relatedto.Primary_Court_Reporting_Firm__r.Scheduling_Email_Address__c}.</P>
-<P>Thank you again for working with {!Relatedto.Primary_Court_Reporting_Firm__r.Name}! </P></P>
-
-
-
-
-
+                Thank you for handling the {!Relatedto.Event_Type_Lowercase__c} of {!Relatedto.Deponent_Name__c} today.
+            </P>
+            <P>
+                Please take just 30 seconds this evening to help us close things out for this assignment in our system:
+            <OL>
+                <LI>"End of Day" Summary - Please <a href="{!$Label.SiteURL}/PortalReportersAndvideographers?id={!Relatedto.Id}&contactid={!recipient.Id}&type=r">click here</a> to provide us with a brief summary of the job. Please include:</li>
+                <UL>
+                    <LI>
+                    Any orders (especially any unexpected orders or expedites). {!IF(Relatedto.Expedite__c="None","",Relatedto.Expedite__c)} 
+                     </LI>
+                    <LI>If there were rough drafts ordered or exhibits retained</LI>
+                    <LI>Any other pertinent information you feel we should know so that we are not caught off guard if any of the parties contact us asking for something that they may have only told to you during the job.
+                        <BLOCKQUOTE>Please feel free to use short style for your summary, for example:
+                            <BR>Firm A: O&amp;1, reg delivery</BR>
+                            <BR>Firm B: Copy, ruf, realtime, 3-day expedite (due next Tuesday), read &amp; sign</BR>
+                            <BR>Firm C: Asked for price of copy. Please call John Doe at 555-5555</BR>
+                            <BR>Ruf will be sent out by 10pm tonight.</BR>
+                        </BLOCKQUOTE>
+                    </LI>            
+                </UL>
+                <LI>Exhibits - If not too voluminous, please feel free to upload the exhibits through same link above or <A HREF="mailto:{!Relatedto.Primary_Court_Reporting_Firm__r.Production_Email_Address__c}">email them</A> to our Production department over the next few days.</LI>
+            </OL>
+    
+            <P>That’s it! Thank you in advance for helping us keep our system up to date in real time so that we can better serve our clients.</P>
+    
+            <P>Here are few additional items that will help if you have not worked with us in the past:</P>
+            <P><B>Client Pricing Questions:</B> If you received any client pricing questions or feel that a particular party should be followed up with to obtain an order, please let us know so that our client services department can follow up with that party accordingly. We will then inform you if we were able to up-sell another copy so that you can bill us accordingly.</P>
+            <P><B>Exhibits, Invoices and Turn-In Sheets:</B> These can be uploaded through the same link in Item #1, you can also upload them any time here, or ship them to the address below through a trackable method such as UPS or FedEx.</P> 
+            <P><B>Final Transcript:</B> <a href="{!$Label.SiteURL}/DepositionTurnIn?id={!Relatedto.Id}" >Please deliver the final transcript to us</a> by <apex:outputText value="{0, date, MM/dd/yyyy}"><apex:Param value="{!relatedTo.Transcript_Due_From_Reporter_Computed__c}" /></apex:OutputText> unless you were told a different delivery date at the job. If any of the parties have requested a different due date than what we told you, please alert us immediately so that we can update our system.</P> 
+            <P>If you have any questions at all, please contact us at {!Relatedto.Primary_Court_Reporting_Firm__r.Phone__c} or {!Relatedto.Primary_Court_Reporting_Firm__r.Scheduling_Email_Address__c}.</P>
+            <P>Thank you again for working with {!Relatedto.Primary_Court_Reporting_Firm__r.Name}! </P></P>
        </div>
      <apex:outputtext escape="false" value="{!Relatedto.Primary_Court_Reporting_Firm__r.Email_Footer_HTML__c}" />   
 

@@ -8,6 +8,8 @@ public class PortalReportersAndvideographersCntrl{
     public string arrivalTime{get;set;}
     public string departureTime{get;set;}
     public Attendee__c attendee {get;set;}
+    
+    public Firm__c firm{get;set;}
     public PortalReportersAndvideographersCntrl(ApexPages.StandardController sc){
         attendee = new Attendee__c ();
         depositionId = sc.getId();
@@ -26,12 +28,19 @@ public class PortalReportersAndvideographersCntrl{
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error,'Id parameter is missing in url.'));
         }else{
             List<Deposition__c>lstDepositions = [select id,Name,Deposition_Date__c,Deposition_Time__c,Transcript_Due_From_Reporter_Computed__c
-                                                ,Special_Instructions_text__c,Page_Count__c,Exhibit_page_count__c,
+                                                ,Special_Instructions_text__c,Page_Count__c,Exhibit_page_count__c,Primary_Court_Reporting_Firm__c,
                                                 Reporter_EOD_Check_In__c,Firm_Name__c
                                                  From Deposition__c WHERE Id =:depositionId ];
-                          
+                         
+            firm = DepositionHelper.fetchFirm( 'Lexitas' );
             if(lstDepositions.size()>0){
                 deposition = lstDepositions[0];
+                if(deposition.Primary_Court_Reporting_Firm__c!=null){
+                    firm = [SELECT Id, Name, Community_Header__c,Community_Footer__c, Web_Page_Footer_HTML__c , Web_Page_Header_HTML__c,
+                            Scheduling_Email_Address__c, Phone__c
+                            FROM Firm__c 
+                            WHERE Id=: deposition.Primary_Court_Reporting_Firm__c  LIMIT 1];
+                }
             }
         }
         String contactName = '';

@@ -1,0 +1,3 @@
+<apex:page standardController="Deposition__c" extensions="PDepositionTurnInCtrl" docType="html-5.0"
+    showHeader="false" standardStylesheets="true">
+</apex:page>

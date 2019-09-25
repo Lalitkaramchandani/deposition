@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>33.0</apiVersion>
+    <available>true</available>
+    <description>CR - Confirmation - Tomorrow</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>CR - Confirmation - Tomorrow VF</name>
+    <style>none</style>
+    <subject>- Confirming &apos;s Job -  - Job #</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

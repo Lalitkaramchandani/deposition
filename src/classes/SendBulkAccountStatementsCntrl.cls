@@ -9,13 +9,13 @@ global class SendBulkAccountStatementsCntrl {
         
         accnt = new Account(End_Date__c=System.today().addDays((System.today().day()*-1)));
         for(Firm__c firm: [select id,Name
-                                 FROM Firm__c WHERE Exclude_From_Statement__c = false]){
+                                 FROM Firm__c ]){
             lstFirms.add(new SelectOption(firm.id,firm.Name));
             if(firm.Name =='Lexitas')
                 selectedFirm = firm.id;
         }
         set<String>setAccountIds = new Set<String>() ;
-        string AggregateQuery = 'Select count(id), Account__c accId From Invoice__c WHERE Deposition__r.Primary_Court_Reporting_Firm__r.Exclude_From_Statement__c=false AND Account__c != NULL AND '+
+        string AggregateQuery = 'Select count(id), Account__c accId From Invoice__c WHERE Account__c != NULL AND '+
                         'Due_Amount__c>0 AND Type__c=\'Client\' AND Status__c=\'Valid\' AND Payment_Status__c!=\'Paid\' AND Account__r.Accounting_Email_Address__c != NULL AND '+ 
                         'Account__r.Accounting_Email_Address__c != \'\' AND '+ 
                         'Account__r.Exclude_from_Bulk_Statements__c =false GROUP BY Account__c';
@@ -27,8 +27,7 @@ global class SendBulkAccountStatementsCntrl {
         }
         lstAccounts = new List<AccountModel>();
         for(Account accnt: [select Id,Name,Last_Statement_Sent__c,Accounting_Email_Address__c,(Select Id, Due_Amount__c From Invoices__r 
-                        WHERE  Due_Amount__c>0 AND Type__c='Client' AND Status__c='Valid' AND Payment_Status__c!='Paid' 
-                        AND Deposition__r.Primary_Court_Reporting_Firm__r.Exclude_From_Statement__c=false ) From Account WHERE ID IN : setAccountIds ]){
+                        WHERE  Due_Amount__c>0 AND Type__c='Client' AND Status__c='Valid' AND Payment_Status__c!='Paid' ) From Account WHERE ID IN : setAccountIds ]){
             lstAccounts.add(new AccountModel(accnt));
         }
         
@@ -39,7 +38,7 @@ global class SendBulkAccountStatementsCntrl {
         List<String>lstAccountIds = accountIds.split(',');
         
         queryStr +='SELECT Id,(select Id,Due_Amount__c,Days_Past_Due_Bucket__c FROM Invoices__r '+
-                   '                 WHERE Deposition__r.Primary_Court_Reporting_Firm__r.Exclude_From_Statement__c=false AND Type__c=\'Client\' AND  Due_Amount__c >=0 AND Status__c=\'Valid\' AND Payment_Status__c!=\'Paid\'';
+                   '                 WHERE Type__c=\'Client\' AND  Due_Amount__c >=0 AND Status__c=\'Valid\' AND Payment_Status__c!=\'Paid\'';
         
         Date startDateForInvoice ; 
         Date endDateForInvoice;         

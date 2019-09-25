@@ -1,0 +1,74 @@
+<apex:page showHeader="false" sidebar="false" controller="SObjectLookupCtrl" id="thisPage" >
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link>
+      <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <apex:sectionHeader Title="Account Search" subtitle="Lookup"/>
+    <apex:form id="thisForm">
+        <apex:outputpanel id="waitPanel">
+            <apex:actionstatus id="waitStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: rgba(251, 251, 251, 0.44);
+                           height: 100%;width:100%; height:100%;position: fixed;z-index: 200">
+                        <div class="waitingHolder" style="top: 40%; width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                            <span class="waitingDescription">Working...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+        <apex:actionFunction name="searchRecords" rerender="searchBlock" action="{!onGo}" status="waitStatus" />
+        <apex:pageBlock id="searchBlock">
+            <apex:pageBlockSection columns="1" >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="lksrch" value="Search"/> 
+                    <apex:outputPanel >
+                        <apex:inputText id="lksrch" maxlength="255" value="{!lkSearch}" />
+                        <button style="margin-left:5px;" value=" Go! " onclick="searchRecords();return false" type="submit" >
+                             Go!
+                        </button>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageMessages id="msg"/>
+            <apex:pageBlockSection id="SearchRecord" columns="1"  >
+            
+                <apex:outputPanel rendered="{!targetList.size > 0}" >
+                    <apex:outputPanel layout="block" style="max-height:350px; overflow:scroll" >
+                        <table class="list" border="0" cellspacing="0" cellpadding="0" rendered="{targetList.size != 0}">
+                            <tbody>
+                                <tr class="headerRow">
+                                    <th class="headerRow">Account Name</th>
+                                </tr>
+                                <apex:repeat value="{!targetList}" var="targetData">
+                                    <tr class="dataRow even first" style="cursor:default;" 
+                                        onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}"
+                                         onClick="onRawClick('{!targetData['Id']}', '{!targetData[fieldName]}');" >
+                                        <td class="dataCell"> {!targetData[fieldName]} </td>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!targetList.size == 0}">
+                    <apex:outputLabel value="No Records Found" />
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <script>
+                var searchValues='{!lkSearch}';
+                var lkId="{!lkId}";
+                var lknm="{!lkName}";
+                function onRawClick(recordId, selectedVal) {
+                    var result = {'selectedId' : recordId,
+                                    'selectedVal' : selectedVal,
+                                    'lknm':lknm,
+                                    'lkId':lkId
+                                };
+                    window.opener.parentCalling(result);
+                    window.self.close();
+                }
+            </script>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

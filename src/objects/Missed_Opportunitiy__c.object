@@ -45,9 +45,9 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -96,41 +96,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Job_Type__c</fullName>
-        <externalId>false</externalId>
-        <label>Job Type</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Deposition</fullName>
-                    <default>true</default>
-                    <label>Deposition</label>
-                </value>
-                <value>
-                    <fullName>EUO</fullName>
-                    <default>false</default>
-                    <label>EUO</label>
-                </value>
-                <value>
-                    <fullName>Arbitration</fullName>
-                    <default>false</default>
-                    <label>Arbitration</label>
-                </value>
-                <value>
-                    <fullName>Hearing</fullName>
-                    <default>false</default>
-                    <label>Hearing</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Location__c</fullName>
         <externalId>false</externalId>
         <label>Location</label>
@@ -175,10 +140,6 @@
     <label>Missed Opportunity</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Account__c</columns>
-        <columns>Call_Date__c</columns>
-        <columns>Location__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

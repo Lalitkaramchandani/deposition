@@ -5,6 +5,6 @@
                 
                 Modification History:
 *****************************************************/
-trigger RepresentationTrigger on Representation__c (before insert, before update, after update ) {
+trigger RepresentationTrigger on Representation__c (before insert, before update) {
     new RepresentationHandler().run();
 }

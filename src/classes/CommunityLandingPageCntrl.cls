@@ -18,8 +18,6 @@ public class CommunityLandingPageCntrl{
             if(usr.Contact.Default_CR_Firm__c != NULL )
                 selectedFirm = usr.Contact.Default_CR_Firm__r.Name;
             system.debug('$$$'+selectedFirm);
-        }else{
-            selectedFirm = firmParam ;
         }
         
         Cookie Cookie= new Cookie('firmCookie', null,null,0,false);

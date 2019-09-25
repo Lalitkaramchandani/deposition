@@ -1,0 +1,56 @@
+<messaging:emailTemplate subject="Confirming Reporter for {!Relatedto.Deposition__r.Day_Of_The_Week__c} - {!Relatedto.Deposition__r.Deponent_Name__c} - {!Relatedto.Deposition__r.Name}" recipientType="Contact" relatedToType="Attendee__c">
+<messaging:htmlEmailBody >
+    <apex:outputtext escape="false" value="{!Relatedto.Deposition__r.Primary_Court_Reporting_Firm__r.Email_Header_HTML__c}" />     
+      <div id="main_container" class="emailMain_Container">
+        <P>Thank you for being available to cover the {!Relatedto.Deposition__r.Event_Type_Lowercase__c} of {!Relatedto.Deposition__r.Deponent_Name__c} on {!Relatedto.Deposition__r.Day_Of_The_Week__c},&nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!Relatedto.Deposition__r.Deposition_Date__c}" /> </apex:outputText> at {!Relatedto.Deposition__r.Deposition_Time__c} {!Relatedto.Deposition__r.Time_Zone__c}. <U><B>{!Relatedto.Deposition__r.Reporter_Instructions__c}</B></U>
+        </P>
+        <P>
+        <B>{!Relatedto.Deposition__r.Networking_Reminder_for_Conf_Emails__c}</B>               
+        </P>
+        <P>
+        Please <a href="{!$Label.SiteURL}/DepositionConfirmation?depositionId={!Relatedto.Deposition__r.Id}&contactId={!Recipient.Id}">click here to confirm</A> that you will cover this job for us. 
+        </P>
+        <P>
+        <TABLE CELLPADDING="5" border="0">
+        <TR><TD>Date:</TD><TD><apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!Relatedto.Deposition__r.Deposition_Date__c}" /> </apex:outputText></TD></TR>
+        
+        <TR><TD>Start Time:</TD><TD>{!Relatedto.Deposition__r.Deposition_Time__c} {!Relatedto.Deposition__r.Time_Zone__c}<apex:outputLabel rendered="{!Relatedto.Deposition__r.Estimated_Duration__c != NULL && Relatedto.Deposition__r.Estimated_Duration__c !=''}" value=" – Estimated duration: {!Relatedto.Deposition__r.Estimated_Duration__c}"></apex:outputLabel> </TD></TR>
+        <TR><TD>Scheduling Client:</TD><TD>{!Relatedto.Deposition__r.Hiring_Attorney__c} -  {!Relatedto.Deposition__r.Hiring_Firm__c}</TD></TR>
+        <TR><TD>Case Name/Caption:</TD><TD>{!Relatedto.Deposition__r.Case_Name__c}</TD></TR>
+        <TR><TD>Witness:</TD><TD>{!Relatedto.Deposition__r.Deponent_Name__c}</TD></TR>
+        <TR><TD VALIGN="TOP">Location:</TD><TD>
+        <apex:outputfield value="{!Relatedto.Deposition__r.Event_Location__c}"/>
+        </TD></TR>
+        <TR><TD>Services Requested: </TD><TD>{!Relatedto.Deposition__r.Deposition_Services__c}</TD></TR>
+        <TR><TD>Special Instructions: </TD><TD>{!Relatedto.Deposition__r.Reporter_Instructions__c}</TD></TR>
+        <TR><TD>Anticipated Due Date:</TD><TD><apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!Relatedto.Deposition__r.Transcript_Due_From_Reporter_Computed__c}" /> </apex:outputText>  {!IF(Relatedto.Deposition__r.Expedite__c="None",""," - " + Relatedto.Deposition__r.Expedite__c)}</TD></TR>
+        <TR><TD>Job #:</TD><TD>{!Relatedto.Deposition__r.Name}</TD></TR>
+        </TABLE>
+        </P>
+        <P>{!IF(CONTAINS(Relatedto.Deposition__r.Deposition_Services__c, 'LegalView'),"LegalView is our remote video viewing system. If we have specifically asked you to assist us with this service, please see attached/below instructions. If we have not, there is NOTHING that you have to do or worry about. Our people will handle it all from our office or the location itself.", "")}
+        <B>{!Relatedto.Deposition__r.Networking_Reminder_2_for_Conf_Emails__c}</B>
+        </P>
+        <P>
+         {!IF(CONTAINS(Relatedto.Deposition__r.Deposition_Services__c, 'Realtime'),"Please arrive at least 45 minutes early.", "Please arrive at least a half hour early.")} After the job, we'll send you an email requesting a recap on the {!Relatedto.Deposition__r.Event_Type_Lowercase__c}.
+        </P>
+        <P>Once you arrive at the deposition, please <A HREF="{!$Label.SiteURL}/OnSiteConfirmation?depositionId={!Relatedto.Deposition__r.Id}&contactId={!Recipient.Id}">click this link</A> to let us know that you are ready to go.</P>
+        <p>
+            <c:DepositionFiles depId="{!Relatedto.Deposition__c}" />
+        </p>
+        <P>        
+        When the transcript is complete, please <a href="{!$Setup.URL_Setting__c.Site_URL__c}/DepositionTurnIn?attendeeId={!Relatedto.Id}&id={!Relatedto.Deposition__c}">use this link</A> to upload your transcripts and exhibits.
+        </p>
+        <P>
+        Please contact us with any questions by replying to this email or calling {!Relatedto.Deposition__r.Primary_Court_Reporting_Firm__r.Phone__c}.
+        </P>
+        
+        <P>Thank you,
+        </P>
+        <P>
+        {!$User.FirstName}
+        </P>
+    </div>
+    <apex:outputtext escape="false" value="{!Relatedto.Deposition__r.Primary_Court_Reporting_Firm__r.Email_Footer_HTML__c}" />   
+</messaging:htmlEmailBody>
+
+</messaging:emailTemplate>

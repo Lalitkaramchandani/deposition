@@ -12,5 +12,7 @@ trigger DepositionBeforeTrigger on Deposition__c  (before insert, before update,
         DepositionHelper.updateDepostionAdminORBossEmail(trigger.new,trigger.oldmap,Trigger.IsUpdate);
         DepositionHelper.populateStateRule(trigger.new,trigger.oldmap,Trigger.IsUpdate);
         DepositionHelper.updateCaseNameText(trigger.new);
-   }
+        DepositionHelper.maintainBusinessUnit(trigger.new, trigger.oldmap, trigger.IsUpdate);
+        
+    }
 }

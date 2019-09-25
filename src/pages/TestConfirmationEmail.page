@@ -1,0 +1,168 @@
+<apex:page title="Test Confirmation Email" controller="TestConfirmEmailCtrl" 
+           tabStyle="Deposition_Confirmation_Email__tab">
+    <head>
+        <style>
+            .custPopup{ 
+                background-color: white; border-width: 0px; border-radius:10px; z-index: 9999; left: 50%; padding:20px; position: fixed;  margin-left: -100px; top:40%;
+                
+            }
+         
+            .popupBackground{ 
+                background-color:black; opacity: 0.30; filter: alpha(opacity = 30); position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 9998; 
+            }
+            .infotext{
+                color:blue!important;
+            }
+            .errortext{
+                color:red!important;
+            }
+            .successtext{
+                color:green!important;
+            }
+            .innerDetail th{
+                width: 150px!important; 
+            }
+            .innerDetail th, .innerDetail td{
+                width: 150px!important; 
+                border: 0!important;
+            }
+        </style>
+        <script>
+            function sendConfirmationEmail(){
+                if(validForm()){
+                    sendConfirmation();
+                }
+            }
+            function sendRecapEmail(){
+                if(validForm()){
+                    sendRecap();
+                }
+            }
+            function validForm(){
+                var ele = document.getElementById('{!$Component.frm.pbt.pbs.conId.conOption}');
+                if(ele.selectedIndex == 0){
+                    alert('Select Attendee First or change Deposition!');
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </head>
+    <apex:form id="frm">
+        <apex:actionStatus id="fetching"> 
+            <apex:facet name="start"> 
+                <apex:outputPanel id="tstpopup"> 
+                    <apex:outputPanel styleClass="popupBackground" layout="block"/> 
+                    <apex:outputPanel styleClass="custPopup" layout="block"> 
+                        <img src="/img/loading24.gif" style="vertical-align:middle; horizontal-align:middle" class="timg"/> 
+                        <span>Please wait...</span> 
+                    </apex:outputPanel> 
+                </apex:outputPanel> 
+            </apex:facet> 
+        </apex:actionStatus>
+        <apex:actionFunction name="sendConfirmation" action="{!onSendConfirmationNotification}" status="fetching" rerender="frm" /> 
+        <apex:actionFunction name="sendRecap" action="{!onSendRecapNotification}" status="fetching" rerender="frm" /> 
+        
+        <apex:pageBlock title="Test Deposition Confirmation Email" id="pbt">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Send Confirmation Email/SMS" onclick="sendConfirmationEmail();return false;" status="fetching" rerender="frm"/>
+                <apex:commandButton value="Send Recap Email/SMS" onclick="sendRecapEmail();return false;" status="fetching" rerender="frm"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection id="pbs">
+                <apex:inputField value="{!inv.Deposition__c}">
+                    <apex:actionSupport event="onchange" action="{!onDepChange}"  status="fetching" rerender="pbt, conId" />
+                </apex:inputField>
+                <apex:pageBlockSectionItem id="conId">
+                    <apex:outputLabel value="Attendee" />
+                    <!--<apex:inputField value="{!inv.Contact__c}" />-->
+                    <apex:selectList value="{!selectedAttendees}" size="1" disabled="{!attendees.size ==1}" id="conOption" >
+                        <apex:selectOptions value="{!attendees}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Deposition details" rendered="{!dep!=null}" columns="1">
+                <table class="list" id="{!$Component.frm.pbt}:rtItemSecTable" border="0" cellpadding="0" cellspacing="0">
+                    <thead class="">
+                        <tr class="headerRow">
+                            <th class="headerRow" scope="col" colspan="1" >
+                                Status
+                            </th>
+                            <th class="headerRow" scope="col" colspan="1" >
+                                Confirmation notification details
+                            </th>
+                            <th class="headerRow" scope="col" colspan="1" >
+                                Recap notification details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="j_id0:frm:turnin4pb:pbsec:items:rep:0:rtItemSec:rtItemSecTable:tb">
+                        <tr class="dataRow even first" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                            <td class="dataCell" colspan="1">
+                                <table class="innerDetail">
+                                    <tr>
+                                        <th class="labelCol vfLabelColTextWrap first" scope="row"
+                                            >Confirm - Reporter</th>
+                                        <td class="dataCol first">{!dep.Confirm_Reporter__c}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dataCell {!if(dep.Confirm_Reporter__c== 'Sent', 'successtext',if(dep.Confirm_Reporter__c!='Not Sent', 'infotext',''))}" colspan="1">
+                                Email/SMS will only send when status is "Not Sent"
+                            </td>
+                            <td class="dataCell {!if(dep.Deposition_Status__c=='Cancelled', 'errortext','')}" colspan="1">
+                                Email/SMS will {!if(dep.Deposition_Status__c=='Cancelled','not ','')}send as Deposition Status is {!dep.Deposition_Status__c}
+                            </td>
+                        </tr>
+                        <tr class="dataRow odd" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                            <td class="dataCell" colspan="1">
+                                <table class="innerDetail">
+                                    <tr>
+                                        <th class="labelCol vfLabelColTextWrap first" scope="row"
+                                            >Confirm - Video Tech</th>
+                                        <td class="dataCol first">{!dep.Confirm_Video_Tech__c}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dataCell {!if(dep.Confirm_Video_Tech__c== 'Sent', 'successtext',if(dep.Confirm_Video_Tech__c!='Not Sent', 'infotext',''))}" colspan="1">
+                                Email/SMS will only send when status is "Not Sent"
+                            </td>
+                            <td class="dataCell {!if(dep.Deposition_Status__c=='Cancelled', 'errortext','')}" colspan="1">
+                                Email/SMS will {!if(dep.Deposition_Status__c=='Cancelled','not ','')}send as Deposition Status is {!dep.Deposition_Status__c}
+                            </td>
+                        </tr>
+                        <tr class="dataRow even last" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                            <td class="dataCell" colspan="1">
+                                <table class="innerDetail">
+                                    <tr>
+                                        <th class="labelCol vfLabelColTextWrap first" scope="row"
+                                            >Confirm - Interpreter</th>
+                                        <td class="dataCol first">{!dep.Confirm_Interpreter__c}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="dataCell {!if(dep.Confirm_Interpreter__c== 'Sent', 'successtext',if(dep.Confirm_Interpreter__c!='Not Sent', 'infotext',''))}" colspan="1">
+                                Email/SMS will only send when status is "Not Sent"
+                            </td>
+                            <td class="dataCell {!if(dep.Deposition_Status__c=='Cancelled', 'errortext','')}" colspan="1">
+                                Email/SMS will {!if(dep.Deposition_Status__c=='Cancelled','not ','')}send as Deposition Status is {!dep.Deposition_Status__c}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </apex:pageBlockSection>
+            <!--<apex:pageBlockSection rendered="{!dep!=null}" title="Deposition details" columns="2">-->
+            <!--    <apex:outputField value="{!dep.Confirm_Reporter__c}" />-->
+            <!--    <apex:outputLabel value="Email/SMS will only send when status is Not Sent" -->
+            <!--            styleClass="{!if(dep.Confirm_Reporter__c== 'Sent', 'successtext',if(dep.Confirm_Reporter__c!='Not Sent', 'infotext',''))}"/>-->
+            <!--    <apex:outputField value="{!dep.Confirm_Video_Tech__c}" />-->
+            <!--    <apex:outputLabel value="Email/SMS will only send when status is Not Sent"-->
+            <!--            styleClass="{!if(dep.Confirm_Video_Tech__c== 'Sent', 'successtext',if(dep.Confirm_Video_Tech__c!='Not Sent', 'infotext',''))}"/>-->
+            <!--    <apex:outputField value="{!dep.Confirm_Interpreter__c}" />-->
+            <!--    <apex:outputLabel value="Email/SMS will only send when status is Not Sent"-->
+            <!--            styleClass="{!if(dep.Confirm_Interpreter__c== 'Sent', 'successtext',if(dep.Confirm_Interpreter__c!='Not Sent', 'infotext',''))}"/>-->
+            <!--</apex:pageBlockSection>-->
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>

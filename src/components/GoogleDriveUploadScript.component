@@ -58,7 +58,7 @@
             j$('.uploadBox').show();
 
             //Only proceed if there are files selected
-            if (files.length == 0) {
+            if (files == undefined || files.length == 0) {
                 alert('Please select a file!');
                 return; //end function
             }
@@ -156,7 +156,7 @@
             j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[0]).hide();
             j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[1]).show();
             j$(".ui-dialog-title").html('Upload Completed ...');
-
+            document.getElementById("file").value='';
         }
 
         function performUploadCancelActions() {

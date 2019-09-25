@@ -41,27 +41,26 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>InvoiceNotification</content>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Visualforce</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
         <content>Invoice_Record_Page1</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>InvoiceNotification</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
     </actionOverrides>
     <allowInChatterGroups>true</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
-    <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -116,6 +115,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Approved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Approved</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Attendee_Role__c</fullName>
         <externalId>false</externalId>
         <formula>TEXT( Attendee__r.Role__c )</formula>
@@ -164,7 +172,7 @@
         <relationshipLabel>Invoices (Billing Contact)</relationshipLabel>
         <relationshipName>Invoices1</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -267,7 +275,7 @@ IMAGE(&quot;https://c.cs11.content.force.com/sfc/dist/version/renditionDownload?
         <externalId>false</externalId>
         <label>Collections Level</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -317,7 +325,7 @@ IMAGE(&quot;https://c.cs11.content.force.com/sfc/dist/version/renditionDownload?
         <externalId>false</externalId>
         <label>Collections - Next Step</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -366,7 +374,7 @@ IMAGE(&quot;https://c.cs11.content.force.com/sfc/dist/version/renditionDownload?
         <externalId>false</externalId>
         <label>Collections Notes</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -468,13 +476,12 @@ TEXT(YEAR(Due_Date__c))</formula>
     </fields>
     <fields>
         <fullName>Conga_Invoice_Template_Id__c</fullName>
-        <description>IF(Conga_Firm_Name__c = &quot;Eppley Reporting&quot;, 
-    &quot;a1z2K0000011RthQAE&quot;, 
-    &quot;a1z2K0000011RtrQAE&quot;)</description>
         <externalId>false</externalId>
-        <formula>IF(Conga_Firm_Name__c = &quot;Eppley Reporting&quot;, 
-    &quot;a1z2K0000011RthQAE&quot;, 
-    &quot;a1z2K0000011RtrQAE&quot;)</formula>
+        <formula>IF( AND(Show_Quantity_Column__c, Show_Rate_Column__c)  , 
+         &quot;a1zA0000001l85d&quot;, 
+           IF(Show_Quantity_Column__c, &quot;a1zA0000001d1B7&quot;, 
+             IF(Show_Rate_Column__c, &quot;a1zA0000001d0zh&quot;, 
+               &quot;a1zA0000001d1BH&quot;) ) )</formula>
         <label>Conga Invoice Template Id</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -575,7 +582,7 @@ IF(Days_Past_Due__c &lt;=180,&apos;150-180&apos;,
         <label>Deponent Name</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -662,29 +669,6 @@ IF(Days_Past_Due__c &lt;=180,&apos;150-180&apos;,
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>External_Reference__c</fullName>
-        <externalId>false</externalId>
-        <label>External Reference ID</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Hiring_Attorney__c</fullName>
-        <externalId>false</externalId>
-        <formula>Deposition__r.Hiring_Attorney__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Hiring Attorney</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Invoice_Age_Upon_Payment__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(Payment_Date__c),NULL,(Payment_Date__c -  Invoice_Date__c))</formula>
@@ -719,20 +703,6 @@ IF(Days_Past_Due__c &lt;=180,&apos;150-180&apos;,
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Invoice_Number__c</fullName>
-        <externalId>false</externalId>
-        <formula>Value(Name)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Invoice Number</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Location__c</fullName>
         <description>A field to note where the deposition occurred.</description>
         <externalId>false</externalId>
@@ -748,9 +718,7 @@ IF(Days_Past_Due__c &lt;=180,&apos;150-180&apos;,
         <fullName>Logo_URL__c</fullName>
         <description>It brings the URL of the logo from Firm object</description>
         <externalId>false</externalId>
-        <formula>IF(Conga_Firm_Name__c = &quot;Eppley Reporting&quot;, 
-&quot;https://nextgen--c.na7.content.force.com/servlet/servlet.ImageServer?id=015A0000006vVP7&amp;oid=00DA0000000XoMw&quot;, 
-Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
+        <formula>Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c</formula>
         <label>Logo URL</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -775,7 +743,7 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         <label>Note</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -787,7 +755,7 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -798,16 +766,6 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         <externalId>false</externalId>
         <inlineHelpText>Indicating whether this an original invoice (ordered by the primary attorney or someone on their account) versus any other client invoice</inlineHelpText>
         <label>Ordering Party</label>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Overpaid_Resource__c</fullName>
-        <externalId>false</externalId>
-        <formula>(Paid_Amount__c &gt;  Invoice_Amount__c)  &amp;&amp;  ((Attendee_Role__c = &quot;Court Reporter&quot;)  || (Attendee_Role__c = &quot;Videographer&quot;))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Overpaid Resource</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -835,7 +793,7 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         <externalId>false</externalId>
         <label>Payment Date</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -928,7 +886,7 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         <externalId>false</externalId>
         <label>Payment Terms</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -949,7 +907,7 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         <externalId>false</externalId>
         <label>Proof of Order</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -970,6 +928,19 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Quick_Payment_Predictions__c</fullName>
+        <externalId>false</externalId>
+        <isAIPredictionField>true</isAIPredictionField>
+        <label>Quick Payment Predictions</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Rate_Sheet__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -978,7 +949,7 @@ Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
         <relationshipLabel>Invoices</relationshipLabel>
         <relationshipName>Invoices</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1072,16 +1043,6 @@ IF(ISBLANK( Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Contact - Standi
         </valueSet>
     </fields>
     <fields>
-        <fullName>Taxable__c</fullName>
-        <externalId>false</externalId>
-        <formula>if(ISPICKVAL(Deposition__r.State__c,&quot;Connecticut&quot;),TRUE,FALSE)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Taxable</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Total_Commissionable_Rev_After_Credits__c</fullName>
         <externalId>false</externalId>
         <formula>Commissionable_Revenue__c -  Total_Credits__c</formula>
@@ -1128,7 +1089,7 @@ IF(ISBLANK( Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Contact - Standi
         <externalId>false</externalId>
         <label>Type</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1163,6 +1124,11 @@ IF(ISBLANK( Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Contact - Standi
                     <fullName>Video/Tech</fullName>
                     <default>false</default>
                     <label>Video/Tech</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1205,7 +1171,6 @@ IF(ISBLANK( Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Contact - Standi
         <customTabListAdditionalFields>Due_Date__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Payment_Status__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
-        <searchResultsAdditionalFields>Invoice_Number__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
@@ -1225,7 +1190,7 @@ IF(ISBLANK( Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Contact - Standi
     </validationRules>
     <validationRules>
         <fullName>Invoice_Date_Can_Not_be_In_Past</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>When selecting the invoice date, don’t allow invoices to be dated in prior months. For example, on February 15th, an invoice can be created for Feb 1, Feb 15 or Feb 28th but cannot be created for January 20th.</description>
         <errorConditionFormula>(ISNEW() || ISCHANGED(Invoice_Date__c))&amp;&amp;  ((MONTH(Invoice_Date__c)&lt;MONTH(TODAY()) &amp;&amp; YEAR(Invoice_Date__c) == YEAR(TODAY()) ) || YEAR(Invoice_Date__c) &lt;YEAR(TODAY()))</errorConditionFormula>
         <errorDisplayField>Invoice_Date__c</errorDisplayField>
@@ -1240,12 +1205,13 @@ IF(ISBLANK( Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Contact - Standi
     </validationRules>
     <validationRules>
         <fullName>Lock_Invoice</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>ISNEW()==false &amp;&amp; (ISCHANGED(Invoice_Date__c) ||
 ISCHANGED(Deposition__c) ||
 ISCHANGED(Attendee__c) ||
 ISCHANGED(Type__c) ||
 ISCHANGED(Status__c) ||
+ISCHANGED(Deponent_Name__c) ||
 ISCHANGED(Invoice_Amount__c) ||
 ISCHANGED(Payment_Term_Days__c)
 
@@ -1392,29 +1358,5 @@ var handleError = function(error) {
 
     sforce.apex.execute(&quot;ListClass&quot;,&quot;goPrev&quot;,{localId:&quot;{!Invoice__c.Id}&quot;}, 
 																							 { onSuccess: refreshList, onFailure: handleError });</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Test_Generate_PDF</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>Test Generate PDF</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://composer.congamerge.com
-?sessionId={!API.Session_ID}
-&amp;serverUrl={!API.Partner_Server_URL_370}
-&amp;id={!Invoice__c.Id}
-&amp;QueryId=[OtherInfo]a1rA0000009Hzge,
-[LineItems]a1rA0000009Hzgj</url>
     </webLinks>
 </CustomObject>

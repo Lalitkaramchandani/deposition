@@ -45,10 +45,10 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -85,6 +85,18 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Attendee_Probability__c</fullName>
+        <externalId>false</externalId>
+        <isAIPredictionField>true</isAIPredictionField>
+        <label>Attendee Probability</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>COD_Warning__c</fullName>
         <externalId>false</externalId>
         <formula>if( Contact__r.Account.COD_Warning__c = TRUE, IMAGE(&quot;http://upload.wikimedia.org/wikipedia/commons/1/19/Portrait_of_Cod.jpg&quot;,&quot;COD Warning&quot;, 260, 350),&quot;&quot;)</formula>
@@ -94,28 +106,6 @@
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Cancellation_Percentage__c</fullName>
-        <externalId>false</externalId>
-        <formula>Contact__r.Cancellation_Percentage__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Contact Cancellation Percentage</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Cancelled__c</fullName>
-        <externalId>false</externalId>
-        <formula>Deposition__r.Cancelled__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Cancelled</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Checkbox_1__c</fullName>
@@ -280,6 +270,60 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Deposition_Services__c</fullName>
+        <externalId>false</externalId>
+        <label>Deposition Services</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Court Reporter</fullName>
+                    <default>false</default>
+                    <label>Court Reporter</label>
+                </value>
+                <value>
+                    <fullName>Expedite</fullName>
+                    <default>false</default>
+                    <label>Expedite</label>
+                </value>
+                <value>
+                    <fullName>Interpreter</fullName>
+                    <default>false</default>
+                    <label>Interpreter</label>
+                </value>
+                <value>
+                    <fullName>Realtime</fullName>
+                    <default>false</default>
+                    <label>Realtime</label>
+                </value>
+                <value>
+                    <fullName>Remote Deposition</fullName>
+                    <default>false</default>
+                    <label>Remote Deposition</label>
+                </value>
+                <value>
+                    <fullName>Rough Draft</fullName>
+                    <default>false</default>
+                    <label>Rough Draft</label>
+                </value>
+                <value>
+                    <fullName>Synchronized Video</fullName>
+                    <default>false</default>
+                    <label>Synchronized Video</label>
+                </value>
+                <value>
+                    <fullName>Traditional Video</fullName>
+                    <default>false</default>
+                    <label>Traditional Video</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
         <fullName>Deposition_Source__c</fullName>
         <externalId>false</externalId>
         <formula>Deposition__r.Source__c</formula>
@@ -360,6 +404,74 @@
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expedite_Level__c</fullName>
+        <externalId>false</externalId>
+        <label>Expedite Level</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Same day turnaround</fullName>
+                    <default>false</default>
+                    <label>Same day turnaround</label>
+                </value>
+                <value>
+                    <fullName>Next day turnaround</fullName>
+                    <default>false</default>
+                    <label>Next day turnaround</label>
+                </value>
+                <value>
+                    <fullName>2 day turnaround</fullName>
+                    <default>false</default>
+                    <label>2 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>3 day turnaround</fullName>
+                    <default>false</default>
+                    <label>3 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>4 day turnaround</fullName>
+                    <default>false</default>
+                    <label>4 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>5 day turnaround</fullName>
+                    <default>false</default>
+                    <label>5 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>6 day turnaround</fullName>
+                    <default>false</default>
+                    <label>6 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>7 day turnaround</fullName>
+                    <default>false</default>
+                    <label>7 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>8 day turnaround</fullName>
+                    <default>false</default>
+                    <label>8 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>9 day turnaround</fullName>
+                    <default>false</default>
+                    <label>9 day turnaround</label>
+                </value>
+                <value>
+                    <fullName>Custom</fullName>
+                    <default>false</default>
+                    <label>Custom</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Financial_Notes__c</fullName>
@@ -455,28 +567,6 @@ Contact__r.Hard_Copy__c  = TRUE</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Likelihood_of_Attendee_Cancelling__c</fullName>
-        <externalId>false</externalId>
-        <label>Likelihood of Attendee Cancelling</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Likelihood_of_Primary_Atty_Cancelling__c</fullName>
-        <externalId>false</externalId>
-        <label>Likelihood of Primary Atty Cancelling</label>
-        <precision>3</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Location_Contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -520,7 +610,7 @@ Contact__r.Hard_Copy__c  = TRUE</formula>
         <length>32768</length>
         <trackHistory>true</trackHistory>
         <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>On_site_Check_In__c</fullName>
@@ -702,9 +792,10 @@ Contact__r.Hard_Copy__c  = TRUE</formula>
         <fullName>Shipping_Notes__c</fullName>
         <externalId>false</externalId>
         <label>Shipping Notes</label>
-        <required>false</required>
+        <length>1000</length>
         <trackHistory>false</trackHistory>
-        <type>TextArea</type>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>Standing_Order__c</fullName>
@@ -775,7 +866,6 @@ Contact__r.Hard_Copy__c  = TRUE</formula>
         <fullName>Turn_In_Link__c</fullName>
         <externalId>false</externalId>
         <formula>$Setup.URL_Setting__c.Site_URL__c&amp;&quot;/DepositionTurnIn?attendeeId=&quot;&amp;Id&amp;&quot;&amp;id=&quot;&amp;Deposition__r.Id</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Turn-In Link</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -813,61 +903,6 @@ Contact__r.Hard_Copy__c  = TRUE</formula>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>ZK_Phone__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF( ISBLANK(Contact__r.Phone),  Contact__r.Alt_Phone__c, &quot;8882671200&quot;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>ZK Phone</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ZK_Reference_Type__c</fullName>
-        <externalId>false</externalId>
-        <formula>&quot;SE&quot;</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>ZK Reference Type</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ZK_Reference_Value__c</fullName>
-        <externalId>false</externalId>
-        <formula>Deposition__r.Name</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>ZK Reference Value</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ZK_Return_Description__c</fullName>
-        <externalId>false</externalId>
-        <formula>&quot;Exhibits&quot;</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>ZK Return Description</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ZK_Return_Type__c</fullName>
-        <externalId>false</externalId>
-        <formula>&quot;8&quot;</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>ZK Return Type</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <label>Attendee</label>
     <listViews>
@@ -915,40 +950,6 @@ Contact__r.Hard_Copy__c  = TRUE</formula>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
     <webLinks>
-        <fullName>Create_Outbound_UPS_Shipment</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
-        <masterLabel>Create Outbound UPS Shipment</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>https://nextgen--zkmulti.na94.visual.force.com/apex/Wizard
-?CF00N2K00000B4uhF={!Attendee__c.Name}
-&amp;CF00N2K00000B4uhF_lkid={!Attendee__c.Id}
-&amp;scontrolCaching=1
-&amp;retURL=%2F{!Attendee__c.Id}
-&amp;sfdc.override=1</url>
-    </webLinks>
-    <webLinks>
-        <fullName>Create_Return_UPS_Shipment</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
-        <masterLabel>Create Return UPS Shipment</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>https://nextgen--zkmulti.na94.visual.force.com/apex/Wizard
-?CF00N2K00000B4uhK={!Attendee__c.Name}
-&amp;CF00N2K00000B4uhK_lkid={!Attendee__c.Id}
-&amp;scontrolCaching=1
-&amp;retURL=%2F{!Attendee__c.Id}
-&amp;sfdc.override=1</url>
-    </webLinks>
-    <webLinks>
         <fullName>New_Attendee</fullName>
         <availability>online</availability>
         <displayType>massActionButton</displayType>
@@ -959,32 +960,5 @@ Contact__r.Hard_Copy__c  = TRUE</formula>
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
         <url>/a07/e?CF00NA0000009iYmS={!Deposition_Location__c.Name}&amp;CF00NA0000009iYmS_lkid={!Deposition_Location__c.Id}&amp;CF00NA00000071AnC={!Deposition__c.Name}&amp;CF00NA00000071AnC_lkid={!Deposition__c.Id}</url>
-    </webLinks>
-    <webLinks>
-        <fullName>test_Conga</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>test Conga</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://composer.congamerge.com
-??SessionId={!API.Session_ID}
-&amp;ServerUrl={!API.Partner_Server_URL_370}
-&amp;id={!Attendee__c.DepositionId__c}
-&amp;TemplateId=a1z2K0000011Rtw
-&amp;EmailTemplateId=00XA0000001f9FhMAI
-&amp;EmailToId={!Attendee__c.ContactId__c}
-&amp;QueryId=a1r2K000007ObAX?pv0=a072K00000hzw7I
-&amp;defaultPDF=1</url>
     </webLinks>
 </CustomObject>
