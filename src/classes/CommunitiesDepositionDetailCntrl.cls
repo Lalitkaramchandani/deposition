@@ -23,6 +23,8 @@ global class CommunitiesDepositionDetailCntrl {
     public String accessCodeToken{get;set;}
     public Integer selectedFileIndex{get;set;}
     public String selectedFileType{get;set;}
+    public Boolean readonly{get;set;}
+    
     public CommunitiesDepositionDetailCntrl(ApexPages.StandardController controller) {
         usr = [select id,ContactId,Contact.Account.Industry,Contact.Account.COD_Warning__c From User WHERE id=:Userinfo.getUserId()];
         lstFiles = new List<AWS_S3_Object__c>();
@@ -42,9 +44,23 @@ global class CommunitiesDepositionDetailCntrl {
                 if(Integer.valueOf(day)<10)
                     day  = '0'+day;    
                 depDate = month+'/'+day+'/'+webdeposition.Deposition_Date__c.Year();
-
+                
+                DateTime restricttion = System.now().addDays(2);
+                readonly = false;
+                if(webdeposition.Deposition_Date__c ==null || webdeposition.Deposition_Date__c<= restricttion){
+                    readonly = true;
+                }
+                if(!readonly){
+                    List<Attendee__c> att = [SELECT Id,Role__c FROM Attendee__c 
+                                             WHERE Deposition__c =:webdeposition.Id and Contact__c=:usr.ContactId];
+                    if(!att.isEmpty()){
+                        readonly = (att[0].Role__c =='Court Reporter' || att[0].Role__c =='Videographer/Technician');
+                    }
+                }
             }
-            
+            if(readonly == null){
+                readonly = !(usr.Contact.Account.Industry =='Court Reporting' || usr.Contact.Account.Industry =='Videography');
+            }
         }
         loadFiles();
         

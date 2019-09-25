@@ -33,7 +33,7 @@ private class TranscriptReminderSchedulerTest {
         for(Deposition__c dep : depositions){
             depositionIds.add(dep.Id);
         }
-        List<Deposition__c> depositionss=new TranscriptReminderScheduler().getDepositionWithAttendes(depositionIds);
+        List<Deposition__c> depositionss=TranscriptReminderScheduler.getDepositionWithAttendes(depositionIds);
         
         Map<Deposition__c, List<Attendee__c>> depAttMap  = new Map<Deposition__c, List<Attendee__c>>();
         for(Deposition__c dep : depositionss){

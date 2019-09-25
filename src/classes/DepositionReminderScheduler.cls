@@ -9,8 +9,7 @@ global class DepositionReminderScheduler implements Schedulable {
     private static final String COURT_REPORTER = 'Court Reporter';    
     private static final String VIDEOGRAPHER_TECHNICIAN = 'Videographer/Technician';
     private static final String INTERPRETER = 'Interpreter';
-    
-    private Set<Deposition__c> depositionSet;
+    private Map<Id, Deposition__c> depositionMap;
     private Set<Id> contactIds;
     private boolean includeTimeZone = true;
     //Execute method to send SMS and email
@@ -57,32 +56,35 @@ global class DepositionReminderScheduler implements Schedulable {
         List<Deposition__c> depositions = getDepositionWithAttendes( depositionIds );
         Map<Deposition__c, List<Attendee__c>> depositionAttendeeMap = new Map<Deposition__c, List<Attendee__c>>();
         Map<Deposition__c, Map<String, List<Attendee__c>>> exemptedAttendees = new Map<Deposition__c, Map<String, List<Attendee__c>>>();
-        depositionSet = new Set<Deposition__c>(); 
         
+        depositionMap = new Map<Id, Deposition__c>();
         if( depositions != NULL && depositions.size() > 0 ){
             for( Deposition__c deposition : depositions ){
                 if( deposition.Deposition_Roles__r != NULL && deposition.Deposition_Roles__r.size() >  0 ){
-                    
+                    Deposition__c dep = deposition;
+                    if(depositionMap.containsKey(deposition.Id)){
+                        dep = depositionMap.get(deposition.Id);
+                    }
                     for( Attendee__c attendee : deposition.Deposition_Roles__r ){
                         if( attendee.Contact__r.Exempt_From_Automated_Confirmations__c != TRUE && String.isNotBlank( attendee.Contact__r.Email ) ){
                             Attendee__c  tempAttendee;
                             //Put 'Court Reporter' attendess to map
                             if( deposition.Confirm_Reporter__c == 'Not Sent' && attendee.Role__c == COURT_REPORTER ){
                                 tempAttendee = attendee;
-                                deposition.Confirm_Reporter__c = 'Sent';
-                                depositionSet.add( deposition );
+                                dep.Confirm_Reporter__c = 'Sent';
+                                depositionMap.put(dep.Id, dep);
                             }
                             //Put 'Videographer/Technician' attendess to map
                             if( deposition.Confirm_Video_Tech__c == 'Not Sent' && attendee.Role__c == VIDEOGRAPHER_TECHNICIAN ){
                                 tempAttendee = attendee;
                                 deposition.Confirm_Video_Tech__c = 'Sent';
-                                depositionSet.add( deposition );
+                                depositionMap.put(dep.Id, dep);
                             }
                             //Put 'Interpreter' attendess to map
                             if( deposition.Confirm_Interpreter__c == 'Not Sent' && attendee.Role__c == INTERPRETER ){
                                 tempAttendee = attendee;
                                 deposition.Confirm_Interpreter__c = 'Sent';
-                                depositionSet.add( deposition );
+                                depositionMap.put(dep.Id, dep);
                             }
                             if( tempAttendee != NULL ){
                                 if( depositionAttendeeMap != NULL && depositionAttendeeMap.containsKey( deposition ) ){
@@ -96,9 +98,9 @@ global class DepositionReminderScheduler implements Schedulable {
                             if( ( deposition.Confirm_Reporter__c == 'Not Sent' && attendee.Role__c == COURT_REPORTER ) || 
                                 ( deposition.Confirm_Video_Tech__c == 'Not Sent' && attendee.Role__c == VIDEOGRAPHER_TECHNICIAN ) ||
                                 ( deposition.Confirm_Interpreter__c == 'Not Sent' && attendee.Role__c == INTERPRETER ) ){
-                                //deposition.Confirm_Reporter__c = 'Sent';
+								
                                 exemptedAttendees = populateDepositionAttendeeTypeMap( exemptedAttendees, deposition, attendee, attendee.Role__c );
-                                depositionSet.add( deposition );
+                                depositionMap.put(dep.Id, dep);
                             }
                         }
                     }
@@ -253,8 +255,8 @@ global class DepositionReminderScheduler implements Schedulable {
     
     //Update Deposition
     private void updateDeposition(){
-        if( depositionSet != NULL && depositionSet.size() > 0 ){
-            UPDATE ( new List<Deposition__c>( depositionSet ) );
+        if( depositionMap != NULL && depositionMap.size() > 0 ){
+            update depositionMap.values() ;
         }
     }
     

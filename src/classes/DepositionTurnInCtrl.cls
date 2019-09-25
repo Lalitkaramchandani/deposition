@@ -239,7 +239,7 @@ global class DepositionTurnInCtrl {
             DateTime restricttion = System.now().addDays(2);
 
             if(depositions[0].Deposition_Date__c ==null || depositions[0].Deposition_Date__c<= restricttion){
-                readonly = true;
+                //readonly = true;
             }
 
             preparePortalDepService(depositions);

@@ -383,17 +383,17 @@ standardStylesheets="false" sidebar="false" showHeader="false"
                                  
                                <div class="single-field">  
                                 <label for="eventtype">
-                                    <span>Event Type</span>
-                                    <apex:inputField value="{!webdeposition.Event_Type__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}" />
-                                    <apex:outputField value="{!webdeposition.Event_Type__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}" />
+                                    <span>Event Type {!readonly} </span>
+                                    <apex:inputField value="{!webdeposition.Event_Type__c}" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}" />
+                                    <apex:outputField value="{!webdeposition.Event_Type__c}" rendered="{!OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}" />
                                 </label>
                                </div>
                                  
                                <div class="single-field">
                                 <label>
                                     <span>Witness Name </span>
-                                    <apex:inputField value="{!webdeposition.Deponent_Name__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
-                                    <apex:outputField value="{!webdeposition.Deponent_Name__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                    <apex:inputField value="{!webdeposition.Deponent_Name__c}" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Deponent_Name__c}" rendered="{!OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}"/>
                                 </label>
                                </div>
                                  
@@ -402,41 +402,41 @@ standardStylesheets="false" sidebar="false" showHeader="false"
                                <div class="single-field">
                                 <label>
                                     <span>Event Date </span>
-                                    <apex:inputtext value="{!depDate}" styleClass="datepicker" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
-                                    <apex:outputField value="{!webdeposition.Deposition_Date__c}" styleClass="datepicker" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                    <apex:inputtext value="{!depDate}" styleClass="datepicker" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Deposition_Date__c}" styleClass="datepicker" rendered="{!OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}"/>
                                 </label>
                                </div>
                                  
                                <div class="single-field">
                                 <label>
                                     <span>Event Time </span>
-                                    <apex:inputField value="{! webdeposition.Deposition_Time__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
-                                    <apex:outputField value="{! webdeposition.Deposition_Time__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                    <apex:inputField value="{! webdeposition.Deposition_Time__c}" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{! webdeposition.Deposition_Time__c}" rendered="{!OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}"/>
                                 </label>
                                </div>
                                  
                                <div class="single-field">   
                                 <label for="timezone">
                                     <span>Time Zone</span>
-                                    <apex:inputField value="{! webdeposition.Time_Zone__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
-                                    <apex:outputField value="{! webdeposition.Time_Zone__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                    <apex:inputField value="{! webdeposition.Time_Zone__c}" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{! webdeposition.Time_Zone__c}" rendered="{!OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}"/>
                                 </label>
                                </div>
                                  
                                <div class="single-field" style="max-height: 80px !important;">
                                 <label>
                                     <span style="min-width:180px;">Event Location </span>
-                                    <apex:inputTextArea value="{!webdeposition.Event_Location__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
-                                    <apex:outputField value="{!webdeposition.Event_Location__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                    <apex:inputTextArea value="{!webdeposition.Event_Location__c}" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Event_Location__c}" rendered="{!OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}"/>
                                 </label>
                                </div>
-                               <div class="single-field" style="max-height: 80px !important;{!IF(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography','display:none;','')}">
+                               <div class="single-field" style="max-height: 80px !important;{!IF(!readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography','display:none;','')}">
                                 <label>
                                     <span style="min-width:180px;">Event Services </span>
                                     <apex:outputField value="{! webdeposition.Deposition_Services__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
                                 </label>
                                </div>
-                                <div class="single-field" style="max-height:200px;{!IF(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography','','display:none;')}">
+                                <div class="single-field" style="max-height:200px;{!IF(!readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography','','display:none;')}">
                                     <span style="float: left;min-width: 27%;margin: 20px;">Event Services </span>
                                     <apex:inputfield value="{! webdeposition.Deposition_Services__c}" /> <br/>
                                     
@@ -446,21 +446,21 @@ standardStylesheets="false" sidebar="false" showHeader="false"
                                <div class="single-field">
                                 <label>
                                     <span>Estimated Duration </span>
-                                    <apex:inputtext style="height: 22px !important;" value="{!webdeposition.Estimated_Duration__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
-                                    <apex:outputField value="{!webdeposition.Estimated_Duration__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                    <apex:inputtext style="height: 22px !important;" value="{!webdeposition.Estimated_Duration__c}" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Estimated_Duration__c}" rendered="{!OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}"/>
                                 </label>
                                </div>
                                  
                                <div class="single-field">
                                 <label>
                                     <span>Case Name/Caption </span>
-                                    <apex:inputtext style="height: 22px !important;" value="{! webdeposition.Case_Name__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
-                                    <apex:outputField value="{! webdeposition.Case_Name__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                    <apex:inputtext style="height: 22px !important;" value="{! webdeposition.Case_Name__c}" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{! webdeposition.Case_Name__c}" rendered="{! OR(readonly, NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'))}"/>
                                 </label>
                                </div>
                                 <div class="recentlyviewed">
                                     <br/>
-                                    <apex:commandButton style="margin-left: 40%;" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}" action="{!saveDeposition}" value="Save" reRender="pnlMsg" status="status"/>
+                                    <apex:commandButton style="margin-left: 40%;" rendered="{! !readonly && usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}" action="{!saveDeposition}" value="Save" reRender="pnlMsg" status="status"/>
                                 </div>  
                               </div>
                          
