@@ -1,0 +1,2 @@
+<apex:page standardController="Case_Leads__c" extensions="MassDeleteSelectedCasesController" recordSetVar="caseLeads" action="{!redirectBack}" >
+</apex:page>

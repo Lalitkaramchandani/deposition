@@ -1,0 +1,22 @@
+<apex:page standardController="Account" extensions="RequestAccountOwnershipExtn">
+   <apex:sectionHeader title="Request" subtitle="Account Ownership"/>
+  <apex:form >
+      <apex:pageBlock id="pb">
+          <apex:pageMessages ></apex:pageMessages>
+          <c:ActionStatus ></c:ActionStatus>
+          <apex:pageBlockButtons >
+              <apex:commandButton reRender="pb" action="{!requestOwnerShip}"  status="status" value="Request Ownership"/>
+              <apex:commandButton reRender="pb" action="{!cancel}" value="Cancel" status="status"/>
+          </apex:pageBlockButtons>
+          <apex:pageBlockSection >
+              <apex:inputField value="{!accnt.Requested_Commission__c}" label="Commission - Reporting"/>
+              <apex:inputField value="{!accnt.Requested_Commission_Records__c}" />
+              <apex:inputField value="{!accnt.Reason_To_Request__c}" required="true"/>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection title="Current Values" >
+              <apex:outputField value="{!Account.Commission__c}" />
+              <apex:outputField value="{!Account.Commission_Records__c}" />
+          </apex:pageBlockSection>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

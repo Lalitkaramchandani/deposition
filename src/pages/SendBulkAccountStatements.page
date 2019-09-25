@@ -1,0 +1,320 @@
+<apex:page readOnly="true" tabStyle="Invoice__c" controller="SendBulkAccountStatementsCntrl" title="Send Bulk Account Statements">
+   <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"></link>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.7/css/select.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css"/>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.19/pagination/input.js"></script>
+    
+    <script>
+        var j$ = jQuery.noConflict();
+        var oTable;
+        var rows_selected = [];
+        //
+        // Updates "Select all" control in a data table
+        //
+        function updateDataTableSelectAllCtrl(table){
+           var $table             = oTable.table().node();
+           var $chkbox_all        = j$('tbody input[type="checkbox"]', $table);
+           var $chkbox_checked    = j$('tbody input[type="checkbox"]:checked', $table);
+           var chkbox_select_all  = j$('thead input[name="select_all"]', $table).get(0);
+        
+           // If none of the checkboxes are checked
+           if($chkbox_checked.length === 0){
+              chkbox_select_all.checked = false;
+              if('indeterminate' in chkbox_select_all){
+                 chkbox_select_all.indeterminate = false;
+              }
+        
+           // If all of the checkboxes are checked
+           } else if ($chkbox_checked.length === $chkbox_all.length){
+              chkbox_select_all.checked = true;
+              if('indeterminate' in chkbox_select_all){
+                 chkbox_select_all.indeterminate = false;
+              }
+        
+           // If some of the checkboxes are checked
+           } else {
+              chkbox_select_all.checked = true;
+              if('indeterminate' in chkbox_select_all){
+                 chkbox_select_all.indeterminate = true;
+              }
+           }
+        }
+        
+        // Shorthand for $( document ).ready()
+        j$(function() {
+            j$(".startDate").val("01/01/2015")
+            oTable= j$('#table').DataTable({
+                 "lengthMenu": [[10, 25, 50,100, -1], [10, 25, 50,100, "All"]]
+                ,
+                columnDefs: [ {
+                    orderable: false,
+                    targets:   0,
+                    'render': function (data, type, full, meta){
+                         return '<input type="checkbox">';
+                     }
+                } ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                },
+                 "pagingType": "input"
+                 ,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                    
+                ]
+                ,
+                  'rowCallback': function(row, data, dataIndex){
+                     // Get row ID
+                     var rowId = data[0];
+            
+                     // If row ID is in the list of selected row IDs
+                     if(j$.inArray(rowId, rows_selected) !== -1){
+                        j$(row).find('input[type="checkbox"]').prop('checked', true);
+                        j$(row).addClass('selected');
+                     }
+                  }
+             });
+             
+               // Handle click on checkbox
+               j$('#table tbody').on('click', 'input[type="checkbox"]', function(e){
+                  var $row = j$(this).closest('tr');
+            
+                  // Get row data
+                  var data = oTable.row($row).data();
+                  console.log(data );
+                  // Get row ID
+                  var rowId = data;
+                    
+                  // Determine whether row ID is in the list of selected row IDs 
+                  var index = j$.inArray(rowId, rows_selected);
+            
+                  // If checkbox is checked and row ID is not in list of selected row IDs
+                  if(this.checked && index === -1){
+                     rows_selected.push(rowId);
+            
+                  // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+                  } else if (!this.checked && index !== -1){
+                     rows_selected.splice(index, 1);
+                  }
+            
+                  if(this.checked){
+                     $row.addClass('selected');
+                  } else {
+                     $row.removeClass('selected');
+                  }
+            
+                  // Update state of "Select all" control
+                  updateDataTableSelectAllCtrl(oTable);
+            
+                  // Prevent click event from propagating to parent
+                  e.stopPropagation();
+               });
+            
+               // Handle click on table cells with checkboxes
+               j$('#table').on('click', 'tbody td, thead th:first-child', function(e){
+                  j$(this).parent().find('input[type="checkbox"]').trigger('click');
+               });
+            
+               // Handle click on "Select all" control
+               j$('thead input[name="select_all"]', oTable.table().container()).on('click', function(e){
+                  if(this.checked){
+                     j$('#table tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                  } else {
+                     j$('#table tbody input[type="checkbox"]:checked').trigger('click');
+                  }
+            
+                  // Prevent click event from propagating to parent
+                  e.stopPropagation();
+               });
+            
+               // Handle table draw event
+               oTable.on('draw', function(){
+                  // Update state of "Select all" control
+                  updateDataTableSelectAllCtrl(table);
+               });
+
+        });
+        
+        function sendEmails(){
+            var data=rows_selected ;
+            
+            var selectedAccountIds =[];
+            var selectedAccountEmails =[];
+            if(data.length ==0 ){
+                alert('Error: Please select atleast one account record!!!');
+            }else{
+                var blankEmailErrorMessage ='';
+                
+                for(var i=0;i<data.length;i++){
+                    var accountHTML = data[i][1];console.log(accountHTML);
+                   
+                     selectedAccountIds[i] = accountHTML.split('<a href="/')[1].split('" target=')[0];
+                     selectedAccountEmails[i]= data[i][4];
+                     console.log(selectedAccountEmails[i].trim().length );
+                     if(selectedAccountEmails[i].trim().length ==0){
+                         
+                         var accName = accountHTML.split('target="_blank">')[1].split('</a>')[0]
+                         blankEmailErrorMessage += accName+' does not have a  email address or valid email address.\n';
+                     }else{
+                         var emails = selectedAccountEmails[i];
+                         if (validateEmail(emails) == false) {
+                             var accName = accountHTML.split('target="_blank">')[1].split('</a>')[0]
+                             blankEmailErrorMessage += accName+' does not have a  email address or valid email address.\n';
+                             break;
+                         } 
+                     }
+                }
+                
+                if(blankEmailErrorMessage !=''){
+                    alert('Error: '+blankEmailErrorMessage);
+                   
+                }else{
+                
+                    // Update Account information
+                     var idArray = selectedAccountIds.toString(); 
+                     var firmId = j$(".selectedFirm").val();
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.SendBulkAccountStatementsCntrl.updateAccounts}',
+                        idArray,firmId,$(".startDate").val(),$(".endDate").val() ,
+                        function(result, event){
+                            
+                            if (event.status) {
+                                if(result.startsWith("Error:")==false && result !=''){
+                                    // Accounts update sucess
+                                    
+                                    //Call conga conductor
+                    
+                                    // STEP 1: CHANGE THE NEXT LINE TO THE TYPE OF RECORDS YOU ARE ACCESSING ON THE VIEW 
+                                   
+                                    
+                                    // STEP 2: CHANGE THE NEXT LINE TO THE API NAME OF THE FIELD THAT CONTAINS THE CONGA COMPOSER URL 
+                                    var urlFieldName="Conga_Conductor_Generate_Statement_of_Ac__c"; 
+                                    
+                                    
+                                    // DO NOT MODIFY ANYTHING BELOW THIS POINT ******************** 
+                                    
+                                    // YOU MAY PASS UP TO 50 IDS 
+                                    
+                                    
+                                    var CongaURL = "https://conductor.congamerge.com" + 
+                                    "?MOID=" + result+ 
+                                    "&SessionId={!$Api.Session_ID}" + 
+                                    "&ServerUrl={!$Api.Partner_Server_URL_160}"+ 
+                                    "&UrlFieldName="+urlFieldName; 
+                                    
+                                    window.open( CongaURL, "Conga", "width=700,height=450,menubar=0" );
+                                }else if(result.startsWith("Error:")){
+                                    // Accounts update failed
+                                    alert('Error: '+result);
+                                }else{
+                                    alert('For Specified Date range  none open balance account found for send email. Please change date range.')
+                                }
+                            } else if (event.type === 'exception') {
+                                alert("Error: "+event.where);
+                            } else {
+                                alert("Error: "+event.message);
+                            }
+                        }, 
+                        {escape: true}
+                    );
+                
+                
+                    
+                }
+           }
+        
+        }
+        
+        
+    </script>
+    <apex:form >
+        <apex:sectionHeader title="Send Bulk Account Statements"/>
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Send" onclick="sendEmails();return false;"/>
+            </apex:pageBlockButtons>
+             <apex:pageBlockSection collapsible="false" columns="2">
+                  
+                  
+                  <apex:inputField value="{!accnt.Start_Date__c}" styleClass="startDate"/>
+                  <apex:inputField value="{!accnt.End_Date__c}" styleClass="endDate"/>
+                  <apex:selectList styleClass="selectedFirm" value="{!selectedFirm}" label="Firm" title="Firm" size="1" multiselect="false">
+                      <apex:selectOptions value="{!lstFirms}"></apex:selectOptions>
+                  </apex:selectList>
+                  <!---<apex:commandButton onclick="showInvoicesPDF();return false;" value="Create Statement"/>--->
+              </apex:pageBlockSection>
+            
+            <br/>    
+            <table  id="table" class="display" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th><input name="select_all" value="1" type="checkbox"/></th>
+                        
+                        <th>Account Name</th>
+                        <th># of Invoices</th>
+                        <th>$ Outstanding</th>
+                        <th>Email of Recipient</th>
+                        <th>Last Activity</th>
+                   </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        
+                        <th>Account Name</th>
+                        <th># of Invoices</th>
+                        <th>$ Outstanding</th>
+                        <th>Email of Recipient</th>
+                        <th>Last Activity</th>
+                        
+                    </tr>
+                </tfoot>
+                <tbody id="tableBody">
+                   <apex:repeat value="{!lstAccounts}"  var="accountMdl"> 
+                       <tr>
+                           <td>
+                               
+                           </td>
+                           <td ><a href="/{!accountMdl.accnt.Id}" target="_blank">{!accountMdl.accnt.Name}</a>
+                           </td>
+                           <td >{!accountMdl.accnt.Invoices__r.size}
+                           </td>
+                           <td >${!accountMdl.dueAmount}
+                               
+                           </td>
+                           <td >{!accountMdl.accnt.Accounting_Email_Address__c}
+                           </td>
+                           <td >{!accountMdl.accnt.Last_Statement_Sent__c}
+                           </td>
+                          
+                       </tr>
+                   </apex:repeat>
+                   
+                </tbody>
+            </table> 
+        </apex:pageBlock>
+        
+    </apex:form>
+    
+    <script>
+        function validateEmail(email) {
+          var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
+        }
+    </script>
+       
+</apex:page>

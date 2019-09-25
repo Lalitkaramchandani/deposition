@@ -1,0 +1,31 @@
+<apex:page standardController="AWS_S3_Object__c">
+   <apex:detail relatedListHover="true" relatedList="true"  subject="{!AWS_S3_Object__c.Id}" title="true" showChatter="true" inlineEdit="false"   />
+   <script type="text/javascript">
+
+       //hideButton("del");
+       hideButton("clone");  
+        function hideButton(btnName) {
+          try{
+            var buttons = parent.document.getElementsByName(btnName);
+            for (var i=0; i < buttons.length; i++) {
+              buttons[i].className="btnDisabled ";
+              buttons[i].disabled=true;
+              buttons[i].type='hidden';
+            }
+          } catch(e) {
+            // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
+          }
+        }
+        
+        function renameButton(btnName, newTitle) {
+          try{
+            var buttons = parent.document.getElementsByName(btnName);
+            for (var i=0; i < buttons.length; i++) {
+              buttons[i].value=newTitle;
+            }
+          } catch(e) {
+            // var ee = e.message || 0; alert('Error: \n\n'+e+'\n'+ee);
+          }
+        }
+    </script>
+</apex:page>

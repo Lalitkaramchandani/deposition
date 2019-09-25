@@ -1,0 +1,68 @@
+<apex:page standardController="Representation__c" showHeader="false" sidebar="false" extensions="MapRepresentationController" >
+   
+    <apex:form >
+        <apex:pageMessages id="msges"></apex:pageMessages>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:pageBlock >
+        
+        <apex:pageBlockSection title="Replace Attorney/Contact" >
+         <!--   <table styleclass="tablestyle">
+            <tr>
+                <td>First Name</td>
+                <td>Last Name</td>
+                <td>Salesforce Contact</td>
+            </tr>
+            <tr>
+                <td><apex:inputField value="{!rep.Unicourt_Attorney_First_Name__c}" /></td>
+                <td><apex:inputField value="{!rep.Unicourt_Attorney_Last_Name__c}" /></td>
+                <td><apex:inputField value="{!rep.Attorney__c}" /></td>
+            </tr>
+            </table> -->
+        	 <apex:pageBlockSectionItem >
+                <apex:outputLabel >First Name: </apex:outputLabel>
+                <apex:inputField value="{!rep.Unicourt_Attorney_First_Name__c}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Last Name: </apex:outputLabel>
+                <apex:inputField value="{!rep.Unicourt_Attorney_Last_Name__c}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Salesforce Contact: </apex:outputLabel>
+                <apex:inputField value="{!rep.Attorney__c}" />
+            </apex:pageBlockSectionItem> 
+        </apex:pageBlockSection>
+        <apex:pageBlockSection columns="2" title="Replace Law Firm/Account" >
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Law Firm Name: </apex:outputLabel>
+                <apex:inputField value="{!rep.Law_Firm_Text__c}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Salesforce Account: </apex:outputLabel>
+                <apex:inputField value="{!rep.Law_Firm__c}" />
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+         <apex:pageBlockSection columns="2" title="Replace Client/Account">
+        	<apex:pageBlockSectionItem >
+                <apex:outputLabel >Client Name: </apex:outputLabel>
+                <apex:inputField value="{!rep.Unicourt_Client_Name__c}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Salesforce Account: </apex:outputLabel>
+                <apex:inputField value="{!rep.Client__c}" />
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons >
+        	<apex:commandButton action="{!updateAllReps}" value="Submit" reRender="msges" status="status" />
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+   </apex:form>
+</apex:page>

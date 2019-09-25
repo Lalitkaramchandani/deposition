@@ -1,0 +1,28 @@
+<apex:component controller="PastDepositionsCntrl"  >
+    <apex:actionFunction name="fetchPastDepositions2gggg" action="{!fetchPastDepositions}" >
+         
+     </apex:actionFunction>
+    
+    <apex:pageBlock id="pbPastDepositions" rendered="{!lstDepositions.size>0}">
+        
+            <apex:pageBlockTable value="{!lstDepositions}" var="dep" styleClass="tablesorter tablesorterPastDepositions" >
+                
+                <apex:column headerValue="Case Caption/Name">
+                    {!dep.Case_Name__c}
+                </apex:column>
+                <apex:column headerValue="Witness Name">
+                    <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!dep.id}','newwindow','700','650');  return false;" >{!dep.Deponent_Name__c}</a>
+                </apex:column>
+                <apex:column value="{!dep.Deposition_Date__c}" />
+                <apex:column value="{!dep.Hiring_Attorney__c}" headerValue="Hiring Attorney Name" />
+                <apex:column value="{!dep.Deposition_Services__c}" />
+                <apex:column headerValue="Deposition Id">
+                    <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!dep.id}','newwindow','700','650');  return false;" >{!dep.Name}</a>
+                </apex:column>
+            </apex:pageBlockTable>
+               
+          
+    </apex:pageBlock>
+    
+
+</apex:component>

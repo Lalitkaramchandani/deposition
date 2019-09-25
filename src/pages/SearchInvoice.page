@@ -1,0 +1,104 @@
+<apex:page controller="SearchInvoiceCtrl" sidebar="false">
+    <apex:form >
+        <apex:pageMessages id="errors" />
+        
+        <apex:pageBlock title="Find Me Invoices!" mode="edit">
+            <table width="100%" border="0">
+                <tr>  
+                    <td width="200" valign="top">
+                        <apex:pageBlock title="Parameters" mode="edit" id="criteria">
+                            <script type="text/javascript">
+                            function doSearch() {
+                                console.log('unpaid::'+document.getElementById("OnlyUnpaid").checked);
+                                searchServer(
+                                    document.getElementById("name").value,
+                                    document.getElementById("amountLower").value,
+                                    document.getElementById("amountUpper").value,
+                                    document.getElementById("OnlyUnpaid").checked
+                                );
+                            }
+                            </script> 
+                            
+                            <apex:actionFunction name="searchServer" action="{!runSearch}" rerender="results,debug,errors">
+                                <apex:param name="name" value="" />
+                                <apex:param name="amountLower" value="" />
+                                <apex:param name="amountUpper" value="" />
+                                <apex:param name="OnlyUnpaid" value="" />
+                            </apex:actionFunction>
+                            
+                            <table cellpadding="2" cellspacing="2">
+                                <tr>
+                                    <td style="font-weight:bold;">Invoice Number<br/>
+                                        <input type="text" id="name" onkeyup="doSearch();"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">Amount From<br/>
+                                        <input type="text" id="amountLower" onkeyup="doSearch();"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">Amount To<br/>
+                                        <input type="text" id="amountUpper" onkeyup="doSearch();"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">
+                                       <br/>
+                                        <input type="checkbox" id="OnlyUnpaid" onchange="doSearch();"/>
+                                         Only show unpaid invoices
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                        </apex:pageBlock>
+                        
+                    </td>
+                    <td valign="top">
+                        
+                        <apex:pageBlock mode="edit" id="results">
+                            
+                            <apex:pageBlockTable value="{!invoices}" var="inv">
+                                
+                                <apex:column >
+                                    <apex:facet name="header">Account Name</apex:facet>
+                                    <apex:outputField value="{!inv.Account__r.Name}">
+                                    </apex:outputField>
+                                    
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Invoice Number</apex:facet>
+                                    <apex:outputLink title="{!inv.Name}" value="{!'/'+inv.Id}" >
+                                        {!inv.Name}
+                                    </apex:outputLink>
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Invoice Amount</apex:facet>
+                                    <apex:outputField value="{!inv.Invoice_Amount__c}">
+                                    </apex:outputField>
+                                </apex:column>
+                                
+                                <apex:column >
+                                    <apex:facet name="header">Case Name/Caption</apex:facet>
+                                    <apex:outputField value="{!inv.Deposition__r.Case_Name__c}">
+                                    </apex:outputField>
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Deponent Name</apex:facet>
+                                    <apex:outputField value="{!inv.Deponent_Name__c}">
+                                    </apex:outputField>
+                                </apex:column>
+                                
+                            </apex:pageBlockTable>
+                            
+                        </apex:pageBlock>
+                        
+                    </td>
+                </tr>
+            </table>
+        </apex:pageBlock>
+        
+    </apex:form>
+    
+</apex:page>

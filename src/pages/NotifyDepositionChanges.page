@@ -1,0 +1,102 @@
+<apex:page standardcontroller="Deposition__c" extensions="NotifyDepositionChangesExtn" title="Notify Deposition Changes">
+     <style>
+        .alert-info {
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+    </style>
+    <apex:sectionheader title="{!Deposition__c.Name}" />
+    <apex:form >
+        
+        <c:ActionStatus ></c:ActionStatus>
+        <apex:pageblock rendered="{!($CurrentPage.parameters.Confirmed=='true' || $CurrentPage.parameters.keyChanges=='true') && $CurrentPage.parameters.Cancelled!='true'}" mode="edit" title="Notify Attendees Of Changes to Deposition" >
+            <br/>
+            <div class="alert alert-info">
+              Check the boxes below to send emails to any of these attendees alerting them of the change to this deposition.
+            </div>
+            <apex:outputPanel id="pnlMessageConfirmClient">
+                <apex:pageMessages ></apex:pageMessages>
+            </apex:outputPanel>
+            <apex:pageblockbuttons rendered="{!lstAttendees.size>0}">
+                <apex:commandButton status="status" reRender="pnlMessageConfirmClient" value="Send Email" action="{!sendEmailForClientConfirm}"/>
+                <apex:commandbutton value="​Return to Deposition" action="{!Cancel}"/>
+            </apex:pageblockbuttons>
+            
+            <apex:pageBlockTable rendered="{!lstAttendees.size>0}" value="{!lstAttendees}" var="attendee">
+                <apex:column headerValue="Select">
+                    <apex:inputCheckbox value="{!attendee.IsDeleted}"/>
+                </apex:column>
+                <apex:column headerValue="Attendee ID">
+                    <a href="/{!attendee.id}" target="_blank" >{!attendee.Name}</a>
+                </apex:column>
+                <apex:column headerValue="​Confirmation Status">
+                    <apex:outputField value="{!attendee.deposition__r.Confirm_Client__c}" rendered="{!attendee.Role__c =='Attorney'}"/>
+                    <apex:outputField value="{!attendee.deposition__r.Confirm_Video_Tech__c}" rendered="{!attendee.Role__c =='Videographer/Technician'}"/>
+                    <apex:outputField value="{!attendee.deposition__r.Confirm_Reporter__c}" rendered="{!attendee.Role__c =='Court Reporter'}"/>
+                </apex:column>
+                <apex:column value="{!attendee.Contact__c}"/>
+                <apex:column value="{!attendee.Contact__r.Email}" headerValue="Email"/>
+                <apex:column value="{!attendee.Role__c}"/>
+                <apex:column value="{!attendee.Account_Name__c}"/>
+                <apex:column value="{!attendee.Deposition_Location__c}"/>
+                <apex:column value="{!attendee.Primary_Attorney__c}"/>
+                <apex:column value="{!attendee.Standing_Orders_del__c}"/>
+              
+            </apex:pageBlockTable>
+            <table class="list" border="0" cellspacing="0" cellpadding="0" style="{!IF(lstAttendees.size==0,'','display:none;')}">
+                <tbody><tr class="headerRow"><th scope="col" class="noRowsHeader">No records to display</th></tr>
+                </tbody>
+             </table>
+
+        </apex:pageblock>
+        
+        
+        <apex:pageblock rendered="{!$CurrentPage.parameters.Cancelled=='true'}" mode="edit" title="Notify Attendees For Cancelled Deposition" >
+            <br/>
+            <div class="alert alert-info">
+              Check the boxes below to send emails to any of these attendees alerting them of the change to this deposition.
+            </div>
+            <apex:outputPanel id="pnlMessageCancelled">
+                <apex:pageMessages ></apex:pageMessages>
+            </apex:outputPanel>
+            <apex:pageblockbuttons rendered="{!lstAttendeesForCancelled.size>0}">
+                <apex:commandButton status="status" reRender="pnlMessageCancelled" value="Send Email" action="{!sendEmailForCancelled}"/>
+                <apex:commandbutton value="Cancel" action="{!Cancel}"/>
+            </apex:pageblockbuttons>
+            
+            <apex:pageBlockTable rendered="{!lstAttendeesForCancelled.size>0}" value="{!lstAttendeesForCancelled}" var="attendee">
+                <apex:column headerValue="Select">
+                    <apex:inputCheckbox value="{!attendee.IsDeleted}"/>
+                </apex:column>
+                <apex:column headerValue="Attendee ID">
+                    <a href="/{!attendee.id}" target="_blank" >{!attendee.Name}</a>
+                </apex:column>
+                <apex:column headerValue="​Confirmation Status">
+                    <apex:outputField value="{!attendee.deposition__r.Confirm_Client__c}" rendered="{!attendee.Role__c =='Attorney'}"/>
+                    <apex:outputField value="{!attendee.deposition__r.Confirm_Video_Tech__c}" rendered="{!attendee.Role__c =='Videographer/Technician'}"/>
+                    <apex:outputField value="{!attendee.deposition__r.Confirm_Reporter__c}" rendered="{!attendee.Role__c =='Court Reporter'}"/>
+                </apex:column>
+                <apex:column value="{!attendee.Contact__c}"/>
+                <apex:column value="{!attendee.Contact__r.Email}" headerValue="Email"/>
+                <apex:column value="{!attendee.Role__c}"/>
+                <apex:column value="{!attendee.Account_Name__c}"/>
+                <apex:column value="{!attendee.Deposition_Location__c}"/>
+                <apex:column value="{!attendee.Primary_Attorney__c}"/>
+                <apex:column value="{!attendee.Standing_Orders_del__c}"/>
+                
+            </apex:pageBlockTable>
+            <table class="list" border="0" cellspacing="0" cellpadding="0" style="{!IF(lstAttendeesForCancelled.size==0,'','display:none;')}">
+                <tbody><tr class="headerRow"><th scope="col" class="noRowsHeader">No records to display</th></tr>
+                </tbody>
+             </table>
+
+        </apex:pageblock>
+     </apex:form>
+</apex:page>

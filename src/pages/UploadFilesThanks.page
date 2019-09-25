@@ -1,0 +1,147 @@
+<apex:page extensions="UploadFilesThanksExtn" standardController="Upload_Files__c" standardstylesheets="false" cache="false" showHeader="false" sidebar="false">
+
+    <head>
+         <c:HeaderCSS />
+         <style>
+            .messageCell,
+            .errorMsg {
+                color: #cc0000;
+                font-size: 0.8em;
+            }
+            
+            .messageCell h4 {
+                color: #cc0000;
+            }
+            
+            .standard {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 10px;
+                color: black;
+                padding: 5px;
+            }
+            
+            .standard_darkred {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 11px;
+                color: darkred;
+            }
+            
+            .table_background {
+                background-color: #f0f0f0
+            }
+            
+            .header_background {
+                background-color: #8c8c8c
+            }
+            
+            .input {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px
+            }
+            
+            .input_hint {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px;
+                color: gray
+            }
+            
+            .ad {
+                font-family: Arial, Helvetica, sans-serif;
+                width: 140px;
+                font-size: 10px;
+                margin: 0 auto;
+                text-align: left;
+                border: 2px solid #999;
+                background: white;
+                padding: 5px;
+            }
+            
+            a.blue:link {
+                color: #0000ff;
+            }
+            
+            a.blue:visited {
+                color: #0000ff;
+            }
+            
+            a.blue:hover {
+                color: #ff0000;
+            }
+            
+            a.blue:active {
+                color: #0000ff;
+            }
+            
+            textarea {
+                color: black !important;
+            }
+            
+            .name {
+                max-width: 190px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                float: left;
+                max-width: 400px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_container">
+            <apex:outputText escape="false" value="{!firm.Web_Page_Header_HTML__c}"></apex:outputText>
+            <div id="headbox">
+                <h3>{!firm.name}</h3></div>
+
+            <div id="content_container">
+                <div id="left_navigation">
+                    <h2 class="navigation_title"><br/>
+      </h2>
+                </div>
+                <div id="main_contentpage">
+                    <div class="post">
+                        <div class="entry" style="text-align:center;">
+                            <!-- SFDC STUFF STARTS HERE -->
+                            <h1 style="font-size:22px;">Upload Confirmation</h1>
+                            <h1>We have successfully received your {!IF(Upload_Files__c.Count_Of_AWS_S3_Objects__c>1,'files','file')}.<br/><br/>
+           </h1>
+
+                            <table id="files" width="100%" cellspacing="0" cellpadding="5">
+                                <tr style="background:#787878;color:white;font-size:14px;">
+                                    <th style="text-align:Center;padding:10px;">File Name</th>
+                                    <th style="text-align:Center;padding:10px;">File Size</th>
+                                </tr>
+                                <apex:repeat value="{!Upload_Files__c.AWS_S3_Objects__R}" var="file">
+                                    <tr style="font-size:12px;">
+                                        <td style="padding:8px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;">
+                                            <label class="name">{!File.File_Name__c}</label>
+                                        </td>
+                                        <td style="padding:8px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;border-right: 1px solid #787878;">{!File.File_Size_KB__c}</td>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                            <!-- SFDC STUFF ENDS HERE -->
+
+                            <BR></BR>
+
+                        </div>
+                        <!-- /.entry -->
+                    </div>
+                    <!-- /.post -->
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div id="content_bottom">
+
+
+                <img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/page-template-btm.jpg')}" width="891" height="38" alt="" class="png" />
+            </div>
+            <div class="clear"></div>
+        </div>
+    <apex:outputText escape="false" value="{!firm.Web_Page_Footer_HTML__c}"></apex:outputText>
+
+
+    </body>
+</apex:page>

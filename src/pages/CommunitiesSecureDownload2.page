@@ -1,0 +1,182 @@
+<apex:page standardController="AWS_S3_Object__c" sidebar="false" extensions="GoogleDriveAuthenticationCntrl" standardStylesheets="false"  applyBodyTag="false" showHeader="false" >
+    <c:CommunityResources title="Secure Download"/>
+     <script src="https://apis.google.com/js/client.js?onload=init"></script>
+    <style>
+     #upload-percentage{
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin-left:-25px;
+            margin-top:-100px;
+            width:150px;
+            height:100px;
+            border-radius: 50%;
+            background:#297ab8;
+            color:#fff;
+            text-align:center;
+            line-height:80px;
+            font-weight:bold;
+            font-size:15px;
+            display:none;
+        }
+        
+        
+        .flash {
+            -webkit-animation-name: flash;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-timing-function: linear;
+            -webkit-animation-iteration-count: infinite;
+        
+            -moz-animation-name: flash;
+            -moz-animation-duration: 1s;
+            -moz-animation-timing-function: linear;
+            -moz-animation-iteration-count: infinite;
+        
+            animation-name: flash;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        
+        @-moz-keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        
+        @-webkit-keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        
+        @keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        #drive-box{
+            padding:10px;
+            margin:10px;   
+            width:98%;
+            display:none;
+            position:relative;
+            min-height:150px;
+            margin-top:60px;
+        }
+        /***************** END MISC ************************/
+  </style>
+  <script>
+        var zipFileName = "{!AWS_S3_Object__c.Name}";
+        var accessToken= '';
+        var apiKey = '{!$Setup.Google_Drive_Configuration__c.Api_Key__c}';
+         function update_progress(e){
+           if (e.lengthComputable){
+              var percentage = Math.round((e.loaded/e.total)*100);
+              showProgressPercentage(percentage);
+              console.log("percent " + percentage + '%' );
+          }
+          else 
+          {
+            console.log("Unable to compute progress information since the total size is unknown");
+          }
+          
+        }
+        
+        
+        //show upload progress
+        function showProgressPercentage(percentageValue) {
+            if ($("#upload-percentage").length == 0) {
+                $("#drive-box").prepend("<div id='upload-percentage' class='flash'></div>");
+            }
+            if (!$("#upload-percentage").is(":visible")) {
+                $("#upload-percentage").show(1000);
+            }
+            $("#upload-percentage").html(percentageValue.toString() + "%");
+        }
+        
+        $( function() {
+            //showProgressPercentage(0);
+            $("#drive-box").show();
+            $("#upload-percentage").show();
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getAccessToken}',
+                 
+                function(result, event){
+                    if (event.status) {
+                        accessToken= result;
+                         gapi.client.setApiKey(apiKey);
+                         gapi.auth.setToken({
+                             access_token: accessToken
+                         });
+                         gapi.client.load('drive', 'v3').then( function() {
+                             var request = gapi.client.drive.files.get({
+                                'fileId': "{!$CurrentPage.Parameters.fileId}",
+                                'fields':"originalFilename"
+                              });
+                              request.execute(function(resp) {
+                                
+                                 zipFileName = resp.originalFilename;
+                                 
+                                Visualforce.remoting.Manager.invokeAction(
+                                            '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getFileInfo}',
+                                             'https://www.googleapis.com/drive/v2/files/{!$CurrentPage.Parameters.fileId}',
+                                             'Bearer ' + accessToken,
+                                            function(result2, event){
+                                                if (event.status) {
+                                                     console.log(accessToken);
+                                                     result2 =  result2.replace(/amp;/g, '');
+                                                     var url = result2 + '&access_token=' + accessToken;
+                                                     
+                                                     $('#textLink').attr('href', url)[0].click();
+                                                      completeDownload();
+                                                }
+                                             }, 
+                                {escape: true}
+                                       );
+                              });
+                        });
+                    } 
+                }, 
+                {escape: true}
+            );
+            
+            
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getAccessToken}',
+                 
+                function(result, event){
+                    if (event.status) {
+                        accessToken= result;
+                       
+                    } 
+                }, 
+                {escape: true}
+            );
+        
+        } );
+        
+       function completeDownload(){
+           $("#drive-box").hide();
+           $("#upload-percentage").hide();                        
+       }
+    </script>
+    <body>
+        <div class="wrapper">
+          <c:CommunityHeader /> 
+          <div>     
+            <br/><br/>
+               <a style="color: white;margin-left: 5%;" href="/apex/home" >Go Back To Home</a>
+                <br/>
+                <br/>
+                <div id="drive-box">
+                   <div id='upload-percentage' class='flash'>Downloading...</div>
+               </div>
+           </div> 
+          <c:CommunityFooter />   
+        </div>
+    </body>
+   
+       
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
+</apex:page>

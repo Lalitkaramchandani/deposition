@@ -1,0 +1,3 @@
+<apex:page controller="UnicourtSearchController">
+    <c:UnicourtSearchComponent ></c:UnicourtSearchComponent>
+    </apex:page>

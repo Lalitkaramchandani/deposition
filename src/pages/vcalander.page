@@ -1,0 +1,28 @@
+<apex:page standardController="Deposition__c" title="event.ics"  cache="false">
+<br/>{!Deposition__c.Converted_Time__c}
+<br/>
+BEGIN:VCALENDAR
+PRODID:-//Blatant Media Corporation//Absorb LMS//EN
+VERSION:2.0
+METHOD:PUBLISH
+BEGIN:VEVENT
+CLASS:PUBLIC
+DTSTAMP;TZID=GMT:<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TEXT(Deposition__c.Converted_Time__c),':',''),'-',''),' ','T')}"/>
+UID:<apex:outputText value="{!Deposition__c.id}"/>
+DTSTART;TZID=GMT:<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TEXT(Deposition__c.Converted_Time__c),':',''),'-',''),' ','T')}"/>
+DTEND;TZID=GMT:<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TEXT(Deposition__c.Converted_Time__c),':',''),'-',''),' ','T')}"/>
+SUMMARY:<apex:outputText value="Deposition {!Deposition__c.name}"/>
+DESCRIPTION:<apex:outputText value="{!Deposition__c.Event_Type__c} of {!Deposition__c.Deponent_Name__c} on {!Deposition__c.Deposition_Date__c} at {!Deposition__c.Deposition_Time__c} {!Deposition__c.Time_Zone__c}" escape="false"/>\n\n
+<apex:outputText value="Event Location: {!JSENCODE(Deposition__c.Event_Location__c)}" escape="false"/>\n\n
+LOCATION:<apex:outputtext value="{!SUBSTITUTE(JSENCODE(Deposition__c.Event_Location__c),'\r\n',' ')}" escape="false"/>
+BEGIN:VALARM
+TRIGGER:-PT1D
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+STATUS:CONFIRMED
+SEQUENCE:0
+ORGANIZER:donotreply@test.com
+END:VEVENT
+END:VCALENDAR 
+</apex:page>

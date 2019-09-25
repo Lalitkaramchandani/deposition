@@ -1,0 +1,9 @@
+<apex:page standardController="Case_Leads__c" extensions="FollowActionWindowController" action="{!addFollower}" showQuickActionVfHeader="false" >
+    <apex:pageMessages ></apex:pageMessages>
+    <div>
+        &nbsp; <br/><br/>
+    </div>
+    <apex:outputPanel style="Font-weight:bold; Font-size:20px;">
+    	<apex:outputText >{!msg}</apex:outputText>
+    </apex:outputPanel>
+</apex:page>

@@ -1,0 +1,47 @@
+<apex:page cache="false" applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="CommunityLandingPageCntrl" action="{!forwardToStartPage}">
+    <c:CommunityResources title="Firm"/>
+    
+    <body>
+        <apex:form id="frm" forceSSL="true">
+            <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <apex:actionFunction action="{!setupCommunityFirm}" name="setupCommunityFirm"   reRender="frm" status="status"/>
+                <c:ActionStatus ></c:ActionStatus>
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        <h1>Login</h1>
+
+
+                        <div class="scheduleform">
+
+                               <apex:pageMessages ></apex:pageMessages>
+                                <div class="single-field">
+                                    <label for="eventtype">
+                                        <span>Select Firm</span>
+                                         <apex:selectList value="{!selectedFirm}" size="1"  >
+                                             <apex:SelectOptions value="{!firmOptions}"> </apex:SelectOptions>
+                                         </apex:SelectList>
+                                         
+                                        <br/>
+                                    </label>
+                                </div>
+
+                                
+                                <div class="recentlyviewed">
+                                    <br/>
+                                    <apex:commandButton value="Submit" onclick="setupCommunityFirm();return false;" styleclass="btn btn-primary btn-large" />
+                                </div>
+                                
+                        </div>
+
+                    </div>
+
+                </div>
+                <c:CommunityFooter />
+                <c:TLS_NiceWarningJquery />
+            </div>
+        </apex:form>
+    </body>
+    
+</apex:page>

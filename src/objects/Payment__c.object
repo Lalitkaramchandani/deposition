@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>CreatePayment</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Payments</relationshipLabel>
+        <relationshipName>Payments</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Paid_in_Full__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Paid in Full</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Method</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ACH</fullName>
+                    <default>false</default>
+                    <label>ACH</label>
+                </value>
+                <value>
+                    <fullName>Cash</fullName>
+                    <default>false</default>
+                    <label>Cash</label>
+                </value>
+                <value>
+                    <fullName>Check</fullName>
+                    <default>true</default>
+                    <label>Check</label>
+                </value>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>false</default>
+                    <label>Credit Card</label>
+                </value>
+                <value>
+                    <fullName>Credit Memo</fullName>
+                    <default>false</default>
+                    <label>Credit Memo</label>
+                </value>
+                <value>
+                    <fullName>Lockbox</fullName>
+                    <default>false</default>
+                    <label>Lockbox</label>
+                </value>
+                <value>
+                    <fullName>Misc. Receivables</fullName>
+                    <default>false</default>
+                    <label>Misc. Receivables</label>
+                </value>
+                <value>
+                    <fullName>Wire Transfer</fullName>
+                    <default>false</default>
+                    <label>Wire Transfer</label>
+                </value>
+                <value>
+                    <fullName>Write Off</fullName>
+                    <default>false</default>
+                    <label>Write Off</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Reason_for_Credit__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason for Credit</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Late Delivery</fullName>
+                    <default>false</default>
+                    <label>Late Delivery</label>
+                </value>
+                <value>
+                    <fullName>Incorrect invoice</fullName>
+                    <default>false</default>
+                    <label>Incorrect invoice</label>
+                </value>
+                <value>
+                    <fullName>Problem at the deposition</fullName>
+                    <default>false</default>
+                    <label>Problem at the deposition</label>
+                </value>
+                <value>
+                    <fullName>Payment Adjustment</fullName>
+                    <default>false</default>
+                    <label>Payment Adjustment</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Payment</fullName>
+                    <default>true</default>
+                    <label>Payment</label>
+                </value>
+                <value>
+                    <fullName>Credit</fullName>
+                    <default>false</default>
+                    <label>Credit</label>
+                </value>
+                <value>
+                    <fullName>Refund</fullName>
+                    <default>false</default>
+                    <label>Refund</label>
+                </value>
+                <value>
+                    <fullName>Finance Charge</fullName>
+                    <default>false</default>
+                    <label>Finance Charge</label>
+                </value>
+                <value>
+                    <fullName>Intercompany</fullName>
+                    <default>false</default>
+                    <label>Intercompany</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Payment</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>P-{0000000}</displayFormat>
+        <label>Payment No</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Payments</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Lock_Payment_Item</fullName>
+        <active>false</active>
+        <errorConditionFormula>(ISNEW()=false &amp;&amp; 
+(ISCHANGED( Amount__c ) || ISCHANGED( Date__c )) &amp;&amp; 
+(MONTH( PRIORVALUE(Date__c) ) &lt; MONTH(TODAY()) || YEAR(PRIORVALUE(Date__c)) &lt; YEAR(TODAY()) || MONTH( Date__c ) &lt; MONTH(TODAY()) || YEAR(Date__c) &lt; YEAR(TODAY()) ) 
+) 
+|| 
+(ISNEW() &amp;&amp; 
+(MONTH(Date__c) &lt; MONTH(TODAY()) || 
+YEAR(Date__c) &lt; YEAR(TODAY())))</errorConditionFormula>
+        <errorMessage>Payments cannot be applied or modified for prior months.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Payment_Type_Needed_for_Credits</fullName>
+        <active>false</active>
+        <description>When issuing a credit, there should not be a payment method listed.</description>
+        <errorConditionFormula>ISPICKVAL(Type__c,&quot;Credit&quot;) &amp;&amp; 
+NOT(ISBLANK(TEXT( Payment_Type__c)))</errorConditionFormula>
+        <errorDisplayField>Payment_Type__c</errorDisplayField>
+        <errorMessage>When issuing a credit, there should not be a payment method listed.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Payment_Type_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>(NOT(ISPICKVAL(Type__c,&quot;Credit&quot;))
+&amp;&amp;
+ISPICKVAL(Payment_Type__c,&quot;Credit Memo&quot;))</errorConditionFormula>
+        <errorDisplayField>Payment_Type__c</errorDisplayField>
+        <errorMessage>Payment type is required for every payment except credits.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Require_Reason_for_Credit</fullName>
+        <active>true</active>
+        <description>Please detail why a credit was issued.</description>
+        <errorConditionFormula>ISPICKVAL(Type__c,&quot;Credit&quot;) &amp;&amp; 
+ISBLANK(TEXT(Reason_for_Credit__c ))</errorConditionFormula>
+        <errorDisplayField>Reason_for_Credit__c</errorDisplayField>
+        <errorMessage>Please explain why this credit was issued.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Require_Reason_for_Misc_Receivables</fullName>
+        <active>true</active>
+        <description>Please detail why miscellaneous receivables were applied.</description>
+        <errorConditionFormula>ISPICKVAL(Type__c,&quot;Misc. Receivables&quot;) &amp;&amp; 
+ISBLANK( Notes__c  )</errorConditionFormula>
+        <errorDisplayField>Notes__c</errorDisplayField>
+        <errorMessage>Please explain why miscellaneous receivables were issued.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

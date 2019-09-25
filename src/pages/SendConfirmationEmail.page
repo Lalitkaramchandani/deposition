@@ -1,0 +1,465 @@
+<apex:page controller="SendConfirmationEmailCtlr" title="NextGen Reporting | Send Confirmation Email"
+     standardStylesheets="true" sidebar="false"  docType="html-5.0" tabStyle="Deposition__c">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>NextGen Reporting | Send Confirmation Email</title>
+  <apex:stylesheet value="{!URLFOR($Resource.SLDS100, 'assets/styles/salesforce-lightning-design-system.min.css')}" />
+  <script src="{!URLFOR($Resource.SLDS100, 'assets/js/svg4everybody.js')}"></script>
+   <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+  <script>svg4everybody(); // run it now or whenever you are ready</script>
+     <script src="{!URLFOR($Resource.aljs, '/appiphony-lightning-js-master/dist/jquery.aljs-all-with-moment.min.js')}"></script>
+    <script src="{!URLFOR($Resource.aljs, '/appiphony-lightning-js-master/dist/jquery.aljs-datepicker.min.js')}"></script>
+   <style>
+   .slds-grid--frame {
+        min-width: 100% !important ;
+        
+    }
+   .msgIcon {
+        display: none!important
+    }
+    .customMessage * {
+        color: #fff!important
+    }
+    .customMessage {
+        margin: 5px 0!important;
+        max-width: 1280px;
+        opacity: 1!important;
+        width: 100%;
+        font-size: 12px;
+        border: 0px;
+        padding-left: 10px;
+    }
+    .message {
+        opacity: .1
+    }
+       .header {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.07);
+      z-index: 1;
+    }
+
+
+    .slds-icon-custom-68, .slds-icon-custom-custom68 {
+        background-color: #f26979;
+        color: #fff;
+    }
+    .slds-page-header__detail-block{
+        margin-right:5% !important;
+    }
+    .slds-page-header__detail-row {
+        margin: .75rem -1.5rem -1rem;
+        padding: .75rem 1.5rem;
+        background-color: rgb(255, 255, 255);
+    }
+    .slds-page-header {
+        padding: 1rem .75rem;
+        border-bottom: 3px solid #d8dde6;
+        background: #f4f6f9;
+    }
+    .slds-page-header__detail-block .slds-text-title{
+            color: rgb(84, 105, 141);
+    }
+    .overlay {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.7;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            z-index: 500;
+        }
+        
+        .status {
+            background: #ddd;
+            border: 1px solid #aaa;
+            border-radius: 2px;
+            color: black;
+            font-weight: bold;
+            
+            cursor: pointer;
+            -moz-box-shadow: 0 0 15px 5px #DDDDDD;
+            -webkit-box-shadow: 0 0 15px 5px #DDDDDD;
+            box-shadow: 0 0 15px 5px #DDDDDD;
+            margin: 2px;
+            width: 250px;
+            opacity: 1;
+            height: auto;
+            position: fixed;
+            left: 40%;
+            margin-top:5%;
+            padding: 15px;
+            z-index: 1000;
+            display: block;
+        }
+   </style>
+   <script>
+     function toggleCheckboxes(){
+         $('.attendeeChk').prop('checked', $("#selectAllChk").prop('checked'));
+     }
+     
+     function callSendEmail(){
+        $("#pnlErrMessage").hide();
+        countOfS3Objects = $('.attendeeChk:checked').length;
+        if(countOfS3Objects == 0){
+             $("#errMsg").html('Please select at least one Attendee.');
+             $("#pnlErrMessage").show();
+        }else{
+            sendEmail();
+        }
+     }
+     function hideErrorNotification(){
+         $("#pnlErrMessage").hide();
+     }
+     $(document).ready(function(){
+            
+           //to show the tool tip
+            var assetsLocation = '{!URLFOR($Resource.SLDS100)}';
+            $.aljsInit({
+                assetsLocation: assetsLocation,
+                scoped: false
+            });
+           $('.sldsdatePicker').datepicker(); 
+           $( ".sldsdatePicker" ).each(function( index ) {
+                if($(this).val() != ''){
+                    var today = new Date($(this).val());
+                    
+                   
+                   
+                    
+                    
+                    var startDate = new Date(today );
+                    var endDate = "", noOfDaysToAdd = 1, count = 0;
+                    while(count < noOfDaysToAdd){
+                        endDate = new Date(startDate.setDate(startDate.getDate() + 1));
+                        if(endDate.getDay() != 0 && endDate.getDay() != 6){
+                           //Date.getDay() gives weekday starting from 0(Sunday) to 6(Saturday)
+                           count++;
+                        }
+                    }
+                    var dd = endDate.getDate();
+                    var mm = endDate.getMonth()+1; //January is 0!
+                    var yyyy = endDate.getFullYear();
+                    
+                    if(dd<10) {
+                        dd='0'+dd
+                    } 
+                    
+                    if(mm<10) {
+                        mm='0'+mm
+                    } 
+                    
+                    today = mm+'/'+dd+'/'+yyyy;
+                    $(this).val(today );
+                }
+           });
+           overridePageMessages();  
+           $("#load-status-slds").hide();
+    });
+        
+    function overridePageMessages(){    
+        var textureEffect = '';
+        //Uncomment below line for texture effect on page messages
+        textureEffect = 'slds-theme--alert-texture';
+                     
+        $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+        $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+        $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+        $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+                         
+        $('.errorM3').removeClass('errorM3'); 
+        $('.confirmM3').removeClass('confirmM3'); 
+        $('.infoM3').removeClass('infoM3');   
+        $('.warningM3').removeClass('warningM3');  
+    }
+   </script>
+  
+</head>
+
+<body>
+  <div class="slds-grid slds-grid--frame slds-grid--vertical">
+
+  <!-- Header -->
+  <!---<header class="header slds-size--1-of-1" role="banner">
+    
+    <div class="slds-grid">
+      
+      <div class="slds-grid slds-grow">
+        <div class="slds-p-vertical--x-small slds-p-horizontal--medium">
+          <img src="/resource/1463323626000/nextgendepositions/nextgendepositions/images/NextGenLogo-Master.svg" style="height: 44px;"/>
+        </div>
+      </div>
+    </div>
+    
+  </header>--->
+   <apex:form >
+       <c:ActionStatus ></c:ActionStatus>
+       <apex:actionFunction name="cancel" action="{!cancel}"/>
+       <apex:actionFunction name="Search" action="{!actionmethod}"    status="status" reRender="pnlApexpageErrMessage,pnlDepositionRecords"/>
+       <apex:actionFunction name="sendEmail" action="{!sendEmail}"   status="status" reRender="pnlApexpageErrMessage"/> 
+       <div class="slds-notify_container" id="pnlErrMessage" style="display:none;">
+          <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+            <button onclick="hideErrorNotification();return false;" class="slds-button slds-notify__close slds-button--icon-inverse" title="Close">
+              <svg aria-hidden="true" class="slds-button__icon">
+                <use xlink:href="{!URLFOR($Resource.SLDS100, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+              </svg>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <span class="slds-assistive-text">Error</span>
+            <h2>
+              <svg aria-hidden="true" class="slds-icon slds-icon--small slds-m-right--x-small">
+                <use xlink:href="{!URLFOR($Resource.SLDS100, '/assets/icons/utility-sprite/svg/symbols.svg#ban')}"></use>
+              </svg> <label id="errMsg"></label> </h2>
+          </div>
+        </div>
+         <div class="slds-spinner_container" id="load-status-slds" >
+              <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+              </div>
+            </div>
+      <!-- Stage Container -->
+      <div class="stage-container slds-grid slds-nowrap slds-size--1-of-1">
+    
+       
+    
+        <!-- Stage -->
+        <section class="stage slds-grid slds-grid--vertical slds-nowrap">
+          
+          <div class="slds-shrink-none">
+             <!-- PAGE HEADER -->
+                <div class="slds-page-header" role="banner">
+                
+                  <!-- PAGE HEADER TOP ROW -->
+                  <div class="slds-grid">
+                
+                    <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
+                    <div class="slds-col">
+                
+                      <!-- HEADING AREA -->
+                      <!-- MEDIA OBJECT = FIGURE + BODY -->
+                      <div class="slds-media slds-media--top slds-no-space slds-grow">
+                        <div class="slds-media__figure">
+                           <svg aria-hidden="true" class="slds-icon slds-icon-custom-custom68 slds-icon--large">
+                            <use xlink:href="{!URLFOR($Resource.SLDS100, '/assets/icons/custom-sprite/svg/symbols.svg#custom68')}"></use>
+                          </svg>
+                          
+                        </div>
+                        <div class="slds-media__body">
+                          <p class="slds-text-title--caps slds-line-height--reset"></p>
+                          <h1 class="slds-page-header__title">Send Confirmation Email</h1>
+                        </div>
+                
+                      </div>
+                      <!-- / MEDIA OBJECT -->
+                      <!-- HEADING AREA -->
+                
+                    </div>
+                    <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
+                     <!-- PAGE HEADER DETAIL ROW -->
+                    
+                    <!-- / PAGE HEADER DETAIL ROW -->
+                    <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
+                    
+                    <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
+                
+                  </div>
+                  <!-- / PAGE HEADER TOP ROW -->
+                
+                   
+                
+                </div>
+                <!-- / PAGE HEADER -->
+    
+            
+          </div>
+          
+          <!-- Stage Main -->
+          <div class="slds-shrink-none stage-main slds-grid slds-wrap slds-grow" role="main">
+    
+            <div style="width:200px !important"  class="slds-grow slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--10-of-12 slds-col-rule--right slds-p-around--large">
+    
+              <!-- MAIN CARD -->
+              <div class="slds-col slds-col-rule--right slds-p-right--large slds-size--12-of-12">
+                  
+                  
+                  <div class="slds-form-element" style="margin-bottom:1%; ">
+                      
+                      <table>
+                          <tr>
+                              <td width="25%">
+                      
+                                  <div class="slds-form-element__control">
+                                     <label style="float:left;margin-top:2%;font-weight: bold;" class="slds-form-element__label" for="text-input-01">Deposition Date</label>              
+                                     <div style="float:left;" class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                        <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS100, '/assets/icons/utility-sprite/svg/symbols.svg#event')}"></use>
+                                        </svg>
+                                         <apex:inputText style="border-left: 3px solid #c00;" required="true" value="{!dummydeposition.Deposition_Date__c}" styleclass="slds-input sldsdatePicker" />
+                                    </div>
+                                  </div>
+                              </td>
+                              <td width="25%">
+                                  <div class="slds-form-element__control">
+                                     <label style="float:left;margin-top:2%;font-weight: bold;" class="slds-form-element__label" for="text-input-01">Firm</label>              
+                                     <div style="float:left;" class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                         <apex:selectList value="{!selectedFirm}" size="1"  styleclass="slds-input">
+                                             <apex:SelectOptions value="{!firmOptions}"> </apex:SelectOptions>
+                                         </apex:SelectList>
+                                        
+                                    </div>
+                                  </div>
+                                 
+                              </td>
+                              <td>
+                                  <div class="slds-col slds-no-flex slds-grid slds-align-top" style="margin-left:2%;">
+                                      <div class="slds-button-group" role="group">
+                                            <button class="slds-button slds-button--neutral" onclick="Search();return false;">
+                                              Search
+                                           </button>
+                                           <button class="slds-button slds-button--neutral" onclick="callSendEmail();return false;">
+                                              Send Email
+                                            </button>
+                                            <button class="slds-button slds-button--neutral" onclick="cancel();return false;">
+                                              Go Back
+                                            </button>
+                                      </div>
+                                  </div>
+                              
+                              </td>
+                          </tr>
+                      </table>
+                      
+                        
+                    
+                  </div>
+                 
+                 
+                  <section class="slds-card__body">
+                      <br/>
+                        <apex:outputPanel id="pnlApexpageErrMessage">
+                            <apex:pageMessages ></apex:pageMessages>
+                            <script>
+                                overridePageMessages();
+                            </script>
+                        </apex:outputPanel>
+                        <br/>
+                  </section >
+                  
+                  <article class="slds-card">
+                
+                    <header class="slds-card__header slds-grid">
+                      <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                          <svg aria-hidden="true" class="slds-icon slds-icon-standard-file slds-icon--small">
+                            <use xlink:href="{!URLFOR($Resource.SLDS100, '/assets/icons/custom-sprite/svg/symbols.svg#custom68')}"></use>
+                          </svg>
+                        </div>
+                        <div class="slds-media__body slds-truncate">
+                          <a href="javascript:void(0);" class="slds-text-link--reset">
+                            <span class="slds-text-heading--small"></span>
+                          </a>
+                        </div>
+                      </div>
+                    </header>
+                    
+                    <!-- CARD BODY = TABLE -->
+                    <apex:outputPanel id="pnlDepositionRecords">
+                        <section class="slds-card__body">
+                          <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer">
+                            <thead>
+                              <tr class="slds-text-heading--label">
+                                <th class="slds-size--1-of-4" scope="col"> <div class="slds-th__action slds-th__action--form">
+                                   <span class="slds-checkbox">
+                                        <label class="slds-checkbox">
+                                            <input  onchange="toggleCheckboxes();" id="selectAllChk" type="Checkbox" class="slds-input"/>
+                                            <span class="slds-checkbox--faux"></span>
+                                            <span class="slds-form-element__label"><span> Send Email</span></span>
+                                        </label>
+                                    </span>    
+                                </div>
+                                </th>
+                                <th class="slds-size--1-of-4" scope="col">Role</th>
+                                <th class="slds-size--1-of-4" scope="col">Name</th>
+                                <th class="slds-size--1-of-4" scope="col">Email</th>
+                                <th scope="col">Confirmation Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!lstDepositionsModel}"  var="depModel"> 
+                                    <tr class="slds-hint-parent" style=" border-bottom: 3px solid #d8dde6;background: #f4f6f9;" >
+                                          
+                                       <th class="slds-size--1-of-12" scope="row" colspan="5">
+                                             <a href="/{!depModel.dep.Id}" target="_blank">{!depModel.dep.Name}</a>
+                                              - {!depModel.dep.Deposition_Time__c} {!depModel.dep.Time_Zone__c}– {!depModel.dep.Event_Type__c} Status: {!depModel.dep.Deposition_Status__c}
+                                              <br/>{!depModel.dep.Event_Location__c}
+                                       </th>
+                                           
+                                           
+                                    </tr>
+                                    <apex:repeat value="{!depModel.dep.Deposition_Roles__r }"  var="attendee"> 
+                                       <tr class="slds-hint-parent" st="{!attendee.id}" >
+                                          
+                                           <th class="slds-size--1-of-4" scope="row">
+                                                
+                                                <span class="slds-checkbox">
+                                                    <label class="slds-checkbox">
+                                                        <apex:inputcheckbox value="{!attendee.IsDeleted}" styleclass="attendeeChk slds-input"/>
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label"><span> </span></span>
+                                                    </label>
+                                                </span>    
+                                           </th>
+                                           <td class="slds-size--1-of-4"><apex:outputField value="{!attendee.Role__c}"/> </td>
+                                           <td class="slds-size--1-of-4"><a href="/{!attendee.Contact__c}" target="_blank">{!attendee.Contact__r.Name}</a></td>
+                                           <td class="slds-size--1-of-4">{!attendee.Contact__r.Email} </td>
+                                           <td class="slds-size--1-of-4">
+                                               <apex:outputField value="{!attendee.Deposition__r.Confirm_Reporter__c}" rendered="{!attendee.Role__c=='Court Reporter'}"/>
+                                               <apex:outputField value="{!attendee.Deposition__r.Confirm_Video_Tech__c}" rendered="{!attendee.Role__c=='Videographer/Technician'}"/>
+                                               <apex:outputField value="{!attendee.Deposition__r.Confirm_Client__c}" rendered="{!attendee.Role__c=='Scheduler' 
+                                               || (attendee.Role__c!='Videographer/Technician' && attendee.Role__c!='Court Reporter' && attendee.Primary_Attorney__c)}"/>
+                                           </td>
+                                           
+                                       </tr>
+                                   </apex:repeat>
+                                   
+                               </apex:repeat>
+                               <tr class="slds-hint-parent" style="{!IF(lstDepositionsModel == NULL || lstDepositionsModel.size==0 ,'','display:none;')}" >
+                                          
+                                       <td class="slds-size--1-of-12" scope="row" colspan="5">
+                                             <div style="margin-left: auto;margin-right: auto;    text-align: center;">No items to display.</div>
+                                       </td>
+                                           
+                                           
+                                    </tr>
+                            </tbody>
+                          </table>
+                          
+                        </section>
+                        <!-- / CARD BODY = SECTION + TABLE -->
+                    </apex:outputPanel>
+                    <footer class="slds-card__footer">
+                      
+                    </footer>
+                
+                  </article>
+                </div>
+                <!-- / MAIN CARD -->
+    
+            </div>
+    
+           
+    
+          </div>
+          
+        </section>
+      </div>
+      </apex:form>
+  </div>
+ 
+</body>
+</html>
+
+</apex:page>

@@ -1,0 +1,52 @@
+<apex:page applyHtmlTag="false" standardController="Upload_Files__c" standardstylesheets="false" cache="false" showHeader="false" sidebar="false" 
+     >
+     
+<head>
+    <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />
+    <title>NextGen Reporting | Upload Files </title>
+    <style>
+      .messageCell, .errorMsg {
+                color: #cc0000;
+                font-size: 0.8em;
+      }
+      
+      .messageCell h4 {
+        color: #cc0000;
+      }
+      .name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            float: left;
+            max-width: 400px;
+        }
+     body,html{
+               background: white !important;
+            }
+    </style>
+</head> 
+<body>
+
+       <!-- SFDC STUFF STARTS HERE -->
+           <h1 style="font-size:22px;">Upload Confirmation</h1> 
+           <h1>We have successfully received your {!IF(Upload_Files__c.Count_Of_AWS_S3_Objects__c>1,'files','file')}.<br/><br/>
+           </h1>
+           
+            <table id="files" width="100%"  cellspacing="0" cellpadding="5">
+                <tr style="background:#787878;color:white;font-size:14px;">
+                    <th style="text-align:Center;padding:10px;">File Name</th>
+                    <th style="text-align:Center;padding:10px;">File Size</th>
+                </tr>
+                <apex:repeat value="{!Upload_Files__c.AWS_S3_Objects__R}" var="file">
+                    <tr style="font-size:12px;">
+                        <td style="padding:8px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;">
+                            <label class="name">{!File.File_Name__c}</label>
+                        </td>
+                        <td style="padding:8px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;border-right: 1px solid #787878;">{!File.File_Size_KB__c}</td>
+                    </tr>
+                </apex:repeat>
+            </table>
+         <!-- SFDC STUFF ENDS HERE --> 
+   
+           <BR></BR>
+</body>
+</apex:page>

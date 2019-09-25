@@ -1,0 +1,19 @@
+<apex:component access="global">
+  <apex:attribute name="files"  type="AWS_S3_Object__c[]" description="This points to Deposition Record Id" />  
+  
+  <P>
+    <TABLE BORDER="1" cellspacing="5" cellpadding="5" WIDTH="90%" style="border-collapse: collapse;">
+        <TR><Th style="text-decoration:underline;">File Type</Th><Th style="text-decoration:underline;">File Name</Th><Th style="text-decoration:underline;">Size (KB)</Th></TR>
+        <apex:repeat value="{!files}" var="file">
+            <TR style="{!IF(file.File_Type__c=='Other' || file.File_Type__c=='' ,'','display:none;')}">
+                <TD>{!file.File_Type__c}</TD>
+                <TD><A HREF="{!$Site.BaseUrl}/{!file.id}">
+                    {!file.File_Name__c}</A>
+                </TD>
+                <TD>{!file.File_Size_KB__c}</TD>
+            </TR>
+        </apex:repeat>
+        
+    </TABLE>
+  </p>  
+</apex:component>

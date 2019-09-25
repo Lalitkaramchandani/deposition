@@ -1,0 +1,86 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="ConfirmController" action="{!ConfirmDeposition}">
+    <c:CommunityResources title="Confirm "/>
+    <style>
+        a{
+            color : white !important;
+        }
+    </style>
+    <body>
+        <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <apex:form id="frm" >
+                
+                <c:ActionStatus ></c:ActionStatus>
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        <h1>Confirm</h1>
+
+                        <div class="scheduleform">
+<apex:pageMessages ></apex:pageMessages>
+                                <!-- SFDC Stuff -->
+                                 <apex:outputPanel rendered="{!isError}" style="color:#cc0000">
+                                The link seems invalid. Please check the link and try again
+                              </apex:outputPanel>
+                              
+                              <apex:outputPanel rendered="{!AND(NOT(isError),isJobOpen)}" style="margin:10px;padding:20px;">
+                                <apex:pageBlock rendered="{!IsAccepted}">
+                                   
+                                        Thank you for accepting this assignment! You will receive an email later today with additional details.
+                                         You will also receive an email the business day before the assignment with final confirmation of all particulars. 
+                                         Below are the current details for the assignment: 
+                                    
+                                    <br/><br/>
+                                </apex:pageBlock>
+                                
+                                <apex:pageBlock rendered="{!!IsAccepted}">
+                                  
+                                    Status: Not Covered.  Please <apex:commandLink action="{!updateDeposition}"> click here </apex:commandLink>
+                                      to confirm that you can cover this {!Lower(Deposition.Event_Type__c)}.
+                                      <br/><br/>
+                                   
+                                </apex:pageBlock>
+                               
+                                    <apex:pageBlock title="Deposition Details">
+                                    
+                                    <TABLE cellspacing="0" cellpadding="6" border="0">
+                                      <TR><TD><strong>Job Number: </strong></TD><TD><apex:outputField value="{!Deposition.Transcript_Due_From_Reporter__c}"/></TD></TR>   
+                                      <TR><TD><strong>Deposition Date: </strong></TD><TD><apex:outputField value="{!Deposition.Deposition_Date__c}"/></TD></TR>
+                                      <TR><TD><strong>Start Time: </strong></TD><TD><apex:outputField value="{!Deposition.Deposition_Time__c}"/> &nbsp; <apex:outputField value="{!Deposition.Time_Zone__c}"/></TD></TR>
+                                      <TR><TD><strong>Primary Location:</strong></TD><TD><apex:outputField value="{!Deposition.Event_Location__c}"/></TD></TR>
+                                      <TR><TD><strong>Case Name/Caption:</strong></TD><TD><apex:outputField value="{!Deposition.Case_Name__c}"/></TD></TR>
+                                      <TR><TD><strong>Witness Name:</strong></TD><TD><apex:outputField value="{!Deposition.Deponent_Name__c}"/></TD></TR>
+                                      <TR><TD><strong>NextGen Client:</strong></TD><TD><apex:outputField value="{!Deposition.Hiring_Attorney__c}"/></TD></TR>
+                                      <TR><TD><strong>Client Firm:</strong></TD><TD><apex:outputField value="{!Deposition.Hiring_Firm__c}"/></TD></TR>
+                                      <TR><TD><strong>Services Requested:</strong></TD><TD><apex:outputField value="{!Deposition.Deposition_Services__c}"/></TD></TR>
+                                      <TR><TD><strong>Event Type:</strong></TD><TD><apex:outputField value="{!Deposition.Event_Type__c}"/></TD></TR>
+                                      <TR><TD><strong>Expedited Transcript:</strong></TD><TD><apex:outputField value="{!Deposition.Expedite__c}"/></TD></TR>
+                                      <TR><TD><strong>Transcript Due Date(Expected):</strong></TD><TD><apex:outputField value="{!Deposition.Transcript_Due_From_Reporter__c}"/></TD></TR>
+                                      <TR><TD><strong>Video/Tech Instructions:</strong></TD><TD><apex:outputField value="{!Deposition.Video_Tech_Instructions__c}"/></TD></TR>
+                                    
+                                    </TABLE>
+                                    </apex:pageBlock> 
+                                
+                              </apex:outputPanel>
+                              
+                              <apex:outputPanel rendered="{!AND(NOT(isError),NOT(isJobOpen))}" style="margin:10px;padding:20px;">
+                                <apex:pageBlock >
+                                Thank you for your interest in covering this job. This job has already been
+                                accepted, but we may have more in your area. Feel free
+                                to call us {!deposition.Primary_Court_Reporting_Firm__r.Phone__c} or {!IF($CurrentPage.parameters.Type!='Videographer/Technician',deposition.Primary_Court_Reporting_Firm__r.Scheduling_Email_Address__c,deposition.Primary_Court_Reporting_Firm__r.Video_Email_Address__c)}.
+                               </apex:pageBlock>
+                              </apex:outputPanel>
+                               <!-- SFDC Stuff -->
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+                </apex:form>
+                <c:CommunityFooter />
+            </div>
+        
+    </body>
+    
+</apex:page>

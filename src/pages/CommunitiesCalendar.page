@@ -1,0 +1,264 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="CommunitiesCalendarCntrl">
+    <c:CommunityResources title="{!currentUser.contact.Account.Name} Deposition Calendar"/>
+    <head>
+        <meta charset="utf-8" />
+        <link href="{!URLFOR($Resource.fullcalendar,'fullcalendar.css')}" rel="stylesheet" />
+        <link href="{!URLFOR($Resource.fullcalendar,'scheduler.min.css')}" rel="stylesheet" />
+        <link href="{!URLFOR($Resource.fullcalendar,'fullcalendar.print.css')}" rel='stylesheet' media='print' />
+        <script src="{!URLFOR($Resource.fullcalendar,'/lib/moment.min.js')}"></script>
+        
+        <script src="{!URLFOR($Resource.fullcalendar,'fullcalendar.min.js')}"></script>
+        <script src="{!URLFOR($Resource.fullcalendar,'scheduler.min.js')}"></script>
+        
+        <script>
+             jQuery(document).ready(function() {
+                getDepositionsEventData('','');
+                
+            });
+            
+            
+            function getDepositionsEventData(calendarStartDate,calendarEndDate) {   
+                jQuery("#load-statusForCalendar").show();                     // records are retrieved from soql database
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.CommunitiesCalendarCntrl.eventdata}',calendarStartDate,calendarEndDate,'{!selectedType}','{!$CurrentPage.Parameters.firm}',  // controller and method names
+                    function(result, event){
+                        if (event.status) {
+                            evt =  JSON.parse(result);
+                            console.log(evt);
+                            jQuery('#calendar').fullCalendar({
+                                theme: true,
+                                header: {
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'month'
+                                }/*,
+                                eventClick: function(calEvent, jsEvent, view) {
+
+                                    var dt = new Date(calEvent.start._i);
+                                   
+                                    var day = dt.getDate();
+                                    var monthIndex = dt.getMonth()+1;
+                                    var year = dt.getFullYear();
+                                    
+                                    fetchDepositions(monthIndex +'/'+day+'/'+year ,calEvent.title.split(' (')[0]);
+                                    
+                                }*/,
+                                dayClick: function(date, jsEvent, view) {
+                                    jQuery('.selectedCell').removeClass('selectedCell');
+                                    jQuery(this).addClass('selectedCell');
+                                    
+                                    fetchDepositions(date.format('MM/DD/YYYY'),'');
+                                    
+                                },
+                                 viewRender: function(view, element) {
+                                    //getDepositionsEventData();
+                                    
+                                    
+                                    var dt = new Date(jQuery('#calendar').fullCalendar('getView').start._d);
+                                   
+                                    var day = dt.getDate();
+                                    var monthIndex = dt.getMonth()+1;
+                                    var year = dt.getFullYear();
+                                    
+                                    var startDate = monthIndex +'/'+day+'/'+year;
+                                    dt = new Date(jQuery('#calendar').fullCalendar('getView').end._d);
+                                   
+                                    day = dt.getDate();
+                                    monthIndex = dt.getMonth()+1;
+                                    year = dt.getFullYear();
+                                    var endDate = monthIndex +'/'+day+'/'+year;
+                                    
+                                    console.log(startDate );
+                                    console.log(endDate );
+                                    getDepositionsEventData(startDate ,endDate );
+                                    
+                                },events: evt
+                            });
+                            
+                            
+                        } else if (event.type === 'exception') { 
+                            console.log(event.message);
+                            
+                        } else {
+                            console.log(event.message);
+                            
+                        }
+                        jQuery("#load-statusForCalendar").hide();
+                        jQuery('#calendar').fullCalendar('removeEvents');
+                        jQuery('#calendar').fullCalendar('addEventSource', evt);         
+                        jQuery('#calendar').fullCalendar('rerenderEvents' );
+                    }, 
+                    {escape: false}
+                );
+            }
+           
+        </script>
+    <style>
+    
+       .fc-month-button{
+           display:none;
+       }
+    
+        #calendar {
+            margin: 2% !important;
+            max-width: 90%;
+            margin-left:5% !important;
+        }
+        .ui-state-highlight{
+            background: none !important;
+            background-color:green !important;
+        }
+        body {
+            font-size: 12px;
+        }
+        .fc-week{
+            height:60px !important;
+        }
+        .dataTables_wrapper .DTTT_button{
+            margin-right: 2px !important;
+        } 
+        .dataTables_filter {
+            float: left !important;
+            margin-left: 5% !important;
+        }
+        .messageCell h4 {
+            margin :0px !important;
+        }
+        .selectedCell{
+            background: rebeccapurple;;
+        }
+         .sidebarCell h2 {
+            font-size: 13px !important;
+        }
+        .dataTables_wrapper{
+            width: 90%;
+            margin-left: 5%;
+        }
+        tr:nth-child(odd) {
+            background: #D5D7DC !important;
+        }
+        tr:nth-child(even) {
+            background: #FFF !important;
+        }
+        .dataTables_filter{
+            display:none !important;
+        }
+        .dataTables_length select{
+            float:left !important;
+        }
+        .dataTables_length label{
+            color: #2779aa !important
+        }
+        .dataRow a{
+            color: black !important;
+        }
+        .fc-toolbar .fc-center h2{
+            font-family: "Open Sans", sans-serif;
+            font-weight: 600;
+            font-size: 1.5em;
+            color: white;
+            text-align: center;
+            padding-top: 3px;
+        }
+    </style>
+   </head>
+    <body>
+        <div class="wrapper">
+                
+                <c:CommunityHeader />
+                 <div id="load-statusForCalendar">
+                    <div class="overlay"></div>
+                    <div class="status">
+                        <img src="/img/loading24.gif" />
+                        <span>Please wait...</span>
+                    </div>
+                </div>
+               <c:ActionStatus ></c:ActionStatus>
+              
+               <button style="margin-left: 5%;margin-top: 2%;{!IF(selectedType=='Show all Jobs' ,'','display:none;')}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" onclick="filterDeposition('All_Account_Depositions');return false;">
+                    <span class="ui-button-text">Show all events for {!currentUser.contact.Account.Name}</span>
+                </button>
+                <button style="margin-left: 5%;margin-top: 2%;{!IF(selectedType=='All_Account_Depositions','','display:none;')}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" onclick="filterDeposition('');return false;">
+                    <span class="ui-button-text">Show only my event</span>
+                </button>
+               <div id='calendar'></div>
+               
+                <br/><br/>
+                <apex:form id="frm">
+                   
+                    <c:PageBlockTableEnhancer useBaseJqueryTheme="true" targetPbTableIds="Depostions" paginate="true" enableExport="false" defaultPageSize="100" pageSizeOptions="5,10,20,30,40,50,100"/>    
+        
+                    <apex:actionFunction name="fetchDepositions" action="{!fetchDayDepositions}"  reRender="frm" status="status">
+                        <apex:param assignTo="{!selectedDate}" name="argu1" value=""/>
+                        <apex:param assignTo="{!selctedBrand}" name="argu2" value=""/>
+                    </apex:actionFunction>
+                    
+                   <h1 style="text-align:left;margin-left:5%">Depositions:</h1>
+                  
+                  <hr align="MIDDLE" width="90%" style="margin-left:5%;"/>
+                 
+                    <apex:pageBlock >
+                        
+                         <apex:pageMessages ></apex:pageMessages>
+                        
+                        <apex:pageBlockTable value="{!lstDepositions}" styleClass="DepostionsTbl" var="depostion" id="Depostions" >
+                            
+                             
+                            <apex:column headerValue="Time">
+                                <apex:outputfield value="{!depostion.Deposition_Time__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Timezone">
+                                <apex:outputfield value="{!depostion.Time_Zone__c}"/>  
+                            </apex:column>
+                            <apex:column headerValue="Case Caption">
+                                <apex:outputfield value="{!depostion.Case_Name__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Deponent Name">
+                                <apex:outputfield value="{!depostion.Deponent_Name__c}"/>
+                            </apex:column>
+                            
+                           <apex:column headerValue="Event Location">
+                                <apex:outputfield value="{!depostion.Event_Location__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Deposition Services">
+                                <apex:outputfield value="{!depostion.Deposition_Services__c}"/>
+                            </apex:column>
+                            
+                             <apex:column headerValue="Job Number" >
+                                <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!depostion.id}','newwindow','700','650');  return false;" >{!depostion.Name}</a>
+                            </apex:column>
+                            
+                        </apex:pageBlockTable> 
+                        
+                    </apex:pageBlock>
+                </apex:form>
+                <c:CommunityFooter />
+            </div>
+             <script>
+              
+           
+              function PopupCenter(url, title, w, h) {
+                // Fixes dual-screen position                         Most browsers      Firefox
+                var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+                var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+            
+                var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+            
+                var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+                var top = ((height / 2) - (h / 2)) + dualScreenTop;
+                var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+            
+                // Puts focus on the newWindow
+                if (window.focus) {
+                    newWindow.focus();
+                }
+              }
+              function filterDeposition(selectedType){
+                
+                window.location.href ="/apex/CommunitiesCalendar?selectedType="+selectedType;
+             }   
+         </script>
+    </body>
+    
+</apex:page>

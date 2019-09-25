@@ -1,0 +1,13 @@
+<apex:component controller="FirmInfoCntrl">
+  <apex:attribute description="Title For Page" name="title" type="string" required="false" />
+  <head>
+    <title>{!firm.Name} | {!title}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery-latest.js')}" />
+    <link href="{!URLFOR($Resource.nextgendepositions, 'nextgendepositions/style.css')}" rel="stylesheet" type="text/css"/>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'/>
+    
+</head>
+</apex:component>

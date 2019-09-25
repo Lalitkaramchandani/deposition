@@ -1,0 +1,452 @@
+<apex:component controller="GoogleDriveAuthenticationCntrl">
+   <apex:attribute type="Boolean" name="IsListFolderFiles" description="IsListFolderFiles"/>
+    <script>
+    
+        // A $( document ).ready() block.
+        j$(document).ready(function() {
+            j$(".file").change(function(event) {
+                fileForInputFile = document.getElementById("file").files;
+                console.log(fileForInputFile);
+            });
+
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) { // If Internet Explorer, return version number
+                j$("#drop_zone").hide();
+
+            } else {
+                if (!window.FileReader) {
+                    alert("This browser doesn't support Drag & Drop of Files. Please try using Google Chrome or Mozilla Firefox to use this application. Redirecting you back to standard way of uploading documents.");
+
+                } else {
+                    // Setup the dnd listeners.
+                    var dropZone = document.getElementById('drop_zone');
+                    try {
+
+                        dropZone.addEventListener('dragover', handleDragOver, false);
+                        dropZone.addEventListener('drop', callPrepareFileUploads, false);
+                    } catch (err) {
+                        alert("This browser doesn't support Drag & Drop of Files. Please try using Google Chrome or Mozilla Firefox to use this application. Redirecting you back to standard way of uploading attachments. (Technical Details : " + err + ")");
+
+                    }
+                }
+            }
+        });
+
+        function handleDragOver(evt) {
+            evt.stopPropagation();
+            evt.preventDefault();
+            evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+        }
+
+        function upload_image() {
+            files = fileForInputFile;
+            prepareFileUploads();
+        }
+
+        function callPrepareFileUploads(evt) {
+            evt.preventDefault();
+            //Get the file(s) from the input field
+            files = evt.dataTransfer.files; // FileList object.
+            prepareFileUploads();
+        }
+        //Executes when start Upload button is selected
+        function prepareFileUploads() {
+
+
+            j$('.uploadBox').show();
+
+            //Only proceed if there are files selected
+            if (files.length == 0) {
+                alert('Please select a file!');
+                return; //end function
+            }
+            var uploadMarkup = '';
+            for (i = 0; i < files.length; i++) {
+                //Determine file display size
+                if (files[i].size < 1000000) {
+                    var displaySize = Math.floor(files[i].size / 1000) + 'K';
+                } else {
+                    var displaySize = Math.round((files[i].size / 1000000) * 10) / 10 + 'MB';
+                }
+
+                //For each file being uploaded create a div to represent that file, includes file size, status bar, etc. data-Status tracks status of upload
+                uploadMarkup += '<div class="upload" style="padding: 10px;width:600px;" data-status="pending" data-index="' + i + '">'; //index used to correspond these upload boxes to records in the files array
+                uploadMarkup += '<span class="uploadHeader" style="width:600px;display:inline-block;">';
+                uploadMarkup += '<span class="fileName"><span class="name" style="max-width: 350px;" id="' + files[i].name + '">' + files[i].name + '</span>&#160;(' + displaySize + ')</span>';
+                uploadMarkup += '<span style="width:250px;position:fixed;"><span class="statusBarPercent"></span></span>';
+                uploadMarkup += '<span class="percentComplete"><progress>Uploading...</progress></span>';
+                uploadMarkup += '</span>';
+                uploadMarkup += '<div class="clear"/>';
+                uploadMarkup += '</div>';
+            }
+            //Empty earlier contents
+            j$('.uploadBox').html('');
+            //Add markup to the upload box
+            j$('.uploadBox').append(uploadMarkup);
+            if("{!IsListFolderFiles}"!="true"){
+                j$('.uploadBox').dialog({
+                    autoOpen: false,
+                    draggable: false,
+                    modal: true,
+                    resizable: false,
+                    width: 650,
+                    height: 500,
+                    buttons: {
+                        "Cancel Remaining Uploads": function() {},
+                        "Done": function() {
+                             j$(this).dialog("close");
+                             uploadComplete();
+                        }
+                    },
+                    open: function(event, ui) {
+                        jQuery('.ui-dialog-titlebar-close').hide();
+                    }
+                });
+    
+                j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[1]).hide();
+                j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[0]).easyconfirm();
+                j$('.uploadBox').dialog('open');
+                j$(".ui-dialog-title").html('Uploading Files ...');
+                checkForUploads();
+            }else{
+                $('.uploadBox').dialog({
+                    autoOpen: false,
+                    draggable: false,
+                    modal: true,
+                    resizable: false,
+                    width: 650,
+                    height: 500,
+                    buttons: {
+                        "Cancel Remaining Uploads": function() {
+                            $( "#dialog-confirm" ).dialog({
+                              resizable: false,
+                              height:200,
+                              modal: true,
+                              buttons: {
+                                "Confirm": function() {
+                                  $( this ).dialog( "close" );
+                                  performUploadCancelActions();
+                                },
+                                Cancel: function() {
+                                  $( this ).dialog( "close" );
+                                }
+                              }
+                            });
+                        },
+                        "Done": function() {
+                             uploadComplete(); 
+                            $(this).dialog("close");
+                             
+                        }
+                    },
+                    open: function(event, ui) {
+                        jQuery('.ui-dialog-titlebar-close').hide();
+                    }
+                });
+    
+                
+                $('.uploadBox').dialog('open');
+                j$(".ui-dialog-title").html('Uploading Files ...');
+                checkForUploads();
+            }
+        }
+        function performUploadCompleteActions() {
+            j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[0]).hide();
+            j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[1]).show();
+            j$(".ui-dialog-title").html('Upload Completed ...');
+
+        }
+
+        function performUploadCancelActions() {
+            files = null;
+            if("{!IsListFolderFiles}"!="true"){
+                j$(".upload:[data-status='incomplete']").find(".percentComplete").html('<font style="color:#C00000;;">Canceled</font>');
+                j$(".upload:[data-status='incomplete']").find(".statusBarPercent").hide();
+                j$(".upload:[data-status='incomplete']").attr('data-status', 'complete');
+    
+                j$(".upload:[data-status='pending']").each(function() {
+                    j$(this).attr('data-status', 'complete');
+                    j$(this).find(".percentComplete").html('<font style="color:#C00000;;">Canceled</font>');
+                });
+                //j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[0]).hide();
+                //j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[1]).show();
+                j$(".ui-dialog-title").html('Upload Cancelled ...');
+                
+           }else{
+               $(".upload:[data-status='incomplete']").find(".percentComplete").html('<font style="color:#C00000;;">Canceled</font>');
+               $(".upload:[data-status='incomplete']").find(".statusBarPercent").hide();
+               $(".upload:[data-status='incomplete']").attr('data-status', 'complete');
+    
+               $(".upload:[data-status='pending']").each(function() {
+                    $(this).attr('data-status', 'complete');
+                    $(this).find(".percentComplete").html('<font style="color:#C00000;;">Canceled</font>');
+                });
+                //j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[0]).hide();
+                //j$(j$('.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only')[1]).show();
+                $(".ui-dialog-title").html('Upload Cancelled ...');
+                callLoadFilesInDataTable();
+           }
+        }
+
+        function uploadComplete() {
+            if("{!IsListFolderFiles}"!="true")
+                fetchAWSS3Objects();
+            else
+              callLoadFilesInDataTable();
+        }
+        
+      // Google Drive Upload Script
+        
+        function init() {
+            getToken();
+        }
+        
+        var data;
+        
+        function getToken() {
+            
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getAccessToken}',
+                 
+                function(result, event){
+                    if (event.status) {
+                        data = result;
+                        accessToken = result;
+                        console.log(data);
+                        handleClientLoad();
+                    } else if (event.type === 'exception') {
+                        alert( event.where);
+                    } else {
+                        alert( event.message);
+                    }
+                }, 
+                {escape: true}
+            );
+            
+        
+        }
+        
+        var clientId = '{!$Setup.Google_Drive_Configuration__c.Client_Id__c}';
+        var apiKey = '{!$Setup.Google_Drive_Configuration__c.Api_Key__c}';
+        var scopes = '{!$Setup.Google_Drive_Configuration__c.Scopes__c}'
+        //var oldFolderId = folderID ;
+        function handleClientLoad() {
+            gapi.client.setApiKey(apiKey);
+            window.setTimeout(checkAuth, 1);
+        }
+        
+        function checkAuth() {
+            console.log(data);
+            gapi.auth.setToken({
+                access_token: data
+            });
+             searchForFolder();
+            /*if(folderID =='')
+                searchForFolder();
+            else{
+                searchForFolder();
+                console.log(folderID );
+                
+                /*if("{!IsListFolderFiles}"=="true"){
+                     $(".folderId").val(folderID );         
+                    callLoadFilesInDataTable();
+                }
+                
+                if ( j$( ".load-statusPublicSite" ).length ) {
+                     j$( ".load-statusPublicSite" ).hide();
+                }
+            }*/
+        }
+        
+        
+        
+        
+        
+        function searchForFolder() {
+        
+            gapi.client.load('drive', 'v3').then(function() {
+                gapi.client.drive.files.list({
+                    q: "mimeType='application/vnd.google-apps.folder' and name = '" + folderName + "'",
+                    spaces: 'drive'
+                }).then(function(response) {
+                    if (response.result.files[0] != null && response.result.files[0].name == folderName) {
+                        getFolderID();
+                    } else {
+                        createFolder();
+                    }
+                });
+            });
+        
+        }
+        
+        function createFolder() {
+        
+            var fileMetadata = {
+                'name': folderName,
+                'mimeType': 'application/vnd.google-apps.folder'
+            };
+            gapi.client.drive.files.create({
+                resource: fileMetadata,
+                fields: 'id'
+            }).then(function(response) {
+                getFolderID();
+            });
+        
+        }
+        
+        function getFolderID() {
+        
+            gapi.client.load('drive', 'v3').then(function() {
+                gapi.client.drive.files.list({
+                    q: "mimeType='application/vnd.google-apps.folder' and explicitlyTrashed=false and name = '" + folderName + "'",
+                    spaces: 'drive'
+                }).then(function(response) {
+                    if (response.result.files[0] != null && response.result.files[0].name == folderName) {
+                        if(folderID == null || folderID == '' || folderID == undefined )
+                            folderID = response.result.files[0].id;
+                        console.log(folderID );
+                        //if(oldFolderId  !='' && oldFolderId   !='null' && oldFolderId  != null)
+                        //    folderID = oldFolderId; 
+                        if("{!IsListFolderFiles}"=="true"){
+                             
+                            $(".folderId").val(folderID );
+                            callLoadFilesInDataTable();
+                        }
+                        
+                        if ( j$( ".load-statusPublicSite" ).length ) {
+                             j$( ".load-statusPublicSite" ).hide();
+                        }
+                    }
+                });
+            });
+        
+        }
+        function getChildren() {
+            
+                gapi.client.load('drive', 'v3').then( function() {
+                
+                    gapi.client.drive.files.list({
+                        q: "'" + folderID + "' in parents"
+                    }).then( function(response) {
+                        populateTable(response.result.files);
+                    });
+                });
+            
+            }
+            var  countOfFiles = 0;
+            var processedFileCount = 0;
+            function populateTable(files) {
+                processedFileCount = 0;
+                countOfFiles =files.length;
+                console.log(files);
+                $("#tableBody tr").remove();
+                var tableBody = document.getElementById('tableBody');
+    
+                for (i = 0; i < files.length; i++) {
+            
+                    var id = files[i].id;
+                                
+                    var tr = document.createElement('tr');
+                                    
+                    // I'm leaving these links as you suggested,
+                    // but as I said on skype the IDs don't work
+                    // this way
+                    var actionTD = document.createElement('td');
+                    actionTD.innerHTML = " <a href=\"\" onclick=\"javascript:window.open('https://drive.google.com/open?id="+ id +"');return false;\" title=\"Preview\">View</a>";
+                    tr.appendChild(actionTD);
+                    
+                   // var typeTD = document.createElement('td');
+                   // typeTD.innerHTML = files[i].mimeType;
+                   // tr.appendChild(typeTD);
+                    
+                    var nameTD = document.createElement('td');
+                    nameTD.innerHTML = files[i].name;
+                    tr.appendChild(nameTD);
+                    
+                    // the next four get an id, as they need
+                    // to be references in getFileData()
+                    // i in this case is the same for one table row
+                    var ownerTD = document.createElement('td');
+                    ownerTD.setAttribute("id", "ownerTD" + i);
+                    tr.appendChild(ownerTD);
+                    
+                    var createTD = document.createElement('td');
+                    createTD.setAttribute("id", "createTD" + i);
+                    tr.appendChild(createTD);
+                    
+                    var modByTD = document.createElement('td');
+                    modByTD.setAttribute("id", "modByTD" + i);
+                    tr.appendChild(modByTD);
+                    
+                    var modDateTD = document.createElement('td');
+                    modDateTD.setAttribute("id", "modDateTD" + i);
+                    tr.appendChild(modDateTD);
+                   
+                    tableBody.appendChild(tr);
+                    
+                    
+                }
+                for (i = 0; i < files.length; i++) {
+                    var id = files[i].id;
+                    console.log(document.getElementById("ownerTD" + i));
+                    getFileData(id, i);
+                }
+                if(files.length == 0)
+                    loadDataTable();
+         }  
+         function getFileData(fileId, rowNumber) {
+                
+                var request = gapi.client.drive.files.get({
+                    'fileId': fileId,
+                    'fields': 'createdTime,lastModifyingUser,modifiedTime,owners/displayName'
+                });
+                request.execute(function returnID(resp) {
+                     console.log(resp.owners);
+                    // rowNumber is equal to a specific i value
+                    console.log("ownerTD" + rowNumber);
+                    var ownerTD = document.getElementById("ownerTD" + rowNumber);
+                    if(resp.owners != undefined){
+                        ownerTD.innerHTML = resp.owners[0].displayName;
+                    
+                        // replacing T and Z to format it nicer
+                        var createTD = document.getElementById("createTD" + rowNumber);
+                        createTD.innerHTML = resp.createdTime.replace("T", " ").replace("Z", "").split('.')[0];
+                      
+                        var modByTD = document.getElementById("modByTD" + rowNumber);
+                        modByTD.innerHTML = resp.lastModifyingUser.displayName;
+                      
+                        var modDateTD = document.getElementById("modDateTD" + rowNumber);
+                        modDateTD.innerHTML = resp.modifiedTime.replace("T", " ").replace("Z", "").split('.')[0];
+                    } 
+                    processedFileCount++;   
+                    if(processedFileCount ==countOfFiles )
+                        loadDataTable();
+                     
+                });  
+        }
+        /**
+         * Download a file content.
+         *
+         * @param {File} file Drive File instance.
+         * @param {Function} callback Function to call when the request is complete.
+         */
+        function downloadFile(fileId) {
+          
+            var accessToken = data;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://www.googleapis.com/drive/v2/files/'+ fileId + '?alt=media');
+            xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+            xhr.onload = function() {
+              callback(xhr.responseText);
+            };
+            xhr.onerror = function() {
+              callback(null);
+            };
+            xhr.send();
+          
+        }  
+        
+    </script>
+</apex:component>

@@ -1,0 +1,71 @@
+<apex:page standardController="Upload_Files__c" sidebar="false" extensions="GoogleDriveAuthenticationCntrl">
+    <style>
+       .overlay {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0.7;
+            top: 0px;
+            left: 0px;
+            position: fixed;
+            z-index: 500;
+        }
+        
+        .status {
+            background: #ddd;
+            border: 1px solid #aaa;
+            border-radius: 2px;
+            color: black;
+            font-weight: bold;
+            
+            cursor: pointer;
+            -moz-box-shadow: 0 0 15px 5px #DDDDDD;
+            -webkit-box-shadow: 0 0 15px 5px #DDDDDD;
+            box-shadow: 0 0 15px 5px #DDDDDD;
+            margin: 2px;
+            width: 250px;
+            opacity: 1;
+            height: auto;
+            position: fixed;
+            left: 40%;
+            margin-top:5%;
+            padding: 15px;
+            z-index: 1000;
+            display: block;
+        }
+  </style>
+    <script>
+        var zipFileName = "{!Upload_Files__c.Name}";
+    </script>
+        
+    <c:downloadjs />
+ <script>
+        var j$ = jQuery.noConflict();
+        var zipFile = new JSZip();
+        var accessToken = '{!AccessCode}';
+        var idx = 0;
+        var countOfS3Objects = 0;
+        countOfS3Objects = parseInt("{!Upload_Files__c.Count_Of_AWS_S3_Objects__c}");
+        if(countOfS3Objects==0)
+            j$("#load-status").hide();
+    </script>
+    
+    <br/><br/>
+    <a class="goBack" href="/{!Upload_Files__c.id}" >Go Back To Upload Batch
+    </a>
+     <div id="load-status">
+        <div class="overlay"></div>
+        <div class="status">
+            <img src="/img/loading24.gif" />
+            <span>Please Wait Downloading Files...</span>
+        </div>
+    </div>
+    
+    <apex:repeat value="{!Upload_Files__c.AWS_S3_Objects__r}" var="s3Obj">
+        <script>
+            if("{!s3Obj.File_Id__c}" != undefined && "{!s3Obj.File_Id__c}" != '')
+                downloadFile("{!s3Obj.File_Name__c}","{!s3Obj.File_Id__c}");
+        </script>
+    </apex:repeat>
+    
+</apex:page>

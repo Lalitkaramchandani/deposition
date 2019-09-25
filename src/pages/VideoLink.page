@@ -1,0 +1,11 @@
+<apex:page standardController="Deposition__c" cache="false" showHeader="false" standardStylesheets="true" extensions="VideoLinkExtn">
+   <script>
+      
+       if("{!Deposition__c.Is_Today_Deposition_Date__c}" == "true" && "{!isAttendeeFound}" == "true" && "{!Deposition__c.Zoom_ID_URL__c}" != "" ){
+           window.location.href="{!Deposition__c.Zoom_ID_URL__c}";
+       }else{
+           window.location.href = '/apex/VideoLinkError?id={!Deposition__c.id}';
+       }
+     
+    </script>
+</apex:page>

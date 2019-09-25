@@ -1,0 +1,15 @@
+<apex:page standardController="AWS_S3_Object__c" sidebar="false">
+    <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/AmazonS3SDKJquery.js')}" type="text/javascript"></script>
+    
+    <script>
+        var uri = "{!AWS_S3_Object__c.Folder_Path__c}{!AWS_S3_Object__c.File_Name_With_Version__c}";
+        //var res = encodeURI(uri);
+        //console.log(uri );
+        AWS.config.update({accessKeyId: '{!$setup.Amazon_S3_Configuration__c.Key__c}', secretAccessKey: '{!$setup.Amazon_S3_Configuration__c.Secret__c}'}); 
+        var s3 = new AWS.S3();
+        var params = {Bucket: '{!AWS_S3_Object__c.Bucket_Name__c}', Key: uri};
+        s3.getSignedUrl('getObject', params, function (err, url) {
+          window.location.href = url;
+        });       
+    </script>
+</apex:page>

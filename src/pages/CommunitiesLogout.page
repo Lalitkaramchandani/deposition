@@ -1,0 +1,16 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" >
+    <c:CommunityResources title="Login"/>
+     <body>
+        <apex:form id="frm" forceSSL="true">
+            <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <script>
+                    window.location.href="{!$CurrentPage.Parameters.returnURL}";
+                </script>
+                <c:CommunityFooter />
+            </div>
+        </apex:form>
+    </body>
+    
+</apex:page>

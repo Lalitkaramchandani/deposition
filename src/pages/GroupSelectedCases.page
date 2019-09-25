@@ -1,0 +1,38 @@
+<apex:page standardController="Case_Leads__c" extensions="GroupSelectedCasesController" recordSetVar="caseLeads" >
+    <apex:form id="pbMain">
+    <apex:pageMessages ></apex:pageMessages>
+    <apex:pageBlock >
+        
+        <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Enter Parent Group Name</apex:outputLabel>
+                <apex:inputText value="{!parentGroupName}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >&nbsp;</apex:outputText>
+                <apex:commandButton value="Select Parent" action="{!findParentCases}"></apex:commandButton>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >{!message} <apex:commandLink onclick="gotoParent();return false;" value="Click here to go to Parent." rendered="{!groupingSuccessful}" /></apex:outputText>
+                  
+            </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        <apex:pageBlockSection columns="1" rendered="{!IF(parentCases.size > 0 && !groupingSuccessful, true, false)}">
+                <apex:pageBlockTable value="{!parentCases}" var="parent">
+                    <apex:column >
+                        <apex:commandLink onclick="groupSelectedCases('{!parent.Id}');return false;">select</apex:commandLink>
+                    </apex:column>
+                    <apex:column value="{!parent.name}" />
+                    <apex:column value="{!parent.Case_Number__c}" />
+                </apex:pageBlockTable>
+         </apex:pageBlockSection>
+        
+    </apex:pageBlock>
+        <apex:actionFunction action="{!groupSelectedCaseLeads}" name="groupSelectedCases" reRender="pbMain">
+            <apex:param assignTo="{!parentCaseId}"  name="parentCaseId" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction action="{!gotoParent}" name="gotoParent" reRender="pbMain">
+        </apex:actionFunction>
+        </apex:form>
+    
+</apex:page>

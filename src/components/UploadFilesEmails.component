@@ -1,0 +1,105 @@
+<apex:component access="global" controller="UploadFilesEmailsComponentCntrl">
+  <apex:attribute name="uploadFilesRecordId" assignTo="{!uploadFilesId}" type="String" description="This points to Upload File Id" />
+    <!---
+    
+      <style type="text/css">
+             #files th, #files td{
+                padding:12px;
+                border-left: 1px solid #787878;
+                border-bottom: 1px solid #787878;
+                text-align: center;
+            }
+            .heading{
+                font-weight: bold;
+            }
+    </style>--->
+    <body>
+        
+        <table width="100%" cellspacing="10">
+            <tr>
+                <td  class="heading" style="width:15%;">
+                    <b>Email address :</b>
+                </td>
+                <td >
+                    {!IF(uploadFiles.Email__c !=NULL && uploadFiles.Email__c !='',uploadFiles.Email__c,uploadFiles.Contact__r.Email)}
+                </td>
+
+            </tr>
+            
+            <tr>
+                <td  nowrap="nowrap" class="heading">
+                    <b>Job number  : </b>
+                </td>
+                <td >
+                   {!uploadFiles.Deposition__r.Name}
+                </td>
+                
+            </tr>
+            <tr>
+                <td  nowrap="nowrap" class="heading">
+                    <b>Notes : </b>
+                </td>
+                <td >
+                    {!uploadFiles.Notes__c}
+                </td> 
+                
+            </tr>
+            <tr>
+                <td  nowrap="nowrap" class="heading">
+                    <b>IP Address  : </b>
+                </td>
+                <td >
+                   {!uploadFiles.IP_Address__c}
+                </td>
+                
+            </tr>
+            <tr>
+                <td  nowrap="nowrap" class="heading">
+                    <b>Uploaded Files :</b>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td >
+                    <table id="files" width="80%"  cellspacing="0" cellpadding="5">
+                        <tr style="background:#787878;color:white;font-size:14px;">
+                            <th style="text-align:Center;">File Name</th>
+                            <!---<th style="text-align:Center;">File View/Download</th>--->
+                            <th style="text-align:Center;">File Type</th>
+                            <th style="text-align:Center;">File Size</th>
+                        </tr>
+                        <apex:repeat value="{!AWSS3Objects}" var="file">
+                            <tr style="font-size:12px;">
+                                <td style="padding:12px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;">
+                                    <label style="text-overflow: ellipsis;overflow: hidden;float: left;max-width: 350px;">{!File.File_Name__c}</label>
+                                </td>
+                                <!---<td style="text-align:Center;padding:12px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;"><a href="{!File.File_Url__c}" target="_blank">View/Download</a></td>
+                                --->
+                                <td style="text-align:Center;padding:12px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;">
+                                    {!File.File_Type__c}
+                                </td>
+                                <td style="padding:12px;border-left: 1px solid #787878;border-bottom: 1px solid #787878;border-right: 1px solid #787878;">{!File.File_Size_KB__c}</td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </td> 
+            </tr>
+            <tr>
+                <td  nowrap="nowrap" class="heading">
+                     <b>Date/time of upload :  </b>
+                </td>
+                <td >
+                    <apex:outputField value="{!uploadFiles.Date_Time_Of_Upload__c}"/>
+                </td>
+               
+            </tr>
+            
+            
+        </table>
+        
+       
+       
+    </body>
+</apex:component>

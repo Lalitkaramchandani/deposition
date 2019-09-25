@@ -1,0 +1,158 @@
+<apex:page Controller="PayReportersCtrl" tabStyle="Invoice__c" >
+    <apex:sectionHeader title="Manage" subtitle="Invoices" />
+    <apex:form id="frm">
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:outputPanel rendered="{!!isSaved}">
+                <div style="margin-bottom: 5px;margin-top: 5px;text-align: center; " >
+            		<apex:pageMessage summary="Please filter records based on Firms." 
+                                   severity="info" strength="3"  />
+                    <div style="margin-left: auto;margin-right: auto;width:360px">
+                        <c:MultiselectPicklist leftLabel="Available Firms"
+    					leftOption="{!allAccounts}"
+    					rightLabel="Selected Firms"
+    					rightOption="{!selectedAccounts}"
+    					size="5"
+    					width="150px"/>
+                        <br/>
+                        <br/>
+                    <apex:commandButton value="Apply Filter" action="{!BuildQuery}" reRender="frm" status="status"/>
+
+                    </div>
+         		</div>
+
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1"  title="Payments" >
+                <apex:pageBlockTable value="{!wrapperRecordList}" var="invoice">
+                    <apex:column >
+                        <apex:facet name="header">Pay In Full</apex:facet>
+                        <apex:inputCheckbox value="{!invoice.paidInFull}"/> 
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Account
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Account__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Contact
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Contact__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Invoice Number
+                        </apex:facet>
+                        <apex:outputLink title="{!invoice.inv.Name}" value="{!'/'+invoice.inv.Id}" >
+                            {!invoice.inv.Name}
+                        </apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Invoice Amount
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Invoice_Amount__c}">
+                        </apex:outputField>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">Case Name/Caption
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Deposition__r.Case_Name__c}">
+                        </apex:outputField>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Deponent Name
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Deponent_Name__c}">
+                        </apex:outputField>
+                    </apex:column>
+                    <!--<apex:column >
+                        <apex:facet name="header">
+                            Claims Number 
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Deposition__r.Insurance_Claim_Info__c}">
+                        </apex:outputField>
+                    </apex:column>-->
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                    <apex:commandButton action="{!save}" title="Pay Resources" value="Pay Resources" reRender="frm" status="status"/>
+                </apex:pageBlockButtons>
+        </apex:pageBlock>
+            </apex:outputPanel>
+         <apex:outputPanel rendered="{!isSaved}">
+            <apex:pageBlock >
+                 <apex:pageMessage summary="The page is showing all payments selected by you. Please confirm payments by clicking on Pay Resources button or click on Edit payments button to edit the payments." 
+                                   severity="confirm" strength="3" rendered="{!isSavedConfirmed==false}" />
+                 <apex:pageMessage summary="Payments completed. Please click on Go Back button to do more payments." 
+                                   severity="info" strength="3" rendered="{!isSavedConfirmed==true}" />
+                
+        <apex:pageMessages />
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!save2}" rendered="{!isSavedConfirmed==false}" title="Pay Resources" value="Pay Resources" reRender="frm" status="status"/>
+                    <apex:commandButton action="{!editPayments}" rendered="{!isSavedConfirmed==false}" title="Edit Payments" value="Edit Payments" reRender="frm" status="status"/>
+                    <apex:commandButton action="{!goBack}" rendered="{!isSavedConfirmed==true}" title="Go Back" value="Go Back" reRender="frm" status="status"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="1"  title="Payments" >
+                <apex:pageBlockTable value="{!wrapperRecordListSaved}" var="invoice">
+                    <apex:column >
+                        <apex:facet name="header">
+                            Account
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Account__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Invoice Number
+                        </apex:facet>
+                        <apex:outputLink title="{!invoice.inv.Name}" value="{!'/'+invoice.inv.Id}" >
+                            {!invoice.inv.Name}
+                        </apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Invoice Amount
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Invoice_Amount__c}">
+                        </apex:outputField>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">Case Name/Caption
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Deposition__r.Case_Name__c}">
+                        </apex:outputField>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Deponent Name
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Deponent_Name__c}">
+                        </apex:outputField>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            Claims Number 
+                        </apex:facet>
+                        <apex:outputField value="{!invoice.inv.Deposition__r.Insurance_Claim_Info__c}">
+                        </apex:outputField>
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+             </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>     
+    </apex:page>

@@ -1,0 +1,29 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false">
+ 
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <a href="/Portal" target="_blank" class="link" style="display:none;">test</a>
+  <script>
+      //var popupWindow = window.open("/Portal");
+
+        $(document).ready(function(e) {
+            /*detectPopup();
+            function detectPopup() {
+            if(!popupWindow) {
+                alert("popup will be blocked");
+        
+            } else {
+                alert("popup will be shown");
+                window.open('','_self');
+                window.close();
+            } 
+            
+           
+        }*/
+      
+         parent.postMessage('Hello Treehouse!', '*');
+      });
+      
+    
+  </script>
+  
+</apex:page>

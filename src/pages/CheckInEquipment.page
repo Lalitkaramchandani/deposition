@@ -1,0 +1,14 @@
+<apex:page action="{!clearContact}" standardController="Equipment__c" extensions="CheckInEquipmentExtension">
+  <apex:form id="frm">
+  <apex:pageMessages />
+  <br/>
+  <br/>
+  <br/>
+  <apex:outputPanel layout="block" style="width:200px;text-align:center;margin:auto;">
+     <b>Please wait... </b><br/><br/>
+     <img src="/img/loading32.gif" />
+  </apex:outputPanel>
+  </apex:form>
+  
+  
+</apex:page>

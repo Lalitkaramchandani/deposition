@@ -1,0 +1,152 @@
+<apex:page standardcontroller="Deposition__c" extensions="DepositionEditExtn">
+    <apex:pagemessages ></apex:pagemessages>
+    <apex:sectionheader title="{!$ObjectType.Deposition__c.label} Edit" subtitle="{!IF(ISNULL(Deposition__c.Name), 'New Deposition',Deposition__c.Name)}"/>
+    <apex:form >
+        <apex:pageblock mode="edit" title="{!$ObjectType.Deposition__c.label} Edit">
+            <apex:pageblockbuttons >
+                <apex:commandbutton value="Save" action="{!saveDeposition}"/>
+                <apex:commandbutton value="Cancel" action="{!Cancel}"/>
+            </apex:pageblockbuttons>
+
+      
+            <apex:outputpanel >
+                <apex:pageblocksection title="Information" showheader="true" columns="2">
+                    <apex:inputfield value="{!Deposition__c.Case_Name__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Deposition_Services__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Deposition_Group__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Special_Instructions__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Deposition_Date__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.File_Uploaded_By_Client__c}" />
+                    <apex:inputfield value="{!Deposition__c.Hiring_Firm__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Reporter_EOD_Check_In__c}" required="false"/>
+                    
+                    
+                    <apex:inputfield value="{!Deposition__c.GuestName__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Deposition_Status__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.GuestEmail__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Expedite__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.GuestPhone__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Due_Date_To_The_Client_Computed__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Hiring_Attorney__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Confirm_Client__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Hiring_Attorney_Email__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Confirm_Reporter__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Deponent_Name__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Confirm_Video_Tech__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Deposition_Time__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Client_Notes__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Time_Zone__c}"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Primary_CR_Firm__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Estimated_Duration__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Event_Type__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Event_Location__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.LastmodifiedByid}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Location_Contact__c}" required="false"/>
+                    <apex:outputfield value="{!Deposition__c.Zoom_ID__c}"/>
+                    <apex:inputfield value="{!Deposition__c.VIP_Level__c}" required="false"/>
+                    <apex:outputfield value="{!Deposition__c.Zoom_ID_URL__c}"/>
+                    <apex:inputfield value="{!Deposition__c.Source__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Corporate_Client__c}" required="false"/>
+                    <apex:outputfield value="{!Deposition__c.OwnerId}"/>
+                    <apex:inputfield value="{!Deposition__c.Corporate_Client_Source__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Production_Alert__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Primary_Court_Reporting_Firm__c}" required="false"/>
+                    
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Scheduling" showheader="true" columns="1">
+                    <apex:inputfield value="{!Deposition__c.Notes__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Post_event_Notes__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Tech_Recap__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Reporter_Instructions__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Video_Tech_Instructions__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Interpreter_Instructions__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Special_Instructions_text__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Description__c}" required="false"/>
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Production" showheader="true" columns="2">
+                    <apex:inputfield value="{!Deposition__c.Post_Deposition_Notes__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Days_Until_Transcript_Due_Comput__c}"/>
+                    <apex:inputField value="{!Deposition__c.Case_Production_Notes__c}"/>
+                    <apex:inputfield value="{!Deposition__c.Transcript_Due_From_Reporter_Computed__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Post_Production_Notes__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Recording_Status__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Case_Video_Notes__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Start_Time__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Transcript_Status__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Stop_Time__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Exhibit_Status__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Duration__c}"/>
+                    
+                    
+                    <apex:inputfield value="{!Deposition__c.Video_Status__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Ontime_Yes_No__c}"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Hard_Copy__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Transcript_Complete_Ontime__c}"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.CR_Email_Address__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Ontime_Production_Complete__c}"/>
+                    
+                    
+                    <apex:inputfield value="{!Deposition__c.Production_Email_Address__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Transcript_Received_Date__c}"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Accounting_Email_Address__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Transcript_Complete_Date__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Videographer_Email_Address__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Production_Complete_Date__c}"/>
+                    <apex:inputField value="{!Deposition__c.Graphical_Alert__c}"/>
+                    <apex:inputfield value="{!Deposition__c.Errata_Status__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Deposition_Time_Calculated__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Errata_Notes__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Video_Uploaded__c}" required="false"/>
+                    <apex:inputField value="{!Deposition__c.Errata_Due_Date__c}"/>
+                    
+                </apex:pageblocksection>
+                <apex:pageblocksection title="Billing" showheader="true" columns="2">
+                    <apex:inputfield value="{!Deposition__c.Billing_Notes__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Page_Count__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Case_Billing_Notes__c}" required="false"/>
+                    
+                    
+                    <apex:inputfield value="{!Deposition__c.Exhibit_Page_Count__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Billed__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Invoice_Status_Reporter__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Bill_for_Last_Minute_Cancellation__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Rates_Reporter__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Cancelled_Date__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Invoice_Status_Video__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Cancelled_Time__c}" required="false"/>
+                    
+                    <apex:inputfield value="{!Deposition__c.Rates_Videographer__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Commission__c}" required="false"/>
+                    
+                    
+                    <apex:inputfield value="{!Deposition__c.Matter_Number__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.State__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Insurance_Claim_Info__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Rule__c}" />
+                    <apex:inputfield value="{!Deposition__c.Claims_Professional__c}" required="false"/>
+                    <apex:inputfield value="{!Deposition__c.Summary_of_Billable_Services__c}" />
+                    
+                    
+                    
+                    
+                </apex:pageblocksection>
+            </apex:outputpanel>
+        </apex:pageblock>
+    </apex:form>
+    
+</apex:page>

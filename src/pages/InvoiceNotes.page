@@ -1,0 +1,9 @@
+<apex:page standardController="Invoice__c">
+  <apex:pageBlock mode="maindetail">
+      <apex:pageBlockSection >
+          <apex:outputField value="{!Invoice__c.Deposition__r.Billing_Notes__c}"/>
+          <apex:outputField value="{!Invoice__c.Deposition__r.Case_Billing_Notes__c}"/>
+      </apex:pageBlockSection>
+      
+  </apex:pageBlock>
+</apex:page>

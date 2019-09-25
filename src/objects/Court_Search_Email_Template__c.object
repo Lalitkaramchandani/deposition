@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>The email template , to be used, when a email is send via the court search page</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Default_CR_Reliability__c</fullName>
+        <externalId>false</externalId>
+        <label>Default CR Reliability</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Default_CR_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Set default CR Status, separate multiple options using semi colon</inlineHelpText>
+        <label>Default CR Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Email_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Template_Name__c</fullName>
+        <description>Please enter the developer Name of the email template</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Please enter the developer Name of the email template</inlineHelpText>
+        <label>Email Template Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Exclude_Fields_For_Logging__c</fullName>
+        <description>These fields should not be logged when the Deposition Logging Trigger runs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>These fields should not be logged when the Deposition Logging Trigger runs</inlineHelpText>
+        <label>Exclude Fields For Logging</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Videographer_Email_Template_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Videographer Email Template Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Court Search Email Template</label>
+    <visibility>Protected</visibility>
+</CustomObject>

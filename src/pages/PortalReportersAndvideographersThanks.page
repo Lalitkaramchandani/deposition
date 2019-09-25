@@ -1,0 +1,117 @@
+<apex:page extensions="UploadFilesThanksExtn" standardController="Upload_Files__c" applyHtmlTag="false" applyBodyTag="false" standardstylesheets="false" cache="false" showHeader="false" sidebar="false" >
+
+    <head>
+        <c:HeaderCSS />
+         <style>
+            
+            
+            .standard {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 10px;
+                color: black;
+                padding: 5px;
+            }
+            
+            .standard_darkred {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 11px;
+                color: darkred;
+            }
+            
+            .table_background {
+                background-color: #f0f0f0
+            }
+            
+            .header_background {
+                background-color: #8c8c8c
+            }
+            
+            .input {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px
+            }
+            
+            .input_hint {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px;
+                color: gray
+            }
+            
+            .ad {
+                font-family: Arial, Helvetica, sans-serif;
+                width: 140px;
+                font-size: 10px;
+                margin: 0 auto;
+                text-align: left;
+                border: 2px solid #999;
+                background: white;
+                padding: 5px;
+            }
+            
+            a.blue:link {
+                color: #0000ff;
+            }
+            
+            a.blue:visited {
+                color: #0000ff;
+            }
+            
+            a.blue:hover {
+                color: #ff0000;
+            }
+            
+            a.blue:active {
+                color: #0000ff;
+            }
+            
+            textarea {
+                color: black !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_container">
+            <apex:outputText escape="false" value="{!firm.Web_Page_Header_HTML__c}"></apex:outputText>
+            <div id="headbox">
+                <h3>{!firm.name}</h3></div>
+
+            <div id="content_container">
+                <div id="left_navigation">
+                    <h2 class="navigation_title"><br/>
+                  </h2>
+                </div>
+                <div id="main_contentpage">
+                    <div class="post">
+                        <div class="entry">
+                            <!-- SFDC STUFF STARTS HERE -->
+                            
+                             <h1 style="font-size:22px;">Update Confirmation</h1>
+                            <h1 style="margin-left: 25%;font-style: italic;">Thank you for the update..<br/><br/>
+                           </h1>
+
+                            <!-- SFDC STUFF ENDS HERE -->
+
+                            <BR></BR>
+                            
+                        </div>
+                        <!-- /.entry -->
+                    </div>
+                    <!-- /.post -->
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div id="content_bottom">
+
+
+                <img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/page-template-btm.jpg')}" width="891" height="38" alt="" class="png" />
+            </div>
+            <div class="clear"></div>
+        </div>
+        <apex:outputText escape="false" value="{!firm.Web_Page_Footer_HTML__c}"></apex:outputText>
+
+    </body>
+</apex:page>

@@ -1,0 +1,105 @@
+<apex:page title="Assign Reporters and Videographers" controller="DepositionAssignmentCntrl" sidebar="true" tabStyle="Deposition__c">
+    <head>
+      
+    <style>
+    
+        .dataTables_filter {
+            float: left !important;
+            margin-left: 5% !important;
+        }
+        
+    </style>
+    <script>
+        jQuery(document).ready(function() {
+            jQuery(".depDate").attr('onfocus','');
+            jQuery(".depDate").datepicker({
+                  inline: true,
+                  minDate: 0  
+              });
+        });
+    </script>
+   </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+   <apex:sectionHeader title="Assign " subtitle="Reporters and Videographers"/>
+   <c:ActionStatus ></c:ActionStatus>
+   
+    <apex:form id="frm">
+        
+        
+        <apex:actionFunction name="saveDepositions" action="{!saveDepositions}" reRender="pnlTomorrowDepositions" status="status"/>
+        <apex:actionFunction name="searchDepositions" action="{!loadDepositions}" reRender="pnlTomorrowDepositions" status="status"/>
+        
+        <apex:pageBlock title="Depositions" >
+            
+            <apex:pageBlockSection title="Filter" columns="2" collapsible="false">
+                <apex:inputfield style="padding: 4px;border-radius: 5px;width:150px" value="{!dep.Deposition_Date__c }" styleClass="depDate"/>
+                <apex:outputPanel >
+                    <b style="margin-right:2%;">Court Reporting Firm</b> 
+                    <apex:selectList style="padding: 4px;border-radius: 5px;" value="{!selectedFirm}" size="1" multiselect="false">
+                        <apex:SelectOptions value="{!lstFirms}"></apex:SelectOptions>
+                    </apex:selectList>
+                    
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <div style="float:right;">
+                        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="searchDepositions();return false;" role="button">
+                                <span class="ui-button-text">Search</span>
+                        </button>
+                    </div >
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <hr/>
+            <apex:outputPanel id="pnlTomorrowDepositions">
+                <c:PageBlockTableEnhancer targetPbTableIds="Depostions" paginate="true" enableExport="false" defaultPageSize="100" pageSizeOptions="5,10,20,30,40,50,100"/>    
+        
+                <center style="display:{!IF(lstTomorrowDepositions.size>0,'block;','none;')}">
+                        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" onclick="saveDepositions();return false;">
+                            <span class="ui-button-text">Save Changes</span>
+                        </button>
+                 </center>
+                 <apex:pageMessages ></apex:pageMessages>
+                
+                <apex:pageBlockTable value="{!lstTomorrowDepositions}" var="depModel" id="Depostions" >
+                    <apex:column headerValue="Job #"  >
+                        <a href="/{!depModel.deposition.id}" target="_blank">{!depModel.deposition.Name}</a>
+                    </apex:column>
+                     <apex:column headerValue="Court Reporter">
+                        <apex:outputField value="{!depModel.reporter.Court_Reporter__c}" rendered="{!depModel.reporter.id == ''}" >
+                            <apex:inlineEditSupport event="ondblClick"  />
+                        </apex:outputField>
+                        <apex:outputField value="{!depModel.reporter.Contact__c}" rendered="{!depModel.reporter.id !=''}"/ >
+                           
+                     </apex:column>
+                     <apex:column headerValue="Videographer">
+                        <apex:outputField value="{!depModel.videographer.Videographer__c}" rendered="{!depModel.videographer.id==''}" >
+                            <apex:inlineEditSupport event="ondblClick"  />
+                        </apex:outputField>
+                        <apex:outputField value="{!depModel.videographer.Contact__c}" rendered="{!depModel.videographer.id!=''}"/ >
+                           
+                     </apex:column>
+                     <apex:column headerValue="Case Caption">
+                        <apex:outputfield value="{!depModel.deposition.Case_Name__c}"/>
+                     </apex:column>
+                     <apex:column headerValue="Deposition Time">
+                        <apex:outputfield value="{!depModel.deposition.Deposition_Time__c}"/>
+                     </apex:column>
+                     <apex:column headerValue="Estimated Duration">
+                        <apex:outputfield value="{!depModel.deposition.Estimated_Duration__c}"/>
+                     </apex:column>
+                     <apex:column headerValue="Hiring Firm">
+                        <apex:outputfield value="{!depModel.deposition.Hiring_Firm__c}"/>
+                     </apex:column>
+                     <apex:column headerValue="Hiring Attorney">
+                        <apex:outputfield value="{!depModel.deposition.Hiring_Attorney__c}"/>
+                     </apex:column>
+                     <apex:column headerValue="Deposition Services">
+                        <apex:outputfield value="{!depModel.deposition.Deposition_Services__c}"/>
+                     </apex:column>
+                     <apex:column headerValue="Scheduler Name">
+                        <apex:outputfield value="{!depModel.deposition.GuestName__c}"/>
+                     </apex:column>
+                </apex:pageBlockTable> 
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

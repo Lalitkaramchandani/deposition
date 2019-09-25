@@ -1,0 +1,138 @@
+<apex:page controller="CreateInvoice_Ctrl" tabStyle="Invoice__c" title="Create Invoice" action="{!lockInvoice}" >
+  <apex:sectionHeader title="Create" subtitle="Invoice"/>
+  <apex:form id="myform">
+      
+      <apex:pageBlock title="Deposition Details" rendered="{!(dep.State__c == NULL|| dep.State__c =='') && !isAttendeeLocked }">
+          <apex:pageMessages ></apex:pageMessages>
+          <apex:pageblockButtons >
+              <apex:commandButton action="{!saveDeposition}" value="Save" reRender="myform"/>
+              <apex:commandButton action="{!Cancel}" value="Cancel" immediate="true"/>
+          </apex:pageblockButtons>
+          <apex:pageBlockSection collapsible="false">
+              
+              <apex:inputField value="{!dep.State__c}" required="true"/>
+          </apex:pageBlockSection>
+      </apex:pageBlock>
+      <apex:pageBlock title="Attendee Locked" rendered="{!isAttendeeLocked}">
+          <apex:pageMessages ></apex:pageMessages>
+          <apex:pageblockButtons >
+              <apex:commandButton action="{!Cancel}" value="Cancel" immediate="true"/>
+          </apex:pageblockButtons>
+          
+      </apex:pageBlock>
+      <apex:pageBlock title="Invoice Details" rendered="{!dep.State__c != NULL && dep.State__c !='' && !isAttendeeLocked}">
+          <apex:pageMessages />
+          <c:ActionStatus />
+          <apex:pageBlockSection id="detailstemp" title="Invoice Information" columns="2">
+             
+              <apex:outputField value="{!attendee.Deposition__r.Event_Location__c}"/>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="State" for="State_guess"/>
+                  <apex:outputPanel >
+                      <apex:outputField value="{!dep.State__c}" id="State_guess" />
+                      <apex:outputLabel value=" - {!stateRules.Rule__c}" rendered="{!stateRules.Rule__c != NULL}"></apex:outputLabel> 
+                  </apex:outputPanel>
+                  
+                  
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Contact Name" for="Contact_name"/>
+                  <apex:outputField value="{!attendee.Contact__c}" id="Contact_name" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Account" for="account__name"/>
+                  
+                  <apex:outputField value="{!attendee.Contact__r.AccountId}" id="account__name" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Contact Financial Notes" for="Contact_Financial_Notes"/>
+                  <apex:outputField value="{!attendee.Contact__r.Financial_Notes__c}" id="Contact_Financial_Notes" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Account Financial Notes  " for="account__Financial_Notes"/>
+                  
+                  <apex:outputField value="{!attendee.Contact__r.Account.Financial_Notes__c}" id="account__Financial_Notes" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Case Name" for="case_name"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Deposition_Group__c}" id="case_name" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Case Name/Caption" for="case_caption"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Case_Name__c}" id="case_caption" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Claim No." for="claim_no"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Insurance_Claim_Info__c}" id="claim_no" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Claims Professional" for="claim_Professional"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Claims_Professional__c}" id="claim_Professional" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Matter Number" for="Matter_Number"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Matter_Number__c}" id="Matter_Number" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Corporate Client" for="Corporate_client"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Corporate_Client_Source__c}" id="Corporate_client" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Billing Notes" for="billing_notes"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Billing_Notes__c}" id="billing_notes" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Standing Orders" for="Standing_orders"/>
+                  <apex:outputField value="{!attendee.Standing_Orders_del__c}" id="Standing_orders" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem rendered="{!((NOT(ISBLANK(attendee.Deposition__r.Deposition_Group__c)) || attendee.Deposition__r.Attorney_Count__c > 4) && attendee.Deposition__r.VIP_Level__c !='')}" >
+                  <img src="https://c.cs11.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Jpg&versionId=068Z0000000Ep70&operationContext=DELIVERY&contentId=05TZ0000000fqZj&page=null&d=/a/Z0000000DXVR/9ZACvk_gVBzxkjnpKRTyb1p7X4mpF44LE8Jev75RPNY&oid=00DZ000000MhmaB&dpt=null&viewId="
+                   title="COD Warning" height="260" width="350"/>
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputlabel value="Select Rate Sheet" for="rateSheet" />
+                  <apex:outputPanel id="rateSheetOutputPanel">
+                      <apex:selectList value="{!selectedRateSheet}" size="1" id="rateSheet">
+                          <apex:selectOptions value="{!rateSheets}"/>
+                      <apex:actionSupport action="{!deSelectLookupRateSheet}" event="onchange" reRender="myform" status="status" />
+                      </apex:selectList>
+                  </apex:outputPanel>
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem rendered="{!showLookupRateSheet || rateSheets.size==1}">
+                  <apex:outputlabel value="Select Rate Sheet" for="rateSheet2" />
+                  <apex:actionRegion >  
+                      <apex:inputField value="{!tempContact.Rate_Sheet__c}" id="rateSheet2">
+                      </apex:inputField>
+                  </apex:actionRegion>
+                  
+                   </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem rendered="{!showTypelookup==true}">
+                  <apex:outputlabel value="Select Invoice type" for="rateSheet2" />
+                  <apex:outputPanel id="invoiceTypeOutputPanel">
+                      <apex:selectList value="{!type}" size="1" id="invType">
+                          <apex:selectOptions value="{!invoiceTypes}"/>
+                      </apex:selectList>
+                  </apex:outputPanel>
+                  
+                   </apex:pageBlockSectionItem>
+              
+              
+                  
+          </apex:pageBlockSection>
+          <apex:pageBlockButtons >
+              <apex:commandButton action="{!PrepareInvoice}" value="Prepare Invoice"/>
+              <apex:commandButton action="{!Cancel}" value="Cancel"/>
+          </apex:pageBlockButtons>
+      </apex:pageBlock>
+  
+  </apex:form>
+</apex:page>

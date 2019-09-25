@@ -1,0 +1,136 @@
+<apex:page controller="ContactDetailsController" standardstylesheets="false" cache="false"
+    showHeader="false" sidebar="false">
+
+    <head>
+        <title>{!firm.Name} | Update Details</title>
+        <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />
+        <style>
+            .pbHeader table td.pbTitle h2 {
+                font-size: larger;
+                font-family: inherit;
+            }
+            
+            .pbBody {
+                padding-left: 1%;
+            }
+            
+            .hideListButton {
+                display: none !important
+            }
+            
+            .table1 tr td {
+                color: white;
+            }
+            
+            .table1 tr td input {
+                width: 100%;
+            }
+            
+            .fieldlabel {
+                text-align: right;
+            }
+            
+            .table1 {
+                width: 100%;
+                //margin: 10px 10px 10px 10px;
+            }
+            
+            .pbHeader {
+                margin: 3% 0% 0% 50%;
+            }
+            
+            .pbBottomButtons {
+                margin: 3% 0% 3% 50%;
+            }
+            
+            .pcss {
+                color: white;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <apex:form >
+            <c:CommunityResources title="Deposition Confirmation" />
+            <c:firmHeader firm="{!firm}" />
+            <apex:pageblock >
+                <apex:pageblockbuttons rendered="{!!isError && !isUpdate}">
+                    <apex:commandbutton value="Save" action="{!save}" style="float: left;" />
+                    <!--  <apex:commandbutton value="Cancel" action="{!save}"/> -->
+                </apex:pageblockbuttons>
+                <div id="main_container">
+                    <apex:pagemessages ></apex:pagemessages>
+                    <div class="clear"></div>
+                    <apex:outputPanel rendered="{!!isError && !isUpdate}" layout="none">
+                        <p class="pcss">
+                            At {!firm.Name}, we&#39;re excited to get to know our clients.
+                        </p>
+                        <p class="pcss">
+                            We periodically have special offers, announcements and birthday prizes. So the more
+                            we know about you, the better we can refine our outreach.
+                        </p>
+                        <table border="0" class="table1" cellspacing="15" cellpadding="3">
+                            <tr>
+                                <td>Where did you get your undergraduate degree?</td>
+                                <td>
+                                    <apex:inputText value="{!conWrap.affCollege}"  />
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Which law school did you attend?</td>
+                                <td><apex:inputText value="{!conWrap.affLawScholl}"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Where are you originally from?</td>
+                                <td><apex:inputText value="{!conWrap.affHomeTown}"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Which sports team is your favorite?</td>
+                                
+                                <td><apex:inputText value="{!conWrap.affSportTeam}"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>What do you like to drink?</td>
+                                
+                                <td><apex:inputText value="{!conWrap.affBeverage}"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>What is your favorite restaurant?</td>
+                                <td><apex:inputText value="{!conWrap.affRestaurant}"  />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>What is your favorite hobby?</td>
+                                <td><apex:inputText value="{!conWrap.affHobby}"  />
+                                </td>
+                                </tr>
+                            <tr>
+                                <td>What is your favorite movie?</td>
+                                <td><apex:inputText value="{!conWrap.affMovie}"  />
+                                </td>
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!isUpdate}" style="" layout="none">
+                        <div style="margin-top:50px;color:white;">
+                            {!msg}
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!isError}" style="" layout="none">
+                        <div style="margin-top:50px;color:#cc0000;">
+                            {!msg}
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </apex:pageblock>
+            <c:firmFooter firm="{!firm}" />
+        </apex:form>
+    </body>
+
+</apex:page>

@@ -1,0 +1,336 @@
+<apex:page standardStylesheets="false"  applyBodyTag="false" showHeader="false"
+ standardController="Deposition__c" extensions="PortalExtn"  >
+
+<c:CommunityResources title="Deposition Portal"/>
+<link href="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/css/jquery-ui-1.8.18.custom.css')}" rel="stylesheet" type="text/css" />
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>  
+
+<body>
+    
+        <div class="wrapper">
+          <c:CommunityHeader />  
+          <apex:form >
+              <apex:outputPanel id="pnlConfirmTomorrowDepositions">
+                  <apex:actionFunction action="{!confirmDeposition}" name="confirmDeposition" status="status" reRender="pnlConfirmTomorrowDepositions">
+                      <apex:param value="" assignTo="{!selectedDepId}" name="selectedDepId"/>
+                  </apex:actionFunction>
+                  <div style="margin-left:6%;">
+                      <apex:pageMessages ></apex:pageMessages>
+                  </div>
+                  <apex:outputPanel rendered="{!lstConfirmTomorrowDepositions.size>0}" >
+                      <br/>
+                      <label style="margin-left: 6%;padding-top: 23px;">
+                          
+                          <apex:repeat value="{!lstConfirmTomorrowDepositions}" var="dep" >
+                              <span><Center>
+                                <a href="#" onclick="confirmDeposition('{!dep.id}');"   style="color: white;font-weight: bold;" >
+                                    <apex:param value="{!dep.id}" assignTo="{!selectedDepId}" name="selectedDepId"/>
+                                    Confirm Upcoming {!dep.Event_Type_Lowercase__c} - <apex:outputField value="{!dep.Deposition_Date__c}"/> {!dep.Deposition_Time__c} {!dep.Time_zone__C}  
+                                </a>
+                                </CENTER>
+                              </span><br/>
+                          </apex:repeat>
+                      </label>
+                  </apex:outputPanel>
+              </apex:outputPanel>
+              <apex:outputPanel rendered="{!lstChatterGroups.size>0}">
+                  <br/>
+                  <label style="margin-left: 6%;padding-top: 23px;">
+                      <span><Center>
+                          
+                          <apex:repeat value="{!lstChatterGroups}" var="group">
+                              Visit the <a target="_blank" href="/_ui/core/chatter/groups/GroupProfilePage?g={!group.CollaborationGroupId}" style="color: white;font-weight: bold;">{!group.CollaborationGroup.Name}</a> Discussion Group. 
+                          </apex:repeat>
+                          </CENTER>
+                      </span>
+                  </label>
+                  <br/>
+              </apex:outputPanel>
+               <apex:outputPanel rendered="{!lstCasesOptions.size>0}">
+                  <br/>
+                   <label style="margin-left: 6%;padding-top: 23px;">
+                       <span style="color:white;">Select Case :  </span>
+                        <apex:selectList onchange="redirecToCase(this.value);" style="width:250px" value="{!selectedCaseId}" size="1" multiselect="false">
+                          <apex:selectOptions value="{!lstCasesOptions}"></apex:selectOptions>
+                        </apex:selectList>
+                        
+                  </label>
+                  <br/><br/>
+              </apex:outputPanel>
+              <apex:outputPanel rendered="{!$CurrentPage.parameters.caseId!=NULL}" style="text-align:center;">
+                  
+                   <label style="margin-left: 6%;padding-top: 23px;">
+                      <span><Center>
+                       <label style="margin-left: 6%;padding-top: 23px;">
+                           <a  href="/apex/portal" style="color: white;font-weight: bold;">Show All Cases</a> 
+                      </label>
+                      </CENTER>
+                      </span>
+                  </label>
+                  <br/><br/>
+              </apex:outputPanel>
+              
+              <apex:outputPanel rendered="{!todayDeposition.id!=NULL}" >
+                  <br/>
+                  <label style="margin-left: 6%;padding-top: 23px;">
+                      <span><Center><a target="_blank" href="{!todayDeposition.Deposition__r.Zoom_ID_URL__c}" style="color: white;font-weight: bold;">Click here to log into today’s {!todayDeposition.Deposition__r.Event_Type_Lowercase__c}:
+                               {!todayDeposition.Deposition__r.Deposition_Time__c}  {!todayDeposition.Deposition__r.Time_zone__C} - {!todayDeposition.Deposition__r.Deponent_Name__c}, 
+                               {!todayDeposition.Deposition__r.Case_Name__c}
+                          </a></CENTER>
+                      </span>
+                  </label>
+                  <br/>  <br/> 
+              </apex:outputPanel>
+              
+              
+              <div class="schedule-depositions" style="display: flex !important;"> 
+                <div class="schedule">
+                    <h1>SCHEDULE</h1>
+                    <apex:outputPanel id="pnlSchedule">
+                        
+                        <div class="scheduleform" style="{!IF(isSuccess,'','display:none;')}">
+                            <p style="color: white;">Thank you for scheduling with {!firm.Name}. </p>
+                            <P style="color: white;">We will follow up with you to confirm this event.</p>
+                            <p style="color: white;"><a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!Deposition__c.id}','newwindow','700','650');  return false;" >Click here to modify the deposition or add additional files.</a></p>
+                            <p style="color: white;">Would you like to <A HREF="/Portal">book another deposition</A>, learn more about <A HREF="{!firm.URL__c}" target="_top">our services</A>, or <a href="mailto:{!Firm.Scheduling_email_address__c}">email our scheduling department?</A></p>
+                        </div>
+                        <script>
+                            if("{!isSuccess}" =="true")
+                                $("#scheduleformDiv").hide();
+                        </script>
+                        <apex:pageMessages escape="false"></apex:pageMessages>
+                    </apex:outputPanel>
+                        <apex:pageMessages ></apex:pageMessages>
+                        <div id="scheduleformDiv" class="scheduleform" >
+                         
+                          
+                           
+                           <div class="single-field">  
+                            <label for="eventtype">
+                                <span>Event Type</span>
+                                 <apex:inputField value="{!Deposition__c.Event_Type__c}"/>
+                            </label>
+                           </div>
+                           
+                           <div class="single-field">
+                            <label>
+                                <span>Case Name/Caption </span>
+                                <apex:inputtext value="{!Deposition__c.Case_Name__c}"/>
+                            </label>
+                           </div>
+                             
+                           <div class="single-field">
+                            <label>
+                                <span>Witness Name(s) </span>
+                                <apex:inputField value="{!Deposition__c.Deponent_Name__c}"/>
+                            </label>
+                           </div>
+                           
+                           <div class="single-field">
+                            <label>
+                                <span>Event Date </span>
+                                <apex:inputtext value="{!Deposition__c.Deposition_Date__c}" styleClass="datepicker"/>
+                            </label>
+                           </div>
+                           
+                           <div class="single-field" style="max-height: 80px !important;">
+                            <label>
+                                <span>Event Location </span>
+                                <apex:inputTextArea value="{!Deposition__c.Event_Location__c}"/>
+                                
+                            </label>
+                           </div>
+                            
+                           <div class="single-field">
+                            <label>
+                                <span>Event Time and Time Zone  </span>
+                                <div>
+                                    <table width="100%">
+                                        <tr>
+                                            <td><apex:inputField style="width:95%;" value="{!Deposition__c.Deposition_Time__c}"/>
+                                            </td>
+                                            <td style="vertical-align:top;"><apex:inputField style="width:100%;padding:5px;" value="{!Deposition__c.Time_Zone__c}"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                </div>
+                                
+                            </label>
+                           </div>
+                             
+                           
+                           <div class="single-field" style="max-height:180px">
+                            
+                                <h2>Services Requested </h2>
+                                <apex:inputField value="{!Deposition__c.Deposition_Services__c}"/>   
+                           </div>
+                             
+                           <div class="single-field">
+                            <label>
+                                <span>Estimated Duration </span>
+                                <apex:inputtext value="{!Deposition__c.Estimated_Duration__c}"/>
+                            </label>
+                           </div>
+                             
+                           
+                             
+                           <div class="single-field">
+                            <label>
+                                <span>Taking Attorney </span>
+                                <apex:inputField value="{!Deposition__c.Hiring_Attorney__c}"/>
+                            </label>
+                           </div>
+                             
+                           <div class="single-field">
+                            <label>
+                                <span>Matter Number </span>
+                                <apex:inputField value="{!Deposition__c.Matter_Number__c }"/>
+                            </label>
+                           </div>
+                             
+                           <div class="single-field">
+                            <label>
+                                <span>Insurance Claim Number</span>
+                                <apex:inputtext value="{!Deposition__c.Insurance_Claim_Info__c}"/>
+                            </label>
+                           </div>
+                             
+                           <div class="single-field">
+                            <label>
+                                <span>Insurance Claim Representative </span>
+                                <apex:inputtext value="{! Deposition__c.Claims_Professional__c}"/>
+                            </label>
+                           </div>
+                             
+                          
+                           <div class="single-field">
+                            <label>
+                                <span>Additional Notes  </span>
+                                <apex:inputtext value="{! Deposition__c.Client_Notes__c}"/>
+                            </label>
+                           </div>
+                             <div class="single-field">
+                            <label for="expeditelevel">
+                                <span>Expedite Level</span>
+                                <apex:inputField value="{!Deposition__c.Expedite__c}"/>
+                            </label>
+                           </div> 
+                            <div class="recentlyviewed">
+                                <br/>
+                                <apex:commandButton style="margin-left: 40%;" action="{!saveDeposition}" value="Schedule a New Deposition" reRender="pnlSchedule" status="status"/>
+                            </div>
+                             
+                        </div>
+                        <script>
+                          $(document).ready(function() {
+                                $("#departing").datepicker();
+                          });  
+                        </script>  
+                    
+                
+                </div>
+               
+              <div class="nextgenlist" >    
+                
+                <h1>PAST DEPOSITIONS</h1><br/>
+                <c:PastDepositions />
+                <br/>
+                <h1>UPCOMING DEPOSITIONS</h1><br/>
+                <c:UpcomingDepositions ></c:UpcomingDepositions>
+                
+                <br/>
+                <br/>
+                <label><span>Looking for a deposition that isn’t listed here? Enter the name of the case or the witness:</span></label>
+                <apex:inputText value="{!depSearchText}" style="border: 1px solid black;
+                                                            padding: 0px;background: rgba(255,255,255,0.8);margin: 1px;height: 2.2em;"/>
+                 &nbsp;&nbsp;<apex:commandButton value="Search" action="{!searchDepositionsRecord}" status="status"/>
+             </div> 
+              
+              
+        </div>
+        </apex:form>    
+        <c:CommunityFooter />   
+       
+    </div>
+    
+    
+    <style>
+       
+        .nextgenlist {
+            margin: 0px 5px 0 15px;
+        }
+        .multiSelectPicklistTable{
+            width:100% !important;
+        }
+         .multiSelectPicklistCell {
+            vertical-align: middle !important;
+        }
+        .single-field textarea{
+                border: 1px solid black;
+                padding: 0px;
+                background: rgba(255,255,255,0.8);
+                margin: 1px;
+                width: 100%;
+                height: 4.2em;
+                display: block;
+        }
+        .ui-datepicker-header{
+            background: #00335B !important;
+        }
+        .ui-datepicker-title{
+            color : white !important;
+        }
+        .ui-widget-header, .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+            border: 1px solid #00335B !important;
+        }
+        .multiSelectPicklistRow select{
+            max-width: 100% !important;
+            width: 100%!important;
+        }
+        .single-field textarea {
+            font: 13.3333px Arial !important;
+        }
+        .nextgenlist{
+            max-width: 100%;
+        }
+        .pager{
+                position: relative !important;
+        }
+    </style>
+    <script>
+        function PopupCenter(url, title, w, h) {
+            // Fixes dual-screen position                         Most browsers      Firefox
+            var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+            var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+        
+            var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+            var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        
+            var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+            var top = ((height / 2) - (h / 2)) + dualScreenTop;
+            var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        
+            // Puts focus on the newWindow
+            if (window.focus) {
+                newWindow.focus();
+            }
+        }
+        $( ".datepicker" ).datepicker();
+        $( ".datepicker" ).click(function() {
+           $( ".ui-state-default" ).click(function() {
+             $("#ui-datepicker-div").hide();
+            });
+        });
+        
+        function redirecToCase(caseId){
+            if(caseId != '')
+                window.location.href = '/apex/portal?caseId='+caseId;
+            else
+                window.location.href = '/apex/portal';
+        }
+    </script>
+</body>
+
+</apex:page>

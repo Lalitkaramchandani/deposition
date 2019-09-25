@@ -1,0 +1,46 @@
+<apex:page standardController="Account" extensions="SelectFirmExtn" action="{!updateAccountDueAmountsFromInvoice}">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <apex:sectionHeader title="Select" subtitle="Firm"/>
+  <script>
+      function showInvoicesPDF(){
+          var firmId = $(".selectedFirm").val();
+          window.location.href = "https://composer.congamerge.com"+
+            "?sessionId={!$Api.Session_ID}"+
+            "&serverUrl={!$Api.Partner_Server_URL_290}"+
+            "&id={!Account.Id}"+
+            "&TemplateGroup=Accounts"+
+            "&CongaEmailTemplateGroup=Accounts"+
+            "&Qvar0ID=a1rA0000009HzzI"+
+            "&QueryID=[Invoice]a1rA0000009Hzzh?pv0={!Account.Id}~pv1="+firmId+","+
+            "[UnpaidInvoices]a1r2K000008exhX,"+
+            "[UnpaidInvoice]a1r2K000008exhS,"+
+            "[FirmDetails]a1rA0000009Hzzc?pv0="+firmId+
+            "&TemplateId=a1z2K000001XJxY"+
+            "&EmailFromID=0D22K000000fxTz"+
+            "&EmailAdditionalTo={!Account.Accounting_Email_Address__c}"+
+            "&OFN=Statement+-+{!URLENCODE(Account.Name)}+-+{!Account.CongaDateField__c} "+
+            "&CongaEmailTemplateId=a1qA00000033KwV"+
+            "&UF0=1"+
+            "&MFTS0=Last_Statement_Sent__c"+
+            "&MFTSValue0={!TEXT( TODAY())}"+
+            "&SC0=1"+
+            "&FP0=1"+
+            "&SC1=Attachments"+
+            "&defaultPDF=1"+
+            "&DS7=2"+
+            "&ds7preview=1";
+      }
+  </script>
+  <apex:form >
+      <apex:pageblock >
+          <apex:pageMessages ></apex:pageMessages>
+          <apex:pageBlockSection collapsible="false" columns="2">
+              <apex:selectList styleClass="selectedFirm" value="{!selectedFirm}" label="Firm" title="Firm" size="1" multiselect="false">
+                  <apex:selectOptions value="{!lstFirms}"></apex:selectOptions>
+              </apex:selectList>
+              <apex:commandButton onclick="showInvoicesPDF();return false;" value="Create Statement"/>
+          </apex:pageBlockSection>
+      </apex:pageblock>
+  </apex:form>
+  
+</apex:page>

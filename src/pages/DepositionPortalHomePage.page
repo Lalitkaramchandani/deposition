@@ -1,0 +1,29 @@
+<apex:page showheader="false" sidebar="false">
+    <head>
+        <style>
+            html,body{
+                background-color: #EEEEEE;;
+            }
+        </style>
+    </head>
+    <apex:form >
+        <div><font class="Apple-style-span" face="Arial, sans-serif" size="3"><br/></font>
+        </div><font class="Apple-style-span" face="Arial, sans-serif" size="3"><div><font class="Apple-style-span" face="Arial, sans-serif" size="3"><br/></font>
+        </div>NextGen Reporting is pleased to offer customers a simple way to manage deposition scheduling online.</font>
+        <ul>
+            <li><strong><a href="/a06/e?" target="_top"><font class="Apple-style-span" face="Arial, sans-serif" size="3">Schedule a new deposition</font></a></strong>
+            </li>
+            <li><strong><a href="/a06?fcf=00BA0000007JjlL"  target="_top"><font class="Apple-style-span" face="Arial, sans-serif" size="3">Your upcoming depositions</font></a></strong>
+            </li>
+            <li><strong><a href="/a06?fcf=00BA0000007ImPm" target="_top"><font class="Apple-style-span" face="Arial, sans-serif" size="3">All upcoming depositions</font></a></strong>
+            </li>
+            <li><strong><font class="Apple-style-span" face="Arial, sans-serif" size="3"><strong><a href="/a06?fcf=00BA0000007ImSM" target="_top">Your past depositions</a></strong>&nbsp; &nbsp;</font>
+                </strong>
+            </li>
+            <li><strong><strong><a href="/a06?fcf=00BA0000007JjlQ" target="_top"><font class="Apple-style-span" face="Arial, sans-serif" size="3">All past depositions</font></a></strong></strong>
+            </li>
+        </ul><font class="Apple-style-span" face="Arial, sans-serif" size="3">If you have any questions on this, please feel free to contact us at <a href="mailto:scheduling@nextgenreporting.com">scheduling@nextgenreporting.com</a> or 215.944.5800.</font>
+        <p><font class="Apple-style-span" face="Arial, sans-serif" size="3">We appreciate the opportunity to work with you!</font>
+        </p>
+    </apex:form>
+</apex:page>

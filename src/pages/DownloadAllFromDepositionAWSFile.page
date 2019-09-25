@@ -1,0 +1,30 @@
+<apex:page standardController="Deposition__c" sidebar="false" extensions="GoogleDriveAuthenticationCntrl">
+   
+    <script>
+        var zipFileName = "{!Deposition__c.Name}";
+    </script>
+        
+    <c:downloadjs />
+    <script>
+        var j$ = jQuery.noConflict();
+        var zipFile = new JSZip();
+        var accessToken = '{!AccessCode}';
+        var idx = 0;
+        var countOfS3Objects = 0;
+        sforce.connection.sessionId = '{!$Api.Session_ID}';
+        result = sforce.connection.query("Select count(Id) countOfRecords from AWS_S3_Object__c WHERE Deposition__c='{!Deposition__c.id}'");
+        records = result.getArray("records");
+        countOfS3Objects = records[0].countOfRecords;
+        
+    </script>
+    <br/><br/>
+    <a class="goBack" href="/{!Deposition__c.id}" >Go Back To Deposition
+    </a>
+    <apex:repeat value="{!Deposition__c.AWS_S3_Objects__r}" var="s3Obj">
+        <script>
+            
+           if("{!s3Obj.File_Id__c}" != undefined && "{!s3Obj.File_Id__c}" != '')
+           downloadFile("{!s3Obj.File_Name__c}","{!s3Obj.File_Id__c}");
+        </script>
+    </apex:repeat>
+</apex:page>

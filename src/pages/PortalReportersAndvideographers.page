@@ -1,0 +1,320 @@
+<apex:page applyHtmlTag="false" applyBodyTag="false" standardstylesheets="false" cache="false" showHeader="false" sidebar="false" standardController="Deposition__c" extensions="PortalReportersAndvideographersCntrl"
+action="{!validatePageParameters}" >
+ <head>
+    <c:HeaderCSS />
+    <link rel="stylesheet" href="{!URLFOR($Resource.TimePicker, 'TimePicker/css/jquery-ui-1.10.0.custom.min.css')}" type="text/css" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.TimePicker, 'TimePicker/css/jquery.ui.timepicker.css')}" type="text/css" />
+
+    <script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'TimePicker/js/jquery-1.9.0.min.js')}"></script>
+  
+    <script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'TimePicker/js/jquery.ui.position.min.js')}"></script>
+
+    <script type="text/javascript" src="{!URLFOR($Resource.TimePicker, 'TimePicker/js/jquery.ui.timepicker.js')}"></script>
+        <style>
+            .messageCell,
+            .errorMsg,
+            .errMsg li {
+                color: #cc0000;
+                font-size: 1em;
+            }
+            
+            .messageCell h4 {
+                color: #cc0000;
+            }
+            
+            .standard {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 10px;
+                color: black;
+                padding: 5px;
+            }
+            
+            .standard_darkred {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 11px;
+                color: darkred;
+            }
+            
+            .table_background {
+                background-color: #f0f0f0
+            }
+            
+            .header_background {
+                background-color: #8c8c8c
+            }
+            
+            .input {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px
+            }
+            
+            .input_hint {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px;
+                color: gray
+            }
+            
+            .ad {
+                font-family: Arial, Helvetica, sans-serif;
+                width: 140px;
+                font-size: 10px;
+                margin: 0 auto;
+                text-align: left;
+                border: 2px solid #999;
+                background: white;
+                padding: 5px;
+            }
+            
+            a.blue:link {
+                color: #0000ff;
+            }
+            
+            a.blue:visited {
+                color: #0000ff;
+            }
+            
+            a.blue:hover {
+                color: #ff0000;
+            }
+            
+            a.blue:active {
+                color: #0000ff;
+            }
+            
+            textarea {
+                color: black !important;
+                margin:0px !important;
+            }
+            select{
+                background: #f9f9f9;
+                border: 1px solid #ccc;
+                box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
+                -moz-box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
+                -webkit-box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
+                padding: 2px;
+                width: 100%;
+            }
+            .alert-danger {
+                color: #a94442;
+                background-color: #f2dede;
+                border-color: #ebccd1;
+            }
+            .alert {
+                padding: 15px;
+                margin-bottom:0px !important;
+                border: 1px solid transparent;
+                border-radius: 4px;
+            }
+            .ui-widget-header {
+                border: 1px solid #00335B !important;
+                background: #00335B url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x !important;
+            }
+            
+            .messageCell,
+            .errorMsg,.error {
+                color: red;
+            }
+            
+            .ui-button {
+                border: 1px solid #cccccc !important;
+                background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x !important;
+                font-weight: bold !important;
+                color: #1c94c4 !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_container">
+           <apex:outputText escape="false" value="{!Deposition__c.Primary_Court_Reporting_Firm__r.Web_Page_Header_HTML__c}"></apex:outputText>
+            <div id="headbox">
+                <h3>{!Deposition__c.Firm_Name__c}</h3></div>
+            <div id="content_container">
+                <div id="left_navigation">
+                    <h2 class="navigation_title"><!---<br/>UPLOAD FILES--->
+                  </h2>
+                </div>
+                <div id="main_contentpage">
+                    <div class="post">
+                        <div class="entry">
+                            <!-- SFDC STUFF STARTS HERE -->
+                            <div class="errMsg">
+                                <apex:pageMessages ></apex:pageMessages>
+                            </div>
+                            <apex:form rendered="{!!isErr}">
+                               <apex:actionFunction action="{!saveDeposition}" name="saveDeposition" />
+                                <c:ActionStatus ></c:ActionStatus>
+                                <h2 class="title"></h2>
+                                
+                                <table cellspacing="0" cellpadding="10" border="0">
+                                     
+                                    
+                                    <tr>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Job ID: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputField value="{!deposition.Name}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Date : " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputField value="{!deposition.Deposition_Date__c}" /> &nbsp;
+                                            <apex:outputField value="{!deposition.Deposition_Time__c}" />
+                                        </td>
+                                    </tr>
+                                    <tr style="{!IF($CurrentPage.parameters.type=='v' || $CurrentPage.parameters.type=='V','display:none;','')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Due Date: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputField value="{!deposition.Transcript_Due_From_Reporter_Computed__c}" label="Due Date : " />
+                                        </td>
+                                    </tr>
+                                    <tr style="{!IF($CurrentPage.parameters.type=='v' || $CurrentPage.parameters.type=='V','display:none;','')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Special instructions: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputField value="{!deposition.Special_Instructions_text__c}" />
+                                        </td>
+                                    </tr>
+                                    <tr >
+                                        <td style="vertical-align: top;padding:4px;" valign="middle">
+                                            <apex:outputText value="{!IF($CurrentPage.parameters.type=='r' || $CurrentPage.parameters.type=='R','Reporter Recap:','Event Recap:')} " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:inputField value="{!attendee.Recap_Notes__c}" style="width:400px;height:300px;" />
+                                        </td>
+                                    </tr>
+                                   
+                                    <!---<tr style="{!IF($CurrentPage.parameters.type=='r' || $CurrentPage.parameters.type=='R','','display:none;')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Page numbers: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:inputField value="{!deposition.Page_Count__c}" />
+                                        </td>
+                                    </tr>
+                                    <tr style="{!IF($CurrentPage.parameters.type=='r' || $CurrentPage.parameters.type=='R','','display:none;')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Exhibit Page Count: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:inputField value="{!deposition.Exhibit_page_count__c}" />
+                                        </td>
+                                    </tr>--->
+                                    <tr style="{!IF($CurrentPage.parameters.type=='v' || $CurrentPage.parameters.type=='V','','display:none;')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Arrival Time: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                             
+                                             <apex:inputText style="width: 70px;" styleclass="startTime" value="{!arrivalTime}" />
+                                        </td>
+                                    </tr>
+                                    <tr style="{!IF($CurrentPage.parameters.type=='v' || $CurrentPage.parameters.type=='V','','display:none;')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Departure Time: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                           <apex:inputText style="width: 70px;" styleclass="endTime" value="{!departureTime}" />
+                                        </td>
+                                    </tr>
+                                    <tr style="{!IF($CurrentPage.parameters.type=='v' || $CurrentPage.parameters.type=='V','','display:none;')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Number of Miles (Round trip): " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:inputField value="{!attendee.Mileage__c}" />
+                                        </td>
+                                    </tr>
+                                    <tr style="{!IF($CurrentPage.parameters.type=='v' || $CurrentPage.parameters.type=='V','','display:none;')}">
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:outputText value="Parking/Expenses: " />
+                                        </td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:inputField value="{!attendee.Parking_Expenses__c}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">&nbsp;</td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <button type="button" class="btn btn-default" onclick="next();">Next</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </apex:form>
+                            <!-- SFDC STUFF ENDS HERE -->
+
+                            <BR></BR>
+                            
+                        </div>
+                        <!-- /.entry -->
+                    </div>
+                    <!-- /.post -->
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div id="content_bottom">
+
+
+                <img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/page-template-btm.jpg')}" width="891" height="38" alt="" class="png" />
+            </div>
+            <div class="clear"></div>
+        </div>
+        <apex:outputText escape="false" value="{!Deposition__c.Primary_Court_Reporting_Firm__r.Web_Page_Footer_HTML__c}"></apex:outputText>
+        <script type="text/javascript">
+         
+        $(document).ready(function() {
+            $('.startTime,.endTime').timepicker({
+                showPeriod: true,
+                showLeadingZero: true
+            });
+        });
+                                           
+         function validateTime(){
+             //start time
+            var start_time = $(".startTime").val();
+            
+            //end time
+            var end_time = $(".endTime").val();
+            
+            //convert both time into timestamp
+            var stt = new Date("November 13, 2013 " + start_time);
+            stt = stt.getTime();
+            
+            var endt = new Date("November 13, 2013 " + end_time);
+            endt = endt.getTime();
+            
+            //by this you can see time stamp value in console via firebug
+            console.log("Time1: "+ stt + " Time2: " + endt);
+            
+            if(stt > endt) {
+                $(".startTime").after('<span class="error">Arrival Time must be smaller then End-time.</span>');
+                $(".endTime").after('<span class="error">Departure Time must be bigger then Start-time.</span>');
+                return false;
+            }else{
+                $(".error").hide();
+                return true;
+            }
+         }
+          function next(){
+                var res = validateTime();
+                if(res ==true){
+                    $(".error").hide();
+                    saveDeposition();
+                }else{
+                   return false;
+                }
+           }
+        </script>
+    </body>
+   
+</apex:page>

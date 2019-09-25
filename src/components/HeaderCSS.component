@@ -1,0 +1,4 @@
+<apex:component >
+  <link href="{!URLFOR($Resource.WilcoxCSS)}" rel="stylesheet" type="text/css"/> 
+        <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css"/>
+</apex:component>

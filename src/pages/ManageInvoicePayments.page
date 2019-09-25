@@ -1,0 +1,363 @@
+<apex:page Controller="ManageInvoicePaymentsCtrl" tabStyle="Invoice__c" docType="html-5.0"  >
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script>
+        function addAmountPaid(checkbox, amountInput,amount) 
+        {
+            var cb=document.getElementById(checkbox);
+            console.log('checkbox checked ?'+cb.checked);
+            var amountInputVar = document.getElementById(amountInput); 
+            if(cb.checked==true){
+                amountInputVar.value =amount;
+                amountInputVar.disabled = true;
+            }else{
+                 amountInputVar.value =0.0;
+                amountInputVar.disabled = false;
+            }
+        }
+        function setPaymentNotes(){
+            $(".paymentNotes").val($(".paymentNotesForAll").val());
+        }
+</script>
+    <style type="text/css">
+        .statusRed{
+            color: #ff0000 !important;
+            
+            
+        }
+        
+        .statusRed a{
+            color: #ff0000 !important;
+            
+            
+        }
+        
+        .statusRed input{
+            color: #ff0000 !important;
+            
+            
+        }
+        .statusRed select{
+            color: #ff0000 !important;
+            
+            
+        }
+        
+        .statusGreen{
+            color: #00ff00 !important;
+            background: #00ff00 !important;
+            
+        }
+    </style>
+    
+    
+    <apex:sectionHeader title="Manage" subtitle="Invoices"/>
+    <apex:form id="frm">
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:outputPanel rendered="{!!isSaved}">
+            <apex:pageBlock >
+                
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!SendToConfirmScreen}" title="Next" value="Next" reRender="frm" status="status"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection collapsible="true" id="mainRecord" columns="2" title="Search for Invoices">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel > Search </apex:outputLabel>
+                        <apex:inputText value="{!SearchString}" style="width:300px" />
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel > Corporate Client Filter</apex:outputLabel>
+                        <apex:selectList value="{!selectedCorporateClient}" multiselect="false" size="1">
+                                    <apex:selectOption itemValue="" itemLabel="All" />
+                                        <apex:selectOption itemValue="Allstate" itemLabel="Allstate"/>
+                                        <apex:selectOption itemValue="AT&T (Troy)" itemLabel="AT&T (Troy)"/>
+                                        <apex:selectOption itemValue="BASF" itemLabel="BASF"/>
+                                        <apex:selectOption itemValue="Cardinal Health" itemLabel="Cardinal Health"/>
+                                        <apex:selectOption itemValue="Erie Insurance" itemLabel="Erie Insurance"/>
+                                        <apex:selectOption itemValue="Fireman’s Fund" itemLabel="Fireman’s Fund"/>
+                                        <apex:selectOption itemValue="Gateway Risk Services" itemLabel="Gateway Risk Services"/>
+                                        <apex:selectOption itemValue="GEICO" itemLabel="GEICO"/>
+                                        <apex:selectOption itemValue="Global Indemnity" itemLabel="Global Indemnity"/>
+                                        <apex:selectOption itemValue="Horace Mann" itemLabel="Horace Mann"/>
+                                        <apex:selectOption itemValue="Liberty Mutual" itemLabel="Liberty Mutual"/>
+                                        <apex:selectOption itemValue="Mass Mutual" itemLabel="Mass Mutual"/>
+                                        <apex:selectOption itemValue="Medical Protective" itemLabel="Medical Protective"/>
+                                        <apex:selectOption itemValue="Preferred Mutual" itemLabel="Preferred Mutual"/>
+                                        <apex:selectOption itemValue="Progressive" itemLabel="Progressive"/>
+                                        <apex:selectOption itemValue="SAP" itemLabel="SAP"/>
+                                        <apex:selectOption itemValue="USAA" itemLabel="USAA"/>
+                                    <apex:actionSupport event="onchange" action="{!Search_OnClick}" rerender="frm" status="status" />
+                                </apex:selectList>
+                    </apex:pageBlockSectionItem>                    
+                    <apex:pageBlockSectionItem dataStyle="text-align:center; width: 50%; max-width: 55%;">
+                        <apex:commandButton value="Search" id="search" action="{!Search_OnClick}" rerender="frm" status="status" />
+                    </apex:pageBlockSectionItem> 
+                    <apex:pageBlockSectionItem >
+                         <apex:outputLabel > Payment Type for All</apex:outputLabel>
+                         <apex:selectList id="paymentTypeforAll" value="{!selectedPaymentType}" size="1">
+                                        <apex:selectOption itemValue="" itemLabel="-None-" />
+                                        <apex:selectOption itemValue="ACH" itemLabel="ACH"/>
+                                        <apex:selectOption itemValue="Cash" itemLabel="Cash"/>
+                                        <apex:selectOption itemValue="Check" itemLabel="Check"/>
+                                        <apex:selectOption itemValue="Credit Card" itemLabel="Credit Card"/>
+                                        <apex:selectOption itemValue="Lockbox" itemLabel="Lockbox"/>
+                                        <apex:selectOption itemValue="Misc. Receivables" itemLabel="Misc. Receivables"/>
+                             <apex:actionSupport event="onchange" action="{!setSelectedPTypeforAll}" rerender="frm" status="status" />
+                                    </apex:selectList>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel > Payment Date for All</apex:outputLabel>
+                        <apex:input value="{!selectedPaymentDate}" type="date">
+                            <apex:actionSupport event="onchange" action="{!setSelectedDateforAll}" rerender="frm" status="status" />
+                        </apex:input>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel > Payment Notes for All</apex:outputLabel>
+                        <apex:inputText styleClass="paymentNotesForAll" onblur="setPaymentNotes();"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                
+                
+                
+                
+                
+                <apex:repeat value="{!firmToInvoicesMap}" var="firm" id="firmList">
+                    <apex:pageBlockSection columns="1"  title="{!firm}" >
+                        <apex:pageBlockTable value="{!firmToInvoicesMap[firm]}" var="invoice">
+                            
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">
+                                    
+                                    <apex:commandLink value="Account Name {!IF(sortExpression=='Account__r.name',IF(sortDirection='ASC','▼','▲'),'')}" action="{!doSort}" rerender="frm" status="status">
+                                        <apex:param name="column" value="Account__r.name" assignTo="{!sortExpression}"></apex:param>
+                                    </apex:commandLink>
+                                   
+                                </apex:facet>
+                                
+                                
+                                
+                                <apex:outputField value="{!invoice.inv.Account__c}">
+                                    
+                                    </apex:outputField>
+                                
+                            </apex:column>
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}">
+                                <apex:facet name="header">
+                                    <apex:commandLink value="Invoice Number {!IF(sortExpression=='Name',IF(sortDirection='ASC','▼','▲'),'')}" action="{!doSort}" rerender="frm" status="status">
+                                        <apex:param name="column" value="Name" assignTo="{!sortExpression}"></apex:param>
+                                    </apex:commandLink>
+                                </apex:facet>
+                                <apex:outputLink title="{!invoice.inv.Name}" value="{!'/'+invoice.inv.Id}" >
+                                    {!invoice.inv.Name}
+                                </apex:outputLink>
+                            </apex:column>
+                           <!-- <apex:column >
+                                <apex:facet name="header">
+                                   <apex:commandLink value="Deposition Date {!IF(sortExpression=='Deposition__r.Deposition_Date__c',IF(sortDirection='ASC','▼','▲'),'')}" action="{!doSort}" rerender="frm" status="status">
+                                        <apex:param name="column" value="Deposition__r.Deposition_Date__c" assignTo="{!sortExpression}"></apex:param>
+                                    </apex:commandLink>
+                               
+                                </apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Deposition_Date__c}">
+                                </apex:outputField>
+                            </apex:column>-->
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">
+                                    <apex:commandLink value="Invoice Amount {!IF(sortExpression=='Invoice_Amount__c',IF(sortDirection='ASC','▼','▲'),'')}" action="{!doSort}" rerender="frm" status="status">
+                                        <apex:param name="column" value="Invoice_Amount__c" assignTo="{!sortExpression}"></apex:param>
+                                    </apex:commandLink>
+                                    </apex:facet>
+                                <apex:outputField value="{!invoice.inv.Invoice_Amount__c}">
+                                </apex:outputField>
+                            </apex:column>
+                            
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">Case Name/Caption
+                                </apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Case_Name__c}">
+                                </apex:outputField>
+                            </apex:column>
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">
+                                <apex:commandLink value="Deponent Name {!IF(sortExpression=='Deponent_Name__c',IF(sortDirection='ASC','▼','▲'),'')}" action="{!doSort}" rerender="frm" status="status">
+                                        <apex:param name="column" value="Deponent_Name__c" assignTo="{!sortExpression}"></apex:param>
+                                    </apex:commandLink></apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deponent_Name__c}">
+                                </apex:outputField>
+                            </apex:column>
+                            <!--<apex:column >
+                                <apex:facet name="header">
+                                <apex:commandLink value="Matter Number {!IF(sortExpression=='Deposition__r.Matter_Number__c',IF(sortDirection='ASC','▼','▲'),'')}" action="{!doSort}" rerender="frm" status="status">
+                                        <apex:param name="column" value="Deposition__r.Matter_Number__c" assignTo="{!sortExpression}"></apex:param>
+                                    </apex:commandLink>
+                                </apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Matter_Number__c}">
+                                </apex:outputField>
+                            </apex:column>-->
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">
+                                <apex:commandLink value="Claims Number {!IF(sortExpression=='Deposition__r.Insurance_Claim_Info__c',IF(sortDirection='ASC','▼','▲'),'')}" action="{!doSort}" rerender="frm" status="status">
+                                        <apex:param name="column" value="Deposition__r.Insurance_Claim_Info__c" assignTo="{!sortExpression}"></apex:param>
+                                    </apex:commandLink>
+                                </apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Insurance_Claim_Info__c}">
+                                </apex:outputField>
+                            </apex:column>
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">Payment Notes</apex:facet>
+                                <apex:inputText styleClass="paymentNotes" value="{!invoice.Notes}" /> 
+                            </apex:column>
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">Paid In Full</apex:facet>
+                                <apex:actionRegion >
+                                <apex:inputCheckbox id="inputCheckboxId" value="{!invoice.paidInFull}" onclick="addAmountPaid('{!$Component.inputCheckboxId}', '{!$Component.amountPaidInput}','{!invoice.inv.Invoice_Amount__c}')">
+                                    <!--<apex:actionSupport event="onclick" rerender="frm" action="{!PaidInFullCheck}" status="status">
+                                        <apex:param name="payInFullCheckedId" assignto="{!payInFullCheckedId}" value="{!invoice.inv.id}"> </apex:param> 
+                                    </apex:actionSupport>-->
+                                </apex:inputCheckbox>
+                                </apex:actionRegion>
+                            </apex:column>
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">Amount Paid</apex:facet>
+                                <apex:input id="amountPaidInput" value="{!invoice.amountPaid}" type="auto" html-step="any" disabled="{!invoice.paidInFull}" style="width:80px" /> 
+                            </apex:column>
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">Payment Type</apex:facet>
+                                    <apex:selectList id="paymentType" value="{!invoice.paymentType}" size="1">
+                                        <apex:selectOption itemValue="ACH" itemLabel="ACH"/>
+                                        <apex:selectOption itemValue="Cash" itemLabel="Cash"/>
+                                        <apex:selectOption itemValue="Check" itemLabel="Check"/>
+                                        <apex:selectOption itemValue="Credit Card" itemLabel="Credit Card"/>
+                                        <apex:selectOption itemValue="Lockbox" itemLabel="Lockbox"/>
+                                        <apex:selectOption itemValue="Misc. Receivables" itemLabel="Misc. Receivables"/>
+                                    </apex:selectList>
+                            </apex:column>
+                            <apex:column styleClass="{!IF(invoice.inv.Status__c != 'Valid','statusRed', '')}" >
+                                <apex:facet name="header">Payment Date</apex:facet>
+                                <apex:inputField value="{!invoice.payment.Date__c}"/>
+                            </apex:column>
+                           <!-- <apex:column >
+                                <apex:facet name="header">Pay in Seperate Tab</apex:facet>
+                                <center>
+                                    <a href="{!'/apex/CreatePayment?CF00NZ0000001DvtD_lkid='+invoice.inv.Id+'&CF00NZ0000001DvtD='+invoice.inv.Name+'&CF00NZ0000001Du6P='+TEXT(invoice.inv.Invoice_Amount__c) +'&scontrolCaching=1&sfdc.override=1'}" target="_blank">Pay</a>
+                                </center>
+                            </apex:column>-->
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                </apex:repeat>
+                <apex:outputPanel style="text-align:center;" layout="block">
+                    <apex:commandButton value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" reRender="frm" status="status"/>
+                    <apex:commandButton value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}" reRender="frm" status="status"/>&nbsp;Page {!pageNumber} of {!totalPages}&nbsp;
+                    <apex:commandButton value="Next" action="{!next}" disabled="{!NOT(hasNext)}" reRender="frm" status="status"/>
+                    <apex:commandButton value="Last"  action="{!last}" disabled="{!NOT(hasNext)}" reRender="frm" status="status"/>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!isSaved}">
+            <apex:pageBlock title="Summary of Payments Grouped by Accounts" >
+                 <apex:pageMessage summary="If the payments below are correct, click Apply Payment. To modify the payments, click Edit Payments." 
+                                   severity="confirm" strength="3" rendered="{!isSavedConfirmed==false}" />
+                 <apex:pageMessage summary="Payments have been applied. Click Done to continue." 
+                                   severity="info" strength="3" rendered="{!isSavedConfirmed==true}" />
+                <!-- <apex:pageMessage summary="{!errorMsg}" 
+                                   severity="error" strength="3" rendered="{! errorMsg!='' }" />-->
+        <apex:pageMessages />
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!save}" rendered="{!isSavedConfirmed==false}" title="Apply Payments" value="Apply Payments" reRender="frm" status="status"/>
+                    <apex:commandButton action="{!editPayments}" rendered="{!isSavedConfirmed==false}" title="Edit Payments" value="Edit Payments" reRender="frm" status="status"/>
+                    <apex:commandButton action="{!goBack}" rendered="{!isSavedConfirmed==true}" title="Done" value="Done" reRender="frm" status="status"/>
+                </apex:pageBlockButtons>
+                <apex:repeat value="{!firmToInvoicesMapSaved}" var="firm">
+                    <apex:pageBlockSection columns="1"  title="{!(firm+ '  Total Payments for Account:'+ accountPaymentsMap[firm])}"   >
+                        <apex:pageBlockTable value="{!firmToInvoicesMapSaved[firm]}" var="invoice">
+                            <apex:column >
+                                <apex:facet name="header">Account Name</apex:facet>
+                                <apex:outputField value="{!invoice.inv.Account__c}">
+                                </apex:outputField>
+                                
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Invoice Number</apex:facet>
+                                <apex:outputLink title="{!invoice.inv.Name}" value="{!'/'+invoice.inv.Id}" >
+                                    {!invoice.inv.Name}
+                                </apex:outputLink>
+                            </apex:column>
+                          <!--  <apex:column >
+                                <apex:facet name="header">Deposition Date</apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Deposition_Date__c}">
+                                </apex:outputField>
+                            </apex:column>-->
+                            <apex:column >
+                                <apex:facet name="header">Invoice Amount</apex:facet>
+                                <apex:outputText value="${0}">
+                                           <apex:param value="{! invoice.inv.Invoice_Amount__c }" />
+                                </apex:outputText>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Payment Amount</apex:facet>
+                                <apex:outputText value="${0}">
+                                           <apex:param value="{! invoice.amountPaid }" />
+                                </apex:outputText>
+                            </apex:column>
+                            
+                            <apex:column >
+                                <apex:facet name="header">Case Name/Caption</apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Case_Name__c}">
+                                </apex:outputField>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Deponent Name</apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deponent_Name__c}">
+                                </apex:outputField>
+                            </apex:column>
+                           <!-- <apex:column >
+                                <apex:facet name="header">Matter Number</apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Matter_Number__c}">
+                                </apex:outputField>
+                            </apex:column>-->
+                            <apex:column >
+                                <apex:facet name="header">Claims Number</apex:facet>
+                                <apex:outputField value="{!invoice.inv.Deposition__r.Insurance_Claim_Info__c}">
+                                </apex:outputField>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Payment Type</apex:facet>
+                                <apex:outputText value="{!invoice.paymentType}">
+                                </apex:outputText>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Payment Date</apex:facet>
+                                     <apex:OutputField value="{!invoice.payment.Date__c}" />
+                            </apex:column>
+                            <!-- <apex:column >
+<apex:facet name="header">Paid In Full</apex:facet>
+<apex:inputCheckbox value="{!invoice.paidInFull}"/> 
+</apex:column>-->
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                </apex:repeat>
+                <!--  <apex:outputPanel style="text-align:center;" layout="block">
+<apex:commandButton value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" reRender="frm" status="status"/>
+<apex:commandButton value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}" reRender="frm" status="status"/>&nbsp;Page {!pageNumber} of {!totalPages}&nbsp;
+<apex:commandButton value="Next" action="{!next}" disabled="{!NOT(hasNext)}" reRender="frm" status="status"/>
+<apex:commandButton value="Last"  action="{!last}" disabled="{!NOT(hasNext)}" reRender="frm" status="status"/>
+</apex:outputPanel>-->
+                <br/>
+                <br/>
+           Total payments in this batch: {!totalPayment}
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        
+    </apex:form>
+</apex:page>

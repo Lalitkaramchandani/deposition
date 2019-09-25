@@ -1,0 +1,86 @@
+<apex:component >
+    <apex:attribute name="firm" description="This is used to prepare Footer" type="Firm__c" required="true" />
+    <apex:outputText escape="false" value="{!firm.Community_Header__c}"> </apex:outputText>
+    <style>
+        select {
+            padding: 3px;
+            border-radius: 5px;
+        }
+        
+        .errorM3 li {
+            list-style: none;
+        }
+        
+        .errorM3 .messageCell .messageText span {
+            display: none;
+        }
+        
+        .errorM3 .messageCell .messageText {
+            color: white;
+        }
+        
+        tr:nth-child(odd) {
+            background: none;
+        }
+        
+        tr:nth-child(even) {
+            background: none;
+        }
+        
+        .messageTable ul {
+            padding-left: 0px !important;
+        }
+        
+        .messageTable li,
+        .messageText {
+            font-size: 1em;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            color: white;
+            margin: 3px;
+            justify-content: space-between;
+        }
+        
+        .editAccount {
+            width: 70px !important;
+            margin-top: 12px !important;
+        }
+        
+        .ngfooter p,
+        #logoutLink {
+            font-family: "Open Sans", sans-serif !important;
+            font-size: 1rem;
+        }
+
+    </style>
+    <script>
+        function searchRecords() {
+            window.location.href = "/apex/CommunitySearch?searchText=" +
+                document.getElementById('searchBox').value;
+        }
+
+        function editAccount() {
+            window.location.href = "/apex/CommunitiesUserAccountUpdate";
+        }
+
+        function openCalendar() {
+            window.location.href = "/apex/CommunitiesCalendar";
+        }
+
+        function handleEnterKey(e) {
+            if (e.keyCode === 13) {
+                searchRecords();
+            }
+
+            return false;
+        }
+        console.log("{!TEXT($User.UserType)}")
+        if ("{!TEXT($User.UserType)}" != "Guest")
+            $("#logoutLink").show();
+        else {
+            $(".reportcalendar img").hide();
+
+        }
+
+    </script>
+</apex:component>

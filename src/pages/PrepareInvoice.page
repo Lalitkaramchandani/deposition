@@ -1,0 +1,337 @@
+<apex:page controller="PrepareInvoice_Ctrl" tabStyle="Invoice__c" title="Prepare Invoice" docType="html-5.0" standardStylesheets="false" >
+    
+   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'/>
+   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'/>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type='text/javascript'>
+        function handleEnterKey(ev)  {
+            if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+                $(".nextButton").click();
+                return false;
+             } else {
+                  return true;
+             }
+         }
+    </script>
+    <script>
+        var callAddRow =false;
+        function itemChanged(itemClass){
+            console.log($("."+itemClass).parent().parent().find("input[id$='_lkid']").val());
+            var itemId = $("."+itemClass).parent().parent().find("input[id$='_lkid']").val()
+        }
+        
+        function addNewRow(selectedIdx, countOfItems){
+            var idx = parseInt(selectedIdx);
+            var countOfInvoiceItems = parseInt(countOfItems);
+            
+            if(idx ==countOfInvoiceItems-1){
+                callAddRow  = true;
+                //$(".btnAddRow").click();
+            }else{
+                callAddRow =false;
+            }
+        }
+        function callAddRowOnComplete(){
+            if(callAddRow )
+                $(".btnAddRow").click();
+        }
+        
+    </script>
+<!--    <script>
+        j$ = jQuery.noConflict();
+        j$(document).ready(function() {
+            
+            if(j$(".Show_column").is(':checked')==true){
+                  j$("[id*='quantity']").show();
+             }else{
+                j$("[id*='quantity']").hide();
+             }
+            
+            
+            j$(".Show_column").click(function() {
+                if(j$(".Show_column").is(':checked')==true){
+                  j$("[id*='quantity']").show();
+                }else{
+                j$("[id*='quantity']").hide();
+                }
+    });
+
+   });
+
+    </script>-->
+    <!--<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <script>
+    $j = jQuery.noConflict();
+
+    var fixHelperModified = function(e, tr) {
+        var $originals = tr.children();
+        var $helper = tr.clone();
+        $helper.children().each(function(index) {
+            $j(this).width($originals.eq(index).width())
+        });
+        return $helper;
+    };
+
+    var updateIndex = function(e, ui) {
+        $j('td.index', ui.item.parent()).each(function (i) {
+            $j(this).html(i + 1);
+        });
+    };
+
+    $j(document).ready(function() {
+        $j("#sort tbody > span").sortable({
+            helper: fixHelperModified,
+            stop: updateIndex
+        }).disableSelection();
+    });
+</script>
+-->
+
+  <apex:sectionHeader title="Prepare Invoice"/>
+  <apex:form id="myform">
+     <!--  <input   id="hiddenInput" type="hidden" name="HiddenVar" value="true" /> -->
+      <apex:pageMessages />
+      <apex:pageBlock title="Invoice Details">
+      <apex:actionFunction name="itemChanged" reRender="pnlItems" status="status" action="{!itemChanged}" oncomplete="$('.autoCompleteDropDown').chosen({});callAddRowOnComplete(); ">
+          <apex:param assignTo="{!selectedIndex}" value="" name="selectedIndex"/>
+      </apex:actionFunction>
+      <c:ActionStatus />
+          <apex:pageBlockSection id="details" title="Invoice Information" columns="2">
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Deposition Date" for="deposition_date"/>
+                  <apex:outputField value="{!attendee.Deposition_Date__c}" id="deposition_date" />
+              </apex:pageBlockSectionItem>
+              
+              
+              <!----<apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Depostion Location" for="Depostion_location"/>
+                  <apex:outputField value="{!attendee.Deposition_Location__c}" id="Depostion_location" />
+              </apex:pageBlockSectionItem>--->
+              <apex:outputField value="{!attendee.Deposition__r.Event_Location__c}"/>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Deposition Time" for="deposition_Time"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Deposition_Time__c}" id="deposition_Time" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Case Caption" for="case_caption"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Case_Name__c}" id="case_caption" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Expedite" for="Expedite"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Expedite__c }" id="Expedite" />
+              </apex:pageBlockSectionItem>
+              <apex:outputField value="{!newInvoice.Deponent_Name__c}" rendered="{!nextPageMode}"/>
+              <apex:inputField onkeypress="return handleEnterKey();" value="{!newInvoice.Deponent_Name__c}"   rendered="{!!nextPageMode}"/>
+              
+              <apex:outputField value="{!newInvoice.Claim_No_Text__c}" rendered="{!nextPageMode}"/>
+              <apex:inputField value="{!newInvoice.Claim_No_Text__c}"   rendered="{!!nextPageMode}"/>
+              
+              <apex:outputField value="{!newInvoice.Claims_Professional_Text__c}" rendered="{!nextPageMode}"/>
+              <apex:inputField onkeypress="return handleEnterKey();" value="{!newInvoice.Claims_Professional_Text__c}"   rendered="{!!nextPageMode}"/>
+              
+              <apex:outputField value="{!newInvoice.Matter_Number_Text__c}" rendered="{!nextPageMode}"/>
+              <apex:inputField onkeypress="return handleEnterKey();" value="{!newInvoice.Matter_Number_Text__c}"   rendered="{!!nextPageMode}"/>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Billing Notes" for="billing_notes"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Billing_Notes__c}" id="billing_notes" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Contact Financial Notes" for="Contact_Financial_Notes"/>
+                  <apex:outputField value="{!attendee.Contact__r.Financial_Notes__c}" id="Contact_Financial_Notes" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Account Financial Notes  " for="account__Financial_Notes"/>
+                  
+                  <apex:outputField value="{!attendee.Contact__r.Account.Financial_Notes__c}" id="account__Financial_Notes" />
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Corporate Client" for="Corporate_client"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Corporate_Client_Source__c}" id="Corporate_client" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Standing Orders" for="Standing_orders"/>
+                  <apex:outputField value="{!attendee.Standing_Orders_del__c}" id="Standing_orders" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Transcript Page Count" for="Transcript_pagecount"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Transcript_page_count__c}" id="Transcript_pagecount" />
+              </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Total Page Count" for="Total_pagecount"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Page_Count__c}" id="Total_pagecount" />
+              </apex:pageBlockSectionItem>
+              
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Exhibit Page Count" for="Exhibit_pagecount"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Exhibit_Page_Count__c}" id="Exhibit_pagecount" />
+              </apex:pageBlockSectionItem>
+              
+              
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel value="Post Event Notes" for="Post_eventnotes"/>
+                  <apex:outputField value="{!attendee.Deposition__r.Post_event_Notes__c}" id="Post_eventnotes" />
+              </apex:pageBlockSectionItem>
+              <apex:outputField value="{!attendee.Deposition__r.Summary_of_Billable_Services__c}" rendered="{!nextPageMode}" />
+              <apex:inputField onkeypress="return handleEnterKey();" value="{!newInvoice.Payment_Term_Days__c}" rendered="{!!nextPageMode}"/>
+              <apex:outputField value="{!newInvoice.Payment_Term_Days__c}" rendered="{!nextPageMode}"/>
+              
+              <apex:inputField onkeypress="return handleEnterKey();" value="{!newInvoice.Note__c}" rendered="{!!nextPageMode}"/>
+              <apex:outputField value="{!newInvoice.Note__c}" rendered="{!nextPageMode}"/>
+              <apex:inputField onkeypress="return handleEnterKey();" value="{!newInvoice.Location__c}" rendered="{!!nextPageMode}"/>
+              <apex:outputField value="{!newInvoice.Location__c}" rendered="{!nextPageMode}"/>
+              <apex:pageBlockSectionItem ><label style="color: #4a4a56; font-weight: bold; margin-left: 20%;margin-right: 4%;" >
+                                            Rate Sheet</label>
+                  <a href="/{!selectedRateSheet}" target="_blank">{!rateSheetName}</a>
+              </apex:pageBlockSectionItem>
+          </apex:pageBlockSection>
+          
+          
+              <apex:pageBlockSection id="invoiceItems" title="Invoice Line Items" columns="1">  
+              <apex:outputPanel id="pnlItems">
+                  <apex:variable var="j" value="{!0}"/>  
+                  <apex:pageBlockTable id="pb" value="{!lstInvoiceItems}" var="InvoiceItem" title="Rate Sheet Items" rendered="{!!nextPageMode}" >
+                      <apex:column title="Item" headerValue="Item">
+                          <!---<apex:inputField value="{!InvoiceItem.rsItem.Item__c}" styleclass="item-{!j}" onchange="itemChanged('item-{!j}');"/>
+                          {!InvoiceItem.selectedItemId}---->
+                          <apex:selectList onkeypress="return handleEnterKey();" onchange="itemChanged('{!j}');addNewRow('{!j}','{!lstInvoiceItems.size}');" styleClass="autoCompleteDropDown" value="{!InvoiceItem.selectedItemId}" size="1">
+                              <apex:selectOptions value="{!lstRateSheetItems}"></apex:selectOptions>
+                          </apex:selectList>
+                          <apex:variable var="j" value="{!j+1}"/>
+                      </apex:column>
+                      <apex:column title="Invoice Text" headerValue="Invoice Text">
+                          <apex:inputText onkeypress="return handleEnterKey();" value="{!InvoiceItem.invoiceText}" style="width:300px;"/>
+                          
+                      </apex:column>
+                      <apex:column title="Price" headerValue="Price">
+                          <apex:inputField onkeypress="return handleEnterKey();" style="width: 30%;min-width:50px;" value="{!InvoiceItem.rsItem.Price__c}" styleClass="itemPrice"/>
+                      </apex:column>
+                       
+                      <apex:column title="Units of Measure" headerValue="Units of Measure">
+                          <apex:selectList onkeypress="return handleEnterKey();" size="1" value="{!InvoiceItem.unitOfMeasure }" styleClass="unitOfMeasure">
+                              <apex:selectOptions value="{!UnitOfMeasureOptions}"></apex:selectOptions>
+                          </apex:selectList>
+                          
+                      </apex:column>
+                      
+                      <apex:column title="Modification" headerValue="Modification (%)">
+                          <apex:inputText onkeypress="return handleEnterKey();" style="width: 30%;min-width:30px;" value="{!InvoiceItem.modification}"/>
+                      </apex:column>
+                      
+                      <apex:column title="Quantity" headerValue="Quantity" styleClass="quantity" id="quantity" >
+                          <apex:inputText onkeypress="return handleEnterKey();" style="width: 30%;min-width:30px;" value="{!InvoiceItem.quantity}"/>
+                      </apex:column>       
+                                             
+                  </apex:pageBlockTable>
+                   <script>
+                      $(".autoCompleteDropDown").chosen({});  
+                      
+                  </script>
+             </apex:outputPanel>
+          
+                <apex:variable var="i" value="{!0}"/>
+              <apex:pageBlockTable styleClass="previewInvoiceItems" id="pb2" columnsWidth="5%" value="{!nextListInvoiceItems}" var="InvoiceItem" title="Invoice Items" rendered="{!nextPageMode}" >
+                  <apex:column title="Index" headerValue="Order No" >
+                      <apex:inputText value="{!InvoiceItem.order}"  styleClass="orderNo" style="display:none;"  />
+                      <apex:variable var="i" value="{!i+1}"/>
+                      <label class="lblOrderNo">{!i}</label>
+                  </apex:column>
+                  
+                  <apex:column title="Item" headerValue="Item">
+                      <apex:outputField value="{!InvoiceItem.rsItem.Item__c}"/>
+                      
+                  </apex:column>
+                   <apex:column title="Invoice Text" headerValue="Invoice Text">
+                      <apex:outputText value="{!InvoiceItem.invoiceText}"/>
+                  </apex:column>
+                  <apex:column title="Price" headerValue="Price">
+                      <apex:outputField value="{!InvoiceItem.rsItem.Price__c}"/>
+                  </apex:column>
+                  
+                  <apex:column title="Units of Measure" headerValue="Units of Measure">
+                      <apex:outputText value="{!InvoiceItem.unitOfMeasure}"/>
+                  </apex:column>
+                  
+                  <apex:column title="Modification" headerValue="Modification (%)">
+                      <apex:outputText value="{!InvoiceItem.modification}"/>
+                  </apex:column>
+                  
+                  <apex:column title="Quantity" headerValue="Quantity" >
+                      <apex:outputText value="{!InvoiceItem.quantity} "/>
+                  </apex:column> 
+                  
+                  <apex:column title="Total Price" headerValue="Total Price">
+                      <apex:outputtext value="{!InvoiceItem.totalPrice}"/>
+                  </apex:column>
+              </apex:pageBlockTable>
+              <apex:outputPanel rendered="{!nextPageMode}" >
+                  <script>
+                      $( ".previewInvoiceItems tbody" ).sortable();
+                      var fixHelperModified = function(e, tr) {
+                            var $originals = tr.children();
+                            var $helper = tr.clone();
+                            $helper.children().each(function(index)
+                            {
+                              $(this).width($originals.eq(index).width())
+                            });
+                            return $helper;
+                        };
+                       $(".previewInvoiceItems tbody").sortable({
+                            update: function( event, ui ) {
+                                var i= 1;
+                                // The .each() method is unnecessary here:
+                                $( ".previewInvoiceItems .orderNo" ).each(function() {
+                                      $( this ).val(i);
+                                      $(this).parent().find('.lblOrderNo').text(i);
+                                      i++;
+                                });
+                            },
+                            helper: fixHelperModified 
+                            
+                        }).disableSelection();
+                  </script>
+              </apex:outputPanel>
+              <apex:pageBlockSectionItem rendered="{!!nextPageMode}" >
+                  <!---<apex:outputPanel >
+                      <apex:outputLabel value="Show Quantity Column" for="Show_column"/>
+                      <apex:inputCheckbox id="Show_column" styleClass="Show_column"  value="{!showQuantity}" >
+                          <apex:actionSupport event="onclick" reRender="myform" status="status" />
+                      </apex:inputCheckbox>    
+                      </apex:outputPanel>--->
+                   
+                  <apex:commandButton style="display:none;" styleClass="btnAddRow" oncomplete="$('.autoCompleteDropDown').chosen({}); " action="{!addRow}" value="Add Row" reRender="myform" status="status"/>
+              </apex:pageBlockSectionItem>
+              
+              
+              </apex:pageBlockSection>
+              <apex:pageBlockSection id="DisplayOptions" title="Display Options" columns="2">
+                 <apex:inputField value="{!newInvoice.Show_Quantity_Column__c}" rendered="{!!nextPageMode}"/>
+                  <apex:outputField value="{!newInvoice.Show_Quantity_Column__c}" rendered="{!nextPageMode}"/>
+                  <apex:inputField value="{!newInvoice.Show_Rate_Column__c}" rendered="{!!nextPageMode}"/>
+                  <apex:outputField value="{!newInvoice.Show_Rate_Column__c}" rendered="{!nextPageMode}"/>
+                  <apex:inputField value="{!newInvoice.Show_Rows__c}" rendered="{!!nextPageMode}"/>
+                  <apex:outputField value="{!newInvoice.Show_Rows__c}" rendered="{!nextPageMode}"/>
+              </apex:pageBlockSection>
+          <apex:pageBlockButtons >
+              <apex:commandButton oncomplete="$('.autoCompleteDropDown').chosen({}); " action="{!previous}" value="Back" rendered="{!!nextPageMode}"  />
+              <apex:commandButton styleClass="nextButton" oncomplete="$('.autoCompleteDropDown').chosen({}); " action="{!next}" value="Next" reRender="myform" rendered="{!!nextPageMode}" status="status"/>
+              
+              
+               <apex:commandButton oncomplete="$('.autoCompleteDropDown').chosen({}); " action="{!Edit}" value="Edit" rendered="{!nextPageMode}" status="status" reRender="myform" />
+              <apex:commandButton oncomplete="$('.autoCompleteDropDown').chosen({}); " action="{!CreateInvoice}" value="Create Invoice" reRender="myform" rendered="{!nextPageMode}" status="status"/>
+          </apex:pageBlockButtons>
+          
+      </apex:pageBlock>
+  
+  </apex:form>
+ 
+</apex:page>

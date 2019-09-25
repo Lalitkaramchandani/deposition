@@ -1,0 +1,131 @@
+<apex:page controller="HighProfileCasesController" >
+    <style type="text/css">
+        .dateFormat{
+        visibility:hidden;
+        }
+       
+        .fullHeight{
+        
+        }
+    </style>
+    
+    <apex:form id="mainForm" >
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:pageBlock id="filterBlock">
+            <apex:pageblockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Filter by Commission Profile:</apex:outputLabel>
+                    <apex:selectList value="{!selectedCommission}" size="1">
+                        <apex:selectOptions value="{!commissionList}"></apex:selectOptions>
+                        <apex:actionSupport event="onchange" action="{!filterListByCommission}" rerender="mainBlock,mainBlockReadyOnly" status="status" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:commandlink styleClass="btn" id="toggleReadEdit"  value="Toggle Read\Edit Mode" action="{!toggleReadyOnlyMode}" rerender="mainForm" />
+                </apex:pageBlockSectionItem>
+            </apex:pageblockSection>
+            </apex:pageBlock>
+            <apex:pageBlock id="mainBlock" rendered="{!!isReadOnly}" >
+           
+                <c:PageBlockTableEnhancer targetPbTableIds="HPCTable" paginate="true" enableExport="false" defaultPageSize="50" pageSizeOptions="5,10,25,50,100,1000" />    
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!save}" value="Save" reRender="mainBlock" status="status" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="1">
+                
+                <apex:pageBlockTable id="HPCTable" value="{!HPCaseList}" var="case">
+                    
+                    <apex:column headerValue="Case Name" width="6%">
+                      
+                        <apex:outputLink target="_blank" value="/{!case.Id}" >{!case.Name}</apex:outputLink>
+                        
+                    </apex:column>
+                    <apex:column headerValue="Filing Date" width="6%" >
+                        <apex:outputField value="{!case.Filing_Date__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Disc. Due" width="6%" >
+                        <apex:outputField value="{!case.Discovery_Deadline__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Case Type" width="6%">
+                        <apex:outputField value="{!case.Case_Type__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Law Firms" width="20%" >
+                        <apex:outputText >{!caseFirmsMap[case.Id]}</apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="Parties" width="20%" >
+                      
+                        <apex:outputText >{!casePartiesMap[case.Id]}</apex:outputText>
+                      
+                    </apex:column>
+                    <apex:column headerValue="Follow Up Date" width="8%" >
+                        <apex:inputField value="{!case.Followup_Date__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Commission" width="8%" >
+                        <apex:outputField value="{!case.Commission__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Notes" width="20%" >
+                        <apex:inputtextArea value="{!case.Notes__c}" rows="7"  cols="25"  />
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+            <!-- Ready Only Version -->
+            
+            <apex:pageBlock id="mainBlockReadyOnly" rendered="{!isReadOnly}">
+           
+                <c:PageBlockTableEnhancer targetPbTableIds="HPCTableReadOnly" paginate="true" enableExport="false" defaultPageSize="50" pageSizeOptions="5,10,25,50,100,1000" />    
+              
+                <apex:pageBlockSection columns="1">
+                <apex:pageBlockTable id="HPCTableReadOnly" value="{!HPCaseList}" var="case">
+                    
+                    <apex:column headerValue="Case Name" width="6%">
+                        <apex:outputLink target="_blank" value="/{!case.Id}" >{!case.Name}</apex:outputLink>
+                        
+                    </apex:column>
+                    <apex:column headerValue="Filing Date" width="6%" >
+                        <apex:outputField value="{!case.Filing_Date__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Disc. Due" width="6%" >
+                        <apex:outputField value="{!case.Discovery_Deadline__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Case Type" width="6%">
+                        <apex:outputField value="{!case.Case_Type__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Law Firms" width="20%" >
+                        <apex:outputText >{!caseFirmsMap[case.Id]}</apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="Parties" width="20%" >
+                      
+                        <apex:outputText >{!casePartiesMap[case.Id]}</apex:outputText>
+                      
+                    </apex:column>
+                    <apex:column headerValue="Follow Up Date" width="8%" >
+                        <apex:outputField value="{!case.Followup_Date__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Commission" width="8%" >
+                        <apex:outputField value="{!case.Commission__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Notes" width="20%" >
+                        <apex:outputField value="{!case.Notes__c}" />
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock> 
+        
+    </apex:form>
+        
+</apex:page>

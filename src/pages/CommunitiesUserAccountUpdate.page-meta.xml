@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>36.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>User-based Account Update : 
+User-based Account Update
+Stop following this work to stop receiving updates in your feed.FollowingStop following this work to stop receiving updates in your feed.
+DESCRIPTION
+Users should have the ability to update their first name, last name, phone number, (contact) business mailing address, password, (contact) standing orders and timezone. Let&apos;s rename the report icon to &quot;Edit Account&quot; to serve this purpose.</description>
+    <label>CommunitiesUserAccountUpdate</label>
+</ApexPage>

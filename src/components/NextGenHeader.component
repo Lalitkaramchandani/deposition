@@ -1,0 +1,21 @@
+<apex:component >
+  
+   <div id="top_container">
+    <div id="logo">
+        <a href="http://www.nextgenreporting.com/">
+            <img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/NextGenReporting-Logo.png')}" width="395" height="77" class="png" border="0" />
+        </a>
+    </div>
+    <div id="top_navigation">
+        <a href="http://www.nextgenreporting.com/contact">CONTACT US</a>
+        <div id="navigation">
+            <li class="page_item page-item-4"><a href="http://www.nextgenreporting.com/services/">Services</a></li>
+            <li class="page_item page-item-45 current_page_ancestor current_page_parent"><a href="http://www.nextgenreporting.com/company/">Company</a></li>
+            <li class="page_item page-item-53"><a href="http://www.nextgenreporting.com/schedule/">Schedule</a></li>
+            <li class="page_item page-item-56"><a href="http://www.nextgenreporting.com/video/">Join an Event</a></li>
+            <li class="page_item page-item-60"><a href="http://www.nextgenreporting.com/repository/">Repository</a></li>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+</apex:component>

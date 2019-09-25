@@ -1,0 +1,20 @@
+<apex:page standardController="Invoice__c">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+      var mostRecentInvoiceAttachmentId = '';
+      <apex:repeat value="{!Invoice__c.Attachments}" var="attachment">
+           mostRecentInvoiceAttachmentId = '{!attachment.id}';
+      </apex:repeat>
+      if(mostRecentInvoiceAttachmentId != ''){
+          window.location.href ='/servlet/servlet.FileDownload?file='+mostRecentInvoiceAttachmentId;
+      }
+      $(function() {
+        if(mostRecentInvoiceAttachmentId == ''){
+            $(".pnlMessage").show();
+        }
+      });
+  </script>
+  <apex:outputPanel styleClass="pnlMessage" style="display:none;">
+       <apex:pageMessage summary="No records found of attachment for invoice." severity="Error" strength="3" />
+  </apex:outputPanel>
+</apex:page>

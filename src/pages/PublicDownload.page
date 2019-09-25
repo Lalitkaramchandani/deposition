@@ -1,0 +1,172 @@
+<apex:page cache="false" showHeader="false" title="Public Download" standardController="AWS_S3_Object__c" sidebar="false" extensions="GoogleDriveAuthenticationCntrl">
+   <style>
+     #upload-percentage{
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin-left:-25px;
+            margin-top:-100px;
+            width:150px;
+            height:100px;
+            border-radius: 50%;
+            background:#297ab8;
+            color:#fff;
+            text-align:center;
+            line-height:80px;
+            font-weight:bold;
+            font-size:15px;
+            display:none;
+        }
+        
+        
+        .flash {
+            -webkit-animation-name: flash;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-timing-function: linear;
+            -webkit-animation-iteration-count: infinite;
+        
+            -moz-animation-name: flash;
+            -moz-animation-duration: 1s;
+            -moz-animation-timing-function: linear;
+            -moz-animation-iteration-count: infinite;
+        
+            animation-name: flash;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        
+        @-moz-keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        
+        @-webkit-keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        
+        @keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        #drive-box{
+            padding:10px;
+            margin:10px;   
+            width:98%;
+            display:none;
+            position:relative;
+            min-height:150px;
+            margin-top:60px;
+        }
+        /***************** END MISC ************************/
+        
+        .fade.in {
+            opacity: 1;
+        }
+       .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+  </style>
+  
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script>
+        var zipFileName = "{!AWS_S3_Object__c.Name}";
+        var accessToken= '';
+         function update_progress(e){
+           if (e.lengthComputable){
+              var percentage = Math.round((e.loaded/e.total)*100);
+              showProgressPercentage(percentage);
+              console.log("percent " + percentage + '%' );
+          }
+          else 
+          {
+            console.log("Unable to compute progress information since the total size is unknown");
+          }
+          
+        }
+        
+        
+        //show upload progress
+        function showProgressPercentage(percentageValue) {
+            if ($("#upload-percentage").length == 0) {
+                $("#drive-box").prepend("<div id='upload-percentage' class='flash'></div>");
+            }
+            if (!$("#upload-percentage").is(":visible")) {
+                $("#upload-percentage").show(1000);
+            }
+            $("#upload-percentage").html(percentageValue.toString() + "%");
+        }
+        
+        $( function() {
+            //showProgressPercentage(0);
+            if("{!AWS_S3_Object__c.Create_Shareable_Link__c}" =="true"){
+                $("#drive-box").show();
+                $("#upload-percentage").show();
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getAccessToken}',
+                     
+                    function(result, event){
+                        if (event.status) {
+                            var accessToken = result;
+                            
+                            Visualforce.remoting.Manager.invokeAction(
+                                    '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getFileInfo}',
+                                     'https://www.googleapis.com/drive/v2/files/{!AWS_S3_Object__c.File_Id__c}',
+                                     'Bearer ' + accessToken,
+                                    function(result2, event){
+                                        if (event.status) {
+                                             console.log(accessToken);
+                                             result2 =  result2.replace(/amp;/g, '');
+                                             var url = result2 + '&access_token=' + accessToken;
+                                             
+                                             $('<a></a>').attr('download', "{!AWS_S3_Object__c.File_Name__c}").attr('href', url).appendTo(document.body)[0].click();
+                                             $("#drive-box").hide();
+                                             $("#upload-percentage").hide(); 
+                                             Visualforce.remoting.Manager.invokeAction(
+                                             '{!$RemoteAction.GoogleDriveAuthenticationCntrl.updateFileDownloadLog}',
+                                             '{!AWS_S3_Object__c.Id}',
+                                             function(result3, event){
+                                                 
+                                             });  
+                                        }
+                                     }, 
+                        {escape: true}
+                               );
+                               
+                        } 
+                    }, 
+                    {escape: true}
+                );
+            }
+        });
+       function completeDownload(){
+           $("#drive-box").hide();
+           $("#upload-percentage").hide();                        
+       }
+    </script>
+    <div class="alert alert-danger {!AWS_S3_Object__c.Create_Shareable_Link__c}" style="{!IF(AWS_S3_Object__c.Create_Shareable_Link__c,'display:none !important;','')}">
+      <strong>Error: </strong> You don't have download access to this file.
+    </div>    
+     <a  href="data:application/octet-stream" id="textLink" download="{!AWS_S3_Object__c.File_Name__C}"></a>
+    <br/><br/>
+   <!--- <a href="/{!AWS_S3_Object__c.Deposition__c}" >Go Back To Deposition</a>
+    ---><br/>
+    <br/>
+    <div id="drive-box">
+       <div id='upload-percentage' class='flash'>Downloading...</div>
+   </div>
+   
+   
+</apex:page>

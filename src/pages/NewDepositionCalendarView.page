@@ -1,0 +1,262 @@
+<apex:page title="Deposition Calendar View" controller="DepositionCalendarViewCntrl" sidebar="true" tabStyle="Deposition__c">
+    <head>
+        <meta charset="utf-8" />
+        <link href="{!URLFOR($Resource.fullcalendar,'fullcalendar.css')}" rel="stylesheet" />
+        <link href="{!URLFOR($Resource.fullcalendar,'scheduler.min.css')}" rel="stylesheet" />
+        <link href="{!URLFOR($Resource.fullcalendar,'fullcalendar.print.css')}" rel='stylesheet' media='print' />
+        <script src="{!URLFOR($Resource.fullcalendar,'/lib/moment.min.js')}"></script>
+        
+        <script src="{!URLFOR($Resource.fullcalendar,'fullcalendar.min.js')}"></script>
+        <script src="{!URLFOR($Resource.fullcalendar,'scheduler.min.js')}"></script>
+        
+        <link rel="stylesheet" href="{!URLFOR($Resource.fullcalendar,'bootstrap/css/bootstrap.min.css')}"/>
+        <script src="{!URLFOR($Resource.fullcalendar,'bootstrap/js/bootstrap.min.js')}"></script>
+        
+        <link href="{!URLFOR($Resource.fullcalendar,'jquery/jquery-ui.css')}" rel="stylesheet"/>
+        <!--<script src="{!URLFOR($Resource.fullcalendar,'jquery/external/jquery/jquery.js')}"></script>-->
+        <script src="{!URLFOR($Resource.fullcalendar,'jquery/jquery-ui.js')}"></script>
+        <script>
+            jQuery(document).ready(function() {
+                getDepositionsEventData('','');
+                
+            });
+            
+            
+            function getDepositionsEventData(calendarStartDate,calendarEndDate) {   
+                jQuery("#load-statusForCalendar").show();                     // records are retrieved from soql database
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.DepositionCalendarViewCntrl.eventdata}',calendarStartDate,calendarEndDate,'{!selectedType}','{!$CurrentPage.Parameters.firm}',  // controller and method names
+                    function(result, event){
+                        if (event.status) {
+                            evt =  JSON.parse(result);
+                            console.log(evt);
+                            jQuery('#calendar').fullCalendar({
+                                theme: true,
+                                header: {
+                                    left: 'prev,next today',
+                                    center: 'title',
+                                    right: 'month'
+                                },
+                                eventClick: function(calEvent, jsEvent, view) {
+
+                                    var dt = new Date(calEvent.start._i);
+                                   
+                                    var day = dt.getDate();
+                                    var monthIndex = dt.getMonth()+1;
+                                    var year = dt.getFullYear();
+                                    fetchDepositions(monthIndex +'/'+day+'/'+year ,calEvent.title.split(' (')[0]);
+                                    
+                                },
+                                dayClick: function(date, jsEvent, view) {
+                                    jQuery('.selectedCell').removeClass('selectedCell');
+                                    jQuery(this).addClass('selectedCell');
+                                    
+                                    fetchDepositions(date.format('MM/DD/YYYY'),'{!$CurrentPage.Parameters.firm}');
+                                    
+                                },
+                                 viewRender: function(view, element) {
+                                    //getDepositionsEventData();
+                                    
+                                    
+                                    var dt = new Date(jQuery('#calendar').fullCalendar('getView').start._d);
+                                   
+                                    var day = dt.getDate();
+                                    var monthIndex = dt.getMonth()+1;
+                                    var year = dt.getFullYear();
+                                    
+                                    var startDate = monthIndex +'/'+day+'/'+year;
+                                    dt = new Date(jQuery('#calendar').fullCalendar('getView').end._d);
+                                   
+                                    day = dt.getDate();
+                                    monthIndex = dt.getMonth()+1;
+                                    year = dt.getFullYear();
+                                    var endDate = monthIndex +'/'+day+'/'+year;
+                                    
+                                    console.log(startDate );
+                                    console.log(endDate );
+                                    getDepositionsEventData(startDate ,endDate );
+                                    
+                                },events: evt
+                            });
+                            
+                        } else if (event.type === 'exception') { 
+                            console.log(event.message);
+                        } else {
+                            console.log(event.message);
+                        }
+                        jQuery("#load-statusForCalendar").hide();
+                        jQuery('#calendar').fullCalendar('removeEvents');
+                        jQuery('#calendar').fullCalendar('addEventSource', evt);         
+                        jQuery('#calendar').fullCalendar('rerenderEvents' );
+                    }, 
+                    {escape: false}
+                );
+            }
+            function goToStandardView(){
+                window.location.href ="/a06/o?nooverride=1";
+            }
+            
+            function filterOnVIPLevel(selectedType){
+                var firmname =  '{!$CurrentPage.Parameters.firm}';
+                if(firmname != undefined && firmname != '')
+                    firmname = firmname.replace('&','%26');
+                window.location.href ="/apex/DepositionCalendarView?selectedType="+selectedType+'&firm='+firmname ;
+            }   
+            
+            function showAllJobs(){
+                window.location.href ="/apex/NewDepositionCalendarView";
+            }          
+        </script>
+    <style>
+    
+       .fc-month-button{
+           display:none;
+       }
+    
+        #calendar {
+            margin: 2% !important;
+            max-width: 75%;
+            margin: 0 auto;
+        }
+        .ui-state-highlight{
+            background: none !important;
+            background-color:green !important;
+        }
+        body {
+            font-size: 12px;
+        }
+        .fc-week{
+            height:60px !important;
+        }
+        .dataTables_wrapper .DTTT_button{
+            margin-right: 2px !important;
+        } 
+        .dataTables_filter {
+            float: left !important;
+            margin-left: 5% !important;
+        }
+        .messageCell h4 {
+            margin :0px !important;
+        }
+        .selectedCell{
+            background: rebeccapurple;;
+        }
+         .sidebarCell h2 {
+            font-size: 13px !important;
+        }
+    </style>
+   </head>
+    <div id="load-statusForCalendar">
+        <div class="overlay"></div>
+        <div class="status">
+            <img src="/img/loading24.gif" />
+            <span>Please wait...</span>
+        </div>
+    </div>
+   <c:ActionStatus ></c:ActionStatus>
+    <div onclick="goToStandardView();" style="margin-left: 2%;" class="nx-pagetitle-action ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button"><span class="ui-button-icon-primary ui-icon sk-icon-listview sk-icon inline"></span><span class="ui-button-text">Go To Standard View</span></div>
+    <div onclick="filterOnVIPLevel('{!IF(selectedType=='Show all Jobs','VIP Only','Show all Jobs')}');" style="margin-left: 2%;" class="nx-pagetitle-action ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button">
+        <span class="ui-button-icon-primary ui-icon sk-icon-listview sk-icon inline"></span>
+        <span class="ui-button-text">{!IF(selectedType=='Show all Jobs','VIP Only','Show all Jobs')}</span>
+    </div>
+    <button style="margin-left: 2%;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" onclick="showAllJobs();return false;">
+        <span class="ui-button-text">Show All Jobs</span>
+    </button>
+   <div id='calendar'></div>
+   
+    <br/><br/>
+    <apex:form id="frm">
+        
+        <c:PageBlockTableEnhancer targetPbTableIds="Depostions" paginate="true" enableExport="false" defaultPageSize="100" pageSizeOptions="5,10,20,30,40,50,100"/>    
+        
+        <apex:actionFunction name="fetchDepositions" action="{!fetchDayDepositions}"  reRender="frm" status="status">
+            <apex:param assignTo="{!selectedDate}" name="argu1" value=""/>
+            <apex:param assignTo="{!selctedBrand}" name="argu2" value=""/>
+        </apex:actionFunction>
+        
+        <apex:actionFunction name="saveDepositions" action="{!saveDepositions}" reRender="frm" status="status"/>
+        
+        <apex:pageBlock title="Depositions" >
+            <center style="display:{!IF(lstDepositions.size>0,'block;','none;')}">
+                    
+                    <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" onclick="saveDepositions();return false;">
+                        <span class="ui-button-text">Save Changes</span>
+                    </button>
+                    
+             </center>
+             <apex:pageMessages ></apex:pageMessages>
+            
+            <apex:pageBlockTable value="{!lstDepositions}" var="depostion" id="Depostions" >
+                
+                 <apex:column headerValue="Brand">
+                    <apex:outputfield value="{!depostion.Primary_Court_Reporting_Firm__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                <!---<apex:column headerValue="VIP">
+                    <apex:outputfield value="{!depostion.VIP_Level__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>--->
+                <apex:column headerValue="Deposition Time">
+                    <apex:outputfield value="{!depostion.Deposition_Time__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headerValue="Estimated Duration">
+                    <apex:outputfield value="{!depostion.Estimated_Duration__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headerValue="Case Caption">
+                    <apex:outputfield value="{!depostion.Case_Name__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headerValue="Hiring Firm">
+                    <apex:outputfield value="{!depostion.Hiring_Firm__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                
+               <apex:column headerValue="Event Location">
+                    <apex:outputfield value="{!depostion.Event_Location__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+               
+                <apex:column headerValue="Deposition Services">
+                    <apex:outputfield value="{!depostion.Deposition_Services__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                 <apex:column headerValue="Expedite Level">
+                    <apex:outputfield value="{!depostion.Expedite__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                
+                <apex:column headerValue="Reporter Email">
+                    <apex:outputfield value="{!depostion.CR_Email_Address__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+               
+                <apex:column headerValue="Video/Tech Email">
+                    <apex:outputfield value="{!depostion.Videographer_Email_Address__c}">
+                        <apex:inlineEditSupport event="ondblClick"  />
+                    </apex:outputField>
+                </apex:column>
+                
+               
+                
+                
+                 <apex:column headerValue="Job #" >
+                    <a href="/{!depostion.id}" target="_blank">{!depostion.Name}</a>
+                </apex:column>
+                
+            </apex:pageBlockTable> 
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

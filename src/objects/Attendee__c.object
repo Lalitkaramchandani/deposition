@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Owner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Owner.FirstName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Arrival_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Arrival Time</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>COD_Warning__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( Contact__r.Account.COD_Warning__c = TRUE, IMAGE(&quot;http://upload.wikimedia.org/wikipedia/commons/1/19/Portrait_of_Cod.jpg&quot;,&quot;COD Warning&quot;, 260, 350),&quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>COD Warning</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cancellation_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Cancellation_Percentage__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Cancellation Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cancelled__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Cancelled__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cancelled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Checkbox_1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Checkbox 1</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Checkbox_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Checkbox 2</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName+&apos; &apos;+ Contact__r.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Testing_Notes__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Testing_Notes__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Testing Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>Deposition_Roles</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>true</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Court_Reporter__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Court Reporter</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Contact.Account.Industry</field>
+                <operation>equals</operation>
+                <value>Court Reporting</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Attendees (Court Reporter)</relationshipLabel>
+        <relationshipName>Attendees</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Create_Invoice__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/apex/createInvoice?id=&quot;+ Id , &quot;Create Invoice&quot;)</formula>
+        <label>Create Invoice</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_of_Deposition__c</fullName>
+        <externalId>false</externalId>
+        <label>Date of Deposition</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Departure_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Departure Time</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Deposition_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Deposition_Date__c</formula>
+        <label>Deposition Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Deposition_Last_Modified_By__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Deposition Last Modified By</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Attendees</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Deposition_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Deposition Location</label>
+        <referenceTo>Deposition_Location__c</referenceTo>
+        <relationshipLabel>Attendees</relationshipLabel>
+        <relationshipName>Attendees</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Deposition_Page_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Page_Count__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Deposition Page Count</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deposition_Source__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Source__c</formula>
+        <label>Deposition Source</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deposition_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Deposition__r.Deposition_Status__c)</formula>
+        <label>Deposition Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deposition__c</fullName>
+        <externalId>false</externalId>
+        <label>Deposition</label>
+        <referenceTo>Deposition__c</referenceTo>
+        <relationshipName>Deposition_Roles</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>true</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Email_Parent_Account_Owner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Parent.Owner.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Email Parent Account Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_of_Account_Owner1__c</fullName>
+        <externalId>false</externalId>
+        <label>Email of Account Owner</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_of_Parent_Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Email of Parent Account Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Location__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(Deposition_Location__r.Location_Address__c,  Deposition__r.Event_Location__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Event Location</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Financial_Notes__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Financial_Notes__c &amp; Contact__r.Account.Financial_Notes__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Financial Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>First Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hard_Copy_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Hard_Copy__c = TRUE
+ || 
+Contact__r.Hard_Copy__c  = TRUE</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Hard Copy Account</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Industry__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact__r.Account.Industry)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Industry</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Received</fullName>
+                    <default>true</default>
+                    <label>Not Received</label>
+                </value>
+                <value>
+                    <fullName>Received</fullName>
+                    <default>false</default>
+                    <label>Received</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Paid</fullName>
+                    <default>false</default>
+                    <label>Paid</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Is_locked_to_Create_Invoice__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is locked to Create Invoice</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LatestDepositionFlag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>LatestDepositionFlag</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Likelihood_of_Attendee_Cancelling__c</fullName>
+        <externalId>false</externalId>
+        <label>Likelihood of Attendee Cancelling</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Likelihood_of_Primary_Atty_Cancelling__c</fullName>
+        <externalId>false</externalId>
+        <label>Likelihood of Primary Atty Cancelling</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Location Contact</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Locked_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Locked By</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mileage__c</fullName>
+        <externalId>false</externalId>
+        <label>Mileage</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Most_Recent_Followup__c</fullName>
+        <externalId>false</externalId>
+        <label>Most Recent Followup</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>32768</length>
+        <trackHistory>true</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>On_site_Check_In__c</fullName>
+        <externalId>false</externalId>
+        <label>On-site Check In</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Parent.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Parent Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parking_Expenses__c</fullName>
+        <externalId>false</externalId>
+        <label>Parking/Expenses</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>PastTime_50Min__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOW() - (55/1440)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>PastTime 50Min</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Attorney__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Primary Attorney</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Recap_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Recap Notes</label>
+        <length>1000</length>
+        <trackHistory>true</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Remove_Reporter__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox to completely remove a reporter from a deposition.</description>
+        <externalId>false</externalId>
+        <label>Remove Reporter</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Reporter_EOD_Check_In__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Reporter EOD Check In</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Attorney</fullName>
+                    <default>false</default>
+                    <label>Attorney</label>
+                </value>
+                <value>
+                    <fullName>Claims Manager</fullName>
+                    <default>false</default>
+                    <label>Claims Manager</label>
+                </value>
+                <value>
+                    <fullName>Corporate Client</fullName>
+                    <default>false</default>
+                    <label>Corporate Client</label>
+                </value>
+                <value>
+                    <fullName>Court Reporter</fullName>
+                    <default>false</default>
+                    <label>Court Reporter</label>
+                </value>
+                <value>
+                    <fullName>Expert</fullName>
+                    <default>false</default>
+                    <label>Expert</label>
+                </value>
+                <value>
+                    <fullName>Interpreter</fullName>
+                    <default>false</default>
+                    <label>Interpreter</label>
+                </value>
+                <value>
+                    <fullName>IT</fullName>
+                    <default>false</default>
+                    <label>IT</label>
+                </value>
+                <value>
+                    <fullName>Monitor</fullName>
+                    <default>false</default>
+                    <label>Monitor</label>
+                </value>
+                <value>
+                    <fullName>Process Server</fullName>
+                    <default>false</default>
+                    <label>Process Server</label>
+                </value>
+                <value>
+                    <fullName>Scheduler</fullName>
+                    <default>false</default>
+                    <label>Scheduler</label>
+                </value>
+                <value>
+                    <fullName>Tester</fullName>
+                    <default>false</default>
+                    <label>Tester</label>
+                </value>
+                <value>
+                    <fullName>Videographer/Technician</fullName>
+                    <default>false</default>
+                    <label>Videographer/Technician</label>
+                </value>
+                <value>
+                    <fullName>Paralegal</fullName>
+                    <default>false</default>
+                    <label>Paralegal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Same_Account_Name_as_Hiring_Attorney__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account_Name__c =  Deposition__r.Hiring_Firm__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Same Account Name as Hiring Attorney</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Scheduling_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Scheduling Contact</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Send_Multiple_Jobs_On_Same_Day__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send Multiple Jobs On Same Day</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Standing_Order__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Standing_Orders__c &amp;  Contact__r.Account.Standing_Orders__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Standing Order</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Standing_Orders_del__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE( Contact__r.Standing_Orders__c , &quot;&quot;)
+&amp;
+ BLANKVALUE( Contact__r.Account.Standing_Orders__c , &quot;&quot;)</formula>
+        <label>Standing Orders</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(Departure_Time__c - Arrival_Time__c)*24</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Timestamp_of_Recap__c</fullName>
+        <externalId>false</externalId>
+        <label>Timestamp of Recap</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Total_Invoice_Amount__c</fullName>
+        <description>Total invoice amount</description>
+        <externalId>false</externalId>
+        <label>Total Invoice Amount</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Transcript_Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Transcript_Due_From_Reporter_Computed__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Transcript Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Turn_In_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>$Setup.URL_Setting__c.Site_URL__c&amp;&quot;/DepositionTurnIn?attendeeId=&quot;&amp;Id&amp;&quot;&amp;id=&quot;&amp;Deposition__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Turn-In Link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VIP_Level__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBlank(TEXT(Contact__r.VIP_Level__c)),Text(Contact__r.Account.VIP_Level__c),Text(Contact__r.VIP_Level__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>VIP Level</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Videographer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Videographer</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Contact.Account.Industry</field>
+                <operation>equals</operation>
+                <value>Court Reporting, Videography</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Attendees (Videographer)</relationshipLabel>
+        <relationshipName>Attendees1</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ZK_Phone__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(Contact__r.Phone),  Contact__r.Alt_Phone__c, &quot;8882671200&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ZK Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZK_Reference_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;SE&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ZK Reference Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZK_Reference_Value__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ZK Reference Value</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZK_Return_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;Exhibits&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ZK Return Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZK_Return_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot;8&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ZK Return Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Attendee</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Contact_Name__c</columns>
+        <columns>Deposition__c</columns>
+        <columns>Date_of_Deposition__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Standing_Orders</fullName>
+        <columns>NAME</columns>
+        <columns>Standing_Orders_del__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Standing_Orders_del__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Standing Orders</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{000}</displayFormat>
+        <label>Attendee ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Attendees</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>First_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Role__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Deposition__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Deposition_Date__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Deposition_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Deposition__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Create_Outbound_UPS_Shipment</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Create Outbound UPS Shipment</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>https://nextgen--zkmulti.na94.visual.force.com/apex/Wizard
+?CF00N2K00000B4uhF={!Attendee__c.Name}
+&amp;CF00N2K00000B4uhF_lkid={!Attendee__c.Id}
+&amp;scontrolCaching=1
+&amp;retURL=%2F{!Attendee__c.Id}
+&amp;sfdc.override=1</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Return_UPS_Shipment</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Create Return UPS Shipment</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>https://nextgen--zkmulti.na94.visual.force.com/apex/Wizard
+?CF00N2K00000B4uhK={!Attendee__c.Name}
+&amp;CF00N2K00000B4uhK_lkid={!Attendee__c.Id}
+&amp;scontrolCaching=1
+&amp;retURL=%2F{!Attendee__c.Id}
+&amp;sfdc.override=1</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Attendee</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Attendee</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/a07/e?CF00NA0000009iYmS={!Deposition_Location__c.Name}&amp;CF00NA0000009iYmS_lkid={!Deposition_Location__c.Id}&amp;CF00NA00000071AnC={!Deposition__c.Name}&amp;CF00NA00000071AnC_lkid={!Deposition__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>test_Conga</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>test Conga</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+??SessionId={!API.Session_ID}
+&amp;ServerUrl={!API.Partner_Server_URL_370}
+&amp;id={!Attendee__c.DepositionId__c}
+&amp;TemplateId=a1z2K0000011Rtw
+&amp;EmailTemplateId=00XA0000001f9FhMAI
+&amp;EmailToId={!Attendee__c.ContactId__c}
+&amp;QueryId=a1r2K000007ObAX?pv0=a072K00000hzw7I
+&amp;defaultPDF=1</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,75 @@
+<apex:page standardstylesheets="false" cache="false" showHeader="false" sidebar="false" 
+     controller="UploadFilesController" title="Upload Files Deposition" action="{!initForUploadPageWithoutTemplate}">
+     <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css" />
+     <style>
+         body{
+                background: white !important;
+            }
+         textarea{
+         color: black;
+         }
+     </style>
+<apex:form >
+            <h2 class="title">UPLOAD FILES</h2>
+            <apex:pageMessages />
+            <apex:outputPanel layout="block" rendered="{!isSuccess}">
+              <b>File has been uploaded successfully</b> <br/>
+            </apex:outputPanel>
+            <table cellspacing="0" cellpadding="10" border="0">
+            <apex:repeat value="{!$ObjectType.Upload_Files__c.FieldSets.UploadBatchesFields}" var="f"> 
+                  <tr>
+                    <td style="vertical-align: middle;padding:4px;" valign="middle"> <apex:outputText value="{!f.Label}" /></td>
+                    <td style="vertical-align: middle;padding:4px;" valign="middle">
+                       <apex:inputField value="{!uploadFiles[f.fieldPath]}" 
+                      required="{!OR(f.required, f.dbrequired)}"/>
+                    </td>
+                  </tr>
+                 
+               </apex:repeat>
+              
+              <tr>
+                  <td colspan="2">
+                      <table cellspacing="0" cellpadding="2" height="100%" width="350" class="table_background">
+                        <tbody><tr><td></td></tr>
+                        <tr>
+                            <td>
+                                <div id="mainbody">
+                                    <table cellspacing="0" cellpadding="2" class="table_background">
+                                    
+                                    <tbody>
+                                        <!---<apex:variable var="i" value="{!1}"/>
+                                        <apex:repeat value="{!lstUploadAttachments}" var="attachmentModel">
+                                            <tr>
+                                            
+                                                <td class="standard">
+                                                    File  {!i}
+                                                    <apex:inputFile fileSize="{!attachmentModel.FileSize}" fileName="{!attachmentModel.attach.name}" value="{!attachmentModel.attach.Body}" onkeypress="this.click(); return false;" styleclass="input" />                                
+                                                  
+                                                    <apex:variable var="i" value="{!i+1}"/>
+                                                    
+                                                </td>
+                                                <td class="standard">
+                                                    File  Type 
+                                                    <apex:inputField value="{!attachmentModel.AWSS3Obj.File_Type__c}"/>
+                                                </td>
+                                            </tr> 
+                                        </apex:repeat>--->
+                                          
+                                        </tbody>
+                                     </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><td></td></tr>
+                        </tbody></table>
+                  </td>
+              </tr>
+              <tr>
+                <td style="vertical-align: middle;padding:4px;" valign="middle">&nbsp;</td>
+                <td style="vertical-align: middle;padding:4px;" valign="middle">
+                 <apex:commandButton value="Next" action="{!SaveFiles}" />
+                </td>
+              </tr>
+            </table>
+            </apex:form>
+</apex:page>

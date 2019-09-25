@@ -1,0 +1,6 @@
+<apex:page showHeader="false" title="{!$Label.site.authorization_required}" id="Unauthorized" cache="false">
+  <script>
+      window.location.href= '/apex/CommunitiesLogin';
+  </script>
+              
+</apex:page>

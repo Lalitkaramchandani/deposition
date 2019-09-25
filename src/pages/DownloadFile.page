@@ -1,0 +1,7 @@
+<apex:page standardController="AWS_S3_Object__c">
+     <br/><br/>
+    <a  href="/{!AWS_S3_Object__c.id}" >Go Back To File
+    </a>
+     <iframe frameborder="0" style="height: 0;width: 0;" src="https://docs.google.com/a/nextgenreporting.com/uc?id={!AWS_S3_Object__c.File_Id__c}&export=download" />
+   
+</apex:page>

@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Formal or informal agreements/relationships with clients - with a value of over $100k annually.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Read</externalSharingModel>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Client Deals</relationshipLabel>
+        <relationshipName>Pipeline_Items</relationshipName>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Actual_Close_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the date that the client made their final decision re the deal/relationship/case... whether we won - or lost.</inlineHelpText>
+        <label>Actual Close Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Annualized_Revenue__c</fullName>
+        <externalId>false</externalId>
+        <label>Estimated Annual Revenue</label>
+        <precision>8</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Anticipated_Close_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the date that we expect the client to make a final decision re the deal/relationship/case.</inlineHelpText>
+        <label>Anticipated Close Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Current_Vendor__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If we know who the client/prospect currently uses, select the name from the list provided.</inlineHelpText>
+        <label>Current Vendor</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Competitors</valueSetName>
+        </valueSet>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Deal_Duration__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Select from the dropdown list.</inlineHelpText>
+        <label>Deal Duration</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Year</fullName>
+                    <default>false</default>
+                    <label>1 Year</label>
+                </value>
+                <value>
+                    <fullName>2 Years</fullName>
+                    <default>false</default>
+                    <label>2 Years</label>
+                </value>
+                <value>
+                    <fullName>3 Years</fullName>
+                    <default>false</default>
+                    <label>3 Years</label>
+                </value>
+                <value>
+                    <fullName>4 Years</fullName>
+                    <default>false</default>
+                    <label>4 Years</label>
+                </value>
+                <value>
+                    <fullName>5 Years</fullName>
+                    <default>false</default>
+                    <label>5 Years</label>
+                </value>
+                <value>
+                    <fullName>Indefinite</fullName>
+                    <default>false</default>
+                    <label>Indefinite</label>
+                </value>
+                <value>
+                    <fullName>Not Yet known</fullName>
+                    <default>false</default>
+                    <label>Not Yet Known</label>
+                </value>
+                <value>
+                    <fullName>Duration of Specific Case</fullName>
+                    <default>false</default>
+                    <label>Duration of Specific Case</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Deal Description</label>
+        <length>1000</length>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Geography__c</fullName>
+        <externalId>false</externalId>
+        <label>Geography</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>true</default>
+                    <label>Domestic</label>
+                </value>
+                <value>
+                    <fullName>International</fullName>
+                    <default>false</default>
+                    <label>International</label>
+                </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>State Specific (see state in deal name)</fullName>
+                    <default>false</default>
+                    <label>State Specific (see state in deal name)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Nature_of_Deal__c</fullName>
+        <externalId>false</externalId>
+        <label>Nature of Deal</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Preferred Provider - Formal</fullName>
+                    <default>false</default>
+                    <label>Preferred Provider - Formal</label>
+                </value>
+                <value>
+                    <fullName>Exclusive Provider- Formal</fullName>
+                    <default>false</default>
+                    <label>Exclusive Provider - Formal</label>
+                </value>
+                <value>
+                    <fullName>Preferred Provider- Informal</fullName>
+                    <default>false</default>
+                    <label>Preferred Provider - Informal</label>
+                </value>
+                <value>
+                    <fullName>Exclusive Provider - Informal</fullName>
+                    <default>false</default>
+                    <label>Exclusive Provider - Informal</label>
+                </value>
+                <value>
+                    <fullName>Specific Case</fullName>
+                    <default>false</default>
+                    <label>Specific Case</label>
+                </value>
+                <value>
+                    <fullName>Managed Services Agreement</fullName>
+                    <default>false</default>
+                    <label>Managed Services Agreement</label>
+                </value>
+                <value>
+                    <fullName>Preferred Provider - Formal / Renewal</fullName>
+                    <default>false</default>
+                    <label>Preferred Provider - Formal / Renewal</label>
+                </value>
+                <value>
+                    <fullName>Exclusive Provider - Formal / Renewal</fullName>
+                    <default>false</default>
+                    <label>Exclusive Provider - Formal / Renewal</label>
+                </value>
+                <value>
+                    <fullName>Preferred Provider - Informal / Renewal</fullName>
+                    <default>false</default>
+                    <label>Preferred Provider - Informal / Renewal</label>
+                </value>
+                <value>
+                    <fullName>Exclusive Provider - Informal / Renewal</fullName>
+                    <default>false</default>
+                    <label>Exclusive Provider - Informal / Renewal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Next_Step__c</fullName>
+        <externalId>false</externalId>
+        <label>Next Step</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pipeline_Revenue__c</fullName>
+        <externalId>false</externalId>
+        <formula>Annualized_Revenue__c *  value( SUBSTITUTE(text(Probability__c), &apos;%&apos;, &apos;&apos;)  )/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>This field auto-calculates based on the Annual Revenue and Probability.</inlineHelpText>
+        <label>Pipeline Revenue</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Probability__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The likelihood, expressed as a percentage, that we will win this deal.  Change this field as the probability changes.</inlineHelpText>
+        <label>Probability</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Stage__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0%</fullName>
+                    <default>false</default>
+                    <label>0%</label>
+                </value>
+                <value>
+                    <fullName>10%</fullName>
+                    <default>false</default>
+                    <label>10%</label>
+                </value>
+                <value>
+                    <fullName>20%</fullName>
+                    <default>false</default>
+                    <label>20%</label>
+                </value>
+                <value>
+                    <fullName>30%</fullName>
+                    <default>false</default>
+                    <label>30%</label>
+                </value>
+                <value>
+                    <fullName>40%</fullName>
+                    <default>false</default>
+                    <label>40%</label>
+                </value>
+                <value>
+                    <fullName>50%</fullName>
+                    <default>false</default>
+                    <label>50%</label>
+                </value>
+                <value>
+                    <fullName>60%</fullName>
+                    <default>false</default>
+                    <label>60%</label>
+                </value>
+                <value>
+                    <fullName>70%</fullName>
+                    <default>false</default>
+                    <label>70%</label>
+                </value>
+                <value>
+                    <fullName>80%</fullName>
+                    <default>false</default>
+                    <label>80%</label>
+                </value>
+                <value>
+                    <fullName>90%</fullName>
+                    <default>false</default>
+                    <label>90%</label>
+                </value>
+                <value>
+                    <fullName>100%</fullName>
+                    <default>false</default>
+                    <label>100%</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>10%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>20%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>30%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>40%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>50%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>60%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>70%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>80%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <valueName>90%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prospecting</controllingFieldValue>
+                <controllingFieldValue>Identify Decision Makers</controllingFieldValue>
+                <controllingFieldValue>Needs Analysis</controllingFieldValue>
+                <controllingFieldValue>Proposal/Price Quote</controllingFieldValue>
+                <controllingFieldValue>Negotiation/Review</controllingFieldValue>
+                <controllingFieldValue>Closed/Won</controllingFieldValue>
+                <valueName>100%</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Closed/Lost</controllingFieldValue>
+                <valueName>0%</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Services__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Select all that apply.</inlineHelpText>
+        <label>Service(s)</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Reporting</fullName>
+                    <default>false</default>
+                    <label>Reporting</label>
+                </value>
+                <value>
+                    <fullName>Defense Records</fullName>
+                    <default>false</default>
+                    <label>Defense Records</label>
+                </value>
+                <value>
+                    <fullName>Plaintiff_Records</fullName>
+                    <default>false</default>
+                    <label>Plaintiff Records</label>
+                </value>
+                <value>
+                    <fullName>Workers_Comp_Records</fullName>
+                    <default>false</default>
+                    <label>Workers&apos; Comp Records</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Source</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Existing Client Relationship</fullName>
+                    <default>false</default>
+                    <label>Existing Client Relationship</label>
+                </value>
+                <value>
+                    <fullName>Non-client Existing Relationship</fullName>
+                    <default>false</default>
+                    <label>Non-client Existing Relationship</label>
+                </value>
+                <value>
+                    <fullName>Pure Prospecting</fullName>
+                    <default>false</default>
+                    <label>Pure Prospecting</label>
+                </value>
+                <value>
+                    <fullName>Inside Counsel Referral</fullName>
+                    <default>false</default>
+                    <label>Inside Counsel Referral</label>
+                </value>
+                <value>
+                    <fullName>Outside Counsel Referral</fullName>
+                    <default>false</default>
+                    <label>Outside Counsel Referral</label>
+                </value>
+                <value>
+                    <fullName>Website</fullName>
+                    <default>false</default>
+                    <label>Website</label>
+                </value>
+                <value>
+                    <fullName>Direct Mail</fullName>
+                    <default>false</default>
+                    <label>Direct Mail</label>
+                </value>
+                <value>
+                    <fullName>Trade Show</fullName>
+                    <default>false</default>
+                    <label>Trade Show</label>
+                </value>
+                <value>
+                    <fullName>Mass Email</fullName>
+                    <default>false</default>
+                    <label>Mass Email</label>
+                </value>
+                <value>
+                    <fullName>Legacy Client Deal</fullName>
+                    <default>false</default>
+                    <label>Legacy Client Deal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Stage__c</fullName>
+        <externalId>false</externalId>
+        <label>Stage</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prospecting</fullName>
+                    <default>false</default>
+                    <label>Prospecting</label>
+                </value>
+                <value>
+                    <fullName>Identify Decision Makers</fullName>
+                    <default>false</default>
+                    <label>Identify Decision Makers</label>
+                </value>
+                <value>
+                    <fullName>Needs Analysis</fullName>
+                    <default>false</default>
+                    <label>Needs Analysis</label>
+                </value>
+                <value>
+                    <fullName>Proposal/Price Quote</fullName>
+                    <default>false</default>
+                    <label>Proposal/Price Quote</label>
+                </value>
+                <value>
+                    <fullName>Negotiation/Review</fullName>
+                    <default>false</default>
+                    <label>Negotiation/Review</label>
+                </value>
+                <value>
+                    <fullName>Closed/Won</fullName>
+                    <default>false</default>
+                    <label>Closed/Won</label>
+                </value>
+                <value>
+                    <fullName>Closed/Lost</fullName>
+                    <default>false</default>
+                    <label>Closed/Lost</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>VIP_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>VIP Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>VIP-1</fullName>
+                    <default>false</default>
+                    <label>VIP-1</label>
+                </value>
+                <value>
+                    <fullName>VIP-2</fullName>
+                    <default>false</default>
+                    <label>VIP-2</label>
+                </value>
+                <value>
+                    <fullName>VIP-PA</fullName>
+                    <default>false</default>
+                    <label>VIP-PA</label>
+                </value>
+                <value>
+                    <fullName>VIP-TX</fullName>
+                    <default>false</default>
+                    <label>VIP-TX</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Winner__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For Closed-Lost deals, select the name of the winning competitor.</inlineHelpText>
+        <label>Lost Deal: Winning Competitor</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Competitors</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Won_Deal_Expiration__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The date that this newly closed/won deal with them expires.</inlineHelpText>
+        <label>Won Deal: Expiration Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Client Deals</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Nature_of_Deal__c</columns>
+        <columns>Services__c</columns>
+        <columns>Geography__c</columns>
+        <columns>Stage__c</columns>
+        <columns>Annualized_Revenue__c</columns>
+        <columns>Probability__c</columns>
+        <columns>Pipeline_Revenue__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Current_Client_Deals</fullName>
+        <columns>NAME</columns>
+        <columns>Actual_Close_Date__c</columns>
+        <columns>Account_Name__c</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>Nature_of_Deal__c</columns>
+        <columns>Services__c</columns>
+        <columns>Geography__c</columns>
+        <columns>VIP_Status__c</columns>
+        <columns>Deal_Duration__c</columns>
+        <columns>Won_Deal_Expiration__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Stage__c</field>
+            <operation>contains</operation>
+            <value>won</value>
+        </filters>
+        <label>All Current (WON) Deals</label>
+    </listViews>
+    <listViews>
+        <fullName>Current_Client_Deals_ER</fullName>
+        <columns>NAME</columns>
+        <columns>Actual_Close_Date__c</columns>
+        <columns>Account_Name__c</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>Nature_of_Deal__c</columns>
+        <columns>Services__c</columns>
+        <columns>Geography__c</columns>
+        <columns>VIP_Status__c</columns>
+        <columns>Deal_Duration__c</columns>
+        <columns>Won_Deal_Expiration__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Stage__c</field>
+            <operation>contains</operation>
+            <value>won</value>
+        </filters>
+        <filters>
+            <field>Nature_of_Deal__c</field>
+            <operation>equals</operation>
+            <value>Exclusive Provider- Formal,Exclusive Provider - Formal / Renewal</value>
+        </filters>
+        <filters>
+            <field>Services__c</field>
+            <operation>includes</operation>
+            <value>Reporting</value>
+        </filters>
+        <label>All Current (WON) Exclusive Reporting</label>
+    </listViews>
+    <listViews>
+        <fullName>Lost_Client_Deals</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Nature_of_Deal__c</columns>
+        <columns>Services__c</columns>
+        <columns>Geography__c</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Stage__c</field>
+            <operation>contains</operation>
+            <value>lost</value>
+        </filters>
+        <label>All Lost Deals</label>
+    </listViews>
+    <listViews>
+        <fullName>Open_Deals</fullName>
+        <columns>NAME</columns>
+        <columns>Anticipated_Close_Date__c</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Nature_of_Deal__c</columns>
+        <columns>Services__c</columns>
+        <columns>Geography__c</columns>
+        <columns>Stage__c</columns>
+        <columns>Annualized_Revenue__c</columns>
+        <columns>Probability__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Stage__c</field>
+            <operation>notContain</operation>
+            <value>LOST,WON</value>
+        </filters>
+        <label>All Open Deals</label>
+    </listViews>
+    <listViews>
+        <fullName>X2019_YTD_WON_DEALS</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Annualized_Revenue__c</columns>
+        <columns>Nature_of_Deal__c</columns>
+        <columns>Stage__c</columns>
+        <columns>Actual_Close_Date__c</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Stage__c</field>
+            <operation>equals</operation>
+            <value>Closed/Won</value>
+        </filters>
+        <filters>
+            <field>Actual_Close_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>1/1/2019</value>
+        </filters>
+        <label>2019 YTD &quot;Won&quot; Deals</label>
+    </listViews>
+    <nameField>
+        <label>Deal Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Client Deals</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>OWNER.FIRST_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OWNER.LAST_NAME</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>Close_Date_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL( Stage__c ,&quot;Closed/Won&quot;)  &amp;&amp; 
+ISBLANK( Actual_Close_Date__c )</errorConditionFormula>
+        <errorDisplayField>Actual_Close_Date__c</errorDisplayField>
+        <errorMessage>Please add the actual close date</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

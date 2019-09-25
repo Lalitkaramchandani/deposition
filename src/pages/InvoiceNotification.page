@@ -1,0 +1,52 @@
+<apex:page standardController="Invoice__c" title="Invoice {!Invoice__c.Name}" lightningStylesheets="true" extensions="InvoiceNotification_ext">
+   
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+ 
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+     <style>
+     .fade.in {
+        opacity: 1;
+     }
+     .alert-info {
+        color: #31708f;
+        background-color: #d9edf7;
+        border-color: #bce8f1;
+    }
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+ </style>   
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if({!Invoice__c.clone__c}){
+             $( "#dialog" ).dialog({
+             dialogClass: "alert",
+             modal:true
+             });
+            }
+            $("#dialog").on("dialogclose", function(event) {
+                resetClone();
+                
+            });
+        });
+       
+    </script>
+    <body>
+        
+        
+        <div id="dialog" style="{!IF(Invoice__c.Clone__c,'','display:none;')}"  class="alert alert-info fade in " title="Cloned Invoice!">
+            <strong>Info!</strong> This invoice has been cloned. Please update it with new information.
+        </div>
+        
+        <apex:detail subject="{!Invoice__c.Id}" relatedList="true" title="false" inlineEdit="true" id="invDetail"/> 
+        <apex:form >
+            <apex:actionFunction action="{!resetCloneFlag}" name="resetClone" immediate="true" id="resetCloneflag" reRender="invDetail"/>
+        </apex:form>
+    </body> 
+    
+</apex:page>

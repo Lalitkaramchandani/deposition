@@ -1,0 +1,113 @@
+<apex:page tabStyle="AWS_S3_Object__c" title="Granting File Access to Users" standardcontroller="Deposition__c" extensions="GrantingFileAccessToUsersExtn" action="{!init}">
+  <apex:sectionHeader title="Granting File Access " subtitle="To Users"/>
+  <script>
+       function selectAll(selectedValue){
+            var checkboxes = document.getElementsByClassName('tblChk');
+            var selected = [];
+            for (var i=0; i<checkboxes.length; i++) {
+                checkboxes[i].checked = selectedValue;
+            }
+            if(selectedValue )
+                document.getElementById('ChkAlllabel').innerHTML="Select none";
+            else
+                document.getElementById('ChkAlllabel').innerHTML="Select all";
+        }
+  </script>
+    <script type="text/javascript">
+        var j$ = jQuery.noConflict();
+    </script>
+    <style>
+        .multilist{
+            width:auto !important;
+        }
+    </style>
+ <apex:Form >
+     <apex:pageBlock >
+         <apex:variable var="counter" value="{!0}"/>
+         <div id="filesLoadStatus"  style="margin-left:40%;display:none;">
+             <div class="status" >
+                 <img src="/img/loading24.gif" />
+                 <span>Please Wait...</span>
+             </div>
+         </div>
+         <apex:outputPanel id="pnlMsg">
+             <apex:pageMessages ></apex:pageMessages>
+         </apex:outputPanel>
+         
+         <c:ActionStatus ></c:ActionStatus>
+          <c:PageBlockTableEnhancer targetPbTableIds="Files" paginate="true" enableExport="false" defaultPageSize="100" pageSizeOptions="10,25,50,100"/>    
+        
+         <apex:pageBlockButtons >
+             <apex:commandButton value="Grant Access" action="{!grantAccess}" reRender="pnlMsg,pnlRecordLink" status="status"/>
+             <!-- removing Save button as auto save functionality implemented -->
+             <!-- <apex:commandButton value="Save" action="{!Savefiles}" reRender="pnlMsg,pnlRecordLink" status="status"/> -->
+             <apex:commandButton value="Cancel" action="{!cancel}" reRender="pnlMsg" status="status"/>
+         </apex:pageBlockButtons>
+         <apex:pageBlockSection Title="Files" collapsible="false" columns="1">
+             <input onchange="selectAll(this.checked);" type="checkbox" id="checkAll"/><span id="ChkAlllabel">Select all</span>
+             <hr />
+             <apex:pageBlockTable value="{!lstFiles}" var="S3File" id="Files">
+                 <apex:column headerValue="Select">
+                     <apex:inputCheckbox value="{!S3File.isSelected}" styleClass="tblChk"/>
+                 </apex:column>
+                 <apex:column headerValue="File Name">
+                     <apex:outputPanel id="pnlRecordLink">
+                         <a style="{!IF(S3File.awsS3Obj.id != NULL,'','display:none;')}" href="/{!S3File.awsS3Obj.id}" target="_blank">{!S3File.awsS3Obj.File_Name__c}</a>
+                         <apex:outputLabel rendered="{!S3File.awsS3Obj.id==NULL}">{!S3File.awsS3Obj.File_Name__c}</apex:outputLabel>
+                     </apex:outputPanel>
+                     
+                 </apex:column>
+                 <apex:column headerValue="File Type">
+                    <apex:inputField value="{!S3File.awsS3Obj.File_Type__c}" onchange="j$('#filesLoadStatus').show();updateFileType({!counter});"/>
+                     <apex:variable var="counter" value="{!counter+1}"/>
+                 </apex:column>
+                 <apex:column headerValue="Uploaded By">
+                     <apex:outputText value="{!S3File.OwnerName}" />
+                 </apex:column>
+                  <apex:column headerValue="Uploaded Date">
+                     <apex:outputText value="{0,date,MM'/'dd'/'yyyy h:mm a}" >
+                        <apex:param value="{!S3File.UploadedDate}" /> 
+                     </apex:outputText>
+                     
+                 </apex:column>
+                 
+                 
+             </apex:pageBlockTable>
+             <apex:pageBlockSection title="Grant Access To User" collapsible="false" columns="1"> 
+                  <c:MultiselectPicklist leftLabel="Available Users"
+                    leftOption="{!allUser}"
+                    rightLabel="Selected Users"
+                    rightOption="{!selectedUsers}"
+                    size="14"
+                    width="150px"/>
+             </apex:pageBlockSection>
+             <apex:pageBlockSection title="Notification Information" collapsible="false" columns="1"> 
+                  <apex:inputCheckbox value="{!NotifyRecipients}" label="Notify Recipients"/>
+                  <apex:inputtextarea value="{!NotificationMessage}" cols="150" rows="10" label="Notification Message"/>
+             </apex:pageBlockSection>
+             
+         </apex:pageBlockSection>
+         <!-- Below section lists all attendees that don't have community cloud account-->
+         <apex:pageBlockSection title="Attendees w/o Community Account" collapsible="false" columns="1">
+             <apex:pageBlockTable rendered="{!AttendeesWithoutCommunity.size >0}" value="{!AttendeesWithoutCommunity}" var="attd" id="attendeeList"> 
+                 <apex:column headerValue="Contact">
+                     <a href="{!attd.urlToCreateUser}" target="_blank">{!attd.attendee.contact__r.name}</a>
+                     
+                 </apex:column>
+                 <apex:column headerValue="Role">
+                     <apex:outputText value="{!attd.attendee.Role__c}" />
+                 </apex:column>
+                 
+             </apex:pageBlockTable>
+             <apex:outputPanel rendered="{!AttendeesWithoutCommunity.size < 1}">
+                 <div style="left: 0;right: 0;text-align: center;"><b>No records to display</b>
+                 </div>
+             </apex:outputPanel>
+         </apex:pageBlockSection>
+     </apex:pageBlock>
+     <apex:actionFunction name="updateFileType" action="{!updateDepFileType}" reRender="pnlMsg" oncomplete="j$('#filesLoadStatus').hide();">
+            <apex:param assignTo="{!selectedDepFileIndex}" value="" name="selectedFileIndex"/>
+      </apex:actionFunction>
+ </apex:Form>
+ 
+</apex:page>

@@ -1,0 +1,78 @@
+<apex:page standardController="Representation__c" extensions="AttorneysAndPartiesOnRepInlineCtrlr" showHeader="false" sidebar="false">
+   
+    <script type="text/javascript">
+
+        function reloadMainPage(id) 
+        {
+                  window.top.location.href = '/' + id;
+        }
+
+
+    </script>
+    <style>
+        .dataTables_length{
+            display:none !important;
+        }
+    </style>
+    <apex:form >
+    <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+    <apex:pageBlock title="Matching Attorneys" id="pb1" mode="detail">
+        <c:PageBlockTableEnhancer targetPbTableIds="attorneys,parties" paginate="true" enableExport="false" defaultPageSize="5" />    
+        
+        
+        <apex:pageBlockTable value="{!attorneyList}" id="attorneys" var="attorney">
+            <apex:column headerValue="Action">
+                <apex:commandLink action="{!selectAttorney}" value="Select" reRender="pb1" status="status" oncomplete="reloadMainPage('{!representation.id}'); return true;">
+                    <apex:param assignTo="{!selectedAttorneyId}" name="aName" value="{!attorney.id}"/>
+                </apex:commandLink>
+            </apex:column>
+            <apex:column headerValue="Name">
+                
+                 <apex:outputLink title="{!attorney.name}" value="{!'/'+attorney.Id}" target="_blank" >
+                                    {!attorney.name}
+                                </apex:outputLink>
+            </apex:column>
+            <apex:column headerValue="Account Name">
+                <apex:outputField value="{!attorney.account.name}" />
+            </apex:column>
+             <apex:column headerValue="Email">
+                <apex:outputField value="{!attorney.email}" />
+            </apex:column>
+             <apex:column headerValue="Phone">
+                <apex:outputField value="{!attorney.phone}" />
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Matching Parties" id="pb2" >
+        
+        <apex:pageBlockTable value="{!partyList}" id="parties" var="party">
+            <apex:column headerValue="Action">
+                <apex:commandLink action="{!selectParty}" value="Select" reRender="pb2" status="status" oncomplete="reloadMainPage('{!representation.id}'); return true;">
+                    <apex:param assignTo="{!selectedPartyId}" name="pName" value="{!party.id}"/>
+                </apex:commandLink>
+            </apex:column>
+            <apex:column headerValue="Name">
+                <apex:outputLink title="{!party.name}" value="{!'/'+party.Id}" target="_blank" >
+                                    {!party.name}
+                                </apex:outputLink>
+            </apex:column>
+            <apex:column headerValue="Industry">
+                <apex:outputField value="{!party.Industry}" />
+            </apex:column>
+            <apex:column headerValue="Phone">
+                <apex:outputField value="{!party.phone}" />
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

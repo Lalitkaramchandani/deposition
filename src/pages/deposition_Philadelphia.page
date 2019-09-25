@@ -1,0 +1,51 @@
+<apex:page cache="false" title="NextGen Reporting&nbsp;|&nbsp;  Schedule" showHeader="false" standardController="Deposition__c" extensions="Web2DepositionExtension" standardStylesheets="true" >
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<style>
+    #dueDate .dateFormat{
+        display:none !important
+    }
+    .errorM3 {
+        margin-left:0px !important;
+    }
+</style>
+Fill out this form to schedule your upcoming deposition or arbitration. We will follow up with you immediately.
+<apex:form >
+
+<TABLE width="65%" border="0">
+<TR><TD colspan="2"><apex:pageMessages escape="false" ></apex:pageMessages> </TD></TR>
+<TR><TD><strong>Event Type: </strong></TD><TD><apex:inputField value="{!Deposition__c.Event_Type__c}"/></TD></TR>
+<TR><TD><strong>Deposition Date: </strong></TD><TD><apex:inputField value="{! Deposition__c.Deposition_Date__c}"/></TD></TR>
+<TR><TD><strong>Deposition Time: </strong></TD><TD><apex:inputField value="{! Deposition__c.Deposition_Time__c}"/></TD></TR>
+<TR ><TD><strong>Time Zone: </strong></TD><TD><apex:inputField value="{! Deposition__c.Time_Zone__c}"/></TD></TR>
+<TR><TD><strong>Event Location:</strong></TD><TD><apex:inputField value="{! Deposition__c.Event_Location__c}"/></TD></TR>
+<TR><TD><strong>Case Name/Caption</strong></TD><TD><apex:inputField value="{! Deposition__c.Case_Name__c}"/></TD></TR>
+<TR id="dueDate"><TD><strong>Due Date (Optional): </strong></TD><TD><apex:inputField value="{! Deposition__c.Due_Date_To_The_Client_Computed__c}"/></TD></TR>
+
+<TR><TD ><strong>Estimated Duration:</strong></TD><TD><apex:inputField value="{!Deposition__c.Estimated_Duration__c}"/></TD></TR>
+<TR><TD><strong>Deponent Name</strong></TD><TD><apex:inputField value="{! Deposition__c.Deponent_Name__c}"/></TD></TR>
+<TR><TD><strong>Hiring Attorney: </strong></TD><TD><apex:inputField value="{! Deposition__c.Hiring_Attorney__c}"/></TD></TR>
+<TR><TD><strong>Hiring Firm: </strong></TD><TD><apex:inputField value="{! Deposition__c.Hiring_Firm__c}"/></TD></TR>
+<TR><TD><strong>Scheduler Name: </strong></TD><TD><apex:inputField value="{! Deposition__c.GuestName__c}"/></TD></TR>
+<TR><TD><strong>Scheduler Email: </strong></TD><TD><apex:inputField value="{! Deposition__c.GuestEmail__c}"/></TD></TR>
+<TR><TD><strong>Scheduler Phone</strong></TD><TD><apex:inputField value="{! Deposition__c.GuestPhone__c}"/></TD></TR>
+<TR><TD><strong>Matter Number: </strong></TD><TD><apex:inputField value="{! Deposition__c.Matter_Number__c}"/></TD></TR>
+<TR><TD><strong>Insurance Claim Info:</strong></TD><TD><apex:inputField value="{! Deposition__c.Insurance_Claim_Info__c}"/></TD></TR>
+<TR><TD><strong>Claims Professional:</strong></TD><TD><apex:inputField value="{! Deposition__c.Claims_Professional__c}"/></TD></TR>
+<TR><TD VALIGN="middle"><strong>Additional Notes: </strong></TD><TD><apex:inputField value="{! Deposition__c.Client_Notes__c}"/></TD></TR>
+<TR><TD COLSPAN="2" id="tdForServices"><strong>Deposition Services</strong><br /><apex:inputField value="{! Deposition__c.Deposition_Services__c}"/></TD></TR>
+<TR><TD COLSPAN="2"><apex:commandButton action="{! saveDeposition}" value="Submit"/></TD></TR>
+</TABLE>
+<apex:inputText style="display:none;" styleClass="Production_Region__c" value="{!Deposition__c.Production_Region__c}"/>
+
+</apex:form>
+<script>
+  $(function() {
+    $( "#tdForServices select[title='Deposition Services - Available'] option" ).each(function( index ) {
+          if($( this ).text()=='Realtime - Possible' || $( this ).text()=='Post Production' || $( this ).text()=='Rough Draft - Possible' )
+              $( this ).remove()
+    });
+  });
+  $(".Production_Region__c").val("Philadelphia");
+</script>
+<c:TLS_NiceWarningJquery />
+</apex:page>

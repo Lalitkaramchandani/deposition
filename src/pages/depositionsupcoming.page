@@ -1,0 +1,8 @@
+<apex:page standardController="Deposition__c" recordSetVar="depositions" sidebar="false" tabStyle="Deposition__c">
+<apex:pageBlock >
+<apex:pageBlockTable value="{!Deposition__c}" var="a">
+<apex:column value="{!a.name}"/>
+<apex:column value="{!a.GuestEmail__c}"/>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:page>

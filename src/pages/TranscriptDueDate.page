@@ -1,0 +1,11 @@
+<apex:page standardController="Deposition__c" standardStylesheets="true"
+extensions="TranscriptDueDateExtension" showHeader="false" sidebar="false">
+<html>
+<body margin="0" padding="0" style="margin:0;padding:0;"> 
+  <apex:outputField value="{!Deposition__c.Days_Until_Transcript_Due_Computed__c}" />
+</body>  
+  <apex:outputText rendered="false">
+    {!Deposition__c.Transcript_Due_From_Reporter_Computed__c}
+  </apex:outputText>
+</html>  
+</apex:page>

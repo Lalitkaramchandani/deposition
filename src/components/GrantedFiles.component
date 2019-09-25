@@ -1,0 +1,21 @@
+<apex:component access="global" controller="GrantedFilesCntrl">
+  <apex:attribute name="contactRecordId" assignTo="{!contactId}" type="String" description="This points to Contact Record Id" />
+  <apex:attribute name="depositionRecordId" assignTo="{!depositionId}" type="String" description="This points to Deposition Record Id" />  
+  
+  <P>
+    Available File(s) 
+    <TABLE BORDER="1" cellspacing="5" cellpadding="5" WIDTH="90%" style="border-collapse: collapse;">
+        <TR><Th style="text-decoration:underline;">File Type</Th><Th style="text-decoration:underline;">File Name</Th><Th style="text-decoration:underline;">Size (KB)</Th></TR>
+        <apex:repeat value="{!AccessFiles}" var="file">
+            <TR>
+                <TD>{!file.File__r.File_Type__c}</TD>
+                <TD><A HREF="{!$Setup.URL_Setting__c.Community_URL__c}/CommunitiesSecureDownload?id={!file.File__c}&firm={!SUBSTITUTE(file.File__r.Deposition__r.Primary_Court_Reporting_Firm__r.Name,'&','%26')}">
+                    {!file.File__r.File_Name__c}</A>
+                </TD>
+                <TD>{!file.File__r.File_Size_KB__c}</TD>
+            </TR>
+        </apex:repeat>
+        
+    </TABLE>
+  </p>  
+</apex:component>

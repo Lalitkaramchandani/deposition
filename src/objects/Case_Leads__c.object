@@ -1,0 +1,2407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Case_Lead_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>BaseUrl__c</fullName>
+        <externalId>false</externalId>
+        <formula>LEFT($Api.Enterprise_Server_URL_450 , FIND(&apos;/services&apos;,$Api.Enterprise_Server_URL_450))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>BaseUrl</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BeingTracked__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Being Tracked</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Category</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Civil</fullName>
+                    <default>false</default>
+                    <label>Civil</label>
+                </value>
+                <value>
+                    <fullName>Criminal</fullName>
+                    <default>false</default>
+                    <label>Criminal</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Description</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Case_Listener__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://www.courtlistener.com/?q=&quot; +  Case_Name__c , &quot;Search Court Listener&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Listener</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Management_Conference__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Management Conference</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Case_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Number</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Priority</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>VIP 1</fullName>
+                    <default>false</default>
+                    <label>VIP 1</label>
+                </value>
+                <value>
+                    <fullName>VIP 2</fullName>
+                    <default>false</default>
+                    <label>VIP 2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case_Status_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Status Category</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Disposed</fullName>
+                    <default>false</default>
+                    <label>Disposed</label>
+                </value>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>false</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>Terminated</fullName>
+                    <default>false</default>
+                    <label>Terminated</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Judgment Entered</fullName>
+                    <default>false</default>
+                    <label>Judgment Entered</label>
+                </value>
+                <value>
+                    <fullName>Other Pending</fullName>
+                    <default>false</default>
+                    <label>Other Pending</label>
+                </value>
+                <value>
+                    <fullName>Other Disposed</fullName>
+                    <default>false</default>
+                    <label>Other Disposed</label>
+                </value>
+                <value>
+                    <fullName>Terminated</fullName>
+                    <default>false</default>
+                    <label>Terminated</label>
+                </value>
+                <value>
+                    <fullName>Settled</fullName>
+                    <default>false</default>
+                    <label>Settled</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Related</fullName>
+                    <default>false</default>
+                    <label>Related</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case_Type_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Type Category</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Case_Type</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case_Type_Subcategory__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Type Subcategory</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Small Claim</fullName>
+                    <default>false</default>
+                    <label>Small Claim</label>
+                </value>
+                <value>
+                    <fullName>Contract</fullName>
+                    <default>false</default>
+                    <label>Contract</label>
+                </value>
+                <value>
+                    <fullName>Bankruptcy</fullName>
+                    <default>false</default>
+                    <label>Bankruptcy</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Personal Injury</fullName>
+                    <default>false</default>
+                    <label>Personal Injury</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Case_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Other Small Claim</fullName>
+                    <default>false</default>
+                    <label>Other Small Claim</label>
+                </value>
+                <value>
+                    <fullName>Chapter 7</fullName>
+                    <default>false</default>
+                    <label>Chapter 7</label>
+                </value>
+                <value>
+                    <fullName>Chapter 13</fullName>
+                    <default>false</default>
+                    <label>Chapter 13</label>
+                </value>
+                <value>
+                    <fullName>Other Product Liability</fullName>
+                    <default>false</default>
+                    <label>Other Product Liability</label>
+                </value>
+                <value>
+                    <fullName>Motor Vehicle</fullName>
+                    <default>false</default>
+                    <label>Motor Vehicle</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Commission_Primary_Rep_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission-Primary Rep Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commission_Secondary_Rep_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission-Secondary Rep Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commission_Tertiary_Rep_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission-Tertiary Rep Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commission__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Commission</label>
+        <referenceTo>Commission__c</referenceTo>
+        <relationshipLabel>Case Leads</relationshipLabel>
+        <relationshipName>Case_Leads</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>County__c</fullName>
+        <externalId>false</externalId>
+        <label>County</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Courthouse__c</fullName>
+        <externalId>false</externalId>
+        <label>Courthouse</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Downey Courthouse</fullName>
+                    <default>false</default>
+                    <label>Downey Courthouse</label>
+                </value>
+                <value>
+                    <fullName>Chatsworth Courthouse</fullName>
+                    <default>false</default>
+                    <label>Chatsworth Courthouse</label>
+                </value>
+                <value>
+                    <fullName>California Central Bankruptcy</fullName>
+                    <default>false</default>
+                    <label>California Central Bankruptcy</label>
+                </value>
+                <value>
+                    <fullName>Florida Middle Bankruptcy</fullName>
+                    <default>false</default>
+                    <label>Florida Middle Bankruptcy</label>
+                </value>
+                <value>
+                    <fullName>Alhambra Courthouse</fullName>
+                    <default>false</default>
+                    <label>Alhambra Courthouse</label>
+                </value>
+                <value>
+                    <fullName>California Southern Bankruptcy</fullName>
+                    <default>false</default>
+                    <label>California Southern Bankruptcy</label>
+                </value>
+                <value>
+                    <fullName>Michael Antonovich Antelope Valley Courthouse</fullName>
+                    <default>false</default>
+                    <label>Michael Antonovich Antelope Valley Courthouse</label>
+                </value>
+                <value>
+                    <fullName>Texas Eastern District</fullName>
+                    <default>false</default>
+                    <label>Texas Eastern District</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Discovery_Deadline__c</fullName>
+        <externalId>false</externalId>
+        <label>Discovery Deadline</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Docket_Alarm__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://www.docketalarm.com/cases/&quot; + substitute(SUBSTITUTE(TEXT(Courthouse__c) , &quot; &quot;, &quot;_&quot;),&quot;:&quot;,&quot;--&quot;) + &quot;_Court/&quot; + Case_Number__c , &quot;Search Docketalarm&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Docket Alarm</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Docket_Entry_Token__c</fullName>
+        <externalId>false</externalId>
+        <label>Docket Entry Token</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dockets__c</fullName>
+        <externalId>false</externalId>
+        <label>Docket #</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Expert_Witness_Probability__c</fullName>
+        <externalId>false</externalId>
+        <label>Expert Witness Probability</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expert_Witness_Used__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Expert Witness Used</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Filing_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Filing Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Followup_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Followup Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Google__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://www.google.com/search?q=&quot; + Case_Name__c, &quot;Search Google&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Google</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>High_Profile_2__c</fullName>
+        <externalId>false</externalId>
+        <label>High Profile #2</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>High_Profile_Case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>High Profile Case</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>High_Profile_Prob__c</fullName>
+        <externalId>false</externalId>
+        <label>High Profile Probability</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>High_Profile_Probability__c</fullName>
+        <externalId>false</externalId>
+        <label>High Profile Probability</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Industry__c</fullName>
+        <externalId>false</externalId>
+        <label>Industry</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Jurisdiction__c</fullName>
+        <externalId>false</externalId>
+        <label>Jurisdiction</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Los Angeles County Superior Courts</fullName>
+                    <default>false</default>
+                    <label>Los Angeles County Superior Courts</label>
+                </value>
+                <value>
+                    <fullName>U.S. Bankruptcy Courts</fullName>
+                    <default>false</default>
+                    <label>U.S. Bankruptcy Courts</label>
+                </value>
+                <value>
+                    <fullName>U.S. District Courts</fullName>
+                    <default>false</default>
+                    <label>U.S. District Courts</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>LastSFDCUpdatedfromUnicourt__c</fullName>
+        <description>This field shows when Case details in SFDC are updated from Unicourt</description>
+        <externalId>false</externalId>
+        <label>Last Updated</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Last_Deposition__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Last Deposition</label>
+        <referenceTo>Deposition__c</referenceTo>
+        <relationshipLabel>Case Leads</relationshipLabel>
+        <relationshipName>Case_Leads</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Last_Updated__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Updated</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Likelihood_of_Lots_of_Parties__c</fullName>
+        <externalId>false</externalId>
+        <label>Likelihood of Lots of Parties</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MDL__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>MDL</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>131000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Number_of_Parties__c</fullName>
+        <externalId>false</externalId>
+        <label># of Parties</label>
+        <summaryForeignKey>Representation__c.Case__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Parent Case</label>
+        <referenceTo>Case_Leads__c</referenceTo>
+        <relationshipLabel>Child Cases</relationshipLabel>
+        <relationshipName>Case_Leads</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RECAP__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://www.courtlistener.com/?type=r&amp;q=&quot; + Case_Name__c + &quot;&amp;type=r&amp;order_by=score+desc&quot;,&quot;Search RECAP&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RECAP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recommended_Email_Blast_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Recommended Email Blast Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Related_JSON_OR_CSV__c</fullName>
+        <externalId>false</externalId>
+        <label>Related JSON/CSV</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Reviewed</fullName>
+                    <default>false</default>
+                    <label>Reviewed</label>
+                </value>
+                <value>
+                    <fullName>Pending Info</fullName>
+                    <default>false</default>
+                    <label>Pending Info</label>
+                </value>
+                <value>
+                    <fullName>To Pursue</fullName>
+                    <default>false</default>
+                    <label>To Pursue</label>
+                </value>
+                <value>
+                    <fullName>In Contact</fullName>
+                    <default>false</default>
+                    <label>In Contact</label>
+                </value>
+                <value>
+                    <fullName>Proposal Submitted</fullName>
+                    <default>false</default>
+                    <label>Proposal Submitted</label>
+                </value>
+                <value>
+                    <fullName>Won</fullName>
+                    <default>false</default>
+                    <label>Won</label>
+                </value>
+                <value>
+                    <fullName>Closed</fullName>
+                    <default>false</default>
+                    <label>Closed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Source_Saved_Search__c</fullName>
+        <externalId>false</externalId>
+        <label>Source Saved Search</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State__c</fullName>
+        <externalId>false</externalId>
+        <label>State</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CA</fullName>
+                    <default>false</default>
+                    <label>CA</label>
+                </value>
+                <value>
+                    <fullName>PACER</fullName>
+                    <default>false</default>
+                    <label>PACER</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Uni_UpdateRequestedOn__c</fullName>
+        <externalId>false</externalId>
+        <label>Update Requested On</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Unicourt_Case_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Unicourt Case ID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Unicourt__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;https://app.unicourt.com/researcher/case/detail/&quot;+ Unicourt_Case_ID__c + &quot;#dockets&quot;, &quot;Search Unicourt&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unicourt</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Update_Request_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Update Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Queued for Update</fullName>
+                    <default>false</default>
+                    <label>Queued for Update</label>
+                </value>
+                <value>
+                    <fullName>Updated</fullName>
+                    <default>false</default>
+                    <label>Updated</label>
+                </value>
+                <value>
+                    <fullName>Had No Update</fullName>
+                    <default>false</default>
+                    <label>Had No Update</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X60_Days_Past_Filing__c</fullName>
+        <externalId>false</externalId>
+        <formula>Filing_Date__c + 60</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>60 Days Past Filing</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Case Lead</label>
+    <listViews>
+        <fullName>AIG_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Courthouse__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>AIG</value>
+        </filters>
+        <filters>
+            <field>Courthouse__c</field>
+            <operation>contains</operation>
+        </filters>
+        <label>AIG Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>AT_T_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>AT&amp;T</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>AT&amp;T Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Adversary_Proceedings_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Number__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Sales_Status__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Adversary</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Adversary Proceedings Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Akin_Gump_Case_Lead</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Akin Gump</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Akin Gump Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Case_Category__c</columns>
+        <columns>Sales_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Name__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>AmTrust_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Number__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Sales_Status__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Case_Type__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>AmTrust</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>AmTrust Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>ArbitrationCL</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Arbitration</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Arbitration Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Bracewell</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Number__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Sales_Status__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Bracewell</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected,Related</value>
+        </filters>
+        <filters>
+            <field>Sales_Status__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Bracewell</label>
+    </listViews>
+    <listViews>
+        <fullName>Brown_Rudnick_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Brown Rudnick</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Brown Rudnick Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>CMC_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>CMC Docket</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>CMC Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Cleary_Gottlieb_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Cleary Gottlieb</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Cleary Gottlieb Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Deposition_Docket_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Number__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Deposition Docket</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Deposition Docket Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Deutsche_Bank_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Deutsche</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Deutsche Bank Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Discovery_Deadlines_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Discovery Deadlines</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Discovery Deadlines Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Fried_Frank_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Fried Frank</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Fried Frank Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Goldman_Sachs_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Number__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Sales_Status__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Goldman Sachs</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Related,Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Goldman Sachs Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Kirkland_Ellis_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Kirkland</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Kirkland Ellis Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Liberty_Mutual_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Liberty Mutual</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Liberty Mutual Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>McKool_Smith_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>McKool Smith</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>McKool Smith Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Medtronic_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Medtronic</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Medtronic Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Milbank_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Milbank</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Milbank Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Paul_Hastings_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Paul Hastings</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Paul Hastings Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Paul_Weiss_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Paul Weiss</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Paul Weiss Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Sidley_Austin_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Sidley Austin</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Sidley Austin Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Sullivan_Cormwell_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Sullivan &amp; Cromwell</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Sullivan Cormwell Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>TX_Cases</fullName>
+        <columns>NAME</columns>
+        <columns>Notes__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Courthouse__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Case_Type__c</columns>
+        <columns>Case_Type_Category__c</columns>
+        <columns>Case_Type_Subcategory__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>State__c</field>
+            <operation>contains</operation>
+            <value>TX</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Dismissed,Judgment Entered,Other Disposed,Terminated,Settled,Rejected,Related</value>
+        </filters>
+        <filters>
+            <field>Sales_Status__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Courthouse__c</field>
+            <operation>notContain</operation>
+            <value>Bexar</value>
+        </filters>
+        <filters>
+            <field>Filing_Date__c</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2016</value>
+        </filters>
+        <label>TX Cases</label>
+    </listViews>
+    <listViews>
+        <fullName>Thermo_Fisher_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Number__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Thermo</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Thermo Fisher Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Trade_Secrets_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Trade Secrets</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Trade Secrets Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>UHG_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>UnitedHealth</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>UHG Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Weil</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Notes__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Updated__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Weil</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <filters>
+            <field>Sales_Status__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Weil Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>Winston_Strawn_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Dockets__c</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>Discovery_Deadline__c</columns>
+        <columns>Docket_Alarm__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Last_Deposition__c</columns>
+        <columns>Last_Updated__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>Winston &amp; Strawn</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected</value>
+        </filters>
+        <label>Winston Strawn Case Leads</label>
+    </listViews>
+    <listViews>
+        <fullName>X3M_Case_Leads</fullName>
+        <columns>NAME</columns>
+        <columns>Case_Number__c</columns>
+        <columns>Number_of_Parties__c</columns>
+        <columns>Parent_Case__c</columns>
+        <columns>Case_Status__c</columns>
+        <columns>High_Profile_Case__c</columns>
+        <columns>Filing_Date__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Saved_Search__c</field>
+            <operation>contains</operation>
+            <value>3M</value>
+        </filters>
+        <filters>
+            <field>Case_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Judgment Entered,Other Disposed,Terminated,Settled,Rejected,Related</value>
+        </filters>
+        <label>3M Case Leads</label>
+    </listViews>
+    <nameField>
+        <label>Case Leads Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Case Leads</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Closed_Case</fullName>
+        <active>true</active>
+        <label>Closed Case</label>
+        <picklistValues>
+            <picklist>Case_Category__c</picklist>
+            <values>
+                <fullName>Civil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Criminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Priority__c</picklist>
+            <values>
+                <fullName>VIP 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Status_Category__c</picklist>
+            <values>
+                <fullName>Disposed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Status__c</picklist>
+            <values>
+                <fullName>Judgment Entered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Disposed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Related</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Type_Category__c</picklist>
+            <values>
+                <fullName>Chapter 13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Criminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Collection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Motor Vehicle</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Yet Classified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Small Claim</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Undetermined</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Type_Subcategory__c</picklist>
+            <values>
+                <fullName>Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Injury</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small Claim</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Type__c</picklist>
+            <values>
+                <fullName>Chapter 13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Motor Vehicle</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Product Liability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Small Claim</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Courthouse__c</picklist>
+            <values>
+                <fullName>Alhambra Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California Central Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California Southern Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chatsworth Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downey Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Florida Middle Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Michael Antonovich Antelope Valley Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Texas Eastern District</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Jurisdiction__c</picklist>
+            <values>
+                <fullName>Los Angeles County Superior Courts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Bankruptcy Courts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E District Courts</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Status__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Info</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proposal Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reviewed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To Pursue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Won</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>State__c</picklist>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PACER</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Update_Request_Status__c</picklist>
+            <values>
+                <fullName>Queued for Update</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Updated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Default</fullName>
+        <active>true</active>
+        <label>Default</label>
+        <picklistValues>
+            <picklist>Case_Category__c</picklist>
+            <values>
+                <fullName>Civil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Criminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Priority__c</picklist>
+            <values>
+                <fullName>VIP 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VIP 2</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Status_Category__c</picklist>
+            <values>
+                <fullName>Disposed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Status__c</picklist>
+            <values>
+                <fullName>Judgment Entered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Disposed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Settled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Type_Category__c</picklist>
+            <values>
+                <fullName>Chapter 13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Criminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debt Collection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Motor Vehicle</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Yet Classified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Small Claim</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Undetermined</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Type_Subcategory__c</picklist>
+            <values>
+                <fullName>Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal Injury</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small Claim</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Case_Type__c</picklist>
+            <values>
+                <fullName>Chapter 13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chapter 7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Motor Vehicle</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Product Liability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Small Claim</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Courthouse__c</picklist>
+            <values>
+                <fullName>Alhambra Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California Central Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>California Southern Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chatsworth Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Downey Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Florida Middle Bankruptcy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Michael Antonovich Antelope Valley Courthouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Texas Eastern District</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Jurisdiction__c</picklist>
+            <values>
+                <fullName>Los Angeles County Superior Courts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E Bankruptcy Courts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%2ES%2E District Courts</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Status__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Contact</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Info</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Proposal Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reviewed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To Pursue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Won</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>State__c</picklist>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PACER</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Update_Request_Status__c</picklist>
+            <values>
+                <fullName>Had No Update</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Queued for Update</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Updated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <listViewButtons>Delete_Cases</listViewButtons>
+        <listViewButtons>Group_Selected</listViewButtons>
+        <searchResultsAdditionalFields>Filing_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Case_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Courthouse__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Delete_Cases</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Delete Cases</masterLabel>
+        <openType>replace</openType>
+        <page>MassDeleteSelectedCases</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+    <webLinks>
+        <fullName>Email_Blast</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Email Blast</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/ContactEmailBlast?id={!Case_Leads__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Follow</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Follow</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+
+
+var caseId = &quot;{!Case_Leads__c.Id}&quot;;
+var uId = &quot;{!$User.Id}&quot;;
+
+var callback = { 
+onSuccess: function(e){
+    alert(e);
+    
+}, onFailure: function(error){} };
+
+sforce.apex.execute(&quot;ManageCaseFollowers&quot;,&quot;addFollower&quot;,{caseLeadId:caseId,userId:uId }, callback);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Group_Selected</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Group Selected</masterLabel>
+        <openType>replace</openType>
+        <page>GroupSelectedCases</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+    <webLinks>
+        <fullName>Search_on_Case_Law</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Search on Case.Law</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://api.case.law/v1/cases/?cite=&amp;name_abbreviation=&amp;jurisdiction=&amp;reporter=&amp;decision_date_min=&amp;decision_date_max=&amp;docket_number=&amp;court=&amp;search={!Case_Leads__c.Case_Name__c}&amp;full_case=&amp;body_format=</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Update</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+
+
+var caseId = &quot;{!Case_Leads__c.Unicourt_Case_ID__c}&quot;;
+
+var callback = { 
+onSuccess: function(e){
+    alert(e);
+    
+}, onFailure: function(error){} };
+
+sforce.apex.execute(&quot;ManageCaseFollowers&quot;,&quot;updateUnicourtCase&quot;,{caseLeadId:caseId}, callback);</url>
+    </webLinks>
+</CustomObject>

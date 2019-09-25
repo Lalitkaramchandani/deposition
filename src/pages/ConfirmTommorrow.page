@@ -1,0 +1,120 @@
+<apex:page standardstylesheets="false" cache="false" showHeader="false" sidebar="false" 
+   controller="ConfirmController" action="{!comfirmDepositionReporter}" title="Confirm Participation">
+
+<head>
+    <title>NextGen Reporting | Confirm </title>
+    <link href="http://www.nextgenreporting.com/wp-content/themes/nextgen/style.css" rel="stylesheet" type="text/css" />
+</head> 
+<body>
+
+<div id="main_container">
+  <div id="top_container">
+    <div id="logo">
+        <a href="http://www.nextgenreporting.com/">
+          <img src="http://www.nextgenreporting.com/wp-content/themes/nextgen/images/NextGenReporting-Logo.png" width="395" height="77" class="png" border="0" />
+        </a>
+      </div>
+      <div id="top_navigation">
+        <a href="http://www.nextgenreporting.com/contact">CONTACT US</a>
+        <div id="navigation">
+        <li class="page_item page-item-4"><a href="http://www.nextgenreporting.com/services/">Services</a></li>
+        <li class="page_item page-item-45 current_page_ancestor current_page_parent"><a href="http://www.nextgenreporting.com/company/">Company</a></li>
+        <li class="page_item page-item-53"><a href="http://www.nextgenreporting.com/schedule/">Schedule</a></li>
+        <li class="page_item page-item-56"><a href="http://www.nextgenreporting.com/video/">Join an Event</a></li>
+        <li class="page_item page-item-60"><a href="http://www.nextgenreporting.com/repository/">Repository</a></li>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <div id="headbox"><h3>NextGen Reporting</h3></div>
+  
+  <div id="content_container">
+    <div id="left_navigation">
+      <h2 class="navigation_title"><br/></h2>
+    </div>
+    <div id="main_contentpage">
+      <div class="post">
+       <div class="entry">
+  <!-- SFDC Stuff -->
+  <apex:outputPanel rendered="{!isError}" style="color:#cc0000;">
+    The link seems invalid. Please check the link and try again
+  </apex:outputPanel>
+  
+    <apex:outputPanel rendered="{!!isError}" style="margin:10px;padding:20px;">
+    <apex:pageBlock >
+    You clicked the link to confirm an upcoming job: Thank you for confirming this job tomorrow. For your convenience, all of the details of
+this event are listed below.
+   </apex:pageBlock>
+   <apex:pageBlock title="Deposition Details">
+    <TABLE cellspacing="0" cellpadding="6" border="0">
+      <TR><TD><strong>Deposition Date: </strong></TD><TD><apex:outputField value="{!Deposition.Deposition_Date__c}"/></TD></TR>
+      <TR><TD><strong>Deposition Time: </strong></TD><TD><apex:outputField value="{!Deposition.Deposition_Time__c}"/></TD></TR>
+      <TR><TD><strong>Primary Deposition Location:</strong></TD><TD><apex:outputField value="{!Deposition.Event_Location__c}"/></TD></TR>
+      <TR><TD><strong>Case Name/Caption:</strong></TD><TD><apex:outputField value="{!Deposition.Case_Name__c}"/></TD></TR>
+      <TR><TD><strong>Deponent Name:</strong></TD><TD><apex:outputField value="{!Deposition.Deponent_Name__c}"/></TD></TR>
+      <TR><TD><strong>Hiring Attorney:</strong></TD><TD><apex:outputField value="{!Deposition.Hiring_Attorney__c}"/></TD></TR>
+      <TR><TD><strong>Hiring Firm:</strong></TD><TD><apex:outputField value="{!Deposition.Hiring_Firm__c}"/></TD></TR>
+      <TR><TD><strong>Deposition Services:</strong></td><td><apex:outputField value="{!Deposition.Deposition_Services__c}"/></TD></TR>
+      <TR><TD><strong>Event Type:</strong></TD><TD><apex:outputField value="{!Deposition.Event_Type__c}"/></TD></TR>
+      <TR><TD><strong>Expedite:</strong></TD><TD><apex:outputField value="{!Deposition.Expedite__c}"/></TD></TR>
+      <TR><TD><strong>Transcript Due From Reporter:</strong></TD><TD><apex:outputField value="{!Deposition.Transcript_Due_From_Reporter_Computed__c}"/></TD></TR>
+    </TABLE>
+   </apex:pageBlock>
+  </apex:outputPanel>
+   <!-- SFDC Stuff -->
+          </div><!-- /.entry -->
+       </div><!-- /.post -->
+     </div>
+     <div class="clear"></div>
+   </div>
+   
+   <div id="content_bottom">
+     <img src="http://www.nextgenreporting.com/wp-content/themes/nextgen/images/page-template-btm.jpg" width="891" height="38" alt="" class="png" />
+   </div>
+   <div class="clear"></div>
+  </div>
+
+
+
+<div id="bottom_container">
+  <div id="bottom_navigation">
+        <div id="bottom_services"><H1>Our Services</H1>
+          <a href="/services/court-reporting/">Court Reporting</a>
+            <a href="/services/video-services/">Video Services</a>
+            <a href="/services/remote-depositions/">Remote Depositions</a>
+            <a href="/services/realtime/">Realtime</a>
+            <a href="/services/remote-trial-video/">Remote Trial Video</a>
+            <a href="/services/interpreting/">Interpreting</a>
+            <a href="/services/trial-presentation/">Trial Presentation</a>
+        </div>
+        <div id="bottom_company"><h1>Company</h1>
+            <a href="/company/news/">News</a>
+            <a href="/company/leadership/">Leadership Team</a>
+            <a href="/company/join-our-team/">Join Our Team</a>
+        </div>
+        <div id="bottom_schedule"><h1>Schedule</h1>
+            <a href="/schedule/">Schedule an Upcoming Deposition</a>
+        </div>
+        <div id="bottom_contact"><h1>Contact</h1>
+          <p class="contact_number">888.267.1200</p>
+      <a href="mailto:sales@NextGenReporting.com">sales@NextGenReporting.com</a>
+
+            <div id="social">
+              <A HREF="http://www.linkedin.com/company/nextgen-reporting"><img src="http://www.nextgenreporting.com/wp-content/themes/nextgen/images/linkedIn-icon.jpg" width="16" height="17" class="social_icons" /> LinkedIn</a><br />
+              <A HREF="http://www.facebook.com/pages/NextGen-Reporting/103734936337092"><img src="http://www.nextgenreporting.com/wp-content/themes/nextgen/images/facebook-icon.jpg" width="16" height="17" class="social_icons" /> Facebook</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+  </div>
+
+<hr class="bottom" />
+
+<p class="footer">&copy; NextGen Reporting. All Rights Reserved. </p>
+<p class="footer">NextGen Reporting, 999 Old Eagle School Road, Suite 118, Wayne, PA 19087</p>
+
+</div>
+
+</body>
+
+</apex:page>

@@ -1,0 +1,66 @@
+<apex:page standardController="Payment__c" extensions="CreatePaymentExtension" showHeader="true" showChat="true" sidebar="true" standardStylesheets="true">
+    <apex:form id="frm">
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:sectionHeader title="Payment Edit" subtitle="New Payment"/> 
+        <apex:outputPanel rendered="{!extraPayment}">
+            <apex:pageMessage summary="{!errorMsg}" 
+                              severity="error" strength="3" rendered="{! errorMsg!='' }" />
+            <apex:pageMessage summary="{!afterDueDateMsg}" 
+                              severity="info" strength="3" escape="false" rendered="{! afterDueDateMsg!='' }" />
+            <apex:pageMessage summary="The payment is greater than the amount due. You can <br/><br/>
+                                       i. Edit the payment <br/> 
+                                       ii. Add this overpayment as a finance charge <br/>
+                                       iii. Apply the credit to another invoice <br/><br/>
+                                       Please select from drop down below." 
+                              severity="confirm" strength="3" escape="false"/>
+            <br/> 
+            <div style="margin-left:100px">
+                <center>
+                    <apex:selectList value="{!selectedOption}" multiselect="false" size="1" required="true" >
+                        <apex:selectOptions value="{!optionsToShow}"/>
+                    </apex:selectList>
+                    <br/>
+                    <apex:outputPanel rendered="{!payment2Invoice==true}">
+                        <br/>
+                        <apex:outputLabel value="Please select another Invoice.">
+                        </apex:outputLabel>
+                        <apex:inputField id="Invoice" value="{!payment2.Invoice__c}" label="Please select another Invoice"/>
+                        <br/><br/>
+                        <apex:commandButton value="Confirm" rendered="{!payment2Invoice==true}" action="{!Confirm2}" reRender="frm" status="status"/><br/>
+             </apex:outputPanel>
+                    <br/>
+                    <br/>
+                    <apex:commandButton value="Confirm" rendered="{!payment2Invoice==false}" action="{!Confirm}" reRender="frm" status="status"/><br/>
+                </center>
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!!extraPayment}">
+            <apex:pageBlock mode="edit" title="Payment Edit">
+                <apex:pageBlockButtons location="both">
+                    <apex:commandButton value="Save" action="{!Save2}"  reRender="frm" status="status"/>
+                    <apex:commandButton value="Cancel" action="{!Cancel}"  />
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockSection title="Information" columns="2" collapsible="true">
+                    <apex:inputField id="Amount" value="{!Payment__c.Amount__c}"/>
+                    <apex:inputField id="Invoice" value="{!Payment__c.Invoice__c}"/>
+                    <apex:inputField id="Notes" value="{!Payment__c.Notes__c}"/>
+                    <apex:inputField id="Date" value="{!Payment__c.Date__c}"/>
+                    <apex:inputField id="Type" value="{!Payment__c.Type__c}"/>
+                    <apex:inputField id="Reason_for_Credit" value="{!Payment__c.Reason_for_Credit__c}"/>
+                    <apex:inputField id="Payment_Type" value="{!Payment__c.Payment_Type__c}"/>
+                    <apex:inputField id="Paid_in_Full__c" value="{!Payment__c.Paid_in_Full__c}"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

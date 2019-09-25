@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account (if applicable)</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Events</relationshipLabel>
+        <relationshipName>Events</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Actual_Annual_Revenue__c</fullName>
+        <externalId>false</externalId>
+        <label>Actual Annual Revenue</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Actual_Cost__c</fullName>
+        <externalId>false</externalId>
+        <label>Actual Cost</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Added_to_Website__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Added to Website</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Advertisement_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check this box - if, for this event, we need to submit an advertisement, e.g. for the event program or association newsletter.  Be sure to notify the Marketing Manager of the submission requirements and deadline.</description>
+        <externalId>false</externalId>
+        <label>Advertisement Required</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Anticipated_Annual_Revenue__c</fullName>
+        <externalId>false</externalId>
+        <label>Anticipated Annual Revenue</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Business_Unit__c</fullName>
+        <externalId>false</externalId>
+        <label>Business Unit(s)</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Austin</fullName>
+                    <default>false</default>
+                    <label>Austin</label>
+                </value>
+                <value>
+                    <fullName>Bryan</fullName>
+                    <default>false</default>
+                    <label>Bryan</label>
+                </value>
+                <value>
+                    <fullName>Chicago</fullName>
+                    <default>false</default>
+                    <label>Chicago</label>
+                </value>
+                <value>
+                    <fullName>Corporate</fullName>
+                    <default>false</default>
+                    <label>Corporate</label>
+                </value>
+                <value>
+                    <fullName>Corpus Christi</fullName>
+                    <default>false</default>
+                    <label>Corpus Christi</label>
+                </value>
+                <value>
+                    <fullName>Dallas</fullName>
+                    <default>false</default>
+                    <label>Dallas</label>
+                </value>
+                <value>
+                    <fullName>Fort Worth</fullName>
+                    <default>false</default>
+                    <label>Fort Worth</label>
+                </value>
+                <value>
+                    <fullName>Houston</fullName>
+                    <default>false</default>
+                    <label>Houston</label>
+                </value>
+                <value>
+                    <fullName>New York</fullName>
+                    <default>false</default>
+                    <label>New York</label>
+                </value>
+                <value>
+                    <fullName>Pennsylvania</fullName>
+                    <default>false</default>
+                    <label>Pennsylvania</label>
+                </value>
+                <value>
+                    <fullName>Rocklin</fullName>
+                    <default>false</default>
+                    <label>Rocklin</label>
+                </value>
+                <value>
+                    <fullName>San Antonio</fullName>
+                    <default>false</default>
+                    <label>San Antonio</label>
+                </value>
+                <value>
+                    <fullName>Tyler</fullName>
+                    <default>false</default>
+                    <label>Tyler</label>
+                </value>
+                <value>
+                    <fullName>Wilmington</fullName>
+                    <default>false</default>
+                    <label>Wilmington</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Estimated_Attendee_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Estimated Attendee Count</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0-25</fullName>
+                    <default>false</default>
+                    <label>0-25</label>
+                </value>
+                <value>
+                    <fullName>25-50</fullName>
+                    <default>false</default>
+                    <label>25-50</label>
+                </value>
+                <value>
+                    <fullName>50-75</fullName>
+                    <default>false</default>
+                    <label>50-75</label>
+                </value>
+                <value>
+                    <fullName>75-100</fullName>
+                    <default>false</default>
+                    <label>75-100</label>
+                </value>
+                <value>
+                    <fullName>100+</fullName>
+                    <default>false</default>
+                    <label>100+</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Event_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Event End Date</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Event_Location__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Location</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Event_Payment_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Payment Status</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending Event Approval</fullName>
+                    <default>false</default>
+                    <label>Pending Event Approval</label>
+                </value>
+                <value>
+                    <fullName>Check Request Made</fullName>
+                    <default>false</default>
+                    <label>Check Request Made</label>
+                </value>
+                <value>
+                    <fullName>Payment via Check Made</fullName>
+                    <default>false</default>
+                    <label>Payment via Check Made</label>
+                </value>
+                <value>
+                    <fullName>Expensed Directly by AE</fullName>
+                    <default>false</default>
+                    <label>Expensed Directly by AE</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Event_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Start Date</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Event_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Event URL</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>First_Time_Participation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box if this is the first time we have attended/sponsored/participated-in this event.</inlineHelpText>
+        <label>First Time Participation?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Flights_Approved__c</fullName>
+        <externalId>false</externalId>
+        <label>Flights Approved</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Flights_Required__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Yes</controllingFieldValue>
+                <valueName>Yes</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Yes</controllingFieldValue>
+                <valueName>No</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Yes</controllingFieldValue>
+                <valueName>Pending</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>No</controllingFieldValue>
+                <valueName>N/A</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Flights_Required__c</fullName>
+        <externalId>false</externalId>
+        <label>Flights Required</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Lexitas_AE_Attendees__c</fullName>
+        <externalId>false</externalId>
+        <label>Lexitas AE Attendees</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Aaron Brown</fullName>
+                    <default>false</default>
+                    <label>Aaron Brown</label>
+                </value>
+                <value>
+                    <fullName>Adam Goldstein</fullName>
+                    <default>false</default>
+                    <label>Adam Goldstein</label>
+                </value>
+                <value>
+                    <fullName>Anthony Minervini</fullName>
+                    <default>false</default>
+                    <label>Anthony Minervini</label>
+                </value>
+                <value>
+                    <fullName>Barbara Donnelly</fullName>
+                    <default>false</default>
+                    <label>Barbara Donnelly</label>
+                </value>
+                <value>
+                    <fullName>Billy Eubank</fullName>
+                    <default>false</default>
+                    <label>Billy Eubank</label>
+                </value>
+                <value>
+                    <fullName>Brennan Tucker</fullName>
+                    <default>false</default>
+                    <label>Brennan Tucker</label>
+                </value>
+                <value>
+                    <fullName>Carlos Perez</fullName>
+                    <default>false</default>
+                    <label>Carlos Perez</label>
+                </value>
+                <value>
+                    <fullName>Chad Davenport</fullName>
+                    <default>false</default>
+                    <label>Chad Davenport</label>
+                </value>
+                <value>
+                    <fullName>Charlynn Oborn</fullName>
+                    <default>false</default>
+                    <label>Charlynn Oborn</label>
+                </value>
+                <value>
+                    <fullName>Cheryl Ormston</fullName>
+                    <default>false</default>
+                    <label>Cheryl Ormston</label>
+                </value>
+                <value>
+                    <fullName>Christian Hespe</fullName>
+                    <default>false</default>
+                    <label>Christian Hespe</label>
+                </value>
+                <value>
+                    <fullName>Corey Cormier</fullName>
+                    <default>false</default>
+                    <label>Corey Cormier</label>
+                </value>
+                <value>
+                    <fullName>Doug Blanchard</fullName>
+                    <default>false</default>
+                    <label>Doug Blanchard</label>
+                </value>
+                <value>
+                    <fullName>Ed Kerpius</fullName>
+                    <default>false</default>
+                    <label>Ed Kerpius</label>
+                </value>
+                <value>
+                    <fullName>Fanny Ybarra</fullName>
+                    <default>false</default>
+                    <label>Fanny Ybarra</label>
+                </value>
+                <value>
+                    <fullName>Jason Primuth</fullName>
+                    <default>false</default>
+                    <label>Jason Primuth</label>
+                </value>
+                <value>
+                    <fullName>Jon Hefler</fullName>
+                    <default>false</default>
+                    <label>Jon Hefler</label>
+                </value>
+                <value>
+                    <fullName>Joseph Reggina</fullName>
+                    <default>false</default>
+                    <label>Joseph Reggina</label>
+                </value>
+                <value>
+                    <fullName>Karla Howes</fullName>
+                    <default>false</default>
+                    <label>Karla Howes</label>
+                </value>
+                <value>
+                    <fullName>Kayla Lambert</fullName>
+                    <default>false</default>
+                    <label>Kayla Lambert</label>
+                </value>
+                <value>
+                    <fullName>Ken Varallo</fullName>
+                    <default>false</default>
+                    <label>Ken Varallo</label>
+                </value>
+                <value>
+                    <fullName>Kurt Fetzer</fullName>
+                    <default>false</default>
+                    <label>Kurt Fetzer</label>
+                </value>
+                <value>
+                    <fullName>Lisa Beabout</fullName>
+                    <default>false</default>
+                    <label>Lisa Beabout</label>
+                </value>
+                <value>
+                    <fullName>Lisa Goulette</fullName>
+                    <default>false</default>
+                    <label>Lisa Goulette</label>
+                </value>
+                <value>
+                    <fullName>Mark Hoorwitz</fullName>
+                    <default>false</default>
+                    <label>Mark Hoorwitz</label>
+                </value>
+                <value>
+                    <fullName>Marlee Steinbrueck</fullName>
+                    <default>false</default>
+                    <label>Marlee Steinbrueck</label>
+                </value>
+                <value>
+                    <fullName>Meredith Manak</fullName>
+                    <default>false</default>
+                    <label>Meredith Manak</label>
+                </value>
+                <value>
+                    <fullName>Meron Hewis</fullName>
+                    <default>false</default>
+                    <label>Meron Hewis</label>
+                </value>
+                <value>
+                    <fullName>Merten Rice</fullName>
+                    <default>false</default>
+                    <label>Merten Rice</label>
+                </value>
+                <value>
+                    <fullName>Mike Tzorfas</fullName>
+                    <default>false</default>
+                    <label>Mike Tzorfas</label>
+                </value>
+                <value>
+                    <fullName>Phillip Reader</fullName>
+                    <default>false</default>
+                    <label>Phillip Reader</label>
+                </value>
+                <value>
+                    <fullName>Rhonda Jensen</fullName>
+                    <default>false</default>
+                    <label>Rhonda Jensen</label>
+                </value>
+                <value>
+                    <fullName>Rodney Magee</fullName>
+                    <default>false</default>
+                    <label>Rodney Magee</label>
+                </value>
+                <value>
+                    <fullName>Sam Bragg</fullName>
+                    <default>false</default>
+                    <label>Sam Bragg</label>
+                </value>
+                <value>
+                    <fullName>Todd Dannhauser</fullName>
+                    <default>false</default>
+                    <label>Todd Dannhauser</label>
+                </value>
+                <value>
+                    <fullName>Tony Kendrick</fullName>
+                    <default>false</default>
+                    <label>Tony Kendrick</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Manager_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Manager Email</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Projected_Cost__c</fullName>
+        <externalId>false</externalId>
+        <label>Projected Cost</label>
+        <precision>5</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ROI__c</fullName>
+        <externalId>false</externalId>
+        <formula>If (Actual_Annual_Revenue__c &gt; 0, Actual_Annual_Revenue__c/ Actual_Cost__c , 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ROI</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Denied</fullName>
+                    <default>false</default>
+                    <label>Denied</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Requested</fullName>
+                    <default>true</default>
+                    <label>Requested</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>true</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Annual Membership</fullName>
+                    <default>false</default>
+                    <label>Annual Membership</label>
+                </value>
+                <value>
+                    <fullName>Attending Only</fullName>
+                    <default>false</default>
+                    <label>Attending Only</label>
+                </value>
+                <value>
+                    <fullName>CLE</fullName>
+                    <default>false</default>
+                    <label>CLE</label>
+                </value>
+                <value>
+                    <fullName>Exhibitor</fullName>
+                    <default>false</default>
+                    <label>Exhibitor</label>
+                </value>
+                <value>
+                    <fullName>Happy Hour</fullName>
+                    <default>false</default>
+                    <label>Happy Hour</label>
+                </value>
+                <value>
+                    <fullName>Lexitas Event</fullName>
+                    <default>false</default>
+                    <label>Lexitas Event</label>
+                </value>
+                <value>
+                    <fullName>Sponsorship</fullName>
+                    <default>false</default>
+                    <label>Sponsorship</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Events</label>
+    <listViews>
+        <fullName>All_Events</fullName>
+        <columns>NAME</columns>
+        <columns>Event_Location__c</columns>
+        <columns>Status__c</columns>
+        <columns>Event_Start_Date__c</columns>
+        <columns>Event_End_Date__c</columns>
+        <columns>Business_Unit__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Events</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Future_Events</fullName>
+        <columns>Business_Unit__c</columns>
+        <columns>Event_Start_Date__c</columns>
+        <columns>NAME</columns>
+        <columns>Event_Location__c</columns>
+        <columns>Status__c</columns>
+        <columns>Projected_Cost__c</columns>
+        <columns>Flights_Required__c</columns>
+        <columns>Flights_Approved__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Event_Start_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Denied</value>
+        </filters>
+        <filters>
+            <field>Business_Unit__c</field>
+            <operation>notEqual</operation>
+            <value>Pennsylvania,Wilmington</value>
+        </filters>
+        <label>All Future non PA Events</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Past_Events</fullName>
+        <columns>NAME</columns>
+        <columns>Event_Location__c</columns>
+        <columns>Status__c</columns>
+        <columns>Event_Start_Date__c</columns>
+        <columns>Event_End_Date__c</columns>
+        <columns>Business_Unit__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Event_Start_Date__c</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>All Past Events</label>
+    </listViews>
+    <listViews>
+        <fullName>Bryan_Events</fullName>
+        <columns>NAME</columns>
+        <columns>Business_Unit__c</columns>
+        <columns>Event_Start_Date__c</columns>
+        <columns>Projected_Cost__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <columns>Event_Location__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Business_Unit__c</field>
+            <operation>includes</operation>
+            <value>Bryan</value>
+        </filters>
+        <label>Bryan Events</label>
+    </listViews>
+    <listViews>
+        <fullName>Events_Pending_Approval</fullName>
+        <columns>Event_Start_Date__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>NAME</columns>
+        <columns>Event_Location__c</columns>
+        <columns>Status__c</columns>
+        <columns>Projected_Cost__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <columns>Flights_Required__c</columns>
+        <columns>Flights_Approved__c</columns>
+        <columns>Event_End_Date__c</columns>
+        <columns>Business_Unit__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Requested</value>
+        </filters>
+        <filters>
+            <field>Business_Unit__c</field>
+            <operation>notEqual</operation>
+            <value>Pennsylvania,Wilmington</value>
+        </filters>
+        <label>Non PA Events Pending Approval</label>
+    </listViews>
+    <listViews>
+        <fullName>Events_Pending_Payment</fullName>
+        <columns>NAME</columns>
+        <columns>Event_Location__c</columns>
+        <columns>Status__c</columns>
+        <columns>Event_Payment_Status__c</columns>
+        <columns>Event_Start_Date__c</columns>
+        <columns>Event_End_Date__c</columns>
+        <columns>Business_Unit__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Event_Payment_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending Event Approval,Check Request Made</value>
+        </filters>
+        <label>Events Pending Payment</label>
+    </listViews>
+    <listViews>
+        <fullName>Lisa_And_Fanny_Future</fullName>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>NAME</columns>
+        <columns>Event_Location__c</columns>
+        <columns>Status__c</columns>
+        <columns>Flights_Required__c</columns>
+        <columns>Flights_Approved__c</columns>
+        <columns>Event_Start_Date__c</columns>
+        <columns>Event_End_Date__c</columns>
+        <columns>Business_Unit__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <columns>Added_to_Website__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Event_Start_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Lexitas_AE_Attendees__c</field>
+            <operation>includes</operation>
+            <value>Lisa Goulette,Fanny Ybarra,Charlynn Oborn</value>
+        </filters>
+        <label>Lisa/Fanny/Charlynn Future Events</label>
+    </listViews>
+    <listViews>
+        <fullName>NY_Events</fullName>
+        <columns>NAME</columns>
+        <columns>Event_Start_Date__c</columns>
+        <columns>Lexitas_AE_Attendees__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Business_Unit__c</field>
+            <operation>equals</operation>
+            <value>New York</value>
+        </filters>
+        <label>NY Events</label>
+    </listViews>
+    <nameField>
+        <label>Event</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Events</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Event_Location__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>No_Status_Edits_By_AEs</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(Status__c,&quot;Approved&quot;)  &amp;&amp; 
+(ISNEW()|| ISCHANGED(Status__c)) &amp;&amp;
+NOT(
+($User.Username = &apos;aaron.brown@lexitas.sf&apos;) ||
+($User.Username = &apos;kvarallo@nextgenreporting.com&apos;) ||
+($User.Username = &apos;kayla.lambert@lexitas.sf&apos;) ||
+($User.Username = &apos;chad.davenport@lexitas.sf&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Only your Sales Manager or the Marketing Manager may approve events.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Order_Collateral</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Order Collateral</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://lexitas.orders.com/shop/home</url>
+    </webLinks>
+</CustomObject>

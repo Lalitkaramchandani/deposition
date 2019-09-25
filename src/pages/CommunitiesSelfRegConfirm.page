@@ -1,0 +1,38 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" 
+  controller="CommunitiesSelfRegConfirmController" action="{!restPassword}" >
+    <c:CommunityResources title="Registration in Process"/>
+
+    <body>
+        <apex:form id="frm" forceSSL="true">
+            <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <c:ActionStatus ></c:ActionStatus>
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        <h1>Registration in Process</h1>
+
+
+                        <div class="scheduleform">
+
+                               <apex:pageMessages ></apex:pageMessages>
+                               <div >
+                                    <label style="font-size: 14px;">
+                                        <span>Thank you for registering.
+                                              An email has been sent to you with your temporary password.
+                                        </span>
+                                    </label>
+                                </div>
+                                 
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <c:CommunityFooter />
+            </div>
+        </apex:form>
+    </body>
+    
+</apex:page>

@@ -1,0 +1,201 @@
+<apex:page standardController="AWS_S3_Object__c" sidebar="false" extensions="GoogleDriveAuthenticationCntrl" standardStylesheets="false"  applyBodyTag="false" showHeader="false" >
+    <c:CommunityResources title="Secure Download"/>
+   <style>
+    #upload-percentage{
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin-left:-25px;
+            margin-top:-100px;
+            width:150px;
+            height:100px;
+            border-radius: 50%;
+            background:#297ab8;
+            color:#fff;
+            text-align:center;
+            line-height:80px;
+            font-weight:bold;
+            font-size:15px;
+            display:none;
+        }
+        
+        .flash {
+            -webkit-animation-name: flash;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-timing-function: linear;
+            -webkit-animation-iteration-count: infinite;
+        
+            -moz-animation-name: flash;
+            -moz-animation-duration: 1s;
+            -moz-animation-timing-function: linear;
+            -moz-animation-iteration-count: infinite;
+        
+            animation-name: flash;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        
+        @-moz-keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        
+        @-webkit-keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        
+        @keyframes flash {  
+            0% { opacity: 1.0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1.0; }
+        }
+        #drive-box{
+            padding:10px;
+            margin:10px;   
+            width:98%;
+            display:none;
+            position:relative;
+            min-height:150px;
+            margin-top:60px;
+        }
+        /***************** END MISC ************************/
+  </style>
+  
+     <script>
+        var zipFileName = "{!AWS_S3_Object__c.Name}";
+        var accessToken= '';
+        
+        
+        
+        function update_progress(e){
+           if (e.lengthComputable){
+              var percentage = Math.round((e.loaded/e.total)*100);
+              showProgressPercentage(percentage);
+              console.log("percent " + percentage + '%' );
+          }
+          else 
+          {
+            console.log("Unable to compute progress information since the total size is unknown");
+          }
+          
+        }
+        
+        
+        //show upload progress
+        function showProgressPercentage(percentageValue) {
+            if ($("#upload-percentage").length == 0) {
+                $("#drive-box").prepend("<div id='upload-percentage' class='flash'></div>");
+            }
+            if (!$("#upload-percentage").is(":visible")) {
+                $("#upload-percentage").show(1000);
+            }
+            $("#upload-percentage").html(percentageValue.toString() + "%");
+        }
+        
+        $( function() {
+            //showProgressPercentage(0);
+            console.log('yee');
+            $("#drive-box").show();
+            $("#upload-percentage").show();
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.GoogleDriveAuthenticationCntrl.haveAccessToFile}',
+                '{!AWS_S3_Object__c.Id}','{!AWS_S3_Object__c.File_Type__c}', '{!AWS_S3_Object__c.Deposition__c}',
+                function(resultForAccess, eventForAccess){
+                    if (eventForAccess.status) {
+                        
+                        if("{!AWS_S3_Object__c.File_Type__c=='Deposition Notice'}" == "true" || resultForAccess==true || resultForAccess=="true"){
+                            Visualforce.remoting.Manager.invokeAction(
+                                '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getAccessToken}',
+                                 
+                                function(result, event){
+                                    if (event.status) {
+                                        var accessToken = result;
+                                      
+                                        Visualforce.remoting.Manager.invokeAction(
+                                            '{!$RemoteAction.GoogleDriveAuthenticationCntrl.getFileInfo}',
+                                             'https://www.googleapis.com/drive/v2/files/{!AWS_S3_Object__c.File_Id__c}',
+                                             'Bearer ' + accessToken,
+                                            function(result2, event){
+                                                if (event.status) {
+                                                     console.log(accessToken);
+                                                     result2 =  result2.replace(/amp;/g, '');
+                                                     var url = result2 + '&access_token=' + accessToken;
+                                                     
+                                                     $('<a></a>').attr('download', "{!AWS_S3_Object__c.File_Name__c}").attr('href', url).appendTo(document.body)[0].click();
+                                                     $("#drive-box").hide();
+                                                     $("#upload-percentage").hide(); 
+                                                     Visualforce.remoting.Manager.invokeAction(
+                                                     '{!$RemoteAction.GoogleDriveAuthenticationCntrl.updateFileDownloadLog}',
+                                                     '{!AWS_S3_Object__c.Id}',
+                                                     function(result3, event){
+                                                         
+                                                     });  
+                                                }
+                                             }, 
+                                {escape: true}
+                                       );
+                                        
+                                        
+                                        
+                                    } 
+                                }, 
+                                {escape: true}
+                            );
+                      }else{
+                          $("#errDiv").show();
+                          downloadCompleted();
+                      }
+                    }
+                }, 
+                {escape: true}
+            );
+            
+            
+            
+            
+        });
+       function downloadCompleted(){
+           $("#drive-box").hide();
+           $("#upload-percentage").hide();                        
+       }
+    </script>
+    <body>
+        <div class="wrapper">
+          <c:CommunityHeader /> 
+          <apex:Form >
+              <c:ActionStatus ></c:ActionStatus>
+              <apex:actionFunction status="status" name="requestFileAccess" action="{!requestFileAccess}" reRender="pnlMessage"/>
+              <div>     
+                <br/><br/>
+                   <a style="color: white;margin-left: 5%;" href="/apex/home" >Go Back To Home</a>
+                    <br/>
+                    <br/>
+                    <div id="drive-box">
+                       <div id='upload-percentage' class='flash'>Downloading...</div>
+                   </div>
+                   
+                   <label id="errDiv" style="display:none;" >
+                       You are logged in as {!$User.FirstName} {!$User.LastName}, and do not have access to this file. <a style="color:white;" href="#" onclick="requestFileAccess();">Click here</a> to get access to that file from your account.
+                   </label>
+                   <apex:outputPanel id="pnlMessage">
+                       <apex:pageMessages escape="false" ></apex:pageMessages>
+                   </apex:outputPanel>
+               </div> 
+               <br/><br/><br/><br/><br/>
+         </apex:Form>
+          <c:CommunityFooter />   
+        </div>
+    </body>
+    <style>
+        #errDiv, .errorM3{
+            margin-left: 5%;
+        }
+        
+        der-radius: 4px;
+        }
+    </style>
+</apex:page>

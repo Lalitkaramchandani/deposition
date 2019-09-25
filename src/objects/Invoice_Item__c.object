@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Commissionable_Revenue__c</fullName>
+        <externalId>false</externalId>
+        <label>Commissionable Revenue</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Conga_Invoice_Table_generator__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND( Invoice__r.Show_Quantity_Column__c, NOT(Invoice__r.Show_Rate_Column__c) ), 
+    &quot;All&quot;, 
+     &quot;&quot;
+    )</formula>
+        <label>Conga Invoice Table generator</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Text</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Invoice__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Invoice Items</relationshipLabel>
+        <relationshipName>Invoice_Items</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Is_Invoice_Paid__c</fullName>
+        <description>Has this invoice been paid?</description>
+        <externalId>false</externalId>
+        <formula>Invoice__r.Payment_Status__c = &quot;Paid&quot;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Invoice Paid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Item_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&apos;/&apos;+ Item__c , Item__r.Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Text(Item__r.Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Item</label>
+        <referenceTo>Item__c</referenceTo>
+        <relationshipLabel>Invoice Items</relationshipLabel>
+        <relationshipName>Invoice_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Modification__c</fullName>
+        <externalId>false</externalId>
+        <label>Modification</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Order No</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Quantity</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rate_Sheet_Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Rate Sheet Item</label>
+        <referenceTo>Rate_Sheet_Item__c</referenceTo>
+        <relationshipLabel>Invoice Items</relationshipLabel>
+        <relationshipName>Invoice_Items</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Total_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Round((Price__c *(1+ Modification__c )),2) * Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Units_of_Measure__c</fullName>
+        <externalId>false</externalId>
+        <label>Units of Measure</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Per Page</fullName>
+                    <default>false</default>
+                    <label>Per Page</label>
+                </value>
+                <value>
+                    <fullName>Per Transcript</fullName>
+                    <default>false</default>
+                    <label>Per Transcript</label>
+                </value>
+                <value>
+                    <fullName>Per Hour</fullName>
+                    <default>false</default>
+                    <label>Per Hour</label>
+                </value>
+                <value>
+                    <fullName>Per Person</fullName>
+                    <default>false</default>
+                    <label>Per Person</label>
+                </value>
+                <value>
+                    <fullName>Per Day</fullName>
+                    <default>false</default>
+                    <label>Per Day</label>
+                </value>
+                <value>
+                    <fullName>Per Kit</fullName>
+                    <default>false</default>
+                    <label>Per Kit</label>
+                </value>
+                <value>
+                    <fullName>Per Half Day</fullName>
+                    <default>false</default>
+                    <label>Per Half Day</label>
+                </value>
+                <value>
+                    <fullName>Per Job</fullName>
+                    <default>false</default>
+                    <label>Per Job</label>
+                </value>
+                <value>
+                    <fullName>Per Disk</fullName>
+                    <default>false</default>
+                    <label>Per Disk</label>
+                </value>
+                <value>
+                    <fullName>Per Mile</fullName>
+                    <default>false</default>
+                    <label>Per Mile</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Invoice Item</label>
+    <nameField>
+        <displayFormat>II-{0000}</displayFormat>
+        <label>Invoice Item Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invoice Items</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Lock_Invoice_Item</fullName>
+        <active>true</active>
+        <errorConditionFormula>(ISNEW()==false &amp;&amp; (
+ISCHANGED(Commissionable_Revenue__c) ||
+ISCHANGED(Item_Type__c) ||
+ISCHANGED(Modification__c) ||
+ISCHANGED(Price__c) ||
+ISCHANGED(Quantity__c) ||
+ISCHANGED(Total_Price__c)
+ 
+) || ISNEW()) &amp;&amp; (MONTH(Invoice__r.Invoice_Date__c  ) &lt; MONTH(TODAY())
+||
+YEAR(Invoice__r.Invoice_Date__c) &lt; YEAR(TODAY()) || TEXT(Invoice__r.Status__c) ==&apos;Void&apos;)</errorConditionFormula>
+        <errorMessage>Invoice items cannot be changed in prior months. Use credits instead.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

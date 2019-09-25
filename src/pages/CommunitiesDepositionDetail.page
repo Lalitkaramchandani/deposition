@@ -1,0 +1,582 @@
+<apex:page standardController="Deposition__c" applyHtmlTag="false" 
+standardStylesheets="false" sidebar="false" showHeader="false"
+ extensions="CommunitiesDepositionDetailCntrl,GoogleDriveAuthenticationCntrl" action="{!init}">
+    <c:CommunityResources title="Deposition Portal"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery.easy-confirm-dialog.js')}" type="text/javascript"></script>
+    <script src="{!$Resource.upload}"></script>
+    <link href="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/css/FileUploadCSS.css')}" rel="stylesheet" type="text/css" />
+    <link href="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/css/jquery-ui-1.8.18.custom.css')}" rel="stylesheet" type="text/css" />
+        
+    <style>
+        .wrapper {
+            margin: auto;
+        }
+        
+        .exhibit-list,
+        .video-list,
+        .transcript-list {
+            list-style-type: none;
+        }
+        
+        .ui-dialog-titlebar{
+            background: #00335B !important; 
+        }
+        
+        
+        .TEVform {
+            display: flex;
+            padding-bottom: 8px; 
+        }
+        
+        .TEVheader {
+            border-bottom: 1px solid gray;
+            padding-bottom: 8px;
+            text-align: center;
+        }
+        
+        .tev-info {
+            padding: 20px;
+        }
+        
+        
+        
+        .formModal2 {
+            width: 100%;
+        }
+         
+        h3 {
+            color: rgb(49,62,83);
+            font-family: "OpenSans", sans-serif;
+            font-weight: 600;
+            font-size: 1.2em;
+            padding-top: 10px;
+        }
+        
+        label { 
+            font-size: 1em;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            color: black;
+            margin: 20px;
+            display: flex;
+        }
+        
+        .single-field {
+            margin-top: 8px;
+            position: relative;
+            max-height: 50px;
+        }
+        
+        .single-field h2 {
+            margin-left: 20px;
+        }
+        
+        .single-field span {
+            flex: 1;
+            font-weight: 300;
+            padding-top: 1px;
+        }
+        
+        .single-field input {
+            border: 1px solid gray;
+            padding: 4px;
+            background: rgba(255,255,255,0.8);
+            margin: 1px;
+            width: auto !important;
+            height: auto !important;
+            flex: 2.4;
+        }
+        
+        select {
+            flex: 2.4;
+            margin-top: 2px;
+            width: auto !important;
+            padding : 4px !important;
+            border-radius:0px !important;
+        }
+        
+        video {
+            text-align: center;
+            height: auto;
+            width: auto;
+            margin-top: 10px;
+        }
+        
+        
+        
+        .file-dropbox img {
+            width: 12%;
+            margin-right: 5px;
+        }
+        
+        
+        .ngheader, .ngfooter label ,.ngfooter p {
+            width: 100% !important;
+        }
+        .multiSelectPicklistCell {
+            vertical-align: middle !important;
+        }
+        .pnlFormMsg .errorM3 .messageCell .messageText {
+               color: black !important;
+        }
+        .status,.overlay{
+             z-index: 2000000000 !important;  
+        }
+       
+        .ui-widget-header {
+            border: 1px solid #00335B !important;
+            
+        }
+        
+        
+        .ui-button {
+            border: 1px solid #cccccc !important;
+            background: #f6f6f6  50% 50% repeat-x !important;
+            font-weight: bold !important;
+            color: #1c94c4 !important;
+        }
+        .ui-dialog{
+            z-index:200000000 !important;
+            font-size: 13px !important;
+        }
+        .tableUploadedFiles label{
+            margin:0px !important;
+        }
+        html {
+            background-size: cover;
+        }
+        
+        .Popup1 {
+            margin:auto;
+            border: 12px solid rgb(98,126,170);
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            background: #fff;
+            background: -moz-linear-gradient(#fff, #999);
+            background: -webkit-linear-gradient(#fff, #999);
+            background: -o-linear-gradient(#fff, #999);
+        }
+        
+        .exhibit-list,
+        .video-list,
+        .transcript-list {
+            list-style-type: none;
+        }
+        
+        .modalHeader {
+            background: white;
+            border-bottom: 1px solid gray;
+            padding: 10px 20px;
+            font-style:italic;
+        }
+        
+        .TEV {
+            text-align: center;
+            border-bottom: 1px solid gray;
+            padding-bottom: 8px; 
+        }
+        
+        .tev-info {
+            padding: 20px;
+            
+        }
+         
+        h3 {
+            color: rgb(49,62,83);
+            font-family: "OpenSans", sans-serif;
+            font-weight: 600;
+            font-size: 1.2em;
+            padding-top: 10px;
+        }
+        
+       
+        
+        .file-dropbox {
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            width: 60%;
+            margin: 25px auto;
+            border: 6px dashed rgb(140,140,140) !important;
+            background-color: white;
+            color: gray;
+        }
+        
+        #load-status img{
+            width:auto !important;
+            height:auto !important;
+        }
+        select{
+            padding: 3px;
+            border-radius: 5px;
+         }
+         .errorM3 li{
+             list-style: none;
+         }
+         .errorM3 .messageCell .messageText span{
+             display:none;
+         }
+         .errorM3 .messageCell .messageText{
+             color:white;
+             padding-left: 10px;
+         }
+         
+        .messageTable ul{
+            padding-left: 10px !important;
+        }
+        .messageTable li ,.messageText{
+            font-size: 1em;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            
+            margin: 3px;
+            justify-content: space-between;
+        }
+        .messageTable tr:nth-child(odd),.messageTable tr:nth-child(even) {
+            background: none;
+        }
+        .single-field textarea{
+                border: 1px solid black;
+                padding: 0px;
+                background: rgba(255,255,255,0.8);
+                margin: 1px;
+                width: 100%;
+                height: 4.2em;
+                display: block;
+        }
+        .ui-dialog{
+            width:90% !important;
+            margin-left:5% !important;
+        }
+        .ui-datepicker-header{
+            background: #00335B !important;
+        }
+        .single-field textarea {
+            font: 13.3333px Arial !important;
+        }
+     </style>
+            
+     <script>
+          var accessToken = '';
+          var uploadBatchId = '';
+          var latestUploadNumber = 0;
+          $(function() {
+            
+            j$( ".datepicker" ).datepicker();
+            uploadBatchId = "{!uploadBatch.id}";
+            console.log(uploadBatchId);
+           
+            latestUploadNumber = {!latestUploadNo};
+            console.log(latestUploadNumber );
+            
+          });
+          
+           
+           var folderName = "{!Deposition__c.Name}";
+           var folderID = "{!Deposition__c.Google_Drive_Folder_Id__c}";
+            
+            
+            var j$ = jQuery.noConflict();
+            var byteChunkArray;
+            var files;
+            var currentFile;
+            var $upload;
+            var CHUNK_SIZE = 180000; //Must be evenly divisible by 3, if not, data corruption will occur
+            var VIEW_URL = '/servlet/servlet.FileDownload?file=';
+            var BatchSize = 0;
+            
+            var fileForInputFile;
+            // A $( document ).ready() block.
+            
+            function checkForUploads() {
+               
+                //Get div of the first matching upload element that is 'pending', if none, all uploads are complete
+                $upload = $(".upload:first[data-status='pending']");
+                console.log($upload);
+                if ($upload.length != 0) {
+                    //Based on index of the div, get correct file from files array
+                   
+                    if (files != null) {
+                        currentFile = files[$upload.attr('data-index')];
+                        
+                        var button = document.getElementById('upload-button');
+                        var results = document.getElementById('results');
+                        var file = currentFile;
+                        console.log('Actual File Name-->' + file.name);
+                        if (file) {
+                            results.innerHTML = '';
+                            var contentType = file.type || 'application/octet-stream';
+                            var metadata = {
+                                'title': file.name,
+                                'mimeType': contentType,
+                                'parents': [{"id": folderID}]
+                            };
+                            var uploader = new MediaUploader({
+                                 file: file,
+                                 token: accessToken,
+                                 metadata : metadata,
+                                 onComplete: function(jsonResponse) {
+                                 
+                                    
+                                    var driveFile= JSON.parse(jsonResponse);
+                                    
+                                    Visualforce.remoting.Manager.invokeAction(
+                                                '{!$RemoteAction.CommunitiesDepositionDetailCntrl.createAwsS3Object}',
+                                                file.name, driveFile.id,uploadBatchId, '{!Deposition__c.id}', file.type, file.size,latestUploadNumber,
+                                                function(result, event) {
+                                                   $upload.attr('data-status', 'complete');
+                                                    $upload.find(".percentComplete").html('<font style="color:#008040;">Completed</font>');
+                                                    $upload.find(".statusBarPercent").hide(); 
+                                                       checkForUploads();
+                                                }, {
+                                                    escape: true
+                                                }
+                                            ); 
+                                    
+                                 }
+                             });
+                             uploader.upload();
+                               
+                               
+                        } else {
+                            results.innerHTML = 'Nothing to upload.';
+                        }
+                    } else {
+                        performUploadCompleteActions();
+                    }
+                } else {
+                    performUploadCompleteActions();
+                }
+        }
+        
+        
+  </script>  
+   <c:GoogleDriveUploadScript IsListFolderFiles="false" />
+   <script src="https://apis.google.com/js/client.js?onload=init"></script>
+   <body>
+        
+          <div id="newpagePopup1" class="Popup1">
+            <div>
+            
+                <c:ActionStatus ></c:ActionStatus>
+                <apex:form id="frm"  >
+                    
+                    <apex:actionFunction immediate="true" name="updateFileType" action="{!updateFileType}" reRender="pnlFileMsg" status="status">
+                        <apex:param assignTo="{!selectedFileIndex}" value="" name="selectedFileIndex"/>
+                         <apex:param assignTo="{!selectedFileType}" value="" name="selectedFileType"/>
+                    </apex:actionFunction>        
+                    <div id="transcript-id" class="modalHeader">
+                    <span class="transcript-case-id"><apex:outputField value="{!Deposition__c.Deponent_Name__c}"/> -&nbsp;<apex:outputField value="{!Deposition__c.Deposition_Date__c}"/></span><br/>
+                    <span class="transcript-case-name"> <apex:outputField value="{! Deposition__c.Case_Name__c}"/></span>
+                    </div>
+                    <apex:outputPanel id="pnlMsg" styleClass="pnlFormMsg">
+                        <apex:pageMessages ></apex:pageMessages>
+                    </apex:outputPanel>
+                    
+                    <div class="TEVform" style="{!IF((webdeposition.Deposition_Date__c == NULL ||  webdeposition.Deposition_Date__c>=TODAY() )&& webdeposition.Deposition_Status__c!='Cancelled','','display:none;')}">
+                         
+                             <apex:actionFunction immediate="true" name="fetchAWSS3Objects" action="{!fetchUserFiles}" status="status" reRender="filesSection" />
+                             <div class="formModal2">
+                                 
+                               <div class="single-field">  
+                                <label for="eventtype">
+                                    <span>Event Type</span>
+                                    <apex:inputField value="{!webdeposition.Event_Type__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}" />
+                                    <apex:outputField value="{!webdeposition.Event_Type__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}" />
+                                </label>
+                               </div>
+                                 
+                               <div class="single-field">
+                                <label>
+                                    <span>Witness Name </span>
+                                    <apex:inputField value="{!webdeposition.Deponent_Name__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Deponent_Name__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                                 
+                               
+                                 
+                               <div class="single-field">
+                                <label>
+                                    <span>Event Date </span>
+                                    <apex:inputtext value="{!depDate}" styleClass="datepicker" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Deposition_Date__c}" styleClass="datepicker" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                                 
+                               <div class="single-field">
+                                <label>
+                                    <span>Event Time </span>
+                                    <apex:inputField value="{! webdeposition.Deposition_Time__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{! webdeposition.Deposition_Time__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                                 
+                               <div class="single-field">   
+                                <label for="timezone">
+                                    <span>Time Zone</span>
+                                    <apex:inputField value="{! webdeposition.Time_Zone__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{! webdeposition.Time_Zone__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                                 
+                               <div class="single-field" style="max-height: 80px !important;">
+                                <label>
+                                    <span style="min-width:180px;">Event Location </span>
+                                    <apex:inputTextArea value="{!webdeposition.Event_Location__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Event_Location__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                               <div class="single-field" style="max-height: 80px !important;{!IF(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography','display:none;','')}">
+                                <label>
+                                    <span style="min-width:180px;">Event Services </span>
+                                    <apex:outputField value="{! webdeposition.Deposition_Services__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                                <div class="single-field" style="max-height:200px;{!IF(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography','','display:none;')}">
+                                    <span style="float: left;min-width: 27%;margin: 20px;">Event Services </span>
+                                    <apex:inputfield value="{! webdeposition.Deposition_Services__c}" /> <br/>
+                                    
+                               </div>
+                               
+                                 
+                               <div class="single-field">
+                                <label>
+                                    <span>Estimated Duration </span>
+                                    <apex:inputtext style="height: 22px !important;" value="{!webdeposition.Estimated_Duration__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{!webdeposition.Estimated_Duration__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                                 
+                               <div class="single-field">
+                                <label>
+                                    <span>Case Name/Caption </span>
+                                    <apex:inputtext style="height: 22px !important;" value="{! webdeposition.Case_Name__c}" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}"/>
+                                    <apex:outputField value="{! webdeposition.Case_Name__c}" rendered="{!NOT(usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography')}"/>
+                                </label>
+                               </div>
+                                <div class="recentlyviewed">
+                                    <br/>
+                                    <apex:commandButton style="margin-left: 40%;" rendered="{!usr.Contact.Account.Industry !='Court Reporting' && usr.Contact.Account.Industry !='Videography'}" action="{!saveDeposition}" value="Save" reRender="pnlMsg" status="status"/>
+                                </div>  
+                              </div>
+                         
+                    </div>
+                   
+                    <div class="TEVheader">  
+                     <h3>Transcripts &nbsp;|&nbsp; Exhibits &nbsp;|&nbsp; Videos</h3>
+                    </div>
+                    
+                    <div class="tev-info">
+                     
+                    <h3>Transcripts:</h3>
+                      <apex:outputPanel id="pnlTranscriptsFiles">
+                          <ul class="transcript-list" style="{!IF(lstTranscripts.size>0,'','display:none;')}">
+                              <apex:repeat value="{!lstTranscripts}" var="file">
+                                  <li class="transcript-list-item">
+                                    <span style="{!IF(usr.Contact.Account.COD_Warning__c,'','display:none;')}" class="transcript-data-trans">{!file.File_Name__c}</span>
+                                    <span style="{!IF(usr.Contact.Account.COD_Warning__c,'display:none;','')}" class="transcript-data-trans"><a style="color: black;text-decoration: initial;" target="_blank" href="/apex/CommunitiesSecureDownload?id={!file.id}">{!file.File_Name__c}</a></span>
+                                  </li>
+                              </apex:repeat>
+                         </ul>
+                      </apex:outputPanel>
+                      
+                     
+                    <h3>Exhibits:</h3>
+                      <apex:outputPanel id="pnlExhibitsFiles">
+                          <ul class="exhibit-list" style="{!IF(lstExhibits.size>0,'','display:none;')}">
+                              <apex:repeat value="{!lstExhibits}" var="file">
+                                  <li class="exhibit-list-item">
+                                    <span  style="{!IF(usr.Contact.Account.COD_Warning__c,'','display:none;')}" class="exhibit-data-name">{!file.File_Name__c}</span>    
+                                    <span  style="{!IF(usr.Contact.Account.COD_Warning__c,'display:none;','')}" class="exhibit-data-name"><a target="_blank" style="color: black;text-decoration: initial;" href="/apex/CommunitiesSecureDownload?id={!file.id}">{!file.File_Name__c}</a></span>
+                                  </li>
+                              </apex:repeat>
+                          </ul>
+                      </apex:outputPanel>
+                        
+                      <h3>Videos:</h3>
+                      <apex:outputPanel id="pnlVideosFiles">
+                          <ul class="video-list" style="{!IF(lstVideos.size>0,'','display:none;')}">
+                             <apex:repeat value="{!lstVideos}" var="file">
+                               <li class="video-list-item">
+                                <span class="video-data-name">{!file.file_Name__c} <a style="color: black;{!IF(usr.Contact.Account.COD_Warning__c,'display:none;','')}" href="/apex/CommunitiesSecureDownload?id={!file.id}" target="_blank">[Download]</a></span>
+                                
+                               </li>
+                                  <div class="video-services" style="text-align:center;{!IF(usr.Contact.Account.COD_Warning__c,'display:none;','')}">
+                                      <video id="video-item" controls="true">
+                                          <source src="https://www.googleapis.com/drive/v2/files/{!file.File_Id__c}?alt=media&access_token={!accessCodeToken}"/>
+                                      </video>
+                                  </div>
+                              </apex:repeat>
+                            </ul>
+                       </apex:outputPanel>
+                      <div class="file-dropbox" id="drop_zone" >
+                          <img src="{!URLFOR($Resource.nextgendepositions, 'nextgendepositions/images/arrow_drag_and_drop.png')}"/>
+                        <p>drag and drop<br/>your files here</p>
+                      </div>  
+                      <div id="results" style="font-weight:bold;font-size: 20px;color:#00335B;display:none;"></div>
+                      <br/>
+                      <div class="uploadBox" style="border: 0px solid #F8f8f8;display:none;"></div>
+                      <div class="pbFooter secondaryPalette">
+                        <div class="bg"></div>
+                    </div>
+                    <div id="dialog-confirm" title="Cancel Upload?" style="display:none;">
+                      <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You have uploads that have not been completed yet. Do you want to cancel the remaining uploads?</p>
+                    </div>  
+                    
+                    <apex:pageBlock id="filesSection" >
+                            <div style="{!IF(lstFiles.size>0, '','display:none;')}">
+                                <h2 class="mainTitle" style="color: black !important;">Uploaded Files:</h2>
+                                <br/>
+                                <apex:outputPanel id="pnlFileMsg">
+                                    <apex:pageMessages ></apex:pageMessages>
+                                </apex:outputPanel>
+                                <apex:variable var="i" value="{!0}"/>
+                                
+                                <table class="ui-widget ui-widget-content tableUploadedFiles" width="100%" style="font-size:14px;">
+                                    <thead>
+                                        <tr class="ui-widget-header ">
+                                            <th style="color: black !important;font-weight:bold;">File Name</th>
+                                            <th style="color: black !important;font-weight:bold;">File Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!lstFiles}" var="file" rendered="{!lstFiles.size>0}">
+                                            <tr>
+                                                <td style="padding:5px;">
+                                                    <label class="name" style="max-width: 355px;">
+                                                        {!file.File_Name__c}
+                                                    </label>
+                                                </td>
+                                                <td style="padding:5px;" align="center">
+                                                    <apex:inputField onchange="updateFileType({!i},this.value);" style="border-left: 3px solid red;" value="{!file.File_Type__c}"  required="true"/>
+                                                    <apex:variable var="i" value="{!i+1}"/>
+                                                </td>
+
+                                            </tr>
+                                        </apex:repeat>
+
+                                    </tbody>
+                                </table>
+
+                                <br/>
+                                <br/>
+
+                              
+                                <!---<div style="margin-left:40%;">
+                                    <apex:commandButton rendered="{!lstFiles.size>0}" value="Save Files" action="{!saveFiles}" reRender="filesSection,pnlTranscriptsFiles,pnlExhibitsFiles,pnlVideosFiles" status="status" />
+                                </div>
+                                ---->
+                            </div>
+                        </apex:pageBlock>           
+                  </div>
+                
+              </apex:form>
+             </div>
+         </div>
+         <c:TLS_NiceWarningJquery />
+    </body>
+</apex:page>

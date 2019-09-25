@@ -1,0 +1,43 @@
+<apex:page standardController="Contact" extensions="SelectFirmContactExtn" action="{!updateContactDueAmountsFromInvoice}">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <apex:sectionHeader title="Select" subtitle="Firm"/>
+  <script>
+      function showInvoicesPDF(){
+          var firmId = $(".selectedFirm").val();
+          window.location.href = "https://composer.congamerge.com"+
+            "?sessionId={!$Api.Session_ID}"+
+            "&serverUrl={!$Api.Partner_Server_URL_290}"+
+            "&id={!Contact.Id}"+
+            "&TemplateGroup=Contacts"+
+            "&CongaEmailTemplateGroup=Contacts"+
+            "&Qvar0ID=a1rA0000009HzzI"+
+            "&QueryID=[UnpaidContInvoices]a1rA0000009MdUS,"+
+            "[UnpaidInvoice]a1rA0000009IDmc,"+
+            "[FirmDetails]a1rA0000009Hzzc?pv0="+firmId+
+            "&TemplateId=a1zA0000001d0yU"+
+            "&OFN=Statement+-+{!URLENCODE(Contact.Name)}+-+{!Contact.CongaDateField__c} "+
+            "&EmailFromID=0D22K000000fxTz"+
+            "&EmailToId=+"+
+            "&EmailAdditionalTo={!Contact.Bill_To_Email_Addresses__c}"+
+            "&CongaEmailTemplateId=a1qA000000332v9"+
+            "&SC0=1"+
+            "&FP0=1"+
+            "&SC1=Attachments"+
+            "&defaultPDF=1"+
+            "&DS7=2"+
+            "&ds7preview=1";
+      }
+  </script>
+  <apex:form >
+      <apex:pageblock >
+          <apex:pageMessages ></apex:pageMessages>
+          <apex:pageBlockSection collapsible="false" columns="2">
+              <apex:selectList styleClass="selectedFirm" value="{!selectedFirm}" label="Firm" title="Firm" size="1" multiselect="false" >
+                  <apex:selectOptions value="{!lstFirms}"></apex:selectOptions>
+              </apex:selectList>
+              <apex:commandButton onclick="showInvoicesPDF();return false;" value="Create Statement" />
+          </apex:pageBlockSection>
+      </apex:pageblock>
+  </apex:form>
+  
+</apex:page>

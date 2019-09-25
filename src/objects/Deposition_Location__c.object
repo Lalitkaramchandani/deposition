@@ -1,0 +1,1101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_of_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account of Location</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Deposition Locations</relationshipLabel>
+        <relationshipName>Deposition_Locations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Connect_Via__c</fullName>
+        <externalId>false</externalId>
+        <label>Connect Via</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Streaming</fullName>
+                    <default>false</default>
+                    <label>Streaming</label>
+                </value>
+                <value>
+                    <fullName>Videoconferencing</fullName>
+                    <default>false</default>
+                    <label>Videoconferencing</label>
+                </value>
+                <value>
+                    <fullName>Phone</fullName>
+                    <default>false</default>
+                    <label>Phone</label>
+                </value>
+                <value>
+                    <fullName>Mobile Device - Streaming</fullName>
+                    <default>false</default>
+                    <label>Mobile Device - Streaming</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Deposition_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Deposition_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Deposition Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Deposition_Equipment_Unique__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Deposition Equipment Unique</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Deposition_Room_Unique__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Deposition Room Unique</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Deposition__c</fullName>
+        <externalId>false</externalId>
+        <label>Deposition</label>
+        <referenceTo>Deposition__c</referenceTo>
+        <relationshipLabel>Deposition Locations</relationshipLabel>
+        <relationshipName>Deposition_Location</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Equipment_To_Ship__c</fullName>
+        <externalId>false</externalId>
+        <label>Equipment To Ship</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Needed</fullName>
+                    <default>false</default>
+                    <label>Not Needed</label>
+                </value>
+                <value>
+                    <fullName>Needs To Ship</fullName>
+                    <default>false</default>
+                    <label>Needs To Ship</label>
+                </value>
+                <value>
+                    <fullName>Shipped</fullName>
+                    <default>false</default>
+                    <label>Shipped</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Equipment__c</fullName>
+        <externalId>false</externalId>
+        <label>Kit Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Kit 1</fullName>
+                    <default>false</default>
+                    <label>Kit 1</label>
+                </value>
+                <value>
+                    <fullName>Kit 2</fullName>
+                    <default>false</default>
+                    <label>Kit 2</label>
+                </value>
+                <value>
+                    <fullName>Kit 3</fullName>
+                    <default>false</default>
+                    <label>Kit 3</label>
+                </value>
+                <value>
+                    <fullName>Kit 4</fullName>
+                    <default>false</default>
+                    <label>Kit 4</label>
+                </value>
+                <value>
+                    <fullName>Kit 5</fullName>
+                    <default>false</default>
+                    <label>Kit 5</label>
+                </value>
+                <value>
+                    <fullName>Kit 6</fullName>
+                    <default>false</default>
+                    <label>Kit 6</label>
+                </value>
+                <value>
+                    <fullName>Kit 7</fullName>
+                    <default>false</default>
+                    <label>Kit 7</label>
+                </value>
+                <value>
+                    <fullName>Kit 8</fullName>
+                    <default>false</default>
+                    <label>Kit 8</label>
+                </value>
+                <value>
+                    <fullName>Kit 9</fullName>
+                    <default>false</default>
+                    <label>Kit 9</label>
+                </value>
+                <value>
+                    <fullName>Kit 10</fullName>
+                    <default>false</default>
+                    <label>Kit 10</label>
+                </value>
+                <value>
+                    <fullName>Kit 11</fullName>
+                    <default>false</default>
+                    <label>Kit 11</label>
+                </value>
+                <value>
+                    <fullName>Kit 12</fullName>
+                    <default>false</default>
+                    <label>Kit 12</label>
+                </value>
+                <value>
+                    <fullName>Kit 13</fullName>
+                    <default>false</default>
+                    <label>Kit 13</label>
+                </value>
+                <value>
+                    <fullName>Kit 14</fullName>
+                    <default>false</default>
+                    <label>Kit 14</label>
+                </value>
+                <value>
+                    <fullName>Kit 15</fullName>
+                    <default>false</default>
+                    <label>Kit 15</label>
+                </value>
+                <value>
+                    <fullName>Kit 16</fullName>
+                    <default>false</default>
+                    <label>Kit 16</label>
+                </value>
+                <value>
+                    <fullName>Kit 17</fullName>
+                    <default>false</default>
+                    <label>Kit 17</label>
+                </value>
+                <value>
+                    <fullName>Kit 18</fullName>
+                    <default>false</default>
+                    <label>Kit 18</label>
+                </value>
+                <value>
+                    <fullName>Kit 19</fullName>
+                    <default>false</default>
+                    <label>Kit 19</label>
+                </value>
+                <value>
+                    <fullName>Kit 20</fullName>
+                    <default>false</default>
+                    <label>Kit 20</label>
+                </value>
+                <value>
+                    <fullName>Kit 21</fullName>
+                    <default>false</default>
+                    <label>Kit 21</label>
+                </value>
+                <value>
+                    <fullName>Kit 22</fullName>
+                    <default>false</default>
+                    <label>Kit 22</label>
+                </value>
+                <value>
+                    <fullName>Kit 23</fullName>
+                    <default>false</default>
+                    <label>Kit 23</label>
+                </value>
+                <value>
+                    <fullName>Kit 24</fullName>
+                    <default>false</default>
+                    <label>Kit 24</label>
+                </value>
+                <value>
+                    <fullName>Kit 25</fullName>
+                    <default>false</default>
+                    <label>Kit 25</label>
+                </value>
+                <value>
+                    <fullName>Kit 26</fullName>
+                    <default>false</default>
+                    <label>Kit 26</label>
+                </value>
+                <value>
+                    <fullName>Kit 27</fullName>
+                    <default>false</default>
+                    <label>Kit 27</label>
+                </value>
+                <value>
+                    <fullName>Kit 28</fullName>
+                    <default>false</default>
+                    <label>Kit 28</label>
+                </value>
+                <value>
+                    <fullName>Kit 29</fullName>
+                    <default>false</default>
+                    <label>Kit 29</label>
+                </value>
+                <value>
+                    <fullName>Kit 30</fullName>
+                    <default>false</default>
+                    <label>Kit 30</label>
+                </value>
+                <value>
+                    <fullName>Kit 31</fullName>
+                    <default>false</default>
+                    <label>Kit 31</label>
+                </value>
+                <value>
+                    <fullName>Kit 32</fullName>
+                    <default>false</default>
+                    <label>Kit 32</label>
+                </value>
+                <value>
+                    <fullName>Kit 33</fullName>
+                    <default>false</default>
+                    <label>Kit 33</label>
+                </value>
+                <value>
+                    <fullName>Kit 34</fullName>
+                    <default>false</default>
+                    <label>Kit 34</label>
+                </value>
+                <value>
+                    <fullName>Kit 35</fullName>
+                    <default>false</default>
+                    <label>Kit 35</label>
+                </value>
+                <value>
+                    <fullName>Kit 36</fullName>
+                    <default>false</default>
+                    <label>Kit 36</label>
+                </value>
+                <value>
+                    <fullName>Kit 37</fullName>
+                    <default>false</default>
+                    <label>Kit 37</label>
+                </value>
+                <value>
+                    <fullName>Kit 38</fullName>
+                    <default>false</default>
+                    <label>Kit 38</label>
+                </value>
+                <value>
+                    <fullName>Kit 39</fullName>
+                    <default>false</default>
+                    <label>Kit 39</label>
+                </value>
+                <value>
+                    <fullName>Kit 40</fullName>
+                    <default>false</default>
+                    <label>Kit 40</label>
+                </value>
+                <value>
+                    <fullName>Kit 41</fullName>
+                    <default>false</default>
+                    <label>Kit 41</label>
+                </value>
+                <value>
+                    <fullName>Kit 42</fullName>
+                    <default>false</default>
+                    <label>Kit 42</label>
+                </value>
+                <value>
+                    <fullName>Kit 43</fullName>
+                    <default>false</default>
+                    <label>Kit 43</label>
+                </value>
+                <value>
+                    <fullName>Kit 44</fullName>
+                    <default>false</default>
+                    <label>Kit 44</label>
+                </value>
+                <value>
+                    <fullName>Kit 45</fullName>
+                    <default>false</default>
+                    <label>Kit 45</label>
+                </value>
+                <value>
+                    <fullName>Kit 46</fullName>
+                    <default>false</default>
+                    <label>Kit 46</label>
+                </value>
+                <value>
+                    <fullName>Kit 47</fullName>
+                    <default>false</default>
+                    <label>Kit 47</label>
+                </value>
+                <value>
+                    <fullName>Kit 48</fullName>
+                    <default>false</default>
+                    <label>Kit 48</label>
+                </value>
+                <value>
+                    <fullName>Kit 49</fullName>
+                    <default>false</default>
+                    <label>Kit 49</label>
+                </value>
+                <value>
+                    <fullName>Kit 50</fullName>
+                    <default>false</default>
+                    <label>Kit 50</label>
+                </value>
+                <value>
+                    <fullName>Kit 51</fullName>
+                    <default>false</default>
+                    <label>Kit 51</label>
+                </value>
+                <value>
+                    <fullName>Kit 52</fullName>
+                    <default>false</default>
+                    <label>Kit 52</label>
+                </value>
+                <value>
+                    <fullName>Kit 53</fullName>
+                    <default>false</default>
+                    <label>Kit 53</label>
+                </value>
+                <value>
+                    <fullName>Kit 54</fullName>
+                    <default>false</default>
+                    <label>Kit 54</label>
+                </value>
+                <value>
+                    <fullName>Kit 55</fullName>
+                    <default>false</default>
+                    <label>Kit 55</label>
+                </value>
+                <value>
+                    <fullName>Kit 56</fullName>
+                    <default>false</default>
+                    <label>Kit 56</label>
+                </value>
+                <value>
+                    <fullName>Kit 57</fullName>
+                    <default>false</default>
+                    <label>Kit 57</label>
+                </value>
+                <value>
+                    <fullName>Kit 58</fullName>
+                    <default>false</default>
+                    <label>Kit 58</label>
+                </value>
+                <value>
+                    <fullName>Kit 59</fullName>
+                    <default>false</default>
+                    <label>Kit 59</label>
+                </value>
+                <value>
+                    <fullName>Kit 60</fullName>
+                    <default>false</default>
+                    <label>Kit 60</label>
+                </value>
+                <value>
+                    <fullName>Kit 61</fullName>
+                    <default>false</default>
+                    <label>Kit 61</label>
+                </value>
+                <value>
+                    <fullName>Kit 62</fullName>
+                    <default>false</default>
+                    <label>Kit 62</label>
+                </value>
+                <value>
+                    <fullName>Kit 63</fullName>
+                    <default>false</default>
+                    <label>Kit 63</label>
+                </value>
+                <value>
+                    <fullName>Kit 64</fullName>
+                    <default>false</default>
+                    <label>Kit 64</label>
+                </value>
+                <value>
+                    <fullName>Kit 65</fullName>
+                    <default>false</default>
+                    <label>Kit 65</label>
+                </value>
+                <value>
+                    <fullName>Kit 66</fullName>
+                    <default>false</default>
+                    <label>Kit 66</label>
+                </value>
+                <value>
+                    <fullName>Kit 67</fullName>
+                    <default>false</default>
+                    <label>Kit 67</label>
+                </value>
+                <value>
+                    <fullName>Kit 68</fullName>
+                    <default>false</default>
+                    <label>Kit 68</label>
+                </value>
+                <value>
+                    <fullName>Kit 69</fullName>
+                    <default>false</default>
+                    <label>Kit 69</label>
+                </value>
+                <value>
+                    <fullName>Kit 70</fullName>
+                    <default>false</default>
+                    <label>Kit 70</label>
+                </value>
+                <value>
+                    <fullName>Kit 71</fullName>
+                    <default>false</default>
+                    <label>Kit 71</label>
+                </value>
+                <value>
+                    <fullName>Kit 72</fullName>
+                    <default>false</default>
+                    <label>Kit 72</label>
+                </value>
+                <value>
+                    <fullName>Kit 73</fullName>
+                    <default>false</default>
+                    <label>Kit 73</label>
+                </value>
+                <value>
+                    <fullName>Kit 74</fullName>
+                    <default>false</default>
+                    <label>Kit 74</label>
+                </value>
+                <value>
+                    <fullName>Kit 75</fullName>
+                    <default>false</default>
+                    <label>Kit 75</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Exhibits_Processed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Exhibits Processed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Facility_Testing_Notes__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account_of_Location__r.Facility_Testing__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Facility Testing Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hidden_Room_Value__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is used in trigger code only. This field has a random number if the room is blank, and actual field value this ensures, that we can have blank values in the Room and still maintain uniqueness</inlineHelpText>
+        <label>Hidden Room Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hiring_Attorney__c</fullName>
+        <externalId>false</externalId>
+        <label>Hiring Attorney</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hiring_Firm__c</fullName>
+        <externalId>false</externalId>
+        <label>Hiring Firm</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Location Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Location_Complete__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Location Complete</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <description>Who is using the room</description>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>5000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Onsite_Technician__c</fullName>
+        <externalId>false</externalId>
+        <label>Onsite Technician</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>Phone</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Return_Tracking__c</fullName>
+        <externalId>false</externalId>
+        <label>Return Tracking #</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Room__c</fullName>
+        <externalId>false</externalId>
+        <label>Room</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>nextgen 1</fullName>
+                    <default>false</default>
+                    <label>nextgen 1</label>
+                </value>
+                <value>
+                    <fullName>nextgen 2</fullName>
+                    <default>false</default>
+                    <label>nextgen 2</label>
+                </value>
+                <value>
+                    <fullName>nextgen 3</fullName>
+                    <default>false</default>
+                    <label>nextgen 3</label>
+                </value>
+                <value>
+                    <fullName>nextgen 4</fullName>
+                    <default>false</default>
+                    <label>nextgen 4</label>
+                </value>
+                <value>
+                    <fullName>nextgen 5</fullName>
+                    <default>false</default>
+                    <label>nextgen 5</label>
+                </value>
+                <value>
+                    <fullName>nextgen 6</fullName>
+                    <default>false</default>
+                    <label>nextgen 6</label>
+                </value>
+                <value>
+                    <fullName>nextgen 7</fullName>
+                    <default>false</default>
+                    <label>nextgen 7</label>
+                </value>
+                <value>
+                    <fullName>nextgen 8</fullName>
+                    <default>false</default>
+                    <label>nextgen 8</label>
+                </value>
+                <value>
+                    <fullName>nextgen 9</fullName>
+                    <default>false</default>
+                    <label>nextgen 9</label>
+                </value>
+                <value>
+                    <fullName>nextgen10</fullName>
+                    <default>false</default>
+                    <label>nextgen10</label>
+                </value>
+                <value>
+                    <fullName>nextgen 11</fullName>
+                    <default>false</default>
+                    <label>nextgen 11</label>
+                </value>
+                <value>
+                    <fullName>nextgen 12</fullName>
+                    <default>false</default>
+                    <label>nextgen 12</label>
+                </value>
+                <value>
+                    <fullName>nextgen 13</fullName>
+                    <default>false</default>
+                    <label>nextgen 13</label>
+                </value>
+                <value>
+                    <fullName>nextgen 14</fullName>
+                    <default>false</default>
+                    <label>nextgen 14</label>
+                </value>
+                <value>
+                    <fullName>nextgen 15</fullName>
+                    <default>false</default>
+                    <label>nextgen 15</label>
+                </value>
+                <value>
+                    <fullName>nextgen 16</fullName>
+                    <default>false</default>
+                    <label>nextgen 16</label>
+                </value>
+                <value>
+                    <fullName>nextgen 17</fullName>
+                    <default>false</default>
+                    <label>nextgen 17</label>
+                </value>
+                <value>
+                    <fullName>nextgen 18</fullName>
+                    <default>false</default>
+                    <label>nextgen 18</label>
+                </value>
+                <value>
+                    <fullName>nextgen 19</fullName>
+                    <default>false</default>
+                    <label>nextgen 19</label>
+                </value>
+                <value>
+                    <fullName>nextgen 20</fullName>
+                    <default>false</default>
+                    <label>nextgen 20</label>
+                </value>
+                <value>
+                    <fullName>nextgen 21</fullName>
+                    <default>false</default>
+                    <label>nextgen 21</label>
+                </value>
+                <value>
+                    <fullName>nextgen 22</fullName>
+                    <default>false</default>
+                    <label>nextgen 22</label>
+                </value>
+                <value>
+                    <fullName>nextgen 23</fullName>
+                    <default>false</default>
+                    <label>nextgen 23</label>
+                </value>
+                <value>
+                    <fullName>nextgen 24</fullName>
+                    <default>false</default>
+                    <label>nextgen 24</label>
+                </value>
+                <value>
+                    <fullName>nextgen 25</fullName>
+                    <default>false</default>
+                    <label>nextgen 25</label>
+                </value>
+                <value>
+                    <fullName>nextgen 26</fullName>
+                    <default>false</default>
+                    <label>nextgen 26</label>
+                </value>
+                <value>
+                    <fullName>nextgen 27</fullName>
+                    <default>false</default>
+                    <label>nextgen 27</label>
+                </value>
+                <value>
+                    <fullName>nextgen 28</fullName>
+                    <default>false</default>
+                    <label>nextgen 28</label>
+                </value>
+                <value>
+                    <fullName>nextgen 29</fullName>
+                    <default>false</default>
+                    <label>nextgen 29</label>
+                </value>
+                <value>
+                    <fullName>nextgen 30</fullName>
+                    <default>false</default>
+                    <label>nextgen 30</label>
+                </value>
+                <value>
+                    <fullName>nextgen 31</fullName>
+                    <default>false</default>
+                    <label>nextgen 31</label>
+                </value>
+                <value>
+                    <fullName>nextgen 33</fullName>
+                    <default>false</default>
+                    <label>nextgen 33</label>
+                </value>
+                <value>
+                    <fullName>Lauren Miller</fullName>
+                    <default>false</default>
+                    <label>Lauren Miller</label>
+                </value>
+                <value>
+                    <fullName>Scott Sandler</fullName>
+                    <default>false</default>
+                    <label>Scott Sandler</label>
+                </value>
+                <value>
+                    <fullName>Simon</fullName>
+                    <default>false</default>
+                    <label>Simon</label>
+                </value>
+                <value>
+                    <fullName>NextGen Test</fullName>
+                    <default>false</default>
+                    <label>NextGen Test</label>
+                </value>
+                <value>
+                    <fullName>Jason Primuth</fullName>
+                    <default>false</default>
+                    <label>Jason Primuth</label>
+                </value>
+                <value>
+                    <fullName>David Noteware</fullName>
+                    <default>false</default>
+                    <label>David Noteware</label>
+                </value>
+                <value>
+                    <fullName>nextgentest1</fullName>
+                    <default>false</default>
+                    <label>nextgentest1</label>
+                </value>
+                <value>
+                    <fullName>nextgentest2</fullName>
+                    <default>false</default>
+                    <label>nextgentest2</label>
+                </value>
+                <value>
+                    <fullName>nextgentest3</fullName>
+                    <default>false</default>
+                    <label>nextgentest3</label>
+                </value>
+                <value>
+                    <fullName>Brandon Rogers</fullName>
+                    <default>false</default>
+                    <label>Brandon Rogers</label>
+                </value>
+                <value>
+                    <fullName>Teadra Vito</fullName>
+                    <default>false</default>
+                    <label>Teadra Vito</label>
+                </value>
+                <value>
+                    <fullName>Caren Kolter</fullName>
+                    <default>false</default>
+                    <label>Caren Kolter</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 1</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 1</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 2</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 2</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 3</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 3</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 4</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 4</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 5</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 5</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 6</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 6</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 7</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 7</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 8</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 8</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 9</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 9</label>
+                </value>
+                <value>
+                    <fullName>NextGen Host 10</fullName>
+                    <default>false</default>
+                    <label>NextGen Host 10</label>
+                </value>
+                <value>
+                    <fullName>USAATRIAL</fullName>
+                    <default>false</default>
+                    <label>USAATRIAL</label>
+                </value>
+                <value>
+                    <fullName>Jeremy Smiler</fullName>
+                    <default>false</default>
+                    <label>Jeremy Smiler</label>
+                </value>
+                <value>
+                    <fullName>Scot Dantzer</fullName>
+                    <default>false</default>
+                    <label>Scot Dantzer</label>
+                </value>
+                <value>
+                    <fullName>(712) 775-7031 - 236-942-315</fullName>
+                    <default>false</default>
+                    <label>(712) 775-7031 - 236-942-315</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Shipping_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Tested__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tested</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>UPS_Tracking_Number__c</fullName>
+        <externalId>true</externalId>
+        <label>Outbound Tracking #</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Deposition Location</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Deposition_Date__c</columns>
+        <columns>Room__c</columns>
+        <columns>Deposition__c</columns>
+        <columns>Notes__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Deposition_Date__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Upcoming Depositions</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Depositions</fullName>
+        <columns>NAME</columns>
+        <columns>Deposition_Date__c</columns>
+        <columns>Room__c</columns>
+        <columns>Deposition__c</columns>
+        <columns>Notes__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Depositions</label>
+    </listViews>
+    <listViews>
+        <fullName>Assigned_Equipment</fullName>
+        <columns>NAME</columns>
+        <columns>Deposition__c</columns>
+        <columns>Equipment__c</columns>
+        <columns>Location_Address__c</columns>
+        <columns>Tested__c</columns>
+        <columns>Notes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Equipment__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Assigned Equipment</label>
+    </listViews>
+    <nameField>
+        <displayFormat>ID-{0000}</displayFormat>
+        <label>Location ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Deposition Locations</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Deposition__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Deposition_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Location_Address__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Deposition__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Deposition_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Hiring_Attorney__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Hiring_Firm__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Notes__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>UPS_Tracking_URL</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>UPS Tracking URL</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>if({!ISBLANK(Deposition_Location__c.UPS_Tracking_Number__c)},&quot;There is no UPS trackig number&quot;,http://wwwapps.ups.com/etracking/tracking.cgi?TypeOfInquiryNumber=T&amp;InquiryNumber1={!Deposition_Location__c.UPS_Tracking_Number__c}</url>
+    </webLinks>
+</CustomObject>

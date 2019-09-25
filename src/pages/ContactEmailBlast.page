@@ -1,0 +1,60 @@
+<apex:page standardController="Case_Leads__c" extensions="ContactEmailBlastController" >
+    <style>
+        .info_style {
+        color: #00529B;
+        
+        margin:10px 22px;
+        font-size:2em;
+        vertical-align:middle;
+        }
+        
+    </style>
+    <apex:form >
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:pageBlock >
+            <c:PageBlockTableEnhancer targetPbTableIds="contactTable" paginate="true" enableExport="false" defaultPageSize="5" pageSizeOptions="5,10,25,50,100" />    
+            <apex:pageBlockSection columns="1" rendered="{!IF(repList.size > 0,false,true)}">
+            	<apex:outputText styleClass="info_style" value="There are no people listed on this case." ></apex:outputText>
+            </apex:pageBlockSection>
+            <apex:pageblocksection columns="1" id="pbsRepList" rendered="{!IF(repList.size > 0,true,false)}" >
+                <apex:pageBlockTable value="{!repList}" var="wrep" id="contactTable" >
+                    <apex:column headerValue="Select" >
+                        <apex:inputCheckbox value="{!wrep.isSelected}" disabled="{!!wrep.hasEmailId}" />
+                    </apex:column>
+                    <apex:column value="{!wrep.rep.Attorney__c}" title="Contact" />
+                    <apex:column value="{!wrep.rep.Representation_Type__c}" title="Representation Type" />
+                   <!-- <apex:column headerValue="Contact has Email" >
+                    <apex:outputText >{!IF((wrep.hasEmailId),'Yes','No')}</apex:outputText></apex:column> -->
+                    <apex:column value="{!wrep.rep.Case__r.Commission__c}" />
+                    <apex:column value="{!wrep.rep.Law_Firm__c}" title="Account" />
+                   
+                    
+                </apex:pageBlockTable>
+            </apex:pageblocksection>
+            <apex:pageBlockSection columns="1" id="pbsSearch" rendered="{!IF(repList.size > 0,true,false)}">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Select Template:</apex:outputLabel>
+                    <apex:outputPanel >
+                        <apex:selectList value="{!selectedTemplate}" size="1" multiselect="false" >
+                            <apex:selectOptions value="{!templateOptions}"></apex:selectOptions>
+                        </apex:selectList>
+                    	<apex:commandButton value="Send" action="{!emailBlast}" />    
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    
+                </apex:pageBlockSectionItem>      
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

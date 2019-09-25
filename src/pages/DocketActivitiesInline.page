@@ -1,0 +1,28 @@
+<apex:page standardController="Case_Leads__c" extensions="DocketActivitiesInlineExtension" >
+    
+    <apex:pageBlock id="pb1">
+        <c:PageBlockTableEnhancer targetPbTableIds="docketActivities" paginate="true" enableExport="false" defaultPageSize="{!IF($CurrentPage.parameters.inline == '1', 5, 25)}" pageSizeOptions="5,10,25,50,100" />    
+        
+        <apex:outputPanel >
+        <apex:outputLink value="/apex/docketactivitiesInline?id={!caseId}" target="_blank" rendered="{!$CurrentPage.parameters.inline == '1'}">Open Full Page</apex:outputLink>
+    </apex:outputPanel>
+        <apex:pageBlockTable value="{!docketActivities}" id="docketActivities" var="docket">
+            <apex:column headerValue="Docket Activity Name">
+                <apex:outputLink value="/{!docket.id}" target="_blank" >{!docket.name}</apex:outputLink>
+               
+            </apex:column>
+            <apex:column headerValue="Docket Update">
+                <apex:outputField value="{!docket.Docket_Update__c}" />
+            </apex:column>
+            <apex:column headerValue="Entry Date">
+               <apex:outputField value="{!docket.Docket_Entry_Date__c}" />
+            </apex:column>
+             <apex:column headerValue="Last Modified Date">
+                <apex:outputField value="{!docket.LastModifiedDate}" />
+            </apex:column>
+            
+        </apex:pageBlockTable>
+         
+    </apex:pageBlock>
+   
+</apex:page>

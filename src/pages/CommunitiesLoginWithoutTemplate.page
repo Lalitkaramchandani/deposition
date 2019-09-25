@@ -1,0 +1,51 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="SiteLoginController">
+   
+    <body>
+        <div class="wrapper">
+                
+              
+                <apex:form id="frm" forceSSL="true">
+                <apex:actionFunction action="{!login}" name="login" id="loginButton"  reRender="frm" status="status"/>
+                <c:ActionStatus ></c:ActionStatus>
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        
+                        <div class="scheduleform">
+
+                               <apex:pageMessages ></apex:pageMessages>
+                               
+                               <div style="padding:15px; font-size:15px; padding-top:5px;">
+                                   <b style="color: #666;">Email Address:</b><br/>
+                                   <apex:inputText label="UserName" required="true" id="username" value="{!username}" style="width:100%; height:25px; font-size:17px" styleclass="form-control validate[required]"/>
+                                </div>
+                                <div style="padding:20px; font-size:15px; padding-top:5px;">
+                                   <b style="color: #666;">Password:</b><br/>
+                                   <apex:inputSecret label="Password" required="true" id="password" value="{!password}" style="width:100%; height:25px; font-size:17px" styleclass="form-control validate[required]"/>
+                                   
+                                </div>
+
+                                
+                                <div align="center" style="padding:0px; ">
+                                    <br/>
+                                    <apex:commandButton value="{!$Label.site.login_button}" onclick="login();return false;" styleclass="btn btn-primary btn-large" />
+                                </div>
+                                <div style="text-align:center; padding:20px; font-size:15px; padding-top:10px;">
+                                    <label>
+                                        <span align="center"><a target="_blank" style="color: #666;" href="/CommunitiesSelfReg"><B>New User</B></a></span> |
+                                        <span align="center"><a target="_blank" style="color: #666;" href="/CommunityForgotPassword"><B>Forgot Password</B></a></span>
+                                    </label>
+                                </div>
+                                
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+                </apex:form>
+                
+            </div>
+        <c:TLS_NiceWarningJquery />
+    </body>
+    
+</apex:page>

@@ -1,0 +1,43 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="ConfirmDepositionController" action="{!updateDeposition}">
+    <c:CommunityResources title="Confirm"/>
+    <body>
+        <div class="wrapper">
+                
+                <c:CommunityHeader />
+ 
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        <h1>Confirm</h1>
+
+                        <div class="scheduleform">
+
+                               <apex:pageMessages ></apex:pageMessages>
+                               <div class="message" style="{!IF(isSucess,'','display:none;')}color: #3d537a;" >
+                            <span><h4>Thank you for confirming tomorrow&#39;s {!deposition.Event_Type_Lowercase__c}. The details of this {!deposition.Event_Type_Lowercase__c} are below. Please contact us immediately if any information is incorrect or has changed. We are available 24 hours a day, worldwide, to assist you.<br/><P></P></h4>
+                                <TABLE>
+                                    <TR><TD>Case Name:</TD><TD>{!deposition.Case_Name__c}</TD></TR>
+                                    <TR><TD>Date/Time:</TD><TD><apex:outputfield value="{!deposition.Deposition_Date__c}"/> {!deposition.Deposition_Time__c} {!deposition.Time_Zone__c}</TD></TR>
+                                    
+                                    <TR><TD>Location:</TD><TD><apex:outputfield value="{!deposition.Event_Location__c}" /><BR><a target="_blank" href="http://maps.google.com/maps?f=q&hl=en&q={!deposition.Event_Location__c}&om=1">View Google Map</a></BR></TD></TR>
+                            <TR><TD>Location Contact:</TD><TD>{!deposition.Location_contact__c}</TD></TR>
+                            <TR><TD>Witness Name:</TD><TD><apex:outputfield value="{!deposition.Deponent_Name__c}" /></TD></TR>
+                            <TR><TD>Scheduling Contact:</TD><TD>{!deposition.Hiring_Attorney__c} - {!deposition.Hiring_Firm__c}</TD></TR>
+                            <TR><TD>Services Requested:</TD><TD>{!deposition.Deposition_Services__c}</TD></TR>
+                            <TR><TD>Additional Notes:</TD><TD>{!deposition.Client_Notes__c}</TD></TR>
+                        </TABLE>
+                        
+                    </span>
+                </div>
+                <!-- SFDC STUFF ENDS HERE -->                            
+                        </div>
+
+                    </div>
+
+                </div>
+             
+                <c:CommunityFooter />
+            </div>
+        
+    </body>
+    
+</apex:page>

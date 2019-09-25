@@ -1,0 +1,55 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="SiteLoginController">
+    <c:CommunityResources title="Login"/>
+    <body>
+        <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <apex:form id="frm" forceSSL="true">
+                <apex:actionFunction action="{!login}" name="login" id="loginButton"  reRender="frm" status="status"/>
+                <c:ActionStatus ></c:ActionStatus>
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        <h1>Login</h1>
+
+                        <div class="scheduleform">
+
+                               <apex:pageMessages ></apex:pageMessages>
+                                <div class="single-field">
+                                    <label for="eventtype">
+                                        <span>Email Address</span>
+                                         <apex:inputText label="UserName" required="true" id="username" value="{!username}" styleclass="form-control validate[required]"/>
+                                        <br/>
+                                    </label>
+                                </div>
+
+                                <div class="single-field">
+                                    <label>
+                                        <span>Password</span>
+                                        <apex:inputSecret label="Password" required="true" id="password" value="{!password}"  styleclass="form-control validate[required]"/>
+                                    </label>
+                                </div>
+                                <div class="recentlyviewed">
+                                    <br/>
+                                    <apex:commandButton value="{!$Label.site.login_button}" onclick="login();return false;" styleclass="btn btn-primary btn-large" />
+                                </div>
+                                 <div class="single-field">
+                                    <label>
+                                        <span><a style="color: white;" href="/CommunitiesSelfReg">New User?</a></span><br/>
+                                        <span><a style="color: white;" href="/CommunityForgotPassword">Forgot Password</a></span>
+                                    </label>
+                                </div>
+                                
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+                </apex:form>
+                <c:CommunityFooter />
+                <c:TLS_NiceWarningJquery />
+            </div>
+        
+    </body>
+    
+</apex:page>

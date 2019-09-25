@@ -1,0 +1,37 @@
+<apex:page controller="SalesRepCasesSummaryController" >
+    <apex:form >
+    <apex:pageBlock title="Clients" >
+       
+        	<apex:pageBlockTable value="{!clientList}" var="client">
+            	<apex:column headerValue="Deposition Name" >
+                    <apex:commandLink value="{!client.Name}" action="{!showDetail}" target="_blank">
+                        <apex:param name="rId" value="{!client.Id}" assignTo="{!rId}"/>
+                    </apex:commandLink> 
+                </apex:column>
+                <apex:column value="{!client.Case_Lead__r.Case_Name__c}"/>
+                <apex:column value="{!client.Deposition_Date__c}"/>
+                <apex:column value="{!client.Deposition_Status__c}"/>
+            </apex:pageBlockTable>
+        
+    </apex:pageBlock>
+    <apex:pageBlock title="Prospects">
+        <apex:pageBlockTable value="{!prospectList}" var="prospect">
+            	<apex:column headerValue="Case Lead Name" >
+                    <apex:commandLink value="{!prospect.Name}" action="{!showDetail}" target="_blank">
+                        <apex:param name="rId" value="{!prospect.Id}" assignTo="{!rId}"/>
+                    </apex:commandLink> 
+            </apex:column>
+            	<apex:column value="{!prospect.Case_Name__c}"/>
+                <apex:column value="{!prospect.Case_Management_Conference__c}"/>
+               <!-- <apex:column value="{!prospect.Deposition_Status__c}"/> -->
+            </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:pageBlock title="Following">
+        <apex:pageBlockTable value="{!followedCaseList}" var="follow">
+            	<apex:column value="{!follow.Case_Lead__c}"/>
+                <apex:column value="{!follow.Case_Lead__r.Case_Name__c}"/>
+                <!-- <apex:column value="{!client.Deposition_Status__c}"/>  -->
+            </apex:pageBlockTable>
+    </apex:pageBlock>
+        </apex:form>
+</apex:page>

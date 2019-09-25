@@ -1,0 +1,7 @@
+<apex:page standardController="Invoice__c" extensions="CloneInvoiceExtn" 
+action="{!cloneInvoiceRecord}">
+  <apex:sectionHeader title="Clone Invoice" subtitle="{!Invoice__c.Name}"/>
+  <apex:pageBlock >
+      <apex:pageMessages ></apex:pageMessages>
+  </apex:pageBlock>
+</apex:page>

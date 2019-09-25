@@ -1,0 +1,25 @@
+<apex:component controller="FirmInfoCntrl">
+  <HR WIDTH="90%" ALIGN="MIDDLE">  
+       </HR>
+    
+    <apex:outputPanel id="pnlFirmFooter" styleClass="ngfooter">
+        <apex:outputLabel escape="false" value="{!firm.Community_Footer__c}"></apex:outputLabel>
+    </apex:outputPanel>
+    <style>
+        .pager select {
+            width: auto;
+        }
+        .pager img{
+            width: auto;
+            height: auto;
+            display:inline;
+        }
+        .status img{
+            width: auto;
+            height: auto;
+        }
+        .scheduleform label{
+            margin-left:0px !important;
+        }
+    </style>
+</apex:component>

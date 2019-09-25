@@ -1,0 +1,56 @@
+<apex:component access="global" controller="RateSheetItemsDetailsCntrl">
+    <apex:attribute name="rateSheetId" assignTo="{!rateSheetRecordId}" type="String" description="This points to Rate Sheet record Id" />
+     <apex:outputtext escape="false" value="{!FrimRecord.Email_Header_HTML__c}" /> 
+    Thank you for working with NextGen Reporting. Below are the rates that we discussed.<br/>
+     Please review these rates, and confirm that they look good to you.
+     <br/><br/>
+    <table width="95%" border="1" cellspacing="0" cellpadding="0" style="background:white;border:solid #e0e3e5 1.0pt;margin-left:2%;margin-right:5%;">
+        <tbody>
+            <tr>
+                <td style="border:solid #ededed 1.0pt;background:#e3f3ff;padding:3.0pt 1.5pt 3.0pt 3.75pt">
+                    <p class="MsoNormal">
+                        <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">
+                           <span style="color:black;text-decoration:none;font-weight:bold;">Item</span>
+                        </span>
+                    </p>
+                </td>
+                <td nowrap="" style="border:solid #ededed 1.0pt;background:#e3f3ff;padding:3.0pt 3.75pt 3.0pt 3.75pt">
+                    <p class="MsoNormal" align="center" style="text-align:center;font-weight:bold;">
+                        <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Price</span>
+                     </p>
+                </td>
+                <td style="border:solid #ededed 1.0pt;background:#e3f3ff;padding:3.0pt 1.5pt 3.0pt 3.75pt">
+                    <p class="MsoNormal" align="right" style="text-align:right;font-weight:bold;">
+                        <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Units of Measure
+                         </span>
+                    </p>
+                </td>
+            </tr>
+            <apex:repeat value="{!RateSheetItems}" var="item">
+                <tr>
+                    <td style="border:solid #ededed 1.0pt;padding:3.0pt 1.5pt 3.0pt 3.75pt">
+                        <p class="MsoNormal"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black"><apex:outputtext value="{!Item.Item__r.Name}"/><u></u><u></u></span></p>
+                    </td>
+                    <td nowrap="" style="border:solid #ededed 1.0pt;padding:3.0pt 3.75pt 3.0pt 3.75pt">
+                        <p class="MsoNormal" align="center" style="text-align:center">
+                            <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black"><apex:outputField value="{!Item.Price__c}"/>
+                        
+                        <u></u><u></u></span></p>
+                    </td>
+                    <td style="border:solid #ededed 1.0pt;padding:3.0pt 1.5pt 3.0pt 3.75pt">
+                        <p class="MsoNormal" align="right" style="text-align:right"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">
+                        <apex:outputField value="{!Item.Units_of_Measure__c}"/><u></u><u></u></span></p>
+                    </td>
+                </tr>
+            </apex:repeat>
+            
+            
+        </tbody>
+    </table>
+We look forward to working with you. Please let us know if you have any questions with these rates.<br/><br/>
+        <P>Thank you,
+        <br/>
+        {!$User.FirstName}
+        </P>
+        <apex:outputtext escape="false" value="{!FrimRecord.Email_Footer_HTML__c}" /> 
+</apex:component>

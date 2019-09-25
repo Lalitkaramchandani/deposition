@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>What gear are we using, and where is it?</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account_of_Location__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account of Location</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_of_Location__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition_Location__r.Location_Address__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address of Location</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Who currently has the equipment?</description>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Equipment</relationshipLabel>
+        <relationshipName>Equipment</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Deposition__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition_Location__r.Deposition__r.Deposition_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Date of Deposition</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Deposition_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Deposition Location</label>
+        <referenceTo>Deposition_Location__c</referenceTo>
+        <relationshipLabel>Equipment</relationshipLabel>
+        <relationshipName>Equipment</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Deposition__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(Deposition_Location__r.Deposition__c, Deposition_Location__r.Deposition__r.Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Deposition</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Link_to_Send_Tracking__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;http://wwwapps.ups.com/WebTracking/processInputRequest?HTMLVersion=5.0&amp;sort_by=status&amp;loc=en_US&amp;InquiryNumber1=&quot;&amp;Send_Tracking__c&amp;&quot;&amp;track.x=32&amp;track.y=7&quot;, &quot;Send&quot;) &amp; &quot; and &quot; &amp;
+
+HYPERLINK(&quot;http://wwwapps.ups.com/WebTracking/processInputRequest?HTMLVersion=5.0&amp;sort_by=status&amp;loc=en_US&amp;InquiryNumber1=&quot;&amp; Receive_Tracking__c  &amp; &quot;&amp;track.x=32&amp;track.y=7&quot;, &quot;Receive&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tracking Links</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Receive_Tracking__c</fullName>
+        <externalId>true</externalId>
+        <label>Receive Tracking</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Send_Tracking__c</fullName>
+        <externalId>true</externalId>
+        <label>Send Tracking</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Timestamp__c</fullName>
+        <description>The shipper and shipping time.</description>
+        <externalId>false</externalId>
+        <label>Shipping Timestamp</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Employees</fullName>
+                    <default>true</default>
+                    <label>Employees</label>
+                </value>
+                <value>
+                    <fullName>In Transit</fullName>
+                    <default>false</default>
+                    <label>In Transit</label>
+                </value>
+                <value>
+                    <fullName>On Location</fullName>
+                    <default>false</default>
+                    <label>On Location</label>
+                </value>
+                <value>
+                    <fullName>Long Term</fullName>
+                    <default>false</default>
+                    <label>Long Term</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Equipment</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Date_of_Deposition__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Deposition__c</columns>
+        <columns>Receive_Tracking__c</columns>
+        <columns>Send_Tracking__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>Kit {0}</displayFormat>
+        <label>Kit ID</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Equipment</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Check_In_Equipment</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>200</height>
+        <linkType>page</linkType>
+        <masterLabel>Check In Equipment</masterLabel>
+        <openType>sidebar</openType>
+        <page>CheckInEquipment</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

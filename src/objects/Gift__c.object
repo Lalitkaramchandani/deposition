@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Business_Unit__c</fullName>
+        <defaultValue>&quot;$User.Business_Unit__c &quot;</defaultValue>
+        <externalId>false</externalId>
+        <label>Business Unit</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Business_Units</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Date_Shipped_if_applicable__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Shipped (if applicable)</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Gift__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Date of Gift</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Description_and_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Description and Reason</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Gift_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Gift Value</label>
+        <precision>6</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Giver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Giver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Gifts</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Manager_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Manager Email</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recipient__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Gifts</relationshipLabel>
+        <relationshipName>Gifts</relationshipName>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Ship_to_if_applicable__c</fullName>
+        <externalId>false</externalId>
+        <label>Ship To (if applicable)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Giver Home Address</fullName>
+                    <default>false</default>
+                    <label>Giver Home Address</label>
+                </value>
+                <value>
+                    <fullName>Giver Office Address</fullName>
+                    <default>false</default>
+                    <label>Giver Office Address</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Shipping_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>Recipient__r.Contact_Name__c &amp; BR() &amp; 
+Recipient__r.Account.Name  &amp; BR() &amp;   
+Recipient__r.Account.BillingStreet  &amp; BR() &amp;  
+Recipient__r.Account.BillingCity &amp; &quot;, &quot; &amp; Recipient__r.Account.BillingState &amp; &quot; &quot; &amp; Recipient__r.Account.BillingPostalCode</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipping Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Denied</fullName>
+                    <default>false</default>
+                    <label>Denied</label>
+                </value>
+                <value>
+                    <fullName>Pending Approval</fullName>
+                    <default>true</default>
+                    <label>Pending Approval</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Giftcard</fullName>
+                    <default>false</default>
+                    <label>Gift Card</label>
+                </value>
+                <value>
+                    <fullName>Event Tickets</fullName>
+                    <default>false</default>
+                    <label>Event Tickets</label>
+                </value>
+                <value>
+                    <fullName>Other (specify in description)</fullName>
+                    <default>false</default>
+                    <label>Other (specify in description)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Gift</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Date_of_Gift__c</columns>
+        <columns>Giver__c</columns>
+        <columns>Business_Unit__c</columns>
+        <columns>Gift_Value__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>Gift {0000}</displayFormat>
+        <label>Gift ID</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Gifts</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Approval_Restricted_to_Admins</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISCHANGED( Status__c )
+&amp;&amp; 
+NOT(
+$User.Username = &quot;aaron.brown@lexitas.sf&quot;  || 
+$User.Username = &quot;kayla.lambert@lexitas.sf&quot;  || 
+$User.Username = &quot;chad.davenport@lexitaslegal.com&quot;  || 
+$User.Username = &quot;kvarallo@nextgenreporting.com&quot; 
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Gifts can only be approved by Aaron, Chad, Ken or Kayla.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Description_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>isblank( Description_and_Reason__c)</errorConditionFormula>
+        <errorDisplayField>Description_and_Reason__c</errorDisplayField>
+        <errorMessage>Please explain the reason for this gift.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Giver_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISBLANK(Giver__c)</errorConditionFormula>
+        <errorDisplayField>Giver__c</errorDisplayField>
+        <errorMessage>Who is requesting this gift?</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>New_Gift_Preapproved</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISNEW() &amp;&amp; NOT(ISPICKVAL(Status__c, &quot;Pending Approval&quot;))
+&amp;&amp;
+NOT(
+$User.Username = &quot;aaron.brown@lexitas.sf&quot; ||
+$User.Username = &quot;kayla.lambert@lexitas.sf&quot; ||
+$User.Username = &quot;chad.davenport@lexitaslegal.com&quot; ||
+$User.Username = &quot;kvarallo@nextgenreporting.com&quot;
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Gifts can only be approved by Aaron, Chad, Ken or Kayla.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Ship_Date_Restricted_to_Admins</fullName>
+        <active>true</active>
+        <errorConditionFormula>(ISNEW() &amp;&amp; NOT(ISBLANK(Date_Shipped_if_applicable__c))
+||
+ISCHANGED( Date_Shipped_if_applicable__c ))
+&amp;&amp; 
+NOT(
+$User.Username = &quot;aaron.brown@lexitas.sf&quot;  || 
+$User.Username = &quot;kayla.lambert@lexitas.sf&quot;  || 
+$User.Username = &quot;chad.davenport@lexitaslegal.com&quot;  || 
+$User.Username = &quot;kvarallo@nextgenreporting.com&quot; 
+)</errorConditionFormula>
+        <errorDisplayField>Date_Shipped_if_applicable__c</errorDisplayField>
+        <errorMessage>Only Aaron, Chad, Ken or Kayla can update the ship date</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

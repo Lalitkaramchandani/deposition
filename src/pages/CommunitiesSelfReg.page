@@ -1,0 +1,77 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="CommunitiesSelfRegController">
+    <c:CommunityResources title="Registration in Process"/>
+
+    <body>
+        
+        <div class="wrapper">
+            
+            <c:CommunityHeader />
+            <c:ActionStatus ></c:ActionStatus>
+            <apex:form id="frm" forceSSL="true">
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        <h1>Registration in Process</h1>
+                            <div class="scheduleform">
+
+                               <apex:pageMessages ></apex:pageMessages>
+                               <div class="single-field" style="max-height: none !important;" >
+                                    <apex:outputLabel value="{!errMsg}" escape="false"/>
+                                </div>
+                               <apex:outputPanel rendered="{!!hideForm}">
+                               
+                               
+                                    <div class="single-field">
+                                        <label for="eventtype">
+                                            <span>First Name: </span>
+                                             <apex:inputText label="First Name"  id="firstName" value="{!firstName}" styleclass="form-control validate[required]"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label for="eventtype">
+                                            <span>Last Name: </span>
+                                             <apex:inputText label="Last  Name"  id="lastName" value="{!lastName}" styleclass="form-control validate[required]"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label for="eventtype">
+                                            <span>Email Address: </span>
+                                             <apex:inputText label="Email"  id="email" value="{!email}" styleclass="form-control validate[required]"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+    
+                                    <div  class="single-field">
+                                        <label >
+                                            <table>
+                                                <tr>
+                                                    <td><apex:inputCheckbox value="{!acceptTermAndConditions}" style="height: inherit;    width: inherit;"/>
+                                            
+                                                    </td>
+                                                    <td> <span class="messageText">I agree to the <a style="color:white;" target="_blank" href="/apex/TermsOfUse">Terms of Service </a></span>
+                                                    </td>
+                                                </tr>
+                                            </table>    
+                                        </label>
+                                    </div>
+    
+                                    <div class="recentlyviewed">
+                                        <br/>
+                                        <apex:commandButton value="{!$Label.site.submit}" reRender="frm" status="status" action="{!registerUser}" styleclass="btn btn-primary btn-large" />
+                                    </div>
+                                </apex:outputPanel>
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+             </apex:form>   
+            <c:CommunityFooter />
+            <c:TLS_NiceWarningJquery />
+        </div>
+        
+    </body>
+    
+</apex:page>

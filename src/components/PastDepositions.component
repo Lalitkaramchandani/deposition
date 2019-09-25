@@ -1,0 +1,117 @@
+<apex:component controller="PastDepositionsCntrl"  >
+    <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery.tablesorter.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.tableSorter, 'tableSorter/jquery.tablesorter.min.js')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.tableSorter, 'tableSorter/themes/blue/style.css')}" type="text/css" id="" media="print, projection, screen" />
+    <script type="text/javascript" src="{!URLFOR($Resource.tableSorter, 'tableSorter/addons/pager/jquery.tablesorter.pager.js')}"></script>
+
+   
+        
+     <c:ActionStatus ></c:ActionStatus>
+     <apex:actionFunction name="fetchPastDepositions" action="{!fetchDepositions}" reRender="pbPastDepositions" status="status">
+         <apex:param assignTo="{!selectedCaseNameChar}" value="" name="selectedCaseNameChar"/>
+     </apex:actionFunction>
+     <apex:outputPanel rendered="{!lstDepositions.size==0}">
+         <label>
+             <span>We don’t see any past depositions for you. If you have past depositions which should be associated with your account,
+                  just <A HREF="mailto:{!Firm.Scheduling_Email_Address__c}" >let us know.</A> 
+                  
+             </span>
+         </label>
+     </apex:outputPanel>
+    <apex:pageBlock id="pbPastDepositions" rendered="{!Depositions.size>0}">
+        <div >
+            <apex:pageBlockTable value="{!Depositions}" var="dep" styleClass="tablesorter" >
+                 <apex:column headerValue="Case Caption/Name">
+                    {!dep.Case_Name__c}
+                </apex:column>
+                <apex:column headerValue="Witness Name">
+                    <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!dep.id}','newwindow','700','650');  return false;" >{!dep.Deponent_Name__c}</a>
+                </apex:column>
+                <apex:column value="{!dep.Deposition_Date__c}" />
+                <apex:column value="{!dep.Hiring_Attorney__c}" headerValue="Hiring Attorney Name" />
+                <apex:column value="{!dep.Deposition_Services__c}" />
+                <apex:column headerValue="Deposition Id">
+                    <a href="#" onclick="PopupCenter('/apex/CommunitiesDepositionDetail?id={!dep.id}','newwindow','700','650');  return false;" >{!dep.Name}</a>
+                </apex:column>
+            </apex:pageBlockTable>
+                <div  class="footerDiv">
+                    <label><i>Search by First Name of Deponent </i></label> <br/>
+                    <label onclick="fetchPastDepositions('A')">A | </label>
+                    <label  onclick="fetchPastDepositions('B')">B | </label>
+                    <label onclick="fetchPastDepositions('C')">C | </label>
+                    <label  onclick="fetchPastDepositions('D')">D | </label>
+                    <label  onclick="fetchPastDepositions('E')">E | </label>
+                    <label onclick="fetchPastDepositions('F')">F | </label>
+                    <label  onclick="fetchPastDepositions('G')">G | </label>
+                    <label onclick="fetchPastDepositions('H')">H | </label>
+                    <label  onclick="fetchPastDepositions('I')">I | </label>
+                    <label  onclick="fetchPastDepositions('J')">J | </label>
+                    <label onclick="fetchPastDepositions('K')">K | </label>
+                    <label  onclick="fetchPastDepositions('L')">L | </label>
+                    <label onclick="fetchPastDepositions('M')">M | </label>
+                    <label  onclick="fetchPastDepositions('N')">N | </label>
+                    <label  onclick="fetchPastDepositions('O')">O | </label>
+                    <label onclick="fetchPastDepositions('P')">P | </label>
+                    <label  onclick="fetchPastDepositions('Q')">Q | </label>
+                    <label onclick="fetchPastDepositions('R')">R | </label>
+                    <label  onclick="fetchPastDepositions('S')">S | </label>
+                    <label  onclick="fetchPastDepositions('T')">T | </label>
+                    <label onclick="fetchPastDepositions('U')">U | </label>
+                    <label  onclick="fetchPastDepositions('V')">V | </label>
+                    <label onclick="fetchPastDepositions('W')">W | </label>
+                    <label  onclick="fetchPastDepositions('X')">X | </label>
+                    <label  onclick="fetchPastDepositions('Y')">Y | </label>
+                    <label  onclick="fetchPastDepositions('Z')">Z | </label>
+                    <label  onclick="fetchPastDepositions('Other')">Other | </label>
+                    <label  onclick="fetchPastDepositions('All')">All</label>
+                    <br/>
+                    <br/>
+                    <div id="pager" class="pager">
+            
+                        <img src="https://mottie.github.com/tablesorter/addons/pager/icons/first.png" class="first" />
+                        <img src="https://mottie.github.com/tablesorter/addons/pager/icons/prev.png" class="prev" />
+                        <span class="pagedisplay"></span>
+                        <!-- this can be any element, including an input -->
+                        <img src="https://mottie.github.com/tablesorter/addons/pager/icons/next.png" class="next" />
+                        <img src="https://mottie.github.com/tablesorter/addons/pager/icons/last.png" class="last" />
+                        <select class="pagesize">
+                            <option   value="10">10</option>
+                            <option selected="selected" value="20">20</option>
+                            <option value="30">30</option>
+                            <option  value="50">50</option>
+                            <option  value="100">100</option>
+                        </select>
+            
+                    </div>
+            
+                </div>
+           </div>     
+          
+    </apex:pageBlock>
+    
+
+    <style>
+        .pager {
+            top: 0px !important;
+            position: initial !important;
+        }
+        
+        .mainTitle {
+            color: white;
+            text-transform: uppercase;
+        }
+        .footerDiv label{
+            font-size:12px;
+            cursor:pointer;
+            font-weight: bold;
+        }
+        
+        .tablesorter a{
+            color : #3D3D3D;
+        }
+        .pbBody{
+            margin-top: -3%;
+         }
+         
+    </style>
+</apex:component>

@@ -1,0 +1,23 @@
+<apex:component access="global">
+<apex:attribute name="Deposition__c" type="Deposition__c" description="Deposition__c record"/>
+<apex:attribute name="method" type="String" description="Method of Vcalendar"/>
+BEGIN:VCALENDAR
+PRODID:-//Blatant Media Corporation//Absorb LMS//EN
+VERSION:2.0
+METHOD:{!method}
+BEGIN:VEVENT
+CLASS:PUBLIC
+DTSTAMP;TZID=GMT:<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TEXT(Deposition__c.Converted_Time__c),':',''),'-',''),' ','T')}"/>
+UID:<apex:outputText value="{!Deposition__c.id}"/>
+DTSTART;TZID=GMT:<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TEXT(Deposition__c.Converted_Time__c),':',''),'-',''),' ','T')}"/>
+DTEND;TZID=GMT:<apex:outputText value="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(TEXT(Deposition__c.Converted_Time__c),':',''),'-',''),' ','T')}"/>
+SUMMARY:<apex:outputText value="{!IF(method=='REQUEST','Reschedule - ',IF(method=="Cancel",'Cancellation Notice -',''))}{!Deposition__c.Event_Type__c} of {!Deposition__c.Deponent_Name__c} on {!Deposition__c.Case_Name__c}" escape="false"/>
+DESCRIPTION:<apex:outputText value="{!Deposition__c.Event_Type__c} of {!Deposition__c.Deponent_Name__c} on {!Deposition__c.Deposition_Date__c} at {!Deposition__c.Deposition_Time__c} {!Deposition__c.Time_Zone__c} " escape="false"/> \n 
+<apex:outputText value="Event Location: {!JSENCODE(Deposition__c.Event_Location__c)} " escape="false"/> \n
+<apex:outputText value="Job Number: {!JSENCODE(Deposition__c.Name)}" escape="false"/>
+LOCATION:<apex:outputtext value="{!SUBSTITUTE(JSENCODE(Deposition__c.Event_Location__c),'\r\n',' ')}" escape="false"/>
+SEQUENCE:0
+ORGANIZER:schedule@nextgenreporting.com
+END:VEVENT
+END:VCALENDAR  
+</apex:component>

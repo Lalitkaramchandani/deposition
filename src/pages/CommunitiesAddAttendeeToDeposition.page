@@ -1,0 +1,150 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" 
+controller="CommunitiesAddAttendeeToDepositionCntrl" action="{!searchDepositions}" >
+    <c:CommunityResources title="Search"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <style>
+        .datatable img{
+            width:auto !important;
+        }
+        .dataTables_length, .dataTables_info, .dataTables_paginate{
+            display:none !important;
+        }
+        .datatable tr:nth-child(odd) {
+            background: #D5D7DC !important;
+        }
+        .datatable tr:nth-child(even) {
+            background: #FFF !important;
+        }
+        .datatable a{
+            color:black !important;
+        }
+        .datatable th ,.datatable td{
+          font-size: 14px;
+          font-family: 'Open Sans Condensed', sans-serif;
+          
+          text-align: left;
+        }
+        
+        /* header */
+        
+        .datatable > thead > tr:first-child > th {
+          text-align: left;
+          background-color: #FFF;
+        }
+        .datatable  tbody td {
+            vertical-align: middle;
+        }
+        .dataTables_info,.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active{
+            color: white !important;
+        }
+        .ngheader{
+            margin: 20px;
+            margin-top: 25px !important;
+        }
+        .dataTables_filter{
+            display:none !important;
+        }
+        .customButton{
+            padding: 5px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <body>
+        <apex:form id="frm" >
+        <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <!---<apex:form id="frm" forceSSL="true">--->
+                <c:ActionStatus ></c:ActionStatus>
+                
+                <div style="width: 90%;margin-left: 5%;">
+                  
+                 
+                  <div style="width:100%;text-align:right;">
+                      <label><a  style="color:white;" href="/portal">Return To The Main Page</a>
+                      </label>
+                  </div>
+                  
+                  <br/><br/>
+                  <label><span>Looking for a deposition that isn’t listed here? Enter the name of the case or the witness:</span></label>
+                  <apex:inputText value="{!depSearchText}" style="border: 1px solid black;
+                                                            padding: 0px;background: rgba(255,255,255,0.8);margin: 1px;height: 2.2em;"/>
+                 &nbsp;&nbsp;<apex:commandButton styleClass="customButton" reRender="pnlDepositions,pnlMsg" value="Search" action="{!searchDepositions}" status="status"/>
+                  
+                  <br/><br/>
+                  <apex:outputPanel id="pnlMsg">
+                       <div >
+                          <apex:pageMessages ></apex:pageMessages>
+                      </div> 
+                  </apex:outputPanel>
+                  
+                   <br/><br/>
+                   <apex:outputPanel id="pnlDepositions">
+                   
+                  
+                  <table style="display:none !important;" id="depositionsTbl"  class="datatable"  cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                               <th>Select</th>
+                               <th>Witness Name</th>
+                               <th>Deposition Date</th>
+                               <th>Case Name</th>
+                               <th>Hiring Attorney</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                               <th>Select</th>
+                               <th>Witness Name</th>
+                               <th>Deposition Date</th>
+                               <th>Case Name</th>
+                               <th>Hiring Attorney</th>
+                            </tr>
+                        </tfoot>
+                        <tbody >
+                           <apex:repeat value="{!lstDepositions}"  var="dep"> 
+                               <tr>
+                                   <td><apex:inputCheckbox value="{!dep.IsDeleted}"/> </td>
+                                   <td>{!dep.Deponent_Name__c}</td>
+                                   <td><apex:outputText value="{0,date,MM'/'dd'/'yyyy }" >
+                                            <apex:param value="{!dep.Deposition_Date__c}" /> 
+                                         </apex:outputText> 
+                                    </td>
+                                   <td>{!dep.Case_Name__c}</td>
+                                   <td>{!dep.Hiring_Attorney__c}</td>
+                                  
+                               </tr>
+                           </apex:repeat>
+                           
+                        </tbody>
+                    </table>
+                    <br/><br/>
+                    <label><span>By granting yourself access to these files, you certify that you have the right and permission to do so.</span></label>
+                    <br/><br/>
+                    <div style="margin-left:40%;">
+                          <apex:commandButton styleClass="customButton" action="{!addToMyAccount}" reRender="pnlDepositions,pnlMsg" value="Add to My Account"  status="status"/>
+                      </div>
+                     <br/><br/>
+                   
+                   <script>
+                      $(".datatable").show();
+                      $('#depositionsTbl').dataTable().fnDestroy();
+                      $('#depositionsTbl').DataTable({
+                            "iDisplayLength": 1000
+                       } );
+                      
+                 </script> 
+                 </apex:outputPanel>   
+                </div>
+                <!---</apex:form>--->
+                <c:CommunityFooter />
+            </div>
+           
+        </apex:form>
+    </body>
+    
+</apex:page>

@@ -1,0 +1,121 @@
+<apex:page title="Find a Court Reporter" standardController="Deposition__c" extensions="CourtReporterController">
+<apex:sectionHeader title="Find a Court Reporter" subtitle="Find Court Reporter" description="Locate court reporters 
+based on their description, coverage area and city. "/>
+<apex:pageMessages />
+
+<apex:form >
+<apex:pageBlock title="Search Criteria">
+  <apex:pageBlockSection columns="1">
+     <apex:pageBlockSectionItem >
+       <apex:outputLabel value="Find" />
+       <apex:outputPanel layout="block">
+           <apex:selectList value="{!selectedType}" size="1" multiselect="false">
+               <apex:selectOptions value="{!TypeOptions}"></apex:selectOptions>
+           </apex:selectList>
+       </apex:outputPanel>     
+     </apex:pageBlockSectionItem>
+     <apex:pageBlockSectionItem >   
+       <apex:outputLabel value="Keyword"/>
+       <apex:outputPanel >
+         <apex:inputText value="{!keywordSearch}"/>  
+       </apex:outputPanel>
+     </apex:pageBlockSectionItem>
+     
+     <!---<apex:pageBlockSectionItem >   
+       <apex:outputLabel value="Contact Name"/>
+       <apex:outputPanel >
+         <apex:inputText value="{!contactName}"/>  
+       </apex:outputPanel>
+     </apex:pageBlockSectionItem>
+     --->
+     
+     <apex:pageBlockSectionItem >
+       <apex:outputLabel value="{!$ObjectType.Contact.fields.CR_Status__c.Label}" />
+       <apex:outputPanel layout="block">
+           <c:MultiSelect leftLabel=""
+                    leftOptions="{!lstAll}"
+                    rightLabel=""
+                    rightOptions="{!lstSelected}"
+                    size="4"
+                    width="150px"/> 
+           
+           </apex:outputPanel>     
+     </apex:pageBlockSectionItem>
+     <apex:pageBlockSectionItem >
+       <apex:outputLabel value="{!$ObjectType.Contact.fields.CR_Reliability__c.Label}" />
+       <apex:outputPanel layout="block">
+           <c:MultiSelect leftLabel=""
+                    leftOptions="{!lstAllReliability}"
+                    rightLabel=""
+                    rightOptions="{!lstSelectedReliability}"
+                    size="4"
+                    width="150px"/> 
+           
+           </apex:outputPanel>     
+     </apex:pageBlockSectionItem>
+     <apex:pageBlockSectionItem >   
+       <apex:outputLabel value="Show All Accounts"/>
+       <apex:outputPanel >
+         <apex:inputcheckbox value="{!showOtherAccount}"/>  
+         <br/>
+         <apex:commandButton value="Go" action="{!search}" />   
+       </apex:outputPanel>
+     </apex:pageBlockSectionItem>
+  </apex:pageBlockSection>
+</apex:pageBlock>
+
+<apex:pageBlock title="Results" rendered="{!IF(searchResults.size > 0,false,true)}">
+  No records to display 
+</apex:pageBlock>
+
+<apex:pageBlock title="Results" rendered="{!IF(searchResults.size > 0,true,false)}">
+  <apex:pageBlockButtons >
+    <apex:commandButton value="Send Email" action="{!SendEmail}" />
+    <apex:commandButton value="Cancel" action="{!Cancel}"/>
+  </apex:pageBlockButtons>
+  
+  <apex:pageBlockSection columns="1" title="Search Results">
+  <apex:pageBlockTable value="{!searchResults}" var="res">
+    <apex:column headerValue="Account Name" style="vertical-align: top;">
+      <apex:outputLink value="/{!res.account.Id}">
+        {!res.account.Name}
+      </apex:outputLink>
+    </apex:column>
+     <apex:column style="vertical-align: top;" value="{!res.Account.Account_Ranking_Formula__c}" headerValue="Account Ranking" />
+          
+    <apex:column >
+      <apex:pageBlockTable value="{!res.lstContact}" var="contact">
+          <apex:column headerValue="Action">
+           <apex:outputPanel rendered="{!!ISBLANK(contact.Email)}">
+             <input type="checkbox" value="1" name="{!contact.Id}" />
+           </apex:outputPanel>  
+           
+           <apex:outputPanel rendered="{!ISBLANK(contact.Email)}">
+             <a target="_blank" href="/{!contact.Id}" title="Missing Email Address. Click to Navigate to the contact Record" >
+               <img src="/img/msg_icons/warning16.png" title="Missing Email Address. Click to Navigate to the contact Record" />
+             </a>  
+           </apex:outputPanel>
+           
+          </apex:column>
+         <apex:column value="{!contact.Contact_Ranking_Formula__c }" headerValue="Contact Ranking" />
+         <apex:column value="{!contact.Name}" />
+         <apex:column value="{!contact.CR_Status__c}" />
+         <apex:column value="{!contact.CR_Reliability__c}" />
+         <apex:column value="{!contact.Phone}" />
+         <apex:column value="{!contact.Email}" />
+         <apex:column value="{!contact.MailingCity}" headerValue="City"/>
+         <apex:column value="{!contact.MailingState}" headerValue="State"/>
+         <apex:column value="{!contact.MailingPostalCode}" headerValue="Zip"/>
+         <apex:column value="{!contact.LastActivityDate}" />
+         <apex:column value="{!contact.Recent_Attendee_Date__c}" />
+         <apex:column value="{!contact.Attendee_Count__c}" />
+         <apex:column value="{!contact.Description}" />
+         
+      </apex:pageBlockTable>
+    </apex:column>
+  </apex:pageBlockTable>
+  </apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+
+</apex:page>

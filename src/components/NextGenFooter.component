@@ -1,0 +1,45 @@
+<apex:component >
+    <div id="bottom_container">
+        <div id="bottom_navigation">
+            <div id="bottom_services">
+                <H1>Our Services</H1>
+                <a href="/services/court-reporting/">Court Reporting</a>
+                <a href="/services/video-services/">Video Services</a>
+                <a href="/services/remote-depositions/">Remote Depositions</a>
+                <a href="/services/realtime/">Realtime</a>
+                <a href="/services/remote-trial-video/">Remote Trial Video</a>
+                <a href="/services/interpreting/">Interpreting</a>
+                <a href="/services/trial-presentation/">Trial Presentation</a>
+            </div>
+            <div id="bottom_company">
+                <h1>Company</h1>
+                <a href="/company/news/">News</a>
+                <a href="/company/leadership/">Leadership Team</a>
+                <a href="/company/join-our-team/">Join Our Team</a>
+            </div>
+            <div id="bottom_schedule">
+                <h1>Schedule</h1>
+                <a href="/schedule/">Schedule an Upcoming Deposition</a>
+            </div>
+            <div id="bottom_contact">
+                <h1>Contact</h1>
+                <p class="contact_number">888.267.1200</p>
+                <a href="mailto:sales@NextGenReporting.com">sales@NextGenReporting.com</a>
+    
+                <div id="social">
+                    <A HREF="http://www.linkedin.com/company/nextgen-reporting"><img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/linkedIn-icon.jpg')}" width="16" height="17" class="social_icons" /> LinkedIn</a>
+                    <br />
+                    <A HREF="http://www.facebook.com/pages/NextGen-Reporting/103734936337092"><img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/facebook-icon.jpg')}" width="16" height="17" class="social_icons" /> Facebook</a>
+                </div>
+    
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+        <hr class="bottom" />
+    
+        <p class="footer">&copy; NextGen Reporting. All Rights Reserved. </p>
+        <p class="footer">NextGen Reporting, 999 Old Eagle School Road, Suite 118, Wayne, PA 19087</p>
+    
+    </div>
+</apex:component>

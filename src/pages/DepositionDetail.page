@@ -1,0 +1,334 @@
+<apex:page standardController="Deposition__c" extensions="GoogleDriveAuthenticationCntrl" >
+        <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+         <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-ui-1.8.18.custom.min.js')}" type="text/javascript"></script>
+        <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery.easy-confirm-dialog.js')}" type="text/javascript"></script>
+       
+         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"></link>
+         <script src="{!$Resource.upload}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+        <link href="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/css/FileUploadCSS.css')}" rel="stylesheet" type="text/css" />
+        <link href="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/css/jquery-ui-1.8.18.custom.css')}" rel="stylesheet" type="text/css" />
+           <style>
+            .ui-dialog {
+                font-size: 13px;
+            }
+            
+            .overlay {
+                width: 100%;
+                height: 100%;
+                background: #000;
+                opacity: 0.7;
+                top: 0px;
+                left: 0px;
+                position: fixed;
+                z-index: 500;
+            }
+            
+            .status {
+                background: #ddd;
+                border: 1px solid #aaa;
+                border-radius: 2px;
+                color: black;
+                font-weight: bold;
+                text-transform: uppercase;
+                cursor: pointer;
+                -moz-box-shadow: 0 0 15px 5px #DDDDDD;
+                -webkit-box-shadow: 0 0 15px 5px #DDDDDD;
+                box-shadow: 0 0 15px 5px #DDDDDD;
+                margin: 2px;
+                width: 250px;
+                opacity: 1;
+                height: auto;
+                
+                left: 40%;
+                padding: 15px;
+                z-index: 1000;
+                display: block;
+            }
+            
+            .ui-widget-header {
+                border: 1px solid #00335B !important;
+                background: #00335B url(images/ui-bg_gloss-wave_35_f6a828_500x100.png) 50% 50% repeat-x !important;
+            }
+            
+            .messageCell,
+            .errorMsg {
+                color: red;
+            }
+            
+            .ui-button {
+                border: 1px solid #cccccc !important;
+                background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x !important;
+                font-weight: bold !important;
+                color: #1c94c4 !important;
+            }
+        </style>
+    <!-- This will render a standard detail page of deposition with all related lists --->
+    <apex:detail relatedListHover="true" relatedList="true"  subject="{!Deposition__c.Id}" title="true" showChatter="true" inlineEdit="true"   />
+    
+    <!--<apex:relatedList list="Deposition_Location__r" />
+    <apex:relatedList list="Deposition_Roles__r" /> 
+    <apex:relatedList list="Invoices__r" /> 
+    <apex:relatedList list="OpenActivities" /> 
+    <apex:relatedList list="ActivityHistories" /> 
+    <apex:relatedList list="Corporate_Clients__r" /> --->
+   
+        
+        <script type="text/javascript"> 
+           var accessToken = '';
+           var folderName = "{!Deposition__c.Name}";
+            var folderID = "{!Deposition__c.Google_Drive_Folder_Id__c}";
+            
+            
+            var j$ = jQuery.noConflict();
+            var byteChunkArray;
+            var files;
+            var currentFile;
+            var $upload;
+            var CHUNK_SIZE = 180000; //Must be evenly divisible by 3, if not, data corruption will occur
+            var VIEW_URL = '/servlet/servlet.FileDownload?file=';
+            var BatchSize = 0;
+            
+            var fileForInputFile;
+            // A $( document ).ready() block.
+            
+            function checkForUploads() {
+               
+                //Get div of the first matching upload element that is 'pending', if none, all uploads are complete
+                $upload = $(".upload:first[data-status='pending']");
+                console.log($upload);
+                if ($upload.length != 0) {
+                    //Based on index of the div, get correct file from files array
+                    console.log(files);
+                    if (files != null) {
+                        currentFile = files[$upload.attr('data-index')];
+                        
+                        var button = document.getElementById('upload-button');
+                        var results = document.getElementById('results');
+                        var file = currentFile;
+                        console.log('Actual File Name-->' + file.name);
+                        if (file) {
+                            results.innerHTML = '';
+                            var contentType = file.type || 'application/octet-stream';
+                            var metadata = {
+                                'title': file.name,
+                                'mimeType': contentType,
+                                'parents': [{"id": folderID}]
+                            };
+                            var uploader = new MediaUploader({
+                                 file: file,
+                                 token: accessToken,
+                                 metadata : metadata,
+                                 onComplete: function(data) {
+                                       console.log('No Error. This file has completed, all byte chunks have been uploaded.');
+                                    $upload.attr('data-status', 'complete');
+                                    $upload.find(".percentComplete").html('<font style="color:#008040;">Completed</font>');
+                                    $upload.find(".statusBarPercent").hide();
+                                    checkForUploads();
+                                 }
+                             });
+                             uploader.upload();
+                               
+                               
+                        } else {
+                            results.innerHTML = 'Nothing to upload.';
+                        }
+                    } else {
+                        performUploadCompleteActions();
+                    }
+                } else {
+                    performUploadCompleteActions();
+                }
+        }
+        function loadDataTable(){
+            console.log('ready');
+            
+            j$("#table").show();
+            
+            j$(".load-status").hide();
+            //j$(".bRelatedList:eq(1 )").append(j$("#GoogleFiles").remove());
+            j$(".file").change(function(event) {
+                fileForInputFile = document.getElementById("file").files;
+                
+            });
+            j$('#table').dataTable().fnDestroy();
+            //j$('#table').DataTable();
+            j$('#table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100,-1], [10, 25, 50,100, "All"]],
+                "oLanguage": {
+                
+                "sSearch": "File Name Search:"
+                
+                }
+             });
+            j$("#GoogleFiles .pbGoogleFiles").show();
+         }
+         
+         
+        function grantFileAccess(){
+             window.location.href = '/apex/GrantingFileAccessToUsers?id={!Deposition__c.id}&folderId='+folderID;
+        }
+        function downloadAsZip  (){
+             window.location.href = '/apex/DownloadAllFilesFromDeposition?id={!Deposition__c.id}';;
+        }
+        
+        function callLoadFilesInDataTable(){
+            j$(".load-status").show();
+            loadFilesInDataTable();
+        }
+        function callSaveFiles(){
+            saveFiles();
+            j$(".load-status").show();
+        }
+        function hideStatus(){
+            j$(".load-status").hide();
+        }
+  </script>  
+  
+  <c:GoogleDriveUploadScript IsListFolderFiles="true" />
+  
+  <script src="https://apis.google.com/js/client.js?onload=init"></script>
+  <apex:form >
+      
+      <apex:inputText styleClass="folderId" value="{!folderId}" style="display:none;" />
+       <apex:actionFunction reRender="pnlForTable" name="loadFilesInDataTable" action="{!loadFilesInDataTable}"  oncomplete="loadDataTable();"/>
+       <apex:actionFunction status="status" reRender="pnlMsg" name="saveFiles" action="{!saveFiles}" oncomplete="hideStatus();" />
+      <apex:actionFunction name="updateFileType" action="{!updateDepFileType}" reRender="pnlMsg" oncomplete="j$('#filesLoadStatus').hide();">
+            <apex:param assignTo="{!selectedDepFileIndex}" value="" name="selectedFileIndex"/>
+      </apex:actionFunction>      
+        
+        
+      <div class="listRelatedObject Custom16Block" id="GoogleFiles" >
+         <div class="load-status" style="margin-left:40%;">
+           <div class="status" >
+                <img src="/img/loading24.gif" />
+                <span>Please Wait Loading Files...</span>
+            </div>
+        </div>
+        
+        <div class="bPageBlock brandSecondaryBrd secondaryPalette pbGoogleFiles" style="display:none;" >
+            <div class="pbHeader">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td class="pbTitle"><img alt="Google Drive" class="" src="/img/icon/contentHubGDrive_16.png" style="float: left;margin-top: 1%;"/>
+                                <h3 id="j_id0:j_id4_title">Files</h3></td>
+                            <td class="pbButton">&nbsp;</td>
+                            <td class="pbHelp">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pbBody" >
+            
+                <br/>
+                  <table border="0" width="100%">
+                      <tr>
+                          <td width="25%">
+                              <b style="float:left;">Select File :</b>
+                                <input style="float:left;" id="file" class="file" type="file" name="files" multiple="true" />
+                              <br/><br/>
+                              <button onclick="upload_image();return false;" style="min-width: 140px;" class="ui-button ui-widget  ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">Start Upload</span></button>
+                              <br/>
+                              <br/>
+                              <button onclick="grantFileAccess();return false;" style="min-width: 140px;" class="ui-button ui-widget  ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">Grant File Access</span></button>
+                              <br/>
+                              <br/>
+                              <button onclick="downloadAsZip();return false;" style="min-width: 140px;" class="ui-button ui-widget  ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">Download As Zip</span></button>
+                              <br/>
+                              <br/>
+                              <!---<button onclick="callSaveFiles();return false;" style="min-width: 140px;" class="ui-button ui-widget  ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">Save File Info</span></button>
+                              --->
+                          </td>
+                          <td>
+                              <div id="drop_zone" style="width:60%;">Drag and Drop Your Files Here</div>
+                                <div class="uploadBox" style="border: 0px solid #F8f8f8;"></div>
+                                <br/>
+                                <div id="results" style="font-weight:bold;font-size: 20px;color:#00335B;"></div>
+                                <br/>
+                                <div class="dragAndDropTargetDiv" id="dragAndDropTargetDiv" style="display: none;">
+                                    <div class="dragAndDropTargetImg"></div>
+                                    <div class="dragAndDropTargetTextDiv">Drag and Drop Files Here</div>
+                                </div>
+                                <br/>
+                                
+                          </td>
+                      </tr>
+                  </table>
+                   
+                 <apex:outputPanel id="pnlMsg">
+                     <br/>
+                     <apex:pagemessages ></apex:pagemessages>
+                      <br/>
+                 </apex:outputPanel> 
+                 
+                  <apex:pageBlock id="pnlForTable">
+                      <apex:variable var="counter" value="{!0}"/>
+                          <div id="filesLoadStatus"  style="margin-left:40%;display:none;">
+                               <div class="status" >
+                                    <img src="/img/loading24.gif" />
+                                    <span>Please Wait...</span>
+                                </div>
+                            </div>
+                          <table style="display:none !important;" id="table" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>File Type</th>
+                                    <th>Title</th>
+                                    <th>Notes</th>
+                                    <th>Uploaded By</th>
+                                    <th>Upload Date</th>
+                                                               </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Action</th>
+                                   <th>File Type</th>
+                                    <th>Title</th>
+                                    <th>Notes</th>
+                                    <th>Uploaded By</th>
+                                    <th>Upload Date</th>
+                                    
+                                </tr>
+                            </tfoot>
+                            <tbody id="tableBody">
+                               <apex:repeat value="{!lstFiles}"  var="S3File"> 
+                                   <tr>
+                                       <td>
+                                           <a href="/apex/FileDetail?id={!S3File.awsS3Obj.id}" target="_blank">Info</a>
+                                          
+                                       </td>
+                                       <td><apex:inputField onchange="j$('#filesLoadStatus').show();updateFileType({!counter});" value="{!S3File.awsS3Obj.File_Type__c}"/>  
+                                           <apex:variable var="counter" value="{!counter+1}"/>
+                                       </td>
+                                       <td><a href="/apex/SecureDownload?id={!S3File.awsS3Obj.id}" target="_blank">{!S3File.awsS3Obj.File_Name__c}</a></td>
+                                       <td><img title="{!S3File.awsS3Obj.Note__c}" src="{!IF(S3File.awsS3Obj.Note__c != NULL && S3File.awsS3Obj.Note__c !='' ,'/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')}" alt="Checked" width="21" height="16" class="checkImg" /> 
+                                           </td>
+                                       <td>{!S3File.OwnerName}</td>
+                                       <td><apex:outputText value="{0,date,MM'/'dd'/'yyyy h:mm a}" >
+                                                <apex:param value="{!S3File.UploadedDate}" /> 
+                                             </apex:outputText>
+                                        </td>
+                                      
+                                   </tr>
+                               </apex:repeat>
+                               
+                            </tbody>
+                        </table>
+                      
+               </apex:pageBlock>
+            </div>
+            <div class="pbFooter secondaryPalette">
+                <div class="bg"></div>
+            </div>
+            <div id="dialog-confirm" title="Cancel Upload?" style="display:none;">
+              <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You have uploads that have not been completed yet. Do you want to cancel the remaining uploads?</p>
+            </div>
+        </div>
+    </div>
+    
+    <c:TLS_NiceWarningJquery />
+  </apex:form>
+</apex:page>

@@ -1,0 +1,65 @@
+<apex:component >
+   <script src="{!URLFOR($Resource.AmazonS3Upload_files, 'AmazonS3Upload_files/js/jquery-1.7.1.min.js')}" type="text/javascript"></script>
+   <apex:includeScript value="{!URLFOR($Resource.js_zip, '/jszip.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.js_zip, '/jszip-load.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.js_zip, '/jszip-deflate.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.js_zip, '/jszip-inflate.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.js_zip, '/FileSaver.js')}"/>
+   <script type="text/javascript" src="/soap/ajax/26.0/connection.js"> </script>
+   <script type="text/javascript" src="/soap/ajax/24.0/apex.js"> </script>
+   <script>
+   
+       
+       function downloadFile( fileName,fileId){
+            if(fileId != ''){
+               
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://www.googleapis.com/drive/v2/files/'+ fileId + '?alt=media');
+                xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+                xhr.responseType = 'arraybuffer';
+                xhr.onload = function() {
+                
+                
+                var uInt8Array = new Uint8Array(this.response);
+                var i = uInt8Array.length;
+                var binaryString = new Array(i);
+                while (i--)
+                {
+                  binaryString[i] = String.fromCharCode(uInt8Array[i]);
+                }
+                var data = binaryString.join('');
+            
+                var base64 = window.btoa(data);              
+                  idx++;
+                  compressFile(zipFile ,fileName,base64);
+                  downloadZipFile();
+                };
+                xhr.onerror = function() {
+                  //callback(null);
+                  idx++;
+                  downloadZipFile();
+                };
+                xhr.send();
+           }else{
+               idx++;
+               downloadZipFile();
+                
+           }      
+        }
+        
+        //Compress one single file
+        function compressFile(zipFile, name, data) {
+            zipFile.file(name, data, {base64:true});
+            
+        }
+        function downloadZipFile(){
+            
+            if( idx == countOfS3Objects){
+                saveAs(zipFile.generate({type:"blob"}), zipFileName+".zip");
+                var link = document.getElementById('load-status');
+                link.style.display = 'none'; //or
+                link.style.visibility = 'hidden';
+            }
+        }
+   </script> 
+</apex:component>

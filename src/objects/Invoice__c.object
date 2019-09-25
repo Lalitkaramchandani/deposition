@@ -1,0 +1,1420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <content>CloneInvoice</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>InvoiceNotification</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Invoice_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASESAFEID( Account__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Invoices</relationshipLabel>
+        <relationshipName>Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>After_Due_Date_Invoice_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Invoice_Amount__c +((Invoice_Amount__c *15)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Late Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Alert__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox to indicate that there&apos;s something notable about this invoice, primarily for collections purposes.</description>
+        <externalId>false</externalId>
+        <label>Alert</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Attendee_Role__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Attendee__r.Role__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Attendee Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Attendee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Attendee</label>
+        <referenceTo>Attendee__c</referenceTo>
+        <relationshipLabel>Invoices</relationshipLabel>
+        <relationshipName>Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>When Billing Account is filled, the invoice PDF shows the Billing Accounts address</description>
+        <externalId>false</externalId>
+        <label>Billing Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Invoices (Billing Account)</relationshipLabel>
+        <relationshipName>Invoices1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>When Billing Contact is filled, the invoice PDF shows the Billing Contacts address</description>
+        <externalId>false</externalId>
+        <label>Billing Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Invoices (Billing Contact)</relationshipLabel>
+        <relationshipName>Invoices1</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Case_Name_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(Deposition__r.Deposition_Group__r.Name,  Deposition__r.Case_Name_Text__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Check_Before_Invoicing__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(  
+
+(NOT(ISBLANK(Deposition__r.Deposition_Group__c))  ||  Deposition__r.Attorney_Count__c &gt; 4) &amp;&amp;  NOT(ISPICKVAL(Deposition__r.VIP_Level__c ,&quot;&quot;))
+,
+IMAGE(&quot;https://c.cs11.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Jpg&amp;versionId=068Z0000000Ep70&amp;operationContext=DELIVERY&amp;contentId=05TZ0000000fqZj&amp;page=null&amp;d=/a/Z0000000DXVR/9ZACvk_gVBzxkjnpKRTyb1p7X4mpF44LE8Jev75RPNY&amp;oid=00DZ000000MhmaB&amp;dpt=null&amp;viewId=&quot;,&quot;COD Warning&quot;, 260, 350),&quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Check Before Invoicing</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Claim_No_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Claim No.</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Claim_No__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Insurance_Claim_Info__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Claim No.</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Claims_Professional_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Claims Professional</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Claims_Professional__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Claims_Professional__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Claims Professional</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Clone__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Clone</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Collections_Level__c</fullName>
+        <externalId>false</externalId>
+        <label>Collections Level</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Polite Email</fullName>
+                    <default>false</default>
+                    <label>Polite Email</label>
+                </value>
+                <value>
+                    <fullName>Dunning 1</fullName>
+                    <default>false</default>
+                    <label>Dunning 1</label>
+                </value>
+                <value>
+                    <fullName>Dunning 2</fullName>
+                    <default>false</default>
+                    <label>Dunning 2</label>
+                </value>
+                <value>
+                    <fullName>Demand Dunning</fullName>
+                    <default>false</default>
+                    <label>Demand Dunning</label>
+                </value>
+                <value>
+                    <fullName>Frozen</fullName>
+                    <default>false</default>
+                    <label>Frozen</label>
+                </value>
+                <value>
+                    <fullName>***ISSUES***</fullName>
+                    <default>false</default>
+                    <label>***ISSUES***</label>
+                </value>
+                <value>
+                    <fullName>Collections</fullName>
+                    <default>false</default>
+                    <label>Collections</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Collections_Next_Step__c</fullName>
+        <externalId>false</externalId>
+        <label>Collections - Next Step</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Hands off</fullName>
+                    <default>false</default>
+                    <label>Hands off</label>
+                </value>
+                <value>
+                    <fullName>Stay the course</fullName>
+                    <default>false</default>
+                    <label>Stay the course</label>
+                </value>
+                <value>
+                    <fullName>Suggest collections</fullName>
+                    <default>false</default>
+                    <label>Suggest collections</label>
+                </value>
+                <value>
+                    <fullName>Suggest shaming</fullName>
+                    <default>false</default>
+                    <label>Suggest shaming</label>
+                </value>
+                <value>
+                    <fullName>WF client – special rules apply</fullName>
+                    <default>false</default>
+                    <label>WF client – special rules apply</label>
+                </value>
+                <value>
+                    <fullName>Will be paid</fullName>
+                    <default>false</default>
+                    <label>Will be paid</label>
+                </value>
+                <value>
+                    <fullName>Write off</fullName>
+                    <default>false</default>
+                    <label>Write off</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Collections_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Collections Notes</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Commission__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Commission__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Commission</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commissionable_Payment_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Commissionable_Revenue__c *  Commissionable_Payment__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Commissionable Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Commissionable_Payment__c</fullName>
+        <externalId>false</externalId>
+        <label>Commissionable Payment</label>
+        <summarizedField>Payment__c.Amount__c</summarizedField>
+        <summaryFilterItems>
+            <field>Payment__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Payment</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Payment__c.Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Commissionable_Revenue__c</fullName>
+        <externalId>false</externalId>
+        <label>Commissionable Revenue</label>
+        <summarizedField>Invoice_Item__c.Commissionable_Revenue__c</summarizedField>
+        <summaryForeignKey>Invoice_Item__c.Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Conga_Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(MONTH( Due_Date__c)) &amp; 
+&quot;/&quot; &amp;
+TEXT(DAY(Due_Date__c)) &amp;
+&quot;/&quot; &amp;
+TEXT(YEAR(Due_Date__c))</formula>
+        <label>Conga Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conga_Email_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Billing_Contact__r.Email)), 
+    Billing_Contact__r.Email, 
+     IF(NOT(ISBLANK(Rate_Sheet__r.Accounting_Email_Address__c)), 
+        Rate_Sheet__r.Accounting_Email_Address__c, 
+         IF(NOT(ISBLANK(Contact__r.Bill_To_Email_Addresses__c)),
+            Contact__r.Bill_To_Email_Addresses__c, 
+             Account__r.Accounting_Email_Address__c)))</formula>
+        <label>Conga Email Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conga_Firm_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Primary_Court_Reporting_Firm__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Conga Firm Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conga_Invoice_Template_Id__c</fullName>
+        <description>IF(Conga_Firm_Name__c = &quot;Eppley Reporting&quot;, 
+    &quot;a1z2K0000011RthQAE&quot;, 
+    &quot;a1z2K0000011RtrQAE&quot;)</description>
+        <externalId>false</externalId>
+        <formula>IF(Conga_Firm_Name__c = &quot;Eppley Reporting&quot;, 
+    &quot;a1z2K0000011RthQAE&quot;, 
+    &quot;a1z2K0000011RtrQAE&quot;)</formula>
+        <label>Conga Invoice Template Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conga_Templelate_Column_Selection__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( AND(Show_Quantity_Column__c, Show_Rate_Column__c) , 
+&quot;All&quot;, 
+IF(Show_Quantity_Column__c, &quot;Qty&quot;, 
+IF(Show_Rate_Column__c, &quot;Rate&quot;, 
+&quot;Rows&quot;) ) )</formula>
+        <label>Conga Templelate Column Selection</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE( Billing_Contact__c ,  Contact__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Invoices</relationshipLabel>
+        <relationshipName>Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Days_Past_Due_Bucket__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Days_Past_Due__c &lt;=30,&apos;0-30&apos;,
+IF(Days_Past_Due__c &lt;=60,&apos;30-60&apos;,
+IF(Days_Past_Due__c &lt;=90,&apos;60-90&apos;,
+IF(Days_Past_Due__c &lt;=120,&apos;90-120&apos;,
+IF(Days_Past_Due__c &lt;=150,&apos;120-150&apos;,
+IF(Days_Past_Due__c &lt;=180,&apos;150-180&apos;,
+
+&apos;Over 180&apos;))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days Past Due (Bucket)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_Past_Due__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( AND( Due_Amount__c &gt; 0, TODAY() &gt; Due_Date__c), TODAY() -  Due_Date__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days Past Due</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Days_Since_Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>TODAY() -  Invoice_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Days Since Invoice Date</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deponent_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Deponent Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Deposition_Cancelled__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Deposition__r.Deposition_Status__c, &apos;Cancelled&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Deposition Cancelled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Deposition_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Deposition_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Deposition Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Deposition__c</fullName>
+        <externalId>false</externalId>
+        <label>Deposition</label>
+        <referenceTo>Deposition__c</referenceTo>
+        <relationshipLabel>Invoices</relationshipLabel>
+        <relationshipName>Invoices</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Do_Not_Email__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Do Not Email</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Due_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Invoice_Amount__c - Paid_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Due Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Due_Amount_copy__c</fullName>
+        <externalId>false</externalId>
+        <formula>Due_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Due Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Invoice_Date__c +Value( TEXT(Payment_Term_Days__c) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>External_Reference__c</fullName>
+        <externalId>false</externalId>
+        <label>External Reference ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Hiring_Attorney__c</fullName>
+        <externalId>false</externalId>
+        <formula>Deposition__r.Hiring_Attorney__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Hiring Attorney</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Age_Upon_Payment__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Payment_Date__c),NULL,(Payment_Date__c -  Invoice_Date__c))</formula>
+        <label>Invoice Age Upon Payment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Amount</label>
+        <summarizedField>Invoice_Item__c.Total_Price__c</summarizedField>
+        <summaryForeignKey>Invoice_Item__c.Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Value(Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <description>A field to note where the deposition occurred.</description>
+        <externalId>false</externalId>
+        <label>Location</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Logo_URL__c</fullName>
+        <description>It brings the URL of the logo from Firm object</description>
+        <externalId>false</externalId>
+        <formula>IF(Conga_Firm_Name__c = &quot;Eppley Reporting&quot;, 
+&quot;https://nextgen--c.na7.content.force.com/servlet/servlet.ImageServer?id=015A0000006vVP7&amp;oid=00DA0000000XoMw&quot;, 
+Deposition__r.Primary_Court_Reporting_Firm__r.Logo_URL__c)</formula>
+        <label>Logo URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Matter_Number_Text__c</fullName>
+        <externalId>false</externalId>
+        <label>Matter Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Note</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Open_Balance__c</fullName>
+        <externalId>false</externalId>
+        <label>Open Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Ordering_Party__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicating whether this an original invoice (ordered by the primary attorney or someone on their account) versus any other client invoice</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicating whether this an original invoice (ordered by the primary attorney or someone on their account) versus any other client invoice</inlineHelpText>
+        <label>Ordering Party</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Overpaid_Resource__c</fullName>
+        <externalId>false</externalId>
+        <formula>(Paid_Amount__c &gt;  Invoice_Amount__c)  &amp;&amp;  ((Attendee_Role__c = &quot;Court Reporter&quot;)  || (Attendee_Role__c = &quot;Videographer&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Overpaid Resource</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Paid_Amount__c</fullName>
+        <description>Total amount paid through payments, credits or misc. revenue.</description>
+        <externalId>false</externalId>
+        <label>Paid Amount</label>
+        <summarizedField>Payment__c.Amount__c</summarizedField>
+        <summaryFilterItems>
+            <field>Payment__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Payment, Misc. Receivables, credit</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Payment__c.Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Date__c</fullName>
+        <description>When was this invoice paid?</description>
+        <externalId>false</externalId>
+        <label>Payment Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <formula>Paid_Amount__c /  Invoice_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Paid_Amount__c&gt;= Invoice_Amount__c,&apos;Paid&apos;,IF(Paid_Amount__c==0,&apos;Unpaid&apos;,IF(Paid_Amount__c&gt;0,&apos;Partial&apos;,&apos;&apos;)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Payment Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Term_Days__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Term Days</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>30</fullName>
+                    <default>true</default>
+                    <label>30</label>
+                </value>
+                <value>
+                    <fullName>60</fullName>
+                    <default>false</default>
+                    <label>60</label>
+                </value>
+                <value>
+                    <fullName>90</fullName>
+                    <default>false</default>
+                    <label>90</label>
+                </value>
+                <value>
+                    <fullName>120</fullName>
+                    <default>false</default>
+                    <label>120</label>
+                </value>
+                <value>
+                    <fullName>180</fullName>
+                    <default>false</default>
+                    <label>180</label>
+                </value>
+                <value>
+                    <fullName>210</fullName>
+                    <default>false</default>
+                    <label>210</label>
+                </value>
+                <value>
+                    <fullName>240</fullName>
+                    <default>false</default>
+                    <label>240</label>
+                </value>
+                <value>
+                    <fullName>270</fullName>
+                    <default>false</default>
+                    <label>270</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Payment_Terms__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Terms</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Print__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&apos;/apex/PrintInvoice?id=&apos;+ Id , &apos;Print&apos; ,&apos;blank&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Print</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Proof_of_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Proof of Order</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Rate_Sheet__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Rate Sheet</label>
+        <referenceTo>Rate_Sheet__c</referenceTo>
+        <relationshipLabel>Invoices</relationshipLabel>
+        <relationshipName>Invoices</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Related_Contact__c</fullName>
+        <externalId>false</externalId>
+        <label>Related Contact</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Show_Quantity_Column__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Show Quantity Column</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Rate_Column__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Show Rate Column</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Show_Rows__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Show Rows</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Standing_Orders__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Account__r.Financial_Notes__c),&quot;&quot;, &quot;Account - Financial Notes:&quot; &amp; Account__r.Financial_Notes__c)
+&amp;
+IF(ISBLANK( Account__r.Standing_Orders__c ),&quot;&quot;, &quot;Account - Standing Orders:&quot; &amp; Account__r.Standing_Orders__c )
+&amp;
+IF(ISBLANK(Billing_Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Billing Contact - Standing Orders:&quot; &amp; Billing_Contact__r.Standing_Orders__c )
+&amp;
+IF(ISBLANK( Contact__r.Standing_Orders__c ),&quot;&quot;, &quot;Contact - Standing Orders:&quot; &amp; Contact__r.Standing_Orders__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Standing Orders</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+                <value>
+                    <fullName>Valid</fullName>
+                    <default>true</default>
+                    <label>Valid</label>
+                </value>
+                <value>
+                    <fullName>On Hold</fullName>
+                    <default>false</default>
+                    <label>On Hold</label>
+                </value>
+                <value>
+                    <fullName>Void</fullName>
+                    <default>false</default>
+                    <label>Void</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Taxable__c</fullName>
+        <externalId>false</externalId>
+        <formula>if(ISPICKVAL(Deposition__r.State__c,&quot;Connecticut&quot;),TRUE,FALSE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Taxable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Total_Commissionable_Rev_After_Credits__c</fullName>
+        <externalId>false</externalId>
+        <formula>Commissionable_Revenue__c -  Total_Credits__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Commissionable Rev After Credits</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Credits__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Credits</label>
+        <summarizedField>Payment__c.Amount__c</summarizedField>
+        <summaryFilterItems>
+            <field>Payment__c.Type__c</field>
+            <operation>equals</operation>
+            <value>Credit</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Payment__c.Invoice__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Revenue_After_Credits__c</fullName>
+        <externalId>false</externalId>
+        <formula>Invoice_Amount__c  -  Total_Credits__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Revenue After Credits</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Client</fullName>
+                    <default>false</default>
+                    <label>Client</label>
+                </value>
+                <value>
+                    <fullName>Interpreter</fullName>
+                    <default>false</default>
+                    <label>Interpreter</label>
+                </value>
+                <value>
+                    <fullName>Miscellaneous</fullName>
+                    <default>false</default>
+                    <label>Miscellaneous</label>
+                </value>
+                <value>
+                    <fullName>Reporter</fullName>
+                    <default>false</default>
+                    <label>Reporter</label>
+                </value>
+                <value>
+                    <fullName>Transcription</fullName>
+                    <default>false</default>
+                    <label>Transcription</label>
+                </value>
+                <value>
+                    <fullName>Video/Tech</fullName>
+                    <default>false</default>
+                    <label>Video/Tech</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Invoice</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Payment_Status__c</columns>
+        <columns>Account__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Due_Date__c</columns>
+        <columns>Invoice_Amount__c</columns>
+        <columns>Type__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Case_Name__c</columns>
+        <columns>Deposition__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case_Name__c</field>
+            <operation>contains</operation>
+            <value>Nine West</value>
+        </filters>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{00000}</displayFormat>
+        <label>Invoice No</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invoices</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Attendee__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Invoice_Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Due_Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Due_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Payment_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Invoice_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Days_Past_Due__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Due_Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Invoice_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Deponent_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Deposition__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Block_Void_Status_For_Due_Invoices</fullName>
+        <active>false</active>
+        <errorConditionFormula>ISNEW()==false &amp;&amp; ISCHANGED(Status__c) &amp;&amp; TEXT(Status__c)==&apos;Void&apos; &amp;&amp; Due_Amount__c&gt;0</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>You can&apos;t void an invoice with a pending open balance.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Invoice_Date_Can_Not_be_In_Past</fullName>
+        <active>true</active>
+        <description>When selecting the invoice date, don’t allow invoices to be dated in prior months. For example, on February 15th, an invoice can be created for Feb 1, Feb 15 or Feb 28th but cannot be created for January 20th.</description>
+        <errorConditionFormula>(ISNEW() || ISCHANGED(Invoice_Date__c))&amp;&amp;  ((MONTH(Invoice_Date__c)&lt;MONTH(TODAY()) &amp;&amp; YEAR(Invoice_Date__c) == YEAR(TODAY()) ) || YEAR(Invoice_Date__c) &lt;YEAR(TODAY()))</errorConditionFormula>
+        <errorDisplayField>Invoice_Date__c</errorDisplayField>
+        <errorMessage>Invoice can&apos;t be created for past month.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Invoice_Type_is_Required</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(Type__c,&apos;&apos;)</errorConditionFormula>
+        <errorDisplayField>Type__c</errorDisplayField>
+        <errorMessage>Please enter a Type for this invoice</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Lock_Invoice</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISNEW()==false &amp;&amp; (ISCHANGED(Invoice_Date__c) ||
+ISCHANGED(Deposition__c) ||
+ISCHANGED(Attendee__c) ||
+ISCHANGED(Type__c) ||
+ISCHANGED(Status__c) ||
+ISCHANGED(Invoice_Amount__c) ||
+ISCHANGED(Payment_Term_Days__c)
+
+
+) &amp;&amp;  (MONTH( PRIORVALUE(Invoice_Date__c) ) &lt;  MONTH(TODAY())
+||
+YEAR(PRIORVALUE(Invoice_Date__c)) &lt; YEAR(TODAY()) )</errorConditionFormula>
+        <errorDisplayField>Account__c</errorDisplayField>
+        <errorMessage>You can&apos;t edit an invoice from a prior month.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Generate_PDF</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Generate PDF</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_370}
+&amp;id={!Invoice__c.Id}
+&amp;CETID=a1qA0000002tNda
+&amp;OFN=Invoice+-+{!URLENCODE(Invoice__c.Name)}
+&amp;QueryId=[OtherInfo]a1rA0000009Hzge,
+[LineItems]a1rA0000009Hzgj
+&amp;TemplateId= {!Invoice__c.Conga_Invoice_Template_Id__c}
+&amp;EmailFromID=0D22K000000fxTz
+&amp;TemplateGroup=Invoices
+&amp;CongaEmailTemplateGroup=Accounts
+&amp;BML=Your+invoice+is+being+created
+&amp;SC0=1
+&amp;SC1=Attachments
+&amp;FP0=1
+&amp;ds7=2
+&amp;ds7preview=1
+&amp;EmailToId={!Invoice__c.ContactId__c}
+&amp;EmailAdditionalTo={!Invoice__c.Conga_Email_Address__c}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Generate_PDF_LEX</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Generate PDF</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_370}
+&amp;id={!Invoice__c.Id}
+&amp;CETID=a1qA0000002tNda
+&amp;OFN=Invoice+-+{!URLENCODE(Invoice__c.Name)}
+&amp;SC0=1
+&amp;SC1=Attachments
+&amp;FP0=1
+&amp;QueryId=[OtherInfo]a1rA0000009Hzge,
+[LineItems]a1rA0000009Hzgj
+&amp;TemplateId= {!Invoice__c.Conga_Invoice_Template_Id__c}
+&amp;EmailFromID=0D2A0000000GpvY
+&amp;TemplateGroup=Invoices
+&amp;CongaEmailTemplateGroup=Accounts
+&amp;BML=Your+invoice+is+being+created
+&amp;ds7=2
+&amp;ds7preview=1
+&amp;EmailToId={!Invoice__c.ContactId__c}
+&amp;EmailAdditionalTo={!Invoice__c.Conga_Email_Address__c}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Invoice</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Invoice</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/createInvoice?id={!Attendee__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Next</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Next</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>var refreshList = function(result) {
+if(result==&apos;&apos;){
+alert(&apos;No records Found!&apos;);
+}else{
+window.location.href=&apos;/&apos;+result;
+}
+    
+};
+
+var handleError = function(error) {
+    alert(&apos;Following error happened:&apos;+error);
+};
+
+
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+
+    sforce.apex.execute(&quot;ListClass&quot;,&quot;goNext&quot;,{localId:&quot;{!Invoice__c.Id}&quot;}, 
+																							 { onSuccess: refreshList, onFailure: handleError });</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Previous</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Previous</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>var refreshList = function(result) {
+if(result==&apos;&apos;){
+alert(&apos;No records Found!&apos;);
+}else{
+window.location.href=&apos;/&apos;+result;
+}
+    
+};
+
+var handleError = function(error) {
+    alert(&apos;Following error happened:&apos;+error);
+};
+
+
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+
+    sforce.apex.execute(&quot;ListClass&quot;,&quot;goPrev&quot;,{localId:&quot;{!Invoice__c.Id}&quot;}, 
+																							 { onSuccess: refreshList, onFailure: handleError });</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Test_Generate_PDF</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Test Generate PDF</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://composer.congamerge.com
+?sessionId={!API.Session_ID}
+&amp;serverUrl={!API.Partner_Server_URL_370}
+&amp;id={!Invoice__c.Id}
+&amp;QueryId=[OtherInfo]a1rA0000009Hzge,
+[LineItems]a1rA0000009Hzgj</url>
+    </webLinks>
+</CustomObject>

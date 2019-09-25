@@ -1,0 +1,3 @@
+<apex:page showheader="false" sidebar="false">
+  <iframe src="https://nextgen.lightning.force.com/one/one.app#/sObject/01ZA0000000Av5m/view?t=1485977650899" height="100%" width="100%" frameborder="0"/>
+</apex:page>

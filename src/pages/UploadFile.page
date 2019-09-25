@@ -1,0 +1,178 @@
+<apex:page standardstylesheets="false" cache="false" showHeader="false" sidebar="false" controller="UploadFilesController"  action="{!init}">
+
+    <head>
+            
+        <link href="{!URLFOR($Resource.WilcoxCSS)}" rel="stylesheet" type="text/css"/> 
+        <link href="{!URLFOR($Resource.NextGenUI, 'NextGenUI/css/style.css')}" rel="stylesheet" type="text/css"/>
+        
+        <style>
+            .messageCell,
+            .errorMsg {
+                color: #cc0000;
+                font-size: 0.8em;
+            }
+            
+            .messageCell h4 {
+                color: #cc0000;
+            }
+            
+            .standard {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 10px;
+                color: black;
+                padding: 5px;
+            }
+            
+            .standard_darkred {
+                font-family: Arial, Helvetica, sans-serif;
+                font-weight: normal;
+                font-size: 11px;
+                color: darkred;
+            }
+            
+            .table_background {
+                background-color: #f0f0f0
+            }
+            
+            .header_background {
+                background-color: #8c8c8c
+            }
+            
+            .input {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px
+            }
+            
+            .input_hint {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9px;
+                color: gray
+            }
+            
+            .ad {
+                font-family: Arial, Helvetica, sans-serif;
+                width: 140px;
+                font-size: 10px;
+                margin: 0 auto;
+                text-align: left;
+                border: 2px solid #999;
+                background: white;
+                padding: 5px;
+            }
+            
+            a.blue:link {
+                color: #0000ff;
+            }
+            
+            a.blue:visited {
+                color: #0000ff;
+            }
+            
+            a.blue:hover {
+                color: #ff0000;
+            }
+            
+            a.blue:active {
+                color: #0000ff;
+            }
+            
+            textarea {
+                color: black !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_container">
+            <!---<c:NextGenHeader />
+            --->
+            
+            
+            <apex:outputText escape="false" value="{!firm.Web_Page_Header_HTML__c}"></apex:outputText>
+            <div id="headbox">
+                <h3>{!Firm.Name}</h3></div>
+
+            <div id="content_container">
+                <div id="left_navigation">
+                    <h2 class="navigation_title"><br/>UPLOAD FILES
+      </h2>
+                </div>
+                <div id="main_contentpage">
+                    <div class="post">
+                        <div class="entry">
+                            <!-- SFDC STUFF STARTS HERE -->
+                            <apex:form >
+                                <h2 class="title">UPLOAD FILES</h2>
+                                <apex:pageMessages />
+                                <apex:outputPanel layout="block" rendered="{!isSuccess}">
+                                    <b>File has been uploaded successfully</b>
+                                    <br/>
+                                </apex:outputPanel>
+                                <table cellspacing="0" cellpadding="10" border="0">
+                                    <apex:repeat value="{!$ObjectType.Upload_Files__c.FieldSets.UploadBatchesFields}" var="f">
+                                        <tr>
+                                            <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                                <apex:outputText value="{!f.Label}" />
+                                            </td>
+                                            <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                                <apex:inputField value="{!uploadFiles[f.fieldPath]}" required="{!OR(f.required, f.dbrequired)}" />
+                                            </td>
+                                        </tr>
+
+                                    </apex:repeat>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <table cellspacing="0" cellpadding="2" height="100%" width="350" class="table_background">
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div id="mainbody">
+
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">&nbsp;</td>
+                                        <td style="vertical-align: middle;padding:4px;" valign="middle">
+                                            <apex:commandButton value="Next" action="{!SaveFiles}" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </apex:form>
+                            <!-- SFDC STUFF ENDS HERE -->
+
+
+                        </div>
+                        <!-- /.entry -->
+                    </div>
+                    <!-- /.post -->
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div id="content_bottom">
+
+
+                <img src="{!URLFOR($Resource.NextGenUI, 'NextGenUI/images/page-template-btm.jpg')}" width="891" height="38" alt="" class="png" />
+            </div>
+            <div class="clear"></div>
+        </div>
+        <!--- <c:NextGenFooter />
+        --->
+        <apex:outputText escape="false" value="{!firm.Web_Page_Footer_HTML__c}"></apex:outputText>
+
+    </body>
+</apex:page>

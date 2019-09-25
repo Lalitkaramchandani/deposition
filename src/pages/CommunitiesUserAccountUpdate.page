@@ -1,0 +1,112 @@
+<apex:page applyHtmlTag="false" standardStylesheets="false" sidebar="false" showHeader="false" controller="CommunitiesUserAccountUpdateCntrl">
+    <c:CommunityResources title="Account Information"/>
+    <body>
+        <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <apex:form id="frm" forceSSL="true">
+                    <apex:actionFunction action="{!save}" name="save" id="saveBtn"  reRender="frm" status="status"/>
+                    <c:ActionStatus ></c:ActionStatus>
+                    <div class="schedule-depositions">
+                        <div class="schedule">
+                            <h1>Update Account Information</h1>
+    
+                            <div class="scheduleform">
+    
+                                    <div class="single-field" style="max-height: none !important;" >
+                                        <apex:outputLabel value="{!errMsg}" escape="false"/>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>First Name</span>
+                                             <apex:inputField value="{!usr.FirstName}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>Last Name</span>
+                                             <apex:inputField value="{!usr.LastName}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>Phone</span>
+                                             <apex:inputField value="{!usr.Phone}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>TimeZone</span>
+                                             <apex:inputField value="{!usr.TimeZoneSidKey}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>Street</span>
+                                             <apex:inputText value="{!con.MailingStreet}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>City</span>
+                                             <apex:inputField value="{!con.MailingCity}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>State</span>
+                                             <apex:inputField value="{!con.MailingState}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>Postal Code</span>
+                                             <apex:inputField value="{!con.MailingPostalCode}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>Country</span>
+                                             <apex:inputField value="{!con.MailingCountry}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    <div class="single-field">
+                                        <label >
+                                            <span>Standing Orders</span>
+                                             <apex:inputtext value="{!con.Standing_Orders__c}"/>
+                                            <br/>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="recentlyviewed">
+                                        <br/>
+                                        <apex:commandButton value="Save" onclick="save();return false;" styleclass="btn btn-primary btn-large" />
+                                    </div>
+                                     <div class="single-field">
+                                        <label>
+                                            <span><a style="color: white;" href="/apex/CommunitiesChangePassword?oldPassword=true">Change Password</a></span>
+                                        </label>
+                                    </div>
+                                    
+                                
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                </apex:form>
+                <c:CommunityFooter />
+            </div>
+        
+    </body>
+    
+</apex:page>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Closed_Case_RecordType_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Closed Case RecordType Id</shortDescription>
+        <value>012A0000000VzXTIA0</value>
+    </labels>
+    <labels>
+        <fullName>Default_CR_Firm</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default CR Firm</shortDescription>
+        <value>Lexitas</value>
+    </labels>
+    <labels>
+        <fullName>Default_Case_Lead_RecordType_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Case Lead RecordType Id</shortDescription>
+        <value>012A0000000VzXUIA0</value>
+    </labels>
+    <labels>
+        <fullName>Default_Contact_Firm</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Contact Firm Id</shortDescription>
+        <value>a0hA000000B8NiV</value>
+    </labels>
+    <labels>
+        <fullName>File_Access_Error_Message</fullName>
+        <categories>Community</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>File Access Error Message</shortDescription>
+        <value>It appears that your account does not access to that file. Please contact us for access.</value>
+    </labels>
+    <labels>
+        <fullName>ManageInvoicePaymentsPageSize</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ManageInvoicePaymentsPageSize</shortDescription>
+        <value>25</value>
+    </labels>
+    <labels>
+        <fullName>Msg_on_Missing_Parameter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Msg on Missing Parameter</shortDescription>
+        <value>To confirm your deposition, please call 888.267.1200.</value>
+    </labels>
+    <labels>
+        <fullName>SalesforceEmailTemplateID</fullName>
+        <categories>Deposition Confirmation Conga</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesforceEmailTemplateID</shortDescription>
+        <value>00X2K000001uKWA</value>
+    </labels>
+    <labels>
+        <fullName>TLS_Warning_Help_URL_Link_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TLS Warning Help URL Link Text</shortDescription>
+        <value>Instructions</value>
+    </labels>
+    <labels>
+        <fullName>TLS_Warning_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TLS Warning Message</shortDescription>
+        <value>To maintain a high level of security, we require that all web browsers are updated with specific updates. It appears that your browser has not been updated with sufficient security protection. To access this site after July 22nd, 2017, please update your browser&apos;s security settings to use TLS 1.1 or higher. For more information, contact your IT staff, update your browser or give us a call at 888.267.1200.</value>
+    </labels>
+</CustomLabels>

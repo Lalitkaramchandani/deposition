@@ -1,0 +1,4 @@
+<apex:page standardController="AWS_S3_Object__c" label="Notes" sidebar="false" showHeader="false" >
+  
+    <apex:outputText >{!AWS_S3_Object__c.Upload_Files__r.Notes__c} </apex:outputText>
+</apex:page>

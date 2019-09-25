@@ -1,0 +1,71 @@
+<apex:page standardController="Deposition__c"  extensions="DepositionCloneCtrl" title="Clone Deposition" > 
+
+    <apex:sectionHeader title="Clone Deposition" subtitle="{!Deposition__c.Name}"/>
+    <apex:form >
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:outputPanel rendered="{!isMultiple}">
+            <apex:pageBlock id="pb1">
+                <c:ActionStatus ></c:ActionStatus>
+                <apex:pageMessages ></apex:pageMessages>
+                   <apex:pageBlockButtons >
+                       <apex:commandButton value="Save" action="{!saveDepositions}" status="status" reRender="pb1"/>
+                   </apex:pageBlockButtons>
+                   <apex:pageblockSection title="Cloned Depositions" showheader="true" columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:pageBlockTable value="{!depositions}" var="deposition">
+                                <apex:column headerValue="Deposition Name">
+                                    <a href="/{!deposition.id}" target="_blank">{!deposition.Name}</a>
+                                </apex:column>
+                                <apex:column headerValue="Deposition Date">
+                                    <apex:inputField value="{!deposition.Deposition_Date__c}" rendered="{!!isSaved}"/>
+                                    <apex:outputField value="{!deposition.Deposition_Date__c}" rendered="{!isSaved}" />
+                                </apex:column>
+                                <apex:column headerValue="Deponent Name">
+                                    <apex:inputField value="{!deposition.Deponent_Name__c}" rendered="{!!isSaved}"/>
+                                    <apex:outputField value="{!deposition.Deponent_Name__c}" rendered="{!isSaved}"/>
+                                </apex:column>
+                                <apex:column headerValue="Event Location">
+                                    <apex:inputField value="{!deposition.Event_Location__c}" rendered="{!!isSaved}"/>
+                                    <apex:outputField value="{!deposition.Event_Location__c}" rendered="{!isSaved}"/>
+                                </apex:column>
+                               <!--- <apex:column headerValue="Deposition Date" value="{!deposition.Deposition_Date__c}"/>
+                                <apex:column headerValue="Case Name/Caption" value="{!deposition.Case_Name__c}"/>
+                               ---> 
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageblockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    <apex:outputPanel rendered="{!!isMultiple}"> 
+    <apex:pageBlock >
+       
+            <apex:pageblockbuttons >
+                <apex:commandbutton value="Save" action="{!onSave}"/>
+                <apex:commandbutton value="Cancel" action="{!Cancel}"/>
+            </apex:pageblockbuttons>
+            <apex:pageblockSection title="Records" showheader="true" columns="1">
+                <apex:pageBlockSectionItem >
+                <apex:outputText value="Number Of Cloned Depositions To Create"></apex:outputText>
+                <apex:inputText value="{!recCount}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageblockSection>
+            
+             <apex:pageblockSection title="Deposition Information" showheader="true" columns="2">
+                 <apex:repeat value="{!availableFields}" var="field">
+                     <apex:pageBlockSectionItem >
+                         <apex:outputPanel >
+                             <apex:inputCheckbox style="float: left;" value="{!fieldChecks[field]}"/>
+                             <h2><apex:outputText value="{!$ObjectType['Deposition__c'].Fields[field].Label}"/></h2>
+                         </apex:outputPanel>
+                         <apex:outputPanel >
+                             <apex:inputField value="{!obj[field]}" />
+                         </apex:outputPanel>
+                     </apex:pageBlockSectionItem>
+                </apex:repeat> 
+             </apex:pageblockSection>
+             
+        </apex:pageBlock>
+    </apex:outputPanel>
+   
+</apex:form>
+</apex:page>

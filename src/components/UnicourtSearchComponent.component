@@ -1,0 +1,109 @@
+<apex:component controller="UnicourtSearchController" allowDML="true" >
+     <style>
+        .successMsg {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+        margin: 0px 0px 0px 200px;
+        padding:8px;
+        }
+    </style>
+    <script>
+    function noenter(ev)
+    {
+        if (window.event)
+        {
+            ev=window.event;
+        }
+        
+        var keyCode;
+        if (ev.keyCode)
+        {
+            keyCode=ev.keyCode;
+        }
+        else
+        {
+            keyCode=ev.charCode;
+        }
+        
+        if (keyCode == 13)
+        {
+            var eleArray=document.getElementsByClassName('searchButton');
+            var ele = eleArray[0];
+            ele.click();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    </script>
+    <apex:form >
+        <apex:pageMessages id="pgMsges"></apex:pageMessages>
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vista.gif" />
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:pageBlock id="searchResultPB">
+            
+            <c:PageBlockTableEnhancer targetPbTableIds="searchResultTable" paginate="true" enableExport="false" defaultPageSize="{!pageSize}" pageSizeOptions="5,10,25,50,100" />    
+            <apex:pageBlockSection columns="1" id="pbsSearch">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Search By:</apex:outputLabel>
+                    <apex:outputPanel >
+                        <apex:selectList value="{!selectedSearchScope}" size="1" multiselect="false" >
+                            <apex:selectOption itemValue="Everything" itemLabel="Keyword" />
+                            <apex:selectOption itemValue="Attorney" itemLabel="Contact" />
+                            <apex:selectOption itemValue="Party" itemLabel="Party" />
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    
+                    <apex:outputLabel >Search Value:</apex:outputLabel>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!searchValue}" onkeypress="return noenter(event);" />
+                        <apex:commandButton id="searchCmdBtn" styleClass="searchButton" value="Search" action="{!searchCasesInUnicourt}" status="status" reRender="searchResult,searchResultPB" />
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>      
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" id="searchResult">
+                <apex:outputPanel rendered="{!showSuccessMsg}" styleClass="successMsg" >
+                    <apex:commandLink action="{!redirectToImportedCase}" target="_blank" value="{!selectedCase.case_name}" /> has been added.
+                        <apex:commandLink action="{!resetShowMsgFlag}" value="  Close" status="status" reRender="searchResult,searchResultPB" >
+                        </apex:commandLink>
+                    </apex:outputPanel>
+                    <apex:pageBlockTable id="searchResultTable" value="{!unicourtCaseMap}" var="caseId">
+                        <apex:column headerValue="Action">
+                            <apex:commandLink action="{!upsertCase}" value="Import" status="status" reRender="searchResult,searchResultPB,pgMsges" rendered="{!!Map_UnicourtCase_IsImportedFlag[caseId]}" >
+                                <apex:param assignTo="{!selectedCaseId}" value="{!caseId}" name="result" />
+                            </apex:commandLink>
+                            <apex:outputText rendered="{!Map_UnicourtCase_IsImportedFlag[caseId]}">Imported</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="Case Name">
+                            <apex:outputText rendered="{!!Map_UnicourtCase_IsImportedFlag[caseId]}" >{!unicourtCaseMap[caseId].case_name} </apex:outputText>
+                            <apex:outputLink value="/{!AlreadyImportedCaseMap[caseId].id}" rendered="{!Map_UnicourtCase_IsImportedFlag[caseId]}">{!unicourtCaseMap[caseId].case_name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="Case Type">
+                            <apex:outputText >{!unicourtCaseMap[caseId].case_type}</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="Case Status">
+                            <apex:outputText >{!unicourtCaseMap[caseId].case_status_name}</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="File Date">
+                            <apex:outputText >{!unicourtCaseMap[caseId].filing_date}</apex:outputText>
+                        </apex:column>
+                        <apex:column headerValue="Case Number">
+                        	<apex:outputText >{!unicourtCaseMap[caseId].case_number}</apex:outputText>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+</apex:component>

@@ -1,0 +1,12 @@
+<apex:component access="global">
+<table>
+<tr><td>
+<hr width="300" align="left" />
+<p><br />NextGen Reporting<br />
+999 Old Eagle School Road, Suite 118 | Wayne, PA 19087<br />
+Phone: 215.944.5800 | Fax: 267.775.3310<br />
+<a href="http://nextgenreporting.com">NextGenReporting.com</a><br />Nationwide Coverage with Offices in Philadelphia, PA | New York, NY | Silicon Valley, CA | Phoenix, AZ</p>
+<p><strong>NextGen Reporting | <span style='color:#C00000'>Making Litigation Easier</span></strong></p>
+</td></tr>
+</table>
+</apex:component>

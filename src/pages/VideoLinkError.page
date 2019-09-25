@@ -1,0 +1,37 @@
+<apex:page applyHtmlTag="false" title="Not Ready for Showtime" standardStylesheets="false" sidebar="false" showHeader="false" controller="ConfirmDepositionController" >
+    <c:CommunityResources title="Not Ready for Showtime"/>
+    <style>
+        a{
+            color : white !important;
+        }
+    </style>
+    <body>
+        <div class="wrapper">
+                
+                <c:CommunityHeader />
+                <apex:form id="frm" >
+                
+                <c:ActionStatus ></c:ActionStatus>
+                <div class="schedule-depositions">
+                    <div class="schedule">
+                        <h1>Not Ready for Showtime</h1>
+
+                        <div class="scheduleform">
+                            <p>The LegalView link is not yet active.</P>
+                            <P>
+                            To test your video connection in advance, <A HREF="https://zoom.us/j/6944432916">click here</A> to start a video stream.</P> 
+                            <P>
+                            If you have any questions at all, feel free to contact our video team at {!deposition.Primary_Court_Reporting_Firm__r.Phone__c}.</p>
+                                
+                        </div>
+
+                    </div>
+
+                </div>
+                </apex:form>
+                <c:CommunityFooter />
+            </div>
+        
+    </body>
+    
+</apex:page>
